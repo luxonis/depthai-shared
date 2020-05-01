@@ -1,10 +1,9 @@
 #include <string>
 
-#include "json_helper.hpp"
+#include "depthai-shared/json_helper.hpp"
 
-
-bool getJSONFromString(const std::string& str, json& json_obj)
+bool getJSONFromString(const std::string& str, nlohmann::json& json_obj)
 {
-    json_obj = json::parse(str);
+    json_obj = nlohmann::json::parse(str);
     return true;
 }

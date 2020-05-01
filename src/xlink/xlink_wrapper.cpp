@@ -6,9 +6,9 @@
 
 #include <XLink.h>
 
-#include "../shared/stream/stream_info.hpp"
-#include "../../shared/timer.hpp"
-#include "xlink_wrapper.hpp"
+#include "depthai-shared/stream/stream_info.hpp"
+#include "depthai-shared/timer.hpp"
+#include "depthai-shared/xlink/xlink_wrapper.hpp"
 
 // FIXME use some header
 extern "C" void wdog_keepalive(void);
