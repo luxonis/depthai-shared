@@ -5,7 +5,7 @@
 #include <functional>
 #include <numeric>
 
-#include "stream_info.hpp"
+#include "depthai-shared/stream/stream_info.hpp"
 
 
 std::vector<int> StreamInfo::getDimensionsForSize(uint32_t req_size) const

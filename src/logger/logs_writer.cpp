@@ -1,6 +1,6 @@
 #include <iostream>
 
-#include "logs_writer.hpp"
+#include "depthai-shared/logger/logs_writer.hpp"
 
 LogsWriter* LogsWriter::instance = nullptr;
 

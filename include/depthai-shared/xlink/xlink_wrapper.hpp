@@ -11,10 +11,10 @@
 
 #include <XLinkPublicDefines.h>
 
-#include "../stream/stream_info.hpp"
-#include "../general/data_observer.hpp"
-#include "../general/data_subject.hpp"
-#include "../stream/stream_data.hpp"
+#include "depthai-shared/stream/stream_info.hpp"
+#include "depthai-shared/general/data_observer.hpp"
+#include "depthai-shared/general/data_subject.hpp"
+#include "depthai-shared/stream/stream_data.hpp"
 
 #include <fcntl.h> 
 #define MAX_USB_BUFF (5 * 1024 * 1024)

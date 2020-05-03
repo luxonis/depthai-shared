@@ -1,8 +1,6 @@
-#ifndef STREAM_INFO_HPP
-#define STREAM_INFO_HPP
+#pragma once
 
-
-#include <stdint.h>
+#include <cstdint>
 
 #include <algorithm>
 #include <functional>
@@ -49,5 +47,3 @@ private:
     }
 };
 
-
-#endif  // STREAM_INFO_HPP

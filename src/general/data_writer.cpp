@@ -3,7 +3,7 @@
 #include <iostream>
 #include <fstream>
 
-#include "data_writer.hpp"
+#include "depthai-shared/general/data_writer.hpp"
 
 using namespace std;
 
