@@ -3,8 +3,7 @@
 #include <cstdint>
 #include <vector>
 
-#include "disparity_luts.hpp"
-
+#include "depthai-shared/disparity_luts.hpp"
 
 float calculateDisparityToDepthMM(
     unsigned disparity,
