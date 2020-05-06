@@ -59,4 +59,5 @@ std::vector<int> StreamInfo::getDimensionsForSize(uint32_t req_size) const
             }
         }
     }
+    return std::vector<int>();
 }
