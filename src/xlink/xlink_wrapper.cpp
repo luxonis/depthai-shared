@@ -183,6 +183,147 @@ bool XLinkWrapper::initFromHostSide(
 
     return result;
 }
+
+bool XLinkWrapper::initFromHostSide(
+    XLinkGlobalHandler_t* global_handler,
+    XLinkHandler_t* device_handler,
+    uint8_t* binary,
+    long binary_size,
+    const std::string &usb_device,
+    bool reboot_device_on_destructor
+)
+{
+    _reboot_device_on_destructor = reboot_device_on_destructor;
+
+    assert(_device_link_id == -1);
+
+    bool result = false;
+    do
+    {
+        XLinkError_t rc;
+        deviceDesc_t deviceDesc = {};
+        deviceDesc_t in_deviceDesc = {};
+        // Timeouts in seconds
+        double timeout_discover = 10;
+        double timeout_bootup   = 10;
+        double timeout_connect  = 10;
+        std::chrono::steady_clock::time_point tstart;
+        std::chrono::duration<double> tdiff;
+
+        // TODO: attempt to connect and reset device if found in booted state
+        // printf("rebooting ...\n");
+        // XLinkResetRemote(0);
+        // printf("done. 5 sec. delay\n");
+        // std::this_thread::sleep_for(std::chrono::seconds(5));
+
+        if (!initXLink(global_handler)) {
+            printf("Failed to initialize xlink!\n");
+            break;
+        }
+
+        if (usb_device == "list") {
+            const int MAX_DEVICES = 32;
+            unsigned int numdev = 0;
+            deviceDesc_t deviceDescAll[MAX_DEVICES] = {};
+            rc = XLinkFindAllSuitableDevices(X_LINK_ANY_STATE, in_deviceDesc,
+                    deviceDescAll, MAX_DEVICES, &numdev);
+            printf("Detected %d device(s):\n", numdev);
+            for (int i = 0; i < numdev; i++) {
+                char *port = strdup(deviceDescAll[i].name);
+                strtok(port, "-");
+                printf("  %-12s on USB port: %s\n", deviceDescAll[i].name, port);
+                free(port);
+            }
+            exit(0);
+        }
+
+        if (!usb_device.empty())
+            snprintf(in_deviceDesc.name, sizeof in_deviceDesc.name,
+                    "%s-ma2480", usb_device.c_str());
+
+        // boot device
+        if (binary != nullptr && binary_size != 0) {
+            // Find un-booted device
+            bool print_found = false;
+            tstart = std::chrono::steady_clock::now();
+            do {
+                rc = XLinkFindFirstSuitableDevice(X_LINK_UNBOOTED, in_deviceDesc, &deviceDesc);
+                tdiff = std::chrono::steady_clock::now() - tstart;
+                if (rc != X_LINK_SUCCESS) {
+                    print_found = true;
+                    printf("\rNo USB device [03e7:2485], still looking");
+                    if (!usb_device.empty())
+                        printf(" on port %s", usb_device.c_str());
+                    printf("... %.3fs ", tdiff.count());
+                    fflush(stdout);
+                } else {
+                    if (print_found)
+                        printf("[FOUND]\n");
+                    break;
+                }
+            } while (tdiff.count() < timeout_discover);
+
+            if (rc != X_LINK_SUCCESS) {
+                printf("NOT FOUND, err code %d\n", rc);
+                break;
+            }
+
+            printf("Sending internal device firmware\n");
+            rc = XLinkBootMemory(&deviceDesc, binary, binary_size);
+            if (rc != X_LINK_SUCCESS) {
+                printf("Failed to boot the device: %s, err code %d\n", deviceDesc.name, rc);
+                break;
+            }
+        } else {
+            // Development option, the firmware is loaded via JTAG
+            printf("Device boot is skipped. (\"binary to boot from\" NOT SPECIFIED !)\n");
+        }
+
+        if (!usb_device.empty())
+            snprintf(in_deviceDesc.name, sizeof in_deviceDesc.name,
+                    "%s-", usb_device.c_str());
+
+        // Search for booted device
+        tstart = std::chrono::steady_clock::now();
+        do {
+            rc = XLinkFindFirstSuitableDevice(X_LINK_BOOTED, in_deviceDesc, &deviceDesc);
+            if (rc == X_LINK_SUCCESS)
+                break;
+            tdiff = std::chrono::steady_clock::now() - tstart;
+        } while (tdiff.count() < timeout_bootup);
+
+        if (rc != X_LINK_SUCCESS) {
+            printf("Failed to find booted device after boot, err code %d\n", rc);
+            break;
+        }
+
+        device_handler->devicePath = deviceDesc.name;
+        device_handler->protocol = deviceDesc.protocol;
+
+        // Try to connect to device
+        tstart = std::chrono::steady_clock::now();
+        do {
+            rc = XLinkConnect(device_handler);
+            if (rc == X_LINK_SUCCESS)
+                break;
+            tdiff = std::chrono::steady_clock::now() - tstart;
+        } while (tdiff.count() < timeout_connect);
+
+        if (rc != X_LINK_SUCCESS) {
+            printf("Failed to connect to device, err code %d\n", rc);
+            break;
+        }
+
+        printf("Successfully connected to device.\n");
+
+        _device_link_id = device_handler->linkId;
+
+        result = true;
+    }
+    while (false);
+
+    return result;
+}
 #endif // __PC__
 
 

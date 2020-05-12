@@ -52,6 +52,15 @@ public:
         const std::string &usb_device = "",
         bool reboot_device_on_destructor = true
         );
+
+    bool initFromHostSide(
+        XLinkGlobalHandler_t* global_handler,
+        XLinkHandler_t* device_handler,
+        uint8_t* binary,
+        long binary_size,
+        const std::string &usb_device,
+        bool reboot_device_on_destructor
+    );
 #endif // __PC__
 #ifndef __PC__
     bool initFromDeviceSide (XLinkGlobalHandler_t* global_handler);
