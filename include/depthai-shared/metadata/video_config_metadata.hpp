@@ -14,7 +14,8 @@ struct VideoConfig{
         H264_BASELINE,
         H264_MAIN,
         H264_HIGH,
-        H265_MAIN
+        H265_MAIN,
+        MJPEG
     } profile;
 
     int bitrate, maxBitrate; //bps
@@ -71,6 +72,8 @@ struct VideoConfig{
                     config.profile = Profile::H264_HIGH;
                 } else if(profile == "h265_main"){
                     config.profile = Profile::H265_MAIN;
+                } else if(profile == "mjpeg"){
+                    config.profile = Profile::MJPEG;
                 }
             } else if(obj["profile"].is_number_integer()){
                 config.profile = (Profile) obj["profile"].get<int>();
