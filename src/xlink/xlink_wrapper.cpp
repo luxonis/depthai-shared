@@ -5,6 +5,8 @@
 #include <iostream>
 
 #include <XLink.h>
+extern "C" int usb_loglevel; //usb log level in xlink
+
 
 #include "depthai-shared/stream/stream_info.hpp"
 #include "depthai-shared/timer.hpp"
@@ -66,8 +68,8 @@ bool XLinkWrapper::initFromHostSide(
     _reboot_device_on_destructor = reboot_device_on_destructor;
 
     assert(_device_link_id == -1);
-    extern int usb_loglevel; //usb log level in xlink
     usb_loglevel = 1;
+  
     bool result = false;
     do
     {
