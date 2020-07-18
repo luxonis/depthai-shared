@@ -129,6 +129,7 @@ bool XLinkWrapper::initFromHostSide(
                         printf(" on port %s", usb_device.c_str());
                     printf("... %.3fs ", tdiff.count());
                     fflush(stdout);
+                    std::this_thread::sleep_for(std::chrono::milliseconds(100));
                 } else {
                     if (print_found)
                         printf("[FOUND]\n");
@@ -270,6 +271,7 @@ bool XLinkWrapper::initFromHostSide(
                         printf(" on port %s", usb_device.c_str());
                     printf("... %.3fs ", tdiff.count());
                     fflush(stdout);
+                    std::this_thread::sleep_for(std::chrono::milliseconds(100));
                 } else {
                     if (print_found)
                         printf("[FOUND]\n");
