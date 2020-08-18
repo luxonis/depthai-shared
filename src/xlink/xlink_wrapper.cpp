@@ -11,9 +11,11 @@ extern "C" int usb_loglevel; //usb log level in xlink
 #include "depthai-shared/stream/stream_info.hpp"
 #include "depthai-shared/timer.hpp"
 #include "depthai-shared/xlink/xlink_wrapper.hpp"
-#include "device.hpp"
 
 
+void XLinkWrapper::setWatchdogUpdateFunction(std::function<void(void)> func){
+   wdUpdateFunction = func;
+}
 
 XLinkWrapper::XLinkWrapper(
     bool be_verbose
@@ -402,7 +404,7 @@ uint32_t XLinkWrapper::openReadAndCloseStream(
             memcpy(&stl_container[0], packet->data, packet->length);
 
             result = packet->length;
-            Device::wdog_keepalive();
+            wdUpdateFunction();
             // release data
             status = XLinkReleaseData(stream_id);
             if (status != X_LINK_SUCCESS)
@@ -460,7 +462,7 @@ uint32_t XLinkWrapper::openReadAndCloseStream(
             uint32_t copy_sz = std::min(buffer_size, packet->length);
             memcpy(buffer, packet->data, copy_sz);
             result = copy_sz;
-            Device::wdog_keepalive();
+            wdUpdateFunction();
             // release data
             status = XLinkReleaseData(stream_id);
             if (status != X_LINK_SUCCESS)
@@ -694,9 +696,7 @@ bool XLinkWrapper::writeToStream(
 #if defined(__PC__) || 0 // Set to 0 if too verbose on device...
         printf("!!! XLink write successful: %s (%d)\n", stream.name, int(write_data_size));
 #endif
-
-    Device::wdog_keepalive();
-
+        wdUpdateFunction();
     }
 
     return status == X_LINK_SUCCESS;
@@ -798,7 +798,7 @@ void XLinkWrapper::openAndReadDataThreadFunc(
                 //     printf ("Stream id #%d | Name %10s | Packet size: %8u | No.: %4u\n",
                 //             stream_id, stream_info.name, packet->length, packet_counter);
                 // }
-                Device::wdog_keepalive();
+                wdUpdateFunction();
                 notifyObservers(stream_info, data);
 
                 packet_counter += 1;

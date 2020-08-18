@@ -16,8 +16,11 @@
 #define MONO_RES_AUTO  (-2)
 #define MONO_MAX_W  1280
 #define MONO_MAX_H   800
-#define MONO_MAX_SIZE(n_planes, elem_size) \
-    (MONO_MAX_W * MONO_MAX_H * (n_planes) * (elem_size) + sizeof(FrameMetadata))
+
+
+constexpr int MONO_MAX_SIZE(int n_planes, int elem_size) {
+   return (MONO_MAX_W * MONO_MAX_H * (n_planes) * (elem_size) + sizeof(FrameMetadata));
+}
 
 // TODO: remove next constant
 std::unordered_map<std::string, StreamInfo> g_streams_pc_to_myriad =
