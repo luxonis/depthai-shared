@@ -1,0 +1,8 @@
+{
+    "$id": "https://lpb.luxonis.com/schema/Datatype.schema.json",
+    "$schema": "http://json-schema.org/draft-07/schema#",
+    "title": "Data types for IO",
+    "description": "Enum specifying available datatypes",
+    "type": "string",
+    "enum": ["RawBuffer", "ImgFrame", "NNTensor"]
+}

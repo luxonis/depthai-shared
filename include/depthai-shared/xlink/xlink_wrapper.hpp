@@ -9,7 +9,7 @@
 
 // #include <boost/thread/shared_mutex.hpp>
 
-#include <XLinkPublicDefines.h>
+//#include <XLinkPublicDefines.h>
 
 #include "depthai-shared/stream/stream_info.hpp"
 #include "depthai-shared/general/data_observer.hpp"

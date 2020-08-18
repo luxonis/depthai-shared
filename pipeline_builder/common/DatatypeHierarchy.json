@@ -1,0 +1,25 @@
+{
+    "hierarchies": [
+        {
+            "datatype": "PoBuf",
+            "children": [
+                {
+                    "datatype": "ImgFrame"
+                },
+                {
+                    "datatype": "NNDetection"
+                }
+            ]
+        },
+        {
+            "datatype": "Message",
+            "children": [
+                {
+                    "datatype": "CmdMessage"
+                }
+            ]    
+        }
+    ]   
+}
+
+  

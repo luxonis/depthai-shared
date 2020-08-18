@@ -1,0 +1,42 @@
+{
+    "$id": "https://lpb.luxonis.com/schema/Pipeline.schema.json",
+    "$schema": "http://json-schema.org/draft-07/schema#",
+    "title": "Pipeline schema",
+    "description": "Specifies whole pipeline, nodes, properties and connections between nodes IOs",
+    "type": "object",
+    "required": ["nodes", "globalProperties", "connections"],
+    "definitions": {
+        "NodeObjInfo": {
+            "type": "object",
+            "required": ["name", "id"],
+            "properties": {
+                "name": {
+                    "type": "string"
+                },
+                "id": {
+                    "$ref": "NodeId.schema.json"
+                },
+                "properties": {
+                    
+                }
+            }
+        }
+    },
+    "properties": {
+        "globalProperties": {
+            "$ref": "../global/Global.properties.schema.json"
+        },
+        "nodes": {
+            "type": "array",
+            "items": {
+                "$ref": "#/definitions/NodeObjInfo"
+            }
+        },
+        "connections": {
+            "type": "array",
+            "items": {
+                "$ref": "NodeConnection.schema.json"
+            }
+        }
+    }
+}

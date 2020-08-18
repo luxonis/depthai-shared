@@ -1,0 +1,32 @@
+{
+    "$id": "https://lpb.luxonis.com/schema/Global.properties.schema.json",
+    "$schema": "http://json-schema.org/draft-07/schema#",
+    "title": "Global Properties",
+    "description": "Specify properties which apply for whole pipeline",
+    "required": [ "leonOsFrequencyKhz", "leonRtFrequencyKhz" ],
+    "type": "object",
+    "properties": {
+        "pipelineVersion": {
+            "type": "string"
+        },
+        "pipelineName": { 
+            "type": "string"
+        },
+        "leonOsFrequencyKhz": {
+            "title": "Leon OS frequency [kHz]",
+            "description": "Set frequency of Leon OS - Incresing can improve performance, at the cost of higher power draw",
+            "type": "number",
+            "minimum": 1000,
+            "maximum": 700000,
+            "default": 600000
+        },
+        "leonRtFrequencyKhz": {
+            "title": "Leon RT frequency [kHz]",
+            "type": "number",
+            "minimum": 1000,
+            "maximum": 700000,
+            "default": 600000,
+            "description": "Set frequency of Leon RT - Incresing can improve performance, at the cost of higher power draw"
+        }
+    }
+}

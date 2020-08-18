@@ -1,0 +1,18 @@
+{
+	"name": "XLinkOut",
+    "description": "XLinkIn transfers data from input to host",   
+    "category": "IO",
+    "properties": "XLinkOut.properties.schema.json",
+    "inputs": [
+        {
+            "name": "in",
+            "type": "sreceiver",
+            "acceptedDatatypes": [
+                {
+                    "datatype": "PoBuf",
+                    "descendants": true
+                }
+            ]
+        }
+    ]
+}

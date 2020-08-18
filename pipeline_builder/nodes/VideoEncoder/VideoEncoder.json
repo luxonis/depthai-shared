@@ -1,0 +1,27 @@
+{
+	"name": "VideoEncoder",
+    "description": "Input a NV12 frames and outputs H264, H265 or MJPEG compressed bitstream",
+    "properties": "VideoEncoder.properties.schema.json",
+    "inputs": [
+        {
+            "name": "in",
+            "type": "sreceiver",
+            "acceptedDatatypes": [
+                {
+                    "datatype": "ImgFrame"
+                }
+            ]
+        }
+    ],
+    "outputs": [
+        {
+            "name": "bitstream",
+            "type": "msender",
+            "possibleDatatypes": [
+                {
+                    "datatype": "ImgFrame"
+                }
+            ]
+        }
+    ]
+}

@@ -1,0 +1,27 @@
+{
+  "$id": "https://lpb.luxonis.com/schema/NeuralNetwork.properties.schema.json",
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "NeuralNetworkProperties",
+  "description": "Specify NeuralNetwork options such as blob path, ...",
+  "required": [ "blobUri" ],
+  "type": "object",
+  "properties": {
+    "blobUri": {
+      "title": "Blob Uri",
+      "description": "Uri which points to blob",
+      "type":"string"
+    },
+    "blobSize":{
+      "title": "Blob Size",
+      "description": "Blob binary size in bytes",
+      "type": "integer",
+      "minimum": 0
+    },
+    "numFrames":{
+      "title": "Number of frames",
+      "description": "Number of available output tensors in pool",
+      "type": "integer",
+      "minimum": 0
+    }
+  }
+}

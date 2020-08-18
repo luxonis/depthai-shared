@@ -1,0 +1,34 @@
+{
+	"name": "ColorCamera",
+    "description": "Ouputs video, preview and still streams off selected camera",
+    "properties": "ColorCamera.properties.schema.json",
+    "outputs": [
+        {
+            "name": "video",
+            "type": "msender",
+            "possibleDatatypes": [
+                {
+                    "datatype": "ImgFrame"
+                }
+            ]
+        },
+        {
+            "name": "still",
+            "type": "msender",
+            "possibleDatatypes": [
+                {
+                    "datatype": "ImgFrame"
+                }
+            ]
+        },
+        {
+            "name": "preview",
+            "type": "msender",
+            "possibleDatatypes": [
+                {
+                    "datatype": "ImgFrame"
+                }
+            ]
+        }
+    ]
+}
