@@ -12,9 +12,10 @@ extern "C" int usb_loglevel; //usb log level in xlink
 #include "depthai-shared/timer.hpp"
 #include "depthai-shared/xlink/xlink_wrapper.hpp"
 
-// FIXME use some header
-extern "C" void wdog_keepalive(void);
 
+void XLinkWrapper::setWatchdogUpdateFunction(std::function<void(void)> func){
+   wdUpdateFunction = func;
+}
 
 XLinkWrapper::XLinkWrapper(
     bool be_verbose
@@ -129,6 +130,7 @@ bool XLinkWrapper::initFromHostSide(
                         printf(" on port %s", usb_device.c_str());
                     printf("... %.3fs ", tdiff.count());
                     fflush(stdout);
+                    std::this_thread::sleep_for(std::chrono::milliseconds(100));
                 } else {
                     if (print_found)
                         printf("[FOUND]\n");
@@ -270,6 +272,7 @@ bool XLinkWrapper::initFromHostSide(
                         printf(" on port %s", usb_device.c_str());
                     printf("... %.3fs ", tdiff.count());
                     fflush(stdout);
+                    std::this_thread::sleep_for(std::chrono::milliseconds(100));
                 } else {
                     if (print_found)
                         printf("[FOUND]\n");
@@ -401,7 +404,7 @@ uint32_t XLinkWrapper::openReadAndCloseStream(
             memcpy(&stl_container[0], packet->data, packet->length);
 
             result = packet->length;
-            wdog_keepalive();
+            wdUpdateFunction();
             // release data
             status = XLinkReleaseData(stream_id);
             if (status != X_LINK_SUCCESS)
@@ -459,7 +462,7 @@ uint32_t XLinkWrapper::openReadAndCloseStream(
             uint32_t copy_sz = std::min(buffer_size, packet->length);
             memcpy(buffer, packet->data, copy_sz);
             result = copy_sz;
-            wdog_keepalive();
+            wdUpdateFunction();
             // release data
             status = XLinkReleaseData(stream_id);
             if (status != X_LINK_SUCCESS)
@@ -693,9 +696,7 @@ bool XLinkWrapper::writeToStream(
 #if defined(__PC__) || 0 // Set to 0 if too verbose on device...
         printf("!!! XLink write successful: %s (%d)\n", stream.name, int(write_data_size));
 #endif
-
-    wdog_keepalive();
-
+        wdUpdateFunction();
     }
 
     return status == X_LINK_SUCCESS;
@@ -797,7 +798,7 @@ void XLinkWrapper::openAndReadDataThreadFunc(
                 //     printf ("Stream id #%d | Name %10s | Packet size: %8u | No.: %4u\n",
                 //             stream_id, stream_info.name, packet->length, packet_counter);
                 // }
-                wdog_keepalive();
+                wdUpdateFunction();
                 notifyObservers(stream_info, data);
 
                 packet_counter += 1;

@@ -44,6 +44,8 @@ public:
     XLinkWrapper(bool be_verbose);
     virtual ~XLinkWrapper();
 
+    void setWatchdogUpdateFunction(std::function<void(void)> func);
+
 #ifdef __PC__
     bool initFromHostSide   (
         XLinkGlobalHandler_t* global_handler,
@@ -93,7 +95,7 @@ private:
     void onNewData(const StreamInfo &stream_info, const StreamData &data) override;
     void closeAllObserverStreams();
 
-
+    std::function<void(void)> wdUpdateFunction;
     const int              c_stream_open_tries = 5;
     const unsigned         c_stream_write_timeout_ms = 5000;
     const unsigned         c_stream_write_wait_ms = 1;
