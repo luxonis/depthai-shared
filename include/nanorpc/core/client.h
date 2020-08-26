@@ -112,7 +112,7 @@ private:
             if (!value_ && !deserializer_)
                 throw exception::client{"[nanorpc::core::client::result::as] No data."};
 
-            using Type = std::decay_t<T>;
+            using Type = typename std::decay<T>::type;
 
             if (!value_)
             {
