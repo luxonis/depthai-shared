@@ -8,9 +8,8 @@
 namespace nanorpc::core
 {
 
-// Portable 64 bit string hasher
-inline constexpr std::int64_t hash(const std::string& str) {
-	std::int64_t h = 1125899906842597L; // prime
+type::id hash_id(const std::string& str) {
+	type::id h = 1125899906842597L; // prime
 	for(const auto& c : str) h = 31 * h + c;
 	return h;
 }

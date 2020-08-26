@@ -45,7 +45,7 @@ public:
     template <typename ... TArgs>
     result call(std::string name, TArgs && ... args)
     {
-        return call(hash(name), std::forward<TArgs>(args) ... );
+        return call(hash_id(name), std::forward<TArgs>(args) ... );
     }
 
     template <typename ... TArgs>

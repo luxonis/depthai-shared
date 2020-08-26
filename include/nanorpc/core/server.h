@@ -42,7 +42,7 @@ public:
     template <typename TFunc>
     void handle(std::string name, TFunc func)
     {
-        handle(hash(name), std::move(func));
+        handle(hash_id(name), std::move(func));
     }
 
     template <typename TFunc>
