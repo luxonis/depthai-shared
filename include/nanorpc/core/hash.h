@@ -8,7 +8,7 @@
 namespace nanorpc::core
 {
 
-type::id hash_id(const std::string& str) {
+inline type::id hash_id(const std::string& str) {
 	type::id h = 1125899906842597L; // prime
 	for(const auto& c : str) h = 31 * h + c;
 	return h;

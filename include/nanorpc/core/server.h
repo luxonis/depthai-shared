@@ -25,6 +25,7 @@
 #include "nanorpc/core/detail/pack_meta.h"
 #include "nanorpc/core/exception.h"
 #include "nanorpc/core/type.h"
+#include "nanorpc/core/hash.h"
 #include "nanorpc/version/core.h"
 
 
