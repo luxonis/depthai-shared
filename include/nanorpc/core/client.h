@@ -23,7 +23,9 @@
 #include "nanorpc/core/detail/pack_meta.h"
 #include "nanorpc/core/exception.h"
 #include "nanorpc/core/type.h"
+#include "nanorpc/core/hash.h"
 #include "nanorpc/version/core.h"
+
 
 namespace nanorpc::core
 {
@@ -43,7 +45,7 @@ public:
     template <typename ... TArgs>
     result call(std::string name, TArgs && ... args)
     {
-        return call(std::hash<std::string>{}(name), std::forward<TArgs>(args) ... );
+        return call(hash(name), std::forward<TArgs>(args) ... );
     }
 
     template <typename ... TArgs>
