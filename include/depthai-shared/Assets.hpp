@@ -18,7 +18,7 @@ class Asset {
     std::uint32_t size;
     std::uint32_t alignment = 1;
 public:
-    Asset(std::uint8_t* d, std::uint32_t s, std::uint32_t a = 1) : data(data), size(s), alignment(a){}
+    Asset(std::uint8_t* d, std::uint32_t s, std::uint32_t a = 1) : data(d), size(s), alignment(a){}
     std::uint8_t* getData(){return data;}
     std::uint32_t getSize(){return size;}
     std::uint32_t getAlignment(){return alignment;}
@@ -68,7 +68,7 @@ public:
         // make sure that key doesn't exist already
         if(map.count(key) > 0) throw std::logic_error("An Asset with the key: " + key + " already exists.");
         
-        // calculate additional bytes neede to offset to alignment
+        // calculate additional bytes needed to offset to alignment
         int toAdd = 0;
         if(a.getAlignment() > 1 && storage.size() % a.getAlignment() != 0){
             toAdd = a.getAlignment() - (storage.size() % a.getAlignment()); 
@@ -77,11 +77,11 @@ public:
         // calculate offset
         std::uint32_t offset = storage.size() + toAdd;
 
-        // resize to accomodate for extra asset
-        storage.resize(storage.size() + toAdd + a.getSize());
+        // Add alignment bytes
+        storage.resize(storage.size() + toAdd);
 
         // copy data
-        storage.insert(storage.begin() + offset, a.getData(), a.getData() + a.getSize());
+        storage.insert(storage.end(), a.getData(), a.getData() + a.getSize());
 
         // Add to map the currently added asset
         AssetInternal internal;
