@@ -8,10 +8,10 @@
 #include <XLinkPublicDefines.h>
 
 // project
-#include <DatatypeEnum.hpp>
-#include <RawBuffer.hpp>
-#include <ImgFrame.h>
-#include <NNTensor.hpp>
+#include "depthai-shared/datatype/DatatypeEnum.hpp"
+#include "depthai-shared/datatype/RawBuffer.hpp"
+#include "depthai-shared/datatype/ImgFrame.hpp"
+#include "depthai-shared/datatype/NNTensor.hpp"
 
 
 // StreamPacket structure ->  || imgframepixels... , serialized_object, object_type, serialized_object_size ||
@@ -22,22 +22,22 @@ namespace dai
     
 
     // Reads int from little endian format
-    int readIntLE(uint8_t* data){
+    inline int readIntLE(uint8_t* data){
         return data[0] + data[1] * 256 + data[2] * 256*256 + data[3] * 256*256*256;
     }
 
     template<class T>
-    std::shared_ptr<T> parseDatatype(nlohmann::json& ser, std::vector<uint8_t> data){
-        T tmp;
-        nlohmann::json::from_json(ser, tmp);
-        tmp.data = data;
+    inline std::shared_ptr<T> parseDatatype(nlohmann::json& ser, std::vector<uint8_t> data){
+        auto tmp = std::make_shared<T>();
+        nlohmann::from_json(ser, *tmp);
+        tmp->data = data;
         return tmp;
     }
 
-    std::shared_ptr<RawBuffer> parsePacket(streamPacketDesc_t* packet) {
+    inline std::shared_ptr<RawBuffer> parsePacket(streamPacketDesc_t* packet) {
         
         int serializedObjectSize = readIntLE(packet->data + packet->length - 4);
-        Datatype objectType = (Datatype) readIntLE(packet->data + packet->length - 8);
+        DatatypeEnum objectType = (DatatypeEnum) readIntLE(packet->data + packet->length - 8);
         
         if(serializedObjectSize < 0){
             throw std::runtime_error("Bad packet, couldn't parse");
@@ -45,23 +45,27 @@ namespace dai
         int bufferLength = packet->length - 8 - serializedObjectSize;
         auto msgpackStart = packet->data + bufferLength;
 
-        nlohmann::json j = nlohmann::json::from_msgpack(msgpackStart, msgpackStart + serializedObjectSize);
+        nlohmann::json jser = nlohmann::json::from_msgpack(msgpackStart, msgpackStart + serializedObjectSize);
 
         // copy data part
         std::vector<uint8_t> data(packet->data, packet->data + bufferLength);
 
+        // RawBuffer is special case, no metadata is actually serialized
+        if(objectType == DatatypeEnum::RawBuffer){
+            auto pBuf = std::make_shared<RawBuffer>();
+            pBuf->data = data;
+            return pBuf;
+        }
+
         switch (objectType)
         {
-        case DatatypeEnum::RawBuffer :
-            return parseDatatype<RawBuffer>(ser, data);
-            break;
-        
+       
         case DatatypeEnum::ImgFrame : 
-            return parseDatatype<ImgFrame>(ser, data);
+            return parseDatatype<ImgFrame>(jser, data);
             break;
 
         case DatatypeEnum::NNTensor : 
-            return parseDatatype<NNTensor>(ser, data);
+            return parseDatatype<NNTensor>(jser, data);
             break;
 
         default:
