@@ -50,8 +50,15 @@ struct NNTensor : public RawBuffer {
     // NNTensor data is in PoBuf
     std::vector<TensorInfo> tensors;
     unsigned int batchSize;
+    
+    virtual void serialize(std::vector<std::uint8_t>& metadata, DatatypeEnum& datatype){
+        nlohmann::json j = *this;
+        metadata = nlohmann::json::to_msgpack(j);
+        datatype = DatatypeEnum::NNTensor;
+    };
 
-    NLOHMANN_DEFINE_TYPE_INTRUSIVE(NNTensor, tensors);
+
+    NLOHMANN_DEFINE_TYPE_INTRUSIVE(NNTensor, tensors, batchSize);
 };
 
 

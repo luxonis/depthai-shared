@@ -64,6 +64,12 @@ struct ImgFrame : public RawBuffer {
     int         sequenceNum;    // increments for each frame    
     Timestamp   ts;       // generation timestamp
 
+    virtual void serialize(std::vector<std::uint8_t>& metadata, DatatypeEnum& datatype){
+        nlohmann::json j = *this;
+        metadata = nlohmann::json::to_msgpack(j);
+        datatype = DatatypeEnum::ImgFrame;
+    };
+
     NLOHMANN_DEFINE_TYPE_INTRUSIVE(ImgFrame, fb, category, instanceNum, sequenceNum, ts);
 };
 
