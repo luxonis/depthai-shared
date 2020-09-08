@@ -19,9 +19,9 @@ class Asset {
     std::uint32_t alignment = 1;
 public:
     Asset(std::uint8_t* d, std::uint32_t s, std::uint32_t a = 1) : data(d), size(s), alignment(a){}
-    std::uint8_t* getData(){return data;}
-    std::uint32_t getSize(){return size;}
-    std::uint32_t getAlignment(){return alignment;}
+    std::uint8_t* getData() const {return data;}
+    std::uint32_t getSize() const {return size;}
+    std::uint32_t getAlignment() const {return alignment;}
 
 };
 
@@ -52,6 +52,14 @@ public:
     Asset get(std::string key){
         AssetInternal internal = map.at(key);
         return Asset(pStorageStart + internal.offset, internal.size, internal.alignment);
+    }
+
+    std::vector< std::pair<std::string, Asset>> getAll(){
+        std::vector< std::pair<std::string, Asset>> allAssets;
+        for(const auto& kv : map){
+            allAssets.push_back( {kv.first, get(kv.first)} );
+        }
+        return allAssets;
     }
 
     NLOHMANN_DEFINE_TYPE_INTRUSIVE(Assets, map);
