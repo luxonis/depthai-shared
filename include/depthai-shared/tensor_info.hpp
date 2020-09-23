@@ -34,7 +34,28 @@ const std::map<TensorDataType, std::string> type_to_string = {
     {TensorDataType::_i8,       "int8"},
 };
 
+enum dimension : int32_t
+{   
+    W = 1,
+    H = 2,
+    C = 3, 
+    N = 4,
+    B = N,
+    WIDTH = W,
+    HEIGHT = H,
+    CHANNEL = C,
+    NUMBER = N,
+    BATCH = N,
+};
 
+const std::map<dimension, std::string> dimension_to_string = {
+    {dimension::W,     "Width"},
+    {dimension::H,     "Height"},
+    {dimension::C,     "Channel"},
+    {dimension::N,     "Batch"},
+};
+
+using ShapeType = uint32_t;
 
 struct TensorInfo
 {
@@ -48,9 +69,9 @@ struct TensorInfo
 
     std::string tensor_name;
 
-    std::vector<uint32_t> order;
-    std::vector<uint32_t> tensor_dimensions;
-    std::vector<uint32_t> tensor_strides;
+    std::vector<dimension> order;
+    std::vector<ShapeType> tensor_dimensions;
+    std::vector<ShapeType> tensor_strides;
 
     TensorDataType tensor_data_type;
     size_t tensor_offset;
@@ -60,26 +81,39 @@ struct TensorInfo
     nlohmann::json serialize()
     {
         nlohmann::json tensor_info;
-        tensor_info["name"] = tensor_name;
-        tensor_info["shape"]["data_type"] = tensor_data_type;
-        tensor_info["offset"] = tensor_offset;
-        tensor_info["idx"] = tensor_idx;
-        tensor_info["shape"]["order"] = order;
-        tensor_info["shape"]["dimensions"] = tensor_dimensions;
-        tensor_info["shape"]["strides"] = tensor_strides;
+        SET_JSON(tensor_name,       tensor_info["name"]);
+        SET_JSON(tensor_offset,     tensor_info["offset"]);
+        SET_JSON(tensor_idx,        tensor_info["idx"]);
+
+        SET_JSON(tensor_data_type,  tensor_info["shape"]["data_type"]);
+        SET_JSON(order,             tensor_info["shape"]["order"]);
+        SET_JSON(tensor_dimensions, tensor_info["shape"]["dimensions"]);
+        SET_JSON(tensor_strides,    tensor_info["shape"]["strides"]);
         return tensor_info;
+    }
+
+    ShapeType get_dimension(dimension dim)
+    {
+        unsigned int i = 0;
+        for(i = 0; i < order.size(); i++)
+        {
+            if(order[i] == dim) break;
+        }
+        if(i == order.size()) assert(0);
+        return tensor_dimensions[i];
     }
 
     private:
     void deserialize(nlohmann::json tensor_info)
     {
-        tensor_name = tensor_info["name"];
-        tensor_data_type = tensor_info["shape"]["data_type"];
-        tensor_offset = tensor_info["offset"];
-        tensor_idx = tensor_info["idx"];
-        order = tensor_info["shape"]["order"].get<std::vector<uint32_t>>();
-        tensor_dimensions = tensor_info["shape"]["dimensions"].get<std::vector<uint32_t>>();
-        tensor_strides = tensor_info["shape"]["strides"].get<std::vector<uint32_t>>();
+        GET_JSON(tensor_name,       tensor_info["name"]);
+        GET_JSON(tensor_offset,     tensor_info["offset"]);
+        GET_JSON(tensor_idx,        tensor_info["idx"]);
+
+        GET_JSON(tensor_data_type,  tensor_info["shape"]["data_type"]);
+        GET_JSON(order,             tensor_info["shape"]["order"]);
+        GET_JSON(tensor_dimensions, tensor_info["shape"]["dimensions"]);
+        GET_JSON(tensor_strides,    tensor_info["shape"]["strides"]);
     }
 };
 
@@ -92,16 +126,16 @@ inline std::ostream &operator<<(std::ostream &os, TensorInfo const &t_info)
     os << "Offset: " << t_info.tensor_offset << " " << ((t_info.tensor_offset <= 1) ? "byte" : " bytes") << std::endl;
     os << "Dimensions: ";
     os << "[";
-    for (int idx = 0; idx < t_info.tensor_dimensions.size(); idx++)
+    for (unsigned int idx = 0; idx < t_info.tensor_dimensions.size(); idx++)
     {
         auto dimension = t_info.tensor_dimensions[idx];
         if (idx == t_info.tensor_dimensions.size() - 1)
         {
-            os << dimension << "]" << std::endl;
+            os << dimension_to_string.at(t_info.order[idx]) << " : " << dimension << "]" << std::endl;
         }
         else
         {
-            os << dimension << ", ";
+            os << dimension_to_string.at(t_info.order[idx]) << " : " << dimension << ", ";
         }
     }
     return os;
