@@ -30,12 +30,3 @@ struct nn_to_depth_bbox_map
     uint16_t max_height;
 };
 
-
-typedef enum TensorDataType : int32_t
-{
-    _fp16 = 0,                  ///< Half precision floating point
-    _u8f  = 1,                  ///< Unsigned byte
-    _int  = 2,                  ///< Signed integer (4 byte)
-    _fp32 = 3,                  ///< Single precision floating point
-    _i8   = 4,                  ///< Signed byte
-} TensorDataType;
