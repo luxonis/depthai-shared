@@ -13,16 +13,19 @@ namespace dai
 {
 
 // This class represent a single asset
-class Asset {
+struct AssetView {
     std::uint8_t* data;
     std::uint32_t size;
     std::uint32_t alignment = 1;
+    AssetView(std::uint8_t* d, std::uint32_t s, std::uint32_t a = 1) : data(d), size(s), alignment(a){}
+
+    /*
 public:
-    Asset(std::uint8_t* d, std::uint32_t s, std::uint32_t a = 1) : data(d), size(s), alignment(a){}
+    AssetView(std::uint8_t* d, std::uint32_t s, std::uint32_t a = 1) : data(d), size(s), alignment(a){}
     std::uint8_t* getData() const {return data;}
     std::uint32_t getSize() const {return size;}
     std::uint32_t getAlignment() const {return alignment;}
-
+*/
 };
 
 
@@ -49,13 +52,13 @@ public:
         return (map.count(key) > 0);
     }
 
-    Asset get(std::string key){
+    AssetView get(std::string key){
         AssetInternal internal = map.at(key);
-        return Asset(pStorageStart + internal.offset, internal.size, internal.alignment);
+        return AssetView(pStorageStart + internal.offset, internal.size, internal.alignment);
     }
 
-    std::vector< std::pair<std::string, Asset>> getAll(){
-        std::vector< std::pair<std::string, Asset>> allAssets;
+    std::vector< std::pair<std::string, AssetView>> getAll(){
+        std::vector< std::pair<std::string, AssetView>> allAssets;
         for(const auto& kv : map){
             allAssets.push_back( {kv.first, get(kv.first)} );
         }
@@ -65,50 +68,6 @@ public:
     NLOHMANN_DEFINE_TYPE_INTRUSIVE(Assets, map);
 
 };
-
-// Subclass which has its own storage
-class AssetManager : public Assets {
-    std::vector<std::uint8_t> storage;
-public: 
-
-    // copy the contents pointed to by Asset 'a' to storage, with alignment a.alignment
-    void add(std::string key, Asset a){
-        // make sure that key doesn't exist already
-        if(map.count(key) > 0) throw std::logic_error("An Asset with the key: " + key + " already exists.");
-        
-        // calculate additional bytes needed to offset to alignment
-        int toAdd = 0;
-        if(a.getAlignment() > 1 && storage.size() % a.getAlignment() != 0){
-            toAdd = a.getAlignment() - (storage.size() % a.getAlignment()); 
-        }
-
-        // calculate offset
-        std::uint32_t offset = storage.size() + toAdd;
-
-        // Add alignment bytes
-        storage.resize(storage.size() + toAdd);
-
-        // copy data
-        storage.insert(storage.end(), a.getData(), a.getData() + a.getSize());
-
-        // Add to map the currently added asset
-        AssetInternal internal;
-        internal.offset = offset;
-        internal.size = a.getSize();
-        internal.alignment = a.getAlignment();
-        map[key] = internal;
-
-    }
-
-    std::vector<std::uint8_t> serialize(){
-        return storage;
-    }
-};
-
-
-
-
-
 
 
 } // namespace dai

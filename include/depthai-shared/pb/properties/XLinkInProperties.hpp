@@ -10,15 +10,8 @@
 #pragma once
 
 #include <nlohmann/json.hpp>
-#include "helper.hpp"
 
 namespace dai {
-namespace gen {
-    /**
-     * Properties for XLinkIn which define stream name
-     */
-
-    using nlohmann::json;
 
     /**
      * Properties for XLinkIn which define stream name
@@ -26,5 +19,7 @@ namespace gen {
     struct XLinkInProperties {
         std::string streamName;
     };
-}
+
+    NLOHMANN_DEFINE_TYPE_NON_INTRUSIVE(XLinkInProperties, streamName)
+    
 }

@@ -10,15 +10,8 @@
 #pragma once
 
 #include <nlohmann/json.hpp>
-#include "helper.hpp"
 
 namespace dai {
-namespace gen {
-    /**
-     * Properties for XLinkOut which define stream name
-     */
-
-    using nlohmann::json;
 
     /**
      * Properties for XLinkOut which define stream name
@@ -27,8 +20,10 @@ namespace gen {
         /**
          * Set a limit to how many packets will be sent further to host
          */
-        double maxFpsLimit;
+        float maxFpsLimit;
         std::string streamName;
     };
-}
+
+    NLOHMANN_DEFINE_TYPE_NON_INTRUSIVE(XLinkOutProperties, maxFpsLimit, streamName)
+
 }

@@ -10,24 +10,12 @@
 #pragma once
 
 #include <nlohmann/json.hpp>
-#include "helper.hpp"
 
-#include "GlobalProperties.hpp"
-
-namespace dai {
-namespace gen {
-    struct NodeConnectionSchema;
-    struct NodeObjInfo;
-}
-}
+#include "NodeConnectionSchema.hpp"
+#include "NodeObjInfo.hpp"
+#include "properties/GlobalProperties.hpp"
 
 namespace dai {
-namespace gen {
-    /**
-     * Specifies whole pipeline, nodes, properties and connections between nodes IOs
-     */
-
-    using nlohmann::json;
 
     /**
      * Specifies whole pipeline, nodes, properties and connections between nodes IOs
@@ -37,5 +25,7 @@ namespace gen {
         GlobalProperties globalProperties;
         std::vector<NodeObjInfo> nodes;
     };
-}
+
+    NLOHMANN_DEFINE_TYPE_NON_INTRUSIVE(PipelineSchema, connections, globalProperties, nodes)
+
 }
