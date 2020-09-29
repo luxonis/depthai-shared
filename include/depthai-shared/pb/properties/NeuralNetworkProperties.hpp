@@ -13,7 +13,7 @@ namespace dai {
         /**
          * Blob binary size in bytes
          */
-        tl::optional<int64_t> blobSize;
+        tl::optional<uint32_t> blobSize;
         /**
          * Uri which points to blob
          */
@@ -21,7 +21,7 @@ namespace dai {
         /**
          * Number of available output tensors in pool
          */
-        tl::optional<int32_t> numFrames;
+        std::uint32_t numFrames = 8;
     };
 
     NLOHMANN_DEFINE_TYPE_NON_INTRUSIVE(NeuralNetworkProperties, blobSize, blobUri, numFrames)
