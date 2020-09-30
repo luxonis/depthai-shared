@@ -13,7 +13,7 @@ namespace dai {
         /**
          * Blob binary size in bytes
          */
-        tl::optional<uint32_t> blobSize;
+        tl::optional<std::uint32_t> blobSize;
         /**
          * Uri which points to blob
          */
