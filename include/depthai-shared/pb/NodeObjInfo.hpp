@@ -5,7 +5,7 @@
 namespace dai {
     
     struct NodeObjInfo {
-        int64_t id;
+        int64_t id = -1;
         std::string name;
         nlohmann::json properties;
     };

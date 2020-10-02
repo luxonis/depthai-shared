@@ -48,19 +48,19 @@ public:
         pStorageStart = ps;
     }
 
-    bool has(std::string key){
+    bool has(const std::string& key){
         return (map.count(key) > 0);
     }
 
-    AssetView get(std::string key){
+    AssetView get(const std::string& key){
         AssetInternal internal = map.at(key);
-        return AssetView(pStorageStart + internal.offset, internal.size, internal.alignment);
+        return {pStorageStart + internal.offset, internal.size, internal.alignment};
     }
 
     std::vector< std::pair<std::string, AssetView>> getAll(){
         std::vector< std::pair<std::string, AssetView>> allAssets;
         for(const auto& kv : map){
-            allAssets.push_back( {kv.first, get(kv.first)} );
+            allAssets.emplace_back(kv.first, get(kv.first));
         }
         return allAssets;
     }

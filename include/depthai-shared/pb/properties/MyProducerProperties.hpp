@@ -18,7 +18,7 @@ namespace dai {
         /**
          * On which processor the node will be placed
          */
-        ProcessorType processorPlacement;
+        ProcessorType processorPlacement = ProcessorType::LOS;
     };
 
     NLOHMANN_DEFINE_TYPE_NON_INTRUSIVE(MyProducerProperties, message, processorPlacement)
