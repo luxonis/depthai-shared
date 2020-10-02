@@ -2,11 +2,12 @@
 
 #include <unordered_map>
 #include <vector>
+#include <cstdint>
 
 namespace dai
 {
 
-    enum class DatatypeEnum : int32_t {
+    enum class DatatypeEnum : std::int32_t {
         RawBuffer,
         ImgFrame,
         NNTensor
