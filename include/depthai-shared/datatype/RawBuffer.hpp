@@ -8,7 +8,7 @@ namespace dai
 {
     
 struct RawBuffer {
-    virtual ~RawBuffer(){}
+    virtual ~RawBuffer() = default;
     std::vector<uint8_t> data;
 
     virtual void serialize(std::vector<std::uint8_t>& metadata, DatatypeEnum& datatype){

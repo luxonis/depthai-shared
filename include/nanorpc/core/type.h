@@ -16,8 +16,13 @@
 #include <string>
 #include <vector>
 
-namespace nanorpc::core::type
+namespace nanorpc
 {
+namespace core
+{
+namespace type
+{
+
 
 using id = std::int64_t;
 using buffer = std::vector<std::uint8_t>;
@@ -25,7 +30,10 @@ using executor = std::function<buffer (buffer)>;
 using executor_map = std::map<std::string, executor>;
 using error_handler = std::function<void (std::exception_ptr)>;
 
-}   // namespace nanorpc::core::type
 
+}   // namespace type
+}   // namespace core
+}   // namespace nanorpc
+    
 
 #endif  // !__NANO_RPC_CORE_TYPE_H__

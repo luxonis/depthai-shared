@@ -11,7 +11,7 @@ namespace dai {
         /**
          * Set a limit to how many packets will be sent further to host
          */
-        float maxFpsLimit;
+        float maxFpsLimit = -1;
         std::string streamName;
     };
 

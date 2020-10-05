@@ -28,8 +28,13 @@
         NANORPC_EXCEPTION_DECL(class_, base_) \
     }
 
-namespace nanorpc::core::exception
+namespace nanorpc
 {
+namespace core
+{
+namespace exception
+{
+    
 
 NANORPC_EXCEPTION_DECL(nanorpc, std::runtime_error)
 NANORPC_EXCEPTION_DECL(packer, nanorpc)
@@ -71,7 +76,10 @@ inline void default_error_handler(std::exception_ptr e)
     }
 }
 
-}   // namespace nanorpc::core::exception
+
+}   // namespace exception   
+}   // namespace core
+}   // namespace nanorpc
 
 
 #endif  // !__NANO_RPC_CORE_EXCEPTION_H__

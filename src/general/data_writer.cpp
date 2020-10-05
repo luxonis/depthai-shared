@@ -19,7 +19,7 @@ bool DataWriter::init
 {
     _file.open(file_path, std::fstream::out | std::fstream::binary | std::ios_base::app);
     return _file.is_open();
-};
+}
 
 unsigned DataWriter::writeData
 (

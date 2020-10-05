@@ -5,8 +5,11 @@
 #include <cstdint>
 #include <string>
 
-namespace nanorpc::core
+namespace nanorpc
 {
+namespace core
+{
+		
 
 inline type::id hash_id(const std::string& str) {
 	type::id h = 1125899906842597L; // prime
@@ -14,7 +17,9 @@ inline type::id hash_id(const std::string& str) {
 	return h;
 }
 
-}   // namespace nanorpc::core
+
+}	// namespace core
+}	// namespace nanorpc
 
 
 #endif  // !__NANO_RPC_CORE_HASH_H__
