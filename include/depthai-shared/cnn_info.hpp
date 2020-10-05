@@ -4,7 +4,6 @@
 
 
 namespace dai {
-    constexpr int MAX_DETECTIONS = 100;
 struct Detection
 {
     uint32_t label;
@@ -20,6 +19,7 @@ struct Detection
 
 struct Detections
 {
+    constexpr static int MAX_DETECTIONS = 100;
     int detection_count;
     Detection detections[MAX_DETECTIONS];
 };
