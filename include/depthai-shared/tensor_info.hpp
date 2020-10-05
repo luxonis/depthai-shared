@@ -5,7 +5,11 @@
 #include "json_helper.hpp"
 
 
-typedef std::uint16_t float16;
+//create a new dummy type, 2 bytes
+struct float16
+{
+    std::uint16_t _dummy;
+};
 
 namespace dai {
 struct TensorInfo
