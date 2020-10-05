@@ -3,7 +3,9 @@
 #include <cstdint>
 
 
-struct detection_t
+namespace dai {
+    constexpr int MAX_DETECTIONS = 100;
+struct Detection
 {
     uint32_t label;
     float confidence;
@@ -16,11 +18,14 @@ struct detection_t
     float depth_z;
 };
 
-struct detection_out_t
+struct Detections
 {
     int detection_count;
-    detection_t detections[100];
+    Detection detections[MAX_DETECTIONS];
 };
+}
+
+
 
 struct nn_to_depth_bbox_map
 {
