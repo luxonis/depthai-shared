@@ -2,9 +2,8 @@
 
 #include <cstdint>
 
-struct StreamData
-{
-    void*    data;
+struct StreamData {
+    void* data;
     uint32_t size;
     uint32_t packet_number;
 

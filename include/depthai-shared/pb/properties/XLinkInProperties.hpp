@@ -1,32 +1,31 @@
 #pragma once
 
 #include <nlohmann/json.hpp>
+
 #include "depthai-shared/xlink/XLinkConstants.hpp"
 
 namespace dai {
 
+/**
+ * Properties for XLinkIn which define stream name
+ */
+struct XLinkInProperties {
     /**
-     * Properties for XLinkIn which define stream name
+     * Name of stream
      */
-    struct XLinkInProperties {
+    std::string streamName;
 
-        /**
-        * Name of stream
-        */
-        std::string streamName;
+    /**
+     * Maximum input data size
+     */
+    std::uint32_t maxDataSize = dai::XLINK_USB_BUFFER_MAX_SIZE;
 
-        /**
-         * Maximum input data size
-         */
-        std::uint32_t maxDataSize = dai::XLINK_USB_BUFFER_MAX_SIZE;
+    /**
+     * Number of frames in pool
+     */
+    std::uint32_t numFrames = 8;
+};
 
-        /**
-         * Number of frames in pool
-         */
-        std::uint32_t numFrames = 8;
+NLOHMANN_DEFINE_TYPE_NON_INTRUSIVE(XLinkInProperties, streamName)
 
-    };
-
-    NLOHMANN_DEFINE_TYPE_NON_INTRUSIVE(XLinkInProperties, streamName)
-    
-}
+}  // namespace dai

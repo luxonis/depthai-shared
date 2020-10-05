@@ -4,17 +4,17 @@
 
 namespace dai {
 
+/**
+ * Properties for XLinkOut which define stream name
+ */
+struct XLinkOutProperties {
     /**
-     * Properties for XLinkOut which define stream name
+     * Set a limit to how many packets will be sent further to host
      */
-    struct XLinkOutProperties {
-        /**
-         * Set a limit to how many packets will be sent further to host
-         */
-        float maxFpsLimit = -1;
-        std::string streamName;
-    };
+    float maxFpsLimit = -1;
+    std::string streamName;
+};
 
-    NLOHMANN_DEFINE_TYPE_NON_INTRUSIVE(XLinkOutProperties, maxFpsLimit, streamName)
+NLOHMANN_DEFINE_TYPE_NON_INTRUSIVE(XLinkOutProperties, maxFpsLimit, streamName)
 
-}
+}  // namespace dai
