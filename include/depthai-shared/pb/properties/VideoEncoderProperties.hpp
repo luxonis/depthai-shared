@@ -18,24 +18,23 @@ namespace dai {
         /**
          * Encoding profile, H264, H265 or MJPEG
          */
-        enum class VideoEncoderProfile : int { H264_BASELINE, H264_HIGH, H264_MAIN, H265_MAIN, MJPEG };
-
+        enum class Profile : int { H264_BASELINE, H264_HIGH, H264_MAIN, H265_MAIN, MJPEG };
         /**
-         * Specifies prefered bitrate of compressed output bitstream
+         * Specifies prefered bitrate (kb) of compressed output bitstream
          */
-        tl::optional<int32_t> bitrate;
+        std::int32_t bitrate = 8000;
         /**
          * Every x number of frames a keyframe will be inserted
          */
-        tl::optional<int32_t> keyframeFrequency;
+        std::int32_t keyframeFrequency = 30;
         /**
-         * Specifies maximum bitrate of compressed output bitstream
+         * Specifies maximum bitrate (kb) of compressed output bitstream
          */
-        tl::optional<int32_t> maxBitrate;
+        std::int32_t maxBitrate = 8000;
         /**
          * Specifies number of B frames to be inserted
          */
-        tl::optional<int32_t> numBFrames;
+        std::int32_t numBFrames = 0;
         /**
          * This options specifies how many frames are available in this nodes pool (can help if
          * receiver node is slow at consuming
@@ -44,15 +43,15 @@ namespace dai {
         /**
          * Encoding profile, H264, H265 or MJPEG
          */
-        VideoEncoderProfile profile;
+        Profile profile;
         /**
          * Value between 0-100% (approximates quality)
          */
-        tl::optional<int32_t> quality;
+        std::int32_t quality = 80;
         /**
          * Rate control mode specifies if constant or variable bitrate should be used (H264 / H265)
          */
-        tl::optional<RateControlMode> rateCtrlMode;
+        RateControlMode rateCtrlMode = RateControlMode::CBR;
         /**
          * Input and compressed output frame width
          */
