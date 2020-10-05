@@ -39,7 +39,7 @@ namespace dai {
          * This options specifies how many frames are available in this nodes pool (can help if
          * receiver node is slow at consuming
          */
-        tl::optional<int32_t> numFramesPool;
+        std::uint32_t numFramesPool = 4;
         /**
          * Encoding profile, H264, H265 or MJPEG
          */
@@ -55,11 +55,11 @@ namespace dai {
         /**
          * Input and compressed output frame width
          */
-        int32_t width;
+        std::int32_t width;
         /**
          * Input and compressed output frame height
          */
-        int32_t height;
+        std::int32_t height;
     };
 
     NLOHMANN_DEFINE_TYPE_NON_INTRUSIVE(VideoEncoderProperties, bitrate, keyframeFrequency, maxBitrate, numBFrames, numFramesPool, profile, quality, rateCtrlMode, width, height)
