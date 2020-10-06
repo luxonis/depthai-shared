@@ -2,7 +2,6 @@
 
 // standard
 #include <memory>
-#include <type_traits>
 
 // libraries
 #include <XLinkPublicDefines.h>

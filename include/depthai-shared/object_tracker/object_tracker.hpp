@@ -1,6 +1,8 @@
 #pragma once
 
 #include <cstdint>
+#include <string>
+#include <vector>
 
 #ifdef HOST_PYTHON_MODULE
     #include <pybind11/numpy.h>
