@@ -35,14 +35,14 @@ std::vector<int> StreamInfo::getDimensionsForSize(uint32_t req_size) const
                 }
             );
 
-            // there is no unknown dimension
+            // there is no unknown Dimension
             if (unknown_dims == 0)
             {
                 // printf("Sizes: elems_n = %d, req_size = %d, elem_size = %d, dims_mul = %d\n", elems_n, req_size, elem_size, dims_mul);
                 // assert(dims_mul == elems_n);  // TODO: remove this. Issue with previewout from cnn (+256 bytes)
                 return dimensions;
             }
-            // one unknown dimension
+            // one unknown Dimension
             else if (unknown_dims == 1)
             {
                 assert(elems_n % dims_mul == 0);
