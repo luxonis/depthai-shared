@@ -20,7 +20,7 @@
 #define MAX_USB_BUFF (5 * 1024 * 1024)
 
 ///
-/// XLinkWrapper is class that wraps XLinks communication.
+/// XLinkWrapper is class that wraps  XLinks communication.
 /// This class uses two mutexes, so be careful editing the code.
 /// It can be used for both side communication (in/out):
 /// 
@@ -50,6 +50,7 @@ public:
     bool initFromHostSide   (
         XLinkGlobalHandler_t* global_handler,
         XLinkHandler_t* device_handler,
+        std::string& usb_speed,
         const std::string &path_to_mvcmd = "",
         const std::string &usb_device = "",
         bool reboot_device_on_destructor = true
@@ -58,6 +59,7 @@ public:
     bool initFromHostSide(
         XLinkGlobalHandler_t* global_handler,
         XLinkHandler_t* device_handler,
+        std::string& usb_speed,
         uint8_t* binary,
         long binary_size,
         const std::string &usb_device,

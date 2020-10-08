@@ -61,6 +61,7 @@ XLinkWrapper::~XLinkWrapper()
 bool XLinkWrapper::initFromHostSide(
     XLinkGlobalHandler_t* global_handler,
     XLinkHandler_t* device_handler,
+    std::string& usb_speed,
     const std::string &device_cmd_file,
     const std::string &usb_device,
     bool reboot_device_on_destructor
@@ -68,9 +69,11 @@ bool XLinkWrapper::initFromHostSide(
 {
     _reboot_device_on_destructor = reboot_device_on_destructor;
 
+    char speed[18] = { 0 };
     assert(_device_link_id == -1);
     usb_loglevel = 1;
-  
+    // char speed[15] = { 0 };
+
     bool result = false;
     do
     {
@@ -144,7 +147,7 @@ bool XLinkWrapper::initFromHostSide(
             }
 
             printf("Sending device firmware \"cmd_file\": %s\n", device_cmd_file.c_str());
-            rc = XLinkBoot(&deviceDesc, device_cmd_file.c_str());
+            rc = XLinkBoot(&deviceDesc, device_cmd_file.c_str(), speed);
             if (rc != X_LINK_SUCCESS) {
                 printf("Failed to boot the device: %s, err code %d\n", deviceDesc.name, rc);
                 break;
@@ -153,7 +156,9 @@ bool XLinkWrapper::initFromHostSide(
             // Development option, the firmware is loaded via JTAG
             printf("Device boot is skipped. (\"cmd_file\" NOT SPECIFIED !)\n");
         }
+        usb_speed = std::string(speed);
 
+        std::cout << "found speed ehre too : " << usb_speed << std::endl;
         if (!usb_device.empty())
             snprintf(in_deviceDesc.name, sizeof in_deviceDesc.name,
                     "%s-", usb_device.c_str());
@@ -203,6 +208,7 @@ bool XLinkWrapper::initFromHostSide(
 bool XLinkWrapper::initFromHostSide(
     XLinkGlobalHandler_t* global_handler,
     XLinkHandler_t* device_handler,
+    std::string& usb_speed,
     uint8_t* binary,
     long binary_size,
     const std::string &usb_device,
@@ -212,6 +218,8 @@ bool XLinkWrapper::initFromHostSide(
     _reboot_device_on_destructor = reboot_device_on_destructor;
 
     assert(_device_link_id == -1);
+    char speed[18] = { 0 }; //"Dont know--------";
+    // speed = (char[15]){ 0 };
 
     bool result = false;
     do
@@ -267,7 +275,7 @@ bool XLinkWrapper::initFromHostSide(
                 tdiff = std::chrono::steady_clock::now() - tstart;
                 if (rc != X_LINK_SUCCESS) {
                     print_found = true;
-                    printf("\rNo USB device [03e7:2485], still looking");
+                    printf("\rNo USB device [03e7:2485], still looking"); 
                     if (!usb_device.empty())
                         printf(" on port %s", usb_device.c_str());
                     printf("... %.3fs ", tdiff.count());
@@ -278,15 +286,15 @@ bool XLinkWrapper::initFromHostSide(
                         printf("[FOUND]\n");
                     break;
                 }
-            } while (tdiff.count() < timeout_discover);
+             } while (tdiff.count() < timeout_discover);
 
             if (rc != X_LINK_SUCCESS) {
                 printf("NOT FOUND, err code %d\n", rc);
                 break;
             }
-
             printf("Sending internal device firmware\n");
-            rc = XLinkBootMemory(&deviceDesc, binary, binary_size);
+            printf("~~ ~~ ~~ ~~ ~~ ~~ ~~> before firmware here Speed:%s\n", speed); 
+            rc = XLinkBootMemory(&deviceDesc, binary, binary_size, speed);
             if (rc != X_LINK_SUCCESS) {
                 printf("Failed to boot the device: %s, err code %d\n", deviceDesc.name, rc);
                 break;
@@ -295,7 +303,10 @@ bool XLinkWrapper::initFromHostSide(
             // Development option, the firmware is loaded via JTAG
             printf("Device boot is skipped. (\"binary to boot from\" NOT SPECIFIED !)\n");
         }
-
+        printf("~~ ~~ ~~ ~~ ~~ ~~ ~~> After firmware here Speed:%s\n", speed); 
+        usb_speed = std::string(speed);
+        std::cout <<"Here is usb speed as string: " << usb_speed << std::endl;
+        printf("firmware sent\n");
         if (!usb_device.empty())
             snprintf(in_deviceDesc.name, sizeof in_deviceDesc.name,
                     "%s-", usb_device.c_str());
@@ -304,11 +315,11 @@ bool XLinkWrapper::initFromHostSide(
         tstart = std::chrono::steady_clock::now();
         do {
             rc = XLinkFindFirstSuitableDevice(X_LINK_BOOTED, in_deviceDesc, &deviceDesc);
+
             if (rc == X_LINK_SUCCESS)
                 break;
             tdiff = std::chrono::steady_clock::now() - tstart;
         } while (tdiff.count() < timeout_bootup);
-
         if (rc != X_LINK_SUCCESS) {
             printf("Failed to find booted device after boot, err code %d\n", rc);
             break;
@@ -316,7 +327,8 @@ bool XLinkWrapper::initFromHostSide(
 
         device_handler->devicePath = deviceDesc.name;
         device_handler->protocol = deviceDesc.protocol;
-
+        
+        printf("In xlink connect\n");
         // Try to connect to device
         tstart = std::chrono::steady_clock::now();
         do {
