@@ -183,7 +183,7 @@ bool XLinkWrapper::initFromHostSide(
         // Try to connect to device
         tstart = std::chrono::steady_clock::now();
         do {
-            rc = XLinkConnect(device_handler);
+            rc = XLinkConnect(device_handler, speed);
             if (rc == X_LINK_SUCCESS)
                 break;
             tdiff = std::chrono::steady_clock::now() - tstart;
@@ -193,7 +193,9 @@ bool XLinkWrapper::initFromHostSide(
             printf("Failed to connect to device, err code %d\n", rc);
             break;
         }
+        usb_speed = std::string(speed);
 
+        std::cout << "found speed ehre too : " << usb_speed << std::endl;
         printf("Successfully connected to device.\n");
 
         _device_link_id = device_handler->linkId;
@@ -303,9 +305,8 @@ bool XLinkWrapper::initFromHostSide(
             // Development option, the firmware is loaded via JTAG
             printf("Device boot is skipped. (\"binary to boot from\" NOT SPECIFIED !)\n");
         }
-        printf("~~ ~~ ~~ ~~ ~~ ~~ ~~> After firmware here Speed:%s\n", speed); 
-        usb_speed = std::string(speed);
-        std::cout <<"Here is usb speed as string: " << usb_speed << std::endl;
+        // usb_speed = std::string(speed);
+        // std::cout <<"Here is usb speed as string: " << usb_speed << std::endl;
         printf("firmware sent\n");
         if (!usb_device.empty())
             snprintf(in_deviceDesc.name, sizeof in_deviceDesc.name,
@@ -328,11 +329,10 @@ bool XLinkWrapper::initFromHostSide(
         device_handler->devicePath = deviceDesc.name;
         device_handler->protocol = deviceDesc.protocol;
         
-        printf("In xlink connect\n");
         // Try to connect to device
         tstart = std::chrono::steady_clock::now();
         do {
-            rc = XLinkConnect(device_handler);
+            rc = XLinkConnect(device_handler, speed);
             if (rc == X_LINK_SUCCESS)
                 break;
             tdiff = std::chrono::steady_clock::now() - tstart;
@@ -343,6 +343,7 @@ bool XLinkWrapper::initFromHostSide(
             break;
         }
 
+        usb_speed = std::string(speed);
         printf("Successfully connected to device.\n");
 
         _device_link_id = device_handler->linkId;
