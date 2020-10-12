@@ -47,7 +47,7 @@ public:
     void setWatchdogUpdateFunction(std::function<void(void)> func);
 
 #ifdef __PC__
-    bool initFromHostSide   (
+    bool initFromHostSide(
         XLinkGlobalHandler_t* global_handler,
         XLinkHandler_t* device_handler,
         std::string& usb_speed,
@@ -55,7 +55,7 @@ public:
         const std::string &path_to_mvcmd = "",
         const std::string &usb_device = "",
         bool reboot_device_on_destructor = true
-        );
+    );
 
     bool initFromHostSide(
         XLinkGlobalHandler_t* global_handler,

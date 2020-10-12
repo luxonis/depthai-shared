@@ -148,7 +148,7 @@ bool XLinkWrapper::initFromHostSide(
             }
 
             printf("Sending device firmware \"cmd_file\": %s\n", device_cmd_file.c_str());
-            rc = XLinkBoot(&deviceDesc, device_cmd_file.c_str(), dev_conn_info);
+            rc = XLinkBoot(&deviceDesc, device_cmd_file.c_str());
             if (rc != X_LINK_SUCCESS) {
                 printf("Failed to boot the device: %s, err code %d\n", deviceDesc.name, rc);
                 break;
@@ -157,9 +157,7 @@ bool XLinkWrapper::initFromHostSide(
             // Development option, the firmware is loaded via JTAG
             printf("Device boot is skipped. (\"cmd_file\" NOT SPECIFIED !)\n");
         }
-        // usb_speed = std::string(speed);
 
-        std::cout << "found speed ehre too : " << usb_speed << std::endl;
         if (!usb_device.empty())
             snprintf(in_deviceDesc.name, sizeof in_deviceDesc.name,
                     "%s-", usb_device.c_str());
@@ -202,7 +200,7 @@ bool XLinkWrapper::initFromHostSide(
         mx_serial = std::string(serial_id);
         usb_speed = std::string(speed);
 
-        std::cout << "found speed ehre too : " << usb_speed << std::endl;
+        std::cout << "found speed here too : " << usb_speed << std::endl;
         printf("Successfully connected to device.\n");
 
         _device_link_id = device_handler->linkId;
@@ -228,9 +226,8 @@ bool XLinkWrapper::initFromHostSide(
     _reboot_device_on_destructor = reboot_device_on_destructor;
 
     assert(_device_link_id == -1);
-    char dev_conn_info[148] = { 0 }; //"Dont know--------";
-    // speed = (char[15]){ 0 };
-
+    // variable to copy mriad x serial id and usb speed
+    char dev_conn_info[148] = { 0 }; 
     bool result = false;
     do
     {
@@ -303,8 +300,7 @@ bool XLinkWrapper::initFromHostSide(
                 break;
             }
             printf("Sending internal device firmware\n");
-            printf("~~ ~~ ~~ ~~ ~~ ~~ ~~> before firmware here Speed:%s\n", dev_conn_info); 
-            rc = XLinkBootMemory(&deviceDesc, binary, binary_size, dev_conn_info);
+            rc = XLinkBootMemory(&deviceDesc, binary, binary_size);
             if (rc != X_LINK_SUCCESS) {
                 printf("Failed to boot the device: %s, err code %d\n", deviceDesc.name, rc);
                 break;
@@ -351,14 +347,14 @@ bool XLinkWrapper::initFromHostSide(
             break;
         }
 
-        char speed[15];
+        char speed[15]; 
         char serial_id[128];
-
         strncpy(speed, dev_conn_info, 15);
         strncpy(serial_id, dev_conn_info+15, 128);
 
         printf("got %s and %s\n", speed, serial_id );
 
+        // copying usb speed and mx_serial
         usb_speed = std::string(speed);
         mx_serial = std::string(serial_id);
         printf("Successfully connected to device.\n");
@@ -483,7 +479,7 @@ uint32_t XLinkWrapper::openReadAndCloseStream(
 
 
 
-// TODO: unite code: reading from stream
+        // TODO: unite code: reading from stream
         streamPacketDesc_t * packet = nullptr;
         XLinkError_t status = XLinkReadData(stream_id, &packet);
 
