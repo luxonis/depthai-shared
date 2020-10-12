@@ -51,6 +51,7 @@ public:
         XLinkGlobalHandler_t* global_handler,
         XLinkHandler_t* device_handler,
         std::string& usb_speed,
+        std::string& mx_serial,
         const std::string &path_to_mvcmd = "",
         const std::string &usb_device = "",
         bool reboot_device_on_destructor = true
@@ -60,6 +61,7 @@ public:
         XLinkGlobalHandler_t* global_handler,
         XLinkHandler_t* device_handler,
         std::string& usb_speed,
+        std::string& mx_serial,
         uint8_t* binary,
         long binary_size,
         const std::string &usb_device,

@@ -62,6 +62,7 @@ bool XLinkWrapper::initFromHostSide(
     XLinkGlobalHandler_t* global_handler,
     XLinkHandler_t* device_handler,
     std::string& usb_speed,
+    std::string& mx_serial,
     const std::string &device_cmd_file,
     const std::string &usb_device,
     bool reboot_device_on_destructor
@@ -69,7 +70,7 @@ bool XLinkWrapper::initFromHostSide(
 {
     _reboot_device_on_destructor = reboot_device_on_destructor;
 
-    char speed[18] = { 0 };
+    char dev_conn_info[148] = { 0 };
     assert(_device_link_id == -1);
     usb_loglevel = 1;
     // char speed[15] = { 0 };
@@ -147,7 +148,7 @@ bool XLinkWrapper::initFromHostSide(
             }
 
             printf("Sending device firmware \"cmd_file\": %s\n", device_cmd_file.c_str());
-            rc = XLinkBoot(&deviceDesc, device_cmd_file.c_str(), speed);
+            rc = XLinkBoot(&deviceDesc, device_cmd_file.c_str(), dev_conn_info);
             if (rc != X_LINK_SUCCESS) {
                 printf("Failed to boot the device: %s, err code %d\n", deviceDesc.name, rc);
                 break;
@@ -156,7 +157,7 @@ bool XLinkWrapper::initFromHostSide(
             // Development option, the firmware is loaded via JTAG
             printf("Device boot is skipped. (\"cmd_file\" NOT SPECIFIED !)\n");
         }
-        usb_speed = std::string(speed);
+        // usb_speed = std::string(speed);
 
         std::cout << "found speed ehre too : " << usb_speed << std::endl;
         if (!usb_device.empty())
@@ -183,7 +184,7 @@ bool XLinkWrapper::initFromHostSide(
         // Try to connect to device
         tstart = std::chrono::steady_clock::now();
         do {
-            rc = XLinkConnect(device_handler, speed);
+            rc = XLinkConnect(device_handler, dev_conn_info);
             if (rc == X_LINK_SUCCESS)
                 break;
             tdiff = std::chrono::steady_clock::now() - tstart;
@@ -193,6 +194,12 @@ bool XLinkWrapper::initFromHostSide(
             printf("Failed to connect to device, err code %d\n", rc);
             break;
         }
+        char speed[15];
+        char serial_id[128];
+
+        strncpy(speed, dev_conn_info, 15);
+        strncpy(serial_id, dev_conn_info+15, 128);
+        mx_serial = std::string(serial_id);
         usb_speed = std::string(speed);
 
         std::cout << "found speed ehre too : " << usb_speed << std::endl;
@@ -211,6 +218,7 @@ bool XLinkWrapper::initFromHostSide(
     XLinkGlobalHandler_t* global_handler,
     XLinkHandler_t* device_handler,
     std::string& usb_speed,
+    std::string& mx_serial,
     uint8_t* binary,
     long binary_size,
     const std::string &usb_device,
@@ -220,7 +228,7 @@ bool XLinkWrapper::initFromHostSide(
     _reboot_device_on_destructor = reboot_device_on_destructor;
 
     assert(_device_link_id == -1);
-    char speed[18] = { 0 }; //"Dont know--------";
+    char dev_conn_info[148] = { 0 }; //"Dont know--------";
     // speed = (char[15]){ 0 };
 
     bool result = false;
@@ -295,8 +303,8 @@ bool XLinkWrapper::initFromHostSide(
                 break;
             }
             printf("Sending internal device firmware\n");
-            printf("~~ ~~ ~~ ~~ ~~ ~~ ~~> before firmware here Speed:%s\n", speed); 
-            rc = XLinkBootMemory(&deviceDesc, binary, binary_size, speed);
+            printf("~~ ~~ ~~ ~~ ~~ ~~ ~~> before firmware here Speed:%s\n", dev_conn_info); 
+            rc = XLinkBootMemory(&deviceDesc, binary, binary_size, dev_conn_info);
             if (rc != X_LINK_SUCCESS) {
                 printf("Failed to boot the device: %s, err code %d\n", deviceDesc.name, rc);
                 break;
@@ -332,7 +340,7 @@ bool XLinkWrapper::initFromHostSide(
         // Try to connect to device
         tstart = std::chrono::steady_clock::now();
         do {
-            rc = XLinkConnect(device_handler, speed);
+            rc = XLinkConnect(device_handler, dev_conn_info);
             if (rc == X_LINK_SUCCESS)
                 break;
             tdiff = std::chrono::steady_clock::now() - tstart;
@@ -343,7 +351,16 @@ bool XLinkWrapper::initFromHostSide(
             break;
         }
 
+        char speed[15];
+        char serial_id[128];
+
+        strncpy(speed, dev_conn_info, 15);
+        strncpy(serial_id, dev_conn_info+15, 128);
+
+        printf("got %s and %s\n", speed, serial_id );
+
         usb_speed = std::string(speed);
+        mx_serial = std::string(serial_id);
         printf("Successfully connected to device.\n");
 
         _device_link_id = device_handler->linkId;
