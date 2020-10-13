@@ -11,7 +11,7 @@
 // project
 #include "depthai-shared/datatype/DatatypeEnum.hpp"
 #include "depthai-shared/datatype/ImgFrame.hpp"
-#include "depthai-shared/datatype/NNTensor.hpp"
+#include "depthai-shared/datatype/NNData.hpp"
 #include "depthai-shared/datatype/RawBuffer.hpp"
 
 // StreamPacket structure ->  || imgframepixels... , serialized_object, object_type, serialized_object_size ||
@@ -59,8 +59,8 @@ inline std::shared_ptr<RawBuffer> parsePacket(streamPacketDesc_t* packet) {
             return parseDatatype<ImgFrame>(jser, data);
             break;
 
-        case DatatypeEnum::NNTensor:
-            return parseDatatype<NNTensor>(jser, data);
+        case DatatypeEnum::NNData:
+            return parseDatatype<NNData>(jser, data);
             break;
 
         default:
