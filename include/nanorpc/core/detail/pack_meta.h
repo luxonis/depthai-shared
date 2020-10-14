@@ -11,8 +11,17 @@
 // STD
 #include <cstdint>
 
-namespace nanorpc::core::detail::pack::meta
+namespace nanorpc
 {
+namespace core
+{
+namespace detail
+{
+namespace pack
+{
+namespace meta
+{
+    
 
 enum class type : std::uint32_t
 {
@@ -27,7 +36,12 @@ enum class status : std::uint32_t
     good
 };
 
-}   // namespace nanorpc::core::detail::pack::meta
+    
+}   // namespace meta
+}   // namespace pack
+}   // namespace detail
+}   // namespace core
+}   // namespace nanorpc
 
 
 #endif  // !__NANO_RPC_CORE_DETAIL_PACK_META_H__

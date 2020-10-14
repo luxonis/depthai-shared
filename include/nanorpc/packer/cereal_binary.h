@@ -43,8 +43,11 @@ namespace cereal {
     }
 }
 
-namespace nanorpc::packer
+namespace nanorpc
 {
+namespace packer
+{
+  
 
 class cereal_binary final
 {
@@ -185,4 +188,5 @@ private:
 
 };
 
-}   // namespace nanorpc::packer
+}   // namespace packer
+}   // namespace nanorpc

@@ -3,14 +3,12 @@
 #include <fstream>
 #include <string>
 
-class DataWriter
-{
-
-private:
+class DataWriter {
+   private:
     std::fstream _file;
-    
-public:
+
+   public:
     ~DataWriter();
-    bool     init      (const std::string& file_path);
-    unsigned writeData (unsigned char* buffer, unsigned buff_size);
+    bool init(const std::string& file_path);
+    unsigned writeData(unsigned char* buffer, unsigned buff_size);
 };

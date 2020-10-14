@@ -1,20 +1,21 @@
 #pragma once
 
 #include <nlohmann/json.hpp>
+
 #include "depthai-shared/pb/common/ProcessorType.hpp"
 
 namespace dai {
 
+/**
+ * Specify message and processor placement of MyConsumer node
+ */
+struct MyConsumerProperties {
     /**
-     * Specify message and processor placement of MyConsumer node
+     * On which processor the node will be placed
      */
-    struct MyConsumerProperties {
-        /**
-         * On which processor the node will be placed
-         */
-        ProcessorType processorPlacement;
-    };
+    ProcessorType processorPlacement;
+};
 
-    NLOHMANN_DEFINE_TYPE_NON_INTRUSIVE(MyConsumerProperties, processorPlacement)
+NLOHMANN_DEFINE_TYPE_NON_INTRUSIVE(MyConsumerProperties, processorPlacement)
 
-}
+}  // namespace dai

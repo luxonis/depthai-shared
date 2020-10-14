@@ -24,9 +24,11 @@
 // nlohmann
 #include "nlohmann/json.hpp"
 
-namespace nanorpc::packer
+namespace nanorpc
 {
-
+namespace packer
+{
+    
 class nlohmann_msgpack final
 {
 private:
@@ -139,4 +141,5 @@ private:
 
 };
 
-}   // namespace nanorpc::packer
+}   // namespace packer
+}   // namespace nanorpc

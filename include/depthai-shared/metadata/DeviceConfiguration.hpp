@@ -4,23 +4,18 @@
 
 // TODO (if necessary)
 
-namespace dai
-{
-    /*
-    struct EEPROM {
-        int version;
-        std::array<float, 9> calibrationHomography;
-        float leftCameraFov; 
-    };
-    */
+namespace dai {
+/*
+struct EEPROM {
+    int version;
+    std::array<float, 9> calibrationHomography;
+    float leftCameraFov;
+};
+*/
 
-    struct DeviceConfiguration {
+struct DeviceConfiguration {
+    std::string version;
+    std::string commit;
+};
 
-        std::string version;
-        std::string commit;
-
-
-    };
-
-
-} // namespace dai
+}  // namespace dai

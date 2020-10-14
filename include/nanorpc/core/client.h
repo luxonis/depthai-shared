@@ -27,7 +27,9 @@
 #include "nanorpc/version/core.h"
 
 
-namespace nanorpc::core
+namespace nanorpc
+{
+namespace core
 {
 
 template <typename TPacker>
@@ -154,6 +156,7 @@ private:
     };
 };
 
-}   // namespace nanorpc::core
+}   // namespace core
+}   // namespace nanorpc
 
 #endif  // !__NANO_RPC_CORE_CLIENT_H__

@@ -17,15 +17,15 @@
 
 namespace dai {
 
-    /**
-     * Specifies whole pipeline, nodes, properties and connections between nodes IOs
-     */
-    struct PipelineSchema {
-        std::vector<NodeConnectionSchema> connections;
-        GlobalProperties globalProperties;
-        std::vector<NodeObjInfo> nodes;
-    };
+/**
+ * Specifies whole pipeline, nodes, properties and connections between nodes IOs
+ */
+struct PipelineSchema {
+    std::vector<NodeConnectionSchema> connections;
+    GlobalProperties globalProperties;
+    std::vector<NodeObjInfo> nodes;
+};
 
-    NLOHMANN_DEFINE_TYPE_NON_INTRUSIVE(PipelineSchema, connections, globalProperties, nodes)
+NLOHMANN_DEFINE_TYPE_NON_INTRUSIVE(PipelineSchema, connections, globalProperties, nodes)
 
-}
+}  // namespace dai
