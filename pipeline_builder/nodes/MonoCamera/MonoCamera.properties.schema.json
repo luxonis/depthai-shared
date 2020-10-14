@@ -1,0 +1,24 @@
+{
+  "$id": "https://lpb.luxonis.com/schema/MonoCamera.properties.schema.json",
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "MonoCameraProperties",
+  "description": "Specify MonoCamera options such as camera ID, ...",
+  "required": [ "camId", "resolution" ],
+  "type": "object",
+  "properties": {
+    "camId": {
+      "title": "Mono camera ID",
+      "description": "Which mono camera the node will use",
+      "type":"integer",
+      "minimum": 1,
+      "maximum": 5
+    },
+    "resolution": {
+      "title": "Camera sensor resolution",
+      "description": "Select the camera sensor resolution (height)",
+      "type":"string",
+      "enum": ["720p", "800p", "400p"],
+      "default": "720p"
+    }
+  }
+}
