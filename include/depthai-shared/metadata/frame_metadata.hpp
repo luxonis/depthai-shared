@@ -86,7 +86,9 @@ public:
     }
 
     std::string getCameraName() {
-        const std::string camName[] = {"rgb", "left", "right"};
+        const std::vector<std::string> camName = {"rgb", "left", "right"};
+        if (instNo >= camName.size()) // Likely if instNo not set on device
+            return std::string("INVALID_instNo");
         return camName[instNo];
     }
 
