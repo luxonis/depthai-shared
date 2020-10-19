@@ -43,15 +43,13 @@ class XLinkWrapper
 public:
     XLinkWrapper(bool be_verbose);
     virtual ~XLinkWrapper();
-
+    
     void setWatchdogUpdateFunction(std::function<void(void)> func);
 
 #ifdef __PC__
     bool initFromHostSide(
         XLinkGlobalHandler_t* global_handler,
         XLinkHandler_t* device_handler,
-        std::string& usb_speed,
-        std::string& mx_serial,
         const std::string &path_to_mvcmd = "",
         const std::string &usb_device = "",
         bool reboot_device_on_destructor = true
@@ -60,13 +58,26 @@ public:
     bool initFromHostSide(
         XLinkGlobalHandler_t* global_handler,
         XLinkHandler_t* device_handler,
-        std::string& usb_speed,
-        std::string& mx_serial,
         uint8_t* binary,
         long binary_size,
         const std::string &usb_device,
         bool reboot_device_on_destructor
     );
+
+    /**
+     * fetching the usb speed enum from the XLink 
+     * after connection is succesfully established 
+     * and get the string value of the enum to return
+     */ 
+    std::string getUSBSpeed(); 
+    
+    /**
+     * fetch the Mx serial id from the XLink 
+     * after connection is succesfully established
+     */
+    std::string getMxSerial();
+
+
 #endif // __PC__
 #ifndef __PC__
     bool initFromDeviceSide (XLinkGlobalHandler_t* global_handler);

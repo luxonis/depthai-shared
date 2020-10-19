@@ -61,8 +61,6 @@ XLinkWrapper::~XLinkWrapper()
 bool XLinkWrapper::initFromHostSide(
     XLinkGlobalHandler_t* global_handler,
     XLinkHandler_t* device_handler,
-    std::string& usb_speed,
-    std::string& mx_serial,
     const std::string &device_cmd_file,
     const std::string &usb_device,
     bool reboot_device_on_destructor
@@ -70,10 +68,8 @@ bool XLinkWrapper::initFromHostSide(
 {
     _reboot_device_on_destructor = reboot_device_on_destructor;
 
-    char dev_conn_info[148] = { 0 };
     assert(_device_link_id == -1);
     usb_loglevel = 1;
-    // char speed[15] = { 0 };
 
     bool result = false;
     do
@@ -87,6 +83,7 @@ bool XLinkWrapper::initFromHostSide(
         double timeout_connect  = 10;
         std::chrono::steady_clock::time_point tstart;
         std::chrono::duration<double> tdiff;
+        // Timeouts in seconds
 
         // TODO: attempt to connect and reset device if found in booted state
         // printf("rebooting ...\n");
@@ -182,7 +179,7 @@ bool XLinkWrapper::initFromHostSide(
         // Try to connect to device
         tstart = std::chrono::steady_clock::now();
         do {
-            rc = XLinkConnect(device_handler, dev_conn_info);
+            rc = XLinkConnect(device_handler);
             if (rc == X_LINK_SUCCESS)
                 break;
             tdiff = std::chrono::steady_clock::now() - tstart;
@@ -192,15 +189,7 @@ bool XLinkWrapper::initFromHostSide(
             printf("Failed to connect to device, err code %d\n", rc);
             break;
         }
-        char speed[15];
-        char serial_id[128];
 
-        strncpy(speed, dev_conn_info, 15);
-        strncpy(serial_id, dev_conn_info+15, 128);
-        mx_serial = std::string(serial_id);
-        usb_speed = std::string(speed);
-
-        std::cout << "found speed here too : " << usb_speed << std::endl;
         printf("Successfully connected to device.\n");
 
         _device_link_id = device_handler->linkId;
@@ -215,8 +204,6 @@ bool XLinkWrapper::initFromHostSide(
 bool XLinkWrapper::initFromHostSide(
     XLinkGlobalHandler_t* global_handler,
     XLinkHandler_t* device_handler,
-    std::string& usb_speed,
-    std::string& mx_serial,
     uint8_t* binary,
     long binary_size,
     const std::string &usb_device,
@@ -309,8 +296,6 @@ bool XLinkWrapper::initFromHostSide(
             // Development option, the firmware is loaded via JTAG
             printf("Device boot is skipped. (\"binary to boot from\" NOT SPECIFIED !)\n");
         }
-        // usb_speed = std::string(speed);
-        // std::cout <<"Here is usb speed as string: " << usb_speed << std::endl;
         printf("firmware sent\n");
         if (!usb_device.empty())
             snprintf(in_deviceDesc.name, sizeof in_deviceDesc.name,
@@ -336,7 +321,7 @@ bool XLinkWrapper::initFromHostSide(
         // Try to connect to device
         tstart = std::chrono::steady_clock::now();
         do {
-            rc = XLinkConnect(device_handler, dev_conn_info);
+            rc = XLinkConnect(device_handler);
             if (rc == X_LINK_SUCCESS)
                 break;
             tdiff = std::chrono::steady_clock::now() - tstart;
@@ -347,16 +332,6 @@ bool XLinkWrapper::initFromHostSide(
             break;
         }
 
-        char speed[15]; 
-        char serial_id[128];
-        strncpy(speed, dev_conn_info, 15);
-        strncpy(serial_id, dev_conn_info+15, 128);
-
-        printf("got %s and %s\n", speed, serial_id );
-
-        // copying usb speed and mx_serial
-        usb_speed = std::string(speed);
-        mx_serial = std::string(serial_id);
         printf("Successfully connected to device.\n");
 
         _device_link_id = device_handler->linkId;
@@ -367,6 +342,16 @@ bool XLinkWrapper::initFromHostSide(
 
     return result;
 }
+
+std::string XLinkWrapper::getUSBSpeed(){
+    std::vector<std::string> speed_str = {"Unknown", "Low/1.5Mbps", "Full/12Mbps", "High/480Mbps", "Super/5000Mbps"};
+    return speed_str[XLinkGetUSBSpeed()];
+}
+
+std::string XLinkWrapper::getMxSerial(){
+    return std::string(XLinkGetMxSerial()); 
+}
+
 #endif // __PC__
 
 
