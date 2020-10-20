@@ -13,7 +13,7 @@ struct RawBuffer {
 
     virtual void serialize(std::vector<std::uint8_t>& metadata, DatatypeEnum& datatype) {
         (void)metadata;
-        datatype = DatatypeEnum::RawBuffer;
+        datatype = DatatypeEnum::Buffer;
     };
 
     // NLOHMANN_DEFINE_TYPE_INTRUSIVE(RawBuffer);

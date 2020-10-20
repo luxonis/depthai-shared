@@ -10,7 +10,7 @@ struct Timestamp {
     NLOHMANN_DEFINE_TYPE_INTRUSIVE(Timestamp, sec, nsec);
 };
 
-struct ImgFrame : public RawBuffer {
+struct RawImgFrame : public RawBuffer {
     enum class Type {
         YUV422i,    // interleaved 8 bit
         YUV444p,    // planar 4:4:4 format
@@ -63,7 +63,7 @@ struct ImgFrame : public RawBuffer {
         datatype = DatatypeEnum::ImgFrame;
     };
 
-    NLOHMANN_DEFINE_TYPE_INTRUSIVE(ImgFrame, fb, category, instanceNum, sequenceNum, ts);
+    NLOHMANN_DEFINE_TYPE_INTRUSIVE(RawImgFrame, fb, category, instanceNum, sequenceNum, ts);
 };
 
 }  // namespace dai

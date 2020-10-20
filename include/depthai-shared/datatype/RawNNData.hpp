@@ -41,7 +41,7 @@ struct TensorInfo {
     NLOHMANN_DEFINE_TYPE_INTRUSIVE(TensorInfo, order, dataType, numDimensions, dims, strides, name, offset);
 };
 
-struct NNData : public RawBuffer {
+struct RawNNData : public RawBuffer {
     // NNData data is in PoBuf
     std::vector<TensorInfo> tensors;
     unsigned int batchSize;
@@ -52,7 +52,7 @@ struct NNData : public RawBuffer {
         datatype = DatatypeEnum::NNData;
     };
 
-    NLOHMANN_DEFINE_TYPE_INTRUSIVE(NNData, tensors, batchSize);
+    NLOHMANN_DEFINE_TYPE_INTRUSIVE(RawNNData, tensors, batchSize);
 };
 
 }  // namespace dai
