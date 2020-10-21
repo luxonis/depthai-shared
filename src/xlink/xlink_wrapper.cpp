@@ -602,10 +602,16 @@ bool XLinkWrapper::initXLink(
     XLinkGlobalHandler_t* global_handler
 ) const
 {
+    static bool initiated = false;
+    if( initiated ) {
+        if (_be_verbose) { printf("XLink already initialized.\n"); }
+        return true;
+    }
     auto status = XLinkInitialize(global_handler);
     if (X_LINK_SUCCESS == status)
     {
         if (_be_verbose) { printf("XLink initialized.\n"); }
+        initiated = true;
         return true;
     }
     else
