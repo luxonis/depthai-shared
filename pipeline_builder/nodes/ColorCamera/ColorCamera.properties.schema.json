@@ -3,7 +3,7 @@
   "$schema": "http://json-schema.org/draft-07/schema#",
   "title": "ColorCameraProperties",
   "description": "Specify ColorCamera options such as camera ID, ...",
-  "required": [ "camId", "resolution", "colorOrder", "interleaved", "previewWidth", "previewHeight" ],
+  "required": [ "camId", "resolution", "fps", "colorOrder", "interleaved", "previewWidth", "previewHeight" ],
   "type": "object",
   "properties": {
     "camId": {
@@ -17,8 +17,16 @@
       "title": "Camera sensor resolution",
       "description": "Select the camera sensor resolution",
       "type":"string",
-      "enum": ["1080p", "4k"],
+      "enum": ["1080p", "4k", "12MP"],
       "default": "1080p"
+    },
+    "fps": {
+      "title": "Camera sensor FPS",
+      "description": "Select the camera sensor FPS",
+      "type": "number",
+      "default": 30.0,
+      "minimum": 0.5,
+      "maximum": 120.0
     },
     "colorOrder":{
       "title": "Color order inside pixel",
