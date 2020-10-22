@@ -21,8 +21,10 @@ namespace dai {
          * Set a limit to how many packets will be sent further to host
          */
         std::string streamName;
+        int busId;
+
     };
 
-    NLOHMANN_DEFINE_TYPE_NON_INTRUSIVE(SPIOutProperties, streamName)
+    NLOHMANN_DEFINE_TYPE_NON_INTRUSIVE(SPIOutProperties, streamName, busId)
 
 }
