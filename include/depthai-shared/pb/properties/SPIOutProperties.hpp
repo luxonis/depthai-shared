@@ -14,7 +14,7 @@
 namespace dai {
 
     /**
-     * Properties for XLinkOut which define stream name
+     * Properties for SPIOut which define stream name
      */
     struct SPIOutProperties {
         /**
