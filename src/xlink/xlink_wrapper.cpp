@@ -179,7 +179,7 @@ bool XLinkWrapper::initFromHostSide(
         // Try to connect to device
         tstart = std::chrono::steady_clock::now();
         do {
-            rc = XLinkConnect(device_handler);
+            rc = connect(device_handler);
             if (rc == X_LINK_SUCCESS)
                 break;
             tdiff = std::chrono::steady_clock::now() - tstart;
@@ -321,7 +321,7 @@ bool XLinkWrapper::initFromHostSide(
         // Try to connect to device
         tstart = std::chrono::steady_clock::now();
         do {
-            rc = XLinkConnect(device_handler);
+            rc = connect(device_handler);
             if (rc == X_LINK_SUCCESS)
                 break;
             tdiff = std::chrono::steady_clock::now() - tstart;
@@ -352,6 +352,11 @@ std::string XLinkWrapper::getUSBSpeed(){
 std::string XLinkWrapper::getMxSerial(){
     assert(_device_link_id != -1);
     return std::string(XLinkGetMxSerial(_device_link_id)); 
+}
+
+XLinkError_t XLinkWrapper::connect(XLinkHandler_t* handler){
+    std::unique_lock<std::mutex> lock(mtx);
+    return XLinkConnect(handler);
 }
 
 #endif // __PC__

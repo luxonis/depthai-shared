@@ -77,6 +77,8 @@ public:
      */
     std::string getMxSerial();
 
+    XLinkError_t connect(XLinkHandler_t* handler);
+
 
 #endif // __PC__
 #ifndef __PC__
@@ -118,7 +120,7 @@ private:
     const unsigned         c_stream_read_timeout_ms = 500;
     const unsigned         c_stream_read_wait_ms = 1;
     const unsigned         c_stream_read_thread_wait_ms = 1;
-
+    std::mutex mtx;
 
     const bool             _be_verbose;
 #ifdef __PC__
