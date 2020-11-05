@@ -179,7 +179,7 @@ bool XLinkWrapper::initFromHostSide(
         // Try to connect to device
         tstart = std::chrono::steady_clock::now();
         do {
-            rc = connect(device_handler);
+            rc = XLinkConnectSafe(device_handler);
             if (rc == X_LINK_SUCCESS)
                 break;
             tdiff = std::chrono::steady_clock::now() - tstart;
@@ -213,8 +213,6 @@ bool XLinkWrapper::initFromHostSide(
     _reboot_device_on_destructor = reboot_device_on_destructor;
 
     assert(_device_link_id == -1);
-    // variable to copy mriad x serial id and usb speed
-    char dev_conn_info[148] = { 0 }; 
     bool result = false;
     do
     {
@@ -296,7 +294,6 @@ bool XLinkWrapper::initFromHostSide(
             // Development option, the firmware is loaded via JTAG
             printf("Device boot is skipped. (\"binary to boot from\" NOT SPECIFIED !)\n");
         }
-        printf("firmware sent\n");
         if (!usb_device.empty())
             snprintf(in_deviceDesc.name, sizeof in_deviceDesc.name,
                     "%s-", usb_device.c_str());
@@ -321,7 +318,7 @@ bool XLinkWrapper::initFromHostSide(
         // Try to connect to device
         tstart = std::chrono::steady_clock::now();
         do {
-            rc = connect(device_handler);
+            rc = XLinkConnectSafe(device_handler);
             if (rc == X_LINK_SUCCESS)
                 break;
             tdiff = std::chrono::steady_clock::now() - tstart;
@@ -354,7 +351,7 @@ std::string XLinkWrapper::getMxSerial(){
     return std::string(XLinkGetMxSerial(_device_link_id)); 
 }
 
-XLinkError_t XLinkWrapper::connect(XLinkHandler_t* handler){
+XLinkError_t XLinkWrapper::XLinkConnectSafe(XLinkHandler_t* handler){
     std::unique_lock<std::mutex> lock(mtx);
     return XLinkConnect(handler);
 }

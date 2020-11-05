@@ -76,8 +76,8 @@ public:
      * after connection is succesfully established
      */
     std::string getMxSerial();
-
-    XLinkError_t connect(XLinkHandler_t* handler);
+    
+    XLinkError_t XLinkConnectSafe(XLinkHandler_t* handler);
 
 
 #endif // __PC__
