@@ -340,10 +340,10 @@ bool XLinkWrapper::initFromHostSide(
     return result;
 }
 
-std::string XLinkWrapper::getUSBSpeed(){
+UsbSpeed_t XLinkWrapper::getUSBSpeed(){
     assert(_device_link_id != -1);
-    std::vector<std::string> speed_str = {"Unknown", "Low/1.5Mbps", "Full/12Mbps", "High/480Mbps", "Super/5000Mbps", "Super+/10000Mbps"};
-    return speed_str[XLinkGetUSBSpeed(_device_link_id)];
+    // std::vector<std::string> speed_str = {"Unknown", "Low/1.5Mbps", "Full/12Mbps", "High/480Mbps", "Super/5000Mbps", "Super+/10000Mbps"};
+    return XLinkGetUSBSpeed(_device_link_id);
 }
 
 std::string XLinkWrapper::getMxSerial(){

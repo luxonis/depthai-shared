@@ -69,7 +69,7 @@ public:
      * after connection is succesfully established 
      * and get the string value of the enum to return
      */ 
-    std::string getUSBSpeed(); 
+    UsbSpeed_t getUSBSpeed(); 
     
     /**
      * fetch the Mx serial id from the XLink 
