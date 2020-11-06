@@ -70,7 +70,7 @@ bool XLinkWrapper::initFromHostSide(
 
     assert(_device_link_id == -1);
     usb_loglevel = 1;
-  
+
     bool result = false;
     do
     {
@@ -83,6 +83,7 @@ bool XLinkWrapper::initFromHostSide(
         double timeout_connect  = 10;
         std::chrono::steady_clock::time_point tstart;
         std::chrono::duration<double> tdiff;
+        // Timeouts in seconds
 
         // TODO: attempt to connect and reset device if found in booted state
         // printf("rebooting ...\n");
@@ -178,7 +179,7 @@ bool XLinkWrapper::initFromHostSide(
         // Try to connect to device
         tstart = std::chrono::steady_clock::now();
         do {
-            rc = XLinkConnect(device_handler);
+            rc = XLinkConnectSafe(device_handler);
             if (rc == X_LINK_SUCCESS)
                 break;
             tdiff = std::chrono::steady_clock::now() - tstart;
@@ -212,7 +213,6 @@ bool XLinkWrapper::initFromHostSide(
     _reboot_device_on_destructor = reboot_device_on_destructor;
 
     assert(_device_link_id == -1);
-
     bool result = false;
     do
     {
@@ -267,7 +267,7 @@ bool XLinkWrapper::initFromHostSide(
                 tdiff = std::chrono::steady_clock::now() - tstart;
                 if (rc != X_LINK_SUCCESS) {
                     print_found = true;
-                    printf("\rNo USB device [03e7:2485], still looking");
+                    printf("\rNo USB device [03e7:2485], still looking"); 
                     if (!usb_device.empty())
                         printf(" on port %s", usb_device.c_str());
                     printf("... %.3fs ", tdiff.count());
@@ -278,13 +278,12 @@ bool XLinkWrapper::initFromHostSide(
                         printf("[FOUND]\n");
                     break;
                 }
-            } while (tdiff.count() < timeout_discover);
+             } while (tdiff.count() < timeout_discover);
 
             if (rc != X_LINK_SUCCESS) {
                 printf("NOT FOUND, err code %d\n", rc);
                 break;
             }
-
             printf("Sending internal device firmware\n");
             rc = XLinkBootMemory(&deviceDesc, binary, binary_size);
             if (rc != X_LINK_SUCCESS) {
@@ -295,7 +294,6 @@ bool XLinkWrapper::initFromHostSide(
             // Development option, the firmware is loaded via JTAG
             printf("Device boot is skipped. (\"binary to boot from\" NOT SPECIFIED !)\n");
         }
-
         if (!usb_device.empty())
             snprintf(in_deviceDesc.name, sizeof in_deviceDesc.name,
                     "%s-", usb_device.c_str());
@@ -304,11 +302,11 @@ bool XLinkWrapper::initFromHostSide(
         tstart = std::chrono::steady_clock::now();
         do {
             rc = XLinkFindFirstSuitableDevice(X_LINK_BOOTED, in_deviceDesc, &deviceDesc);
+
             if (rc == X_LINK_SUCCESS)
                 break;
             tdiff = std::chrono::steady_clock::now() - tstart;
         } while (tdiff.count() < timeout_bootup);
-
         if (rc != X_LINK_SUCCESS) {
             printf("Failed to find booted device after boot, err code %d\n", rc);
             break;
@@ -316,11 +314,11 @@ bool XLinkWrapper::initFromHostSide(
 
         device_handler->devicePath = deviceDesc.name;
         device_handler->protocol = deviceDesc.protocol;
-
+        
         // Try to connect to device
         tstart = std::chrono::steady_clock::now();
         do {
-            rc = XLinkConnect(device_handler);
+            rc = XLinkConnectSafe(device_handler);
             if (rc == X_LINK_SUCCESS)
                 break;
             tdiff = std::chrono::steady_clock::now() - tstart;
@@ -341,6 +339,23 @@ bool XLinkWrapper::initFromHostSide(
 
     return result;
 }
+
+UsbSpeed_t XLinkWrapper::getUSBSpeed(){
+    assert(_device_link_id != -1);
+    // std::vector<std::string> speed_str = {"Unknown", "Low/1.5Mbps", "Full/12Mbps", "High/480Mbps", "Super/5000Mbps", "Super+/10000Mbps"};
+    return XLinkGetUSBSpeed(_device_link_id);
+}
+
+std::string XLinkWrapper::getMxSerial(){
+    assert(_device_link_id != -1);
+    return std::string(XLinkGetMxSerial(_device_link_id)); 
+}
+
+XLinkError_t XLinkWrapper::XLinkConnectSafe(XLinkHandler_t* handler){
+    std::unique_lock<std::mutex> lock(mtx);
+    return XLinkConnect(handler);
+}
+
 #endif // __PC__
 
 
@@ -453,7 +468,7 @@ uint32_t XLinkWrapper::openReadAndCloseStream(
 
 
 
-// TODO: unite code: reading from stream
+        // TODO: unite code: reading from stream
         streamPacketDesc_t * packet = nullptr;
         XLinkError_t status = XLinkReadData(stream_id, &packet);
 

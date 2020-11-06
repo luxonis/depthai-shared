@@ -20,7 +20,7 @@
 #define MAX_USB_BUFF (5 * 1024 * 1024)
 
 ///
-/// XLinkWrapper is class that wraps XLinks communication.
+/// XLinkWrapper is class that wraps  XLinks communication.
 /// This class uses two mutexes, so be careful editing the code.
 /// It can be used for both side communication (in/out):
 /// 
@@ -43,17 +43,17 @@ class XLinkWrapper
 public:
     XLinkWrapper(bool be_verbose);
     virtual ~XLinkWrapper();
-
+    
     void setWatchdogUpdateFunction(std::function<void(void)> func);
 
 #ifdef __PC__
-    bool initFromHostSide   (
+    bool initFromHostSide(
         XLinkGlobalHandler_t* global_handler,
         XLinkHandler_t* device_handler,
         const std::string &path_to_mvcmd = "",
         const std::string &usb_device = "",
         bool reboot_device_on_destructor = true
-        );
+    );
 
     bool initFromHostSide(
         XLinkGlobalHandler_t* global_handler,
@@ -63,6 +63,23 @@ public:
         const std::string &usb_device,
         bool reboot_device_on_destructor
     );
+
+    /**
+     * fetching the usb speed enum from the XLink 
+     * after connection is succesfully established 
+     * and get the string value of the enum to return
+     */ 
+    UsbSpeed_t getUSBSpeed(); 
+    
+    /**
+     * fetch the Mx serial id from the XLink 
+     * after connection is succesfully established
+     */
+    std::string getMxSerial();
+    
+    XLinkError_t XLinkConnectSafe(XLinkHandler_t* handler);
+
+
 #endif // __PC__
 #ifndef __PC__
     bool initFromDeviceSide (XLinkGlobalHandler_t* global_handler);
@@ -103,7 +120,7 @@ private:
     const unsigned         c_stream_read_timeout_ms = 500;
     const unsigned         c_stream_read_wait_ms = 1;
     const unsigned         c_stream_read_thread_wait_ms = 1;
-
+    std::mutex mtx;
 
     const bool             _be_verbose;
 #ifdef __PC__
