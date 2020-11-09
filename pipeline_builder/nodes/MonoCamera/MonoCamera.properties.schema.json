@@ -19,6 +19,14 @@
       "type":"string",
       "enum": ["720p", "800p", "400p"],
       "default": "720p"
-    }
+    },
+    "fps": {
+      "title": "Camera sensor FPS",
+      "description": "Select the camera sensor FPS",
+      "type": "number",
+      "default": 30.0,
+      "minimum": 0.5,
+      "maximum": 120.0
+    },
   }
 }
