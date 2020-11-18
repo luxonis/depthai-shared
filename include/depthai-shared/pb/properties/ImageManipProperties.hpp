@@ -44,13 +44,17 @@ struct ImageManipProperties {
 
 
     // crop stage, crops input image before passing to Resize stage
-    tl::optional<CropConfig> cropConfig;
+    CropConfig cropConfig;
     
     // Resize stage, resizes the image before passing to Format stage
-    tl::optional<ResizeConfig> resizeConfig;
+    ResizeConfig resizeConfig;
 
     // Formats the final image
-    tl::optional<FormatConfig> formatConfig;
+    FormatConfig formatConfig;
+
+    bool enableCrop = false;
+    bool enableResize = false;
+    bool enableFormat = false;
 
     // Whether to wait for config at 'inputConfig' io
     bool inputConfigSync = false;
@@ -71,6 +75,7 @@ NLOHMANN_DEFINE_TYPE_NON_INTRUSIVE(ImageManipProperties::ResizeConfig, width, he
 
 NLOHMANN_DEFINE_TYPE_NON_INTRUSIVE(ImageManipProperties::FormatConfig, pixelFormat, interleave, normalizeFp16, flipHorizontal)
 
-NLOHMANN_DEFINE_TYPE_NON_INTRUSIVE(ImageManipProperties, cropConfig, resizeConfig, formatConfig, inputConfigSync)
+NLOHMANN_DEFINE_TYPE_NON_INTRUSIVE(ImageManipProperties, cropConfig, resizeConfig, formatConfig, enableCrop, enableResize, enableFormat, inputConfigSync, outputFrameSize, numFramesPool)
 
 }  // namespace dai
+
