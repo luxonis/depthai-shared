@@ -49,6 +49,6 @@ struct ColorCameraProperties {
 
 };
 
-NLOHMANN_DEFINE_TYPE_NON_INTRUSIVE(ColorCameraProperties, camId, colorOrder, interleaved, previewHeight, previewWidth, resolution)
+NLOHMANN_DEFINE_TYPE_NON_INTRUSIVE(ColorCameraProperties, camId, colorOrder, interleaved, previewHeight, previewWidth, resolution, fps)
 
 }  // namespace dai
