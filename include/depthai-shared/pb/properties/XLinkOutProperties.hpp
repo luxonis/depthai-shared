@@ -12,7 +12,7 @@ struct XLinkOutProperties {
      * Set a limit to how many packets will be sent further to host
      */
     float maxFpsLimit = -1;
-    
+
     /**
      * Name of stream
      */
