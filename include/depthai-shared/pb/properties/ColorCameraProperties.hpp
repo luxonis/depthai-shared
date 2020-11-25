@@ -11,7 +11,7 @@ struct ColorCameraProperties {
     /**
      * Select the camera sensor resolution
      */
-    enum class SensorResolution : int32_t { THE_1080_P, THE_4_K };
+    enum class SensorResolution : int32_t { THE_1080_P, THE_4_K, THE_12_MP };
 
     /**
      * For 24 bit color these can be either RGB or BGR
@@ -42,8 +42,13 @@ struct ColorCameraProperties {
      * Select the camera sensor resolution
      */
     SensorResolution resolution = SensorResolution::THE_1080_P;
+    /**
+     * Camera sensor FPS
+     */
+    float fps = 30.0;
+
 };
 
-NLOHMANN_DEFINE_TYPE_NON_INTRUSIVE(ColorCameraProperties, camId, colorOrder, interleaved, previewHeight, previewWidth, resolution)
+NLOHMANN_DEFINE_TYPE_NON_INTRUSIVE(ColorCameraProperties, camId, colorOrder, interleaved, previewHeight, previewWidth, resolution, fps)
 
 }  // namespace dai
