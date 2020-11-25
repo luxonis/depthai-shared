@@ -69,9 +69,18 @@ struct StereoDepthProperties {
     // TODO: rectification mesh option for fisheye camera use-cases
 };
 
-NLOHMANN_DEFINE_TYPE_NON_INTRUSIVE(StereoDepthProperties, calibration, median, confidenceThreshold,
-        enableLeftRightCheck, enableSubpixel, enableExtendedDisparity,
-        rectifyMirrorFrame, rectifyEdgeFillColor, enableOutputRectified,
-        enableOutputDepth, width, height)
+NLOHMANN_DEFINE_TYPE_NON_INTRUSIVE(StereoDepthProperties,
+                                   calibration,
+                                   median,
+                                   confidenceThreshold,
+                                   enableLeftRightCheck,
+                                   enableSubpixel,
+                                   enableExtendedDisparity,
+                                   rectifyMirrorFrame,
+                                   rectifyEdgeFillColor,
+                                   enableOutputRectified,
+                                   enableOutputDepth,
+                                   width,
+                                   height)
 
 }  // namespace dai

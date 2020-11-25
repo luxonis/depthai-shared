@@ -46,7 +46,6 @@ struct ColorCameraProperties {
      * Camera sensor FPS
      */
     float fps = 30.0;
-
 };
 
 NLOHMANN_DEFINE_TYPE_NON_INTRUSIVE(ColorCameraProperties, camId, colorOrder, interleaved, previewHeight, previewWidth, resolution, fps)
