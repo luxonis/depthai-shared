@@ -1,6 +1,6 @@
 #pragma once
 
-#include <depthai-shared/datatype/RawImgFrame.hpp>
+#include <depthai-shared/datatype/RawImageManipConfig.hpp>
 #include <depthai-shared/pb/common/optional.hpp>
 #include <nlohmann/json.hpp>
 
@@ -10,44 +10,7 @@ namespace dai {
  * Specify ImageManip options
  */
 struct ImageManipProperties {
-    /**
-     * Crop rectrangle normalized xmin, ymin (top left point), xmax, ymax (bottom right point)
-     */
-    struct CropRect {
-        // Normalized range 0-1
-        float xmin = 0.0f, ymin = 0.0f, xmax = 0.0f, ymax = 0.0f;
-    };
-
-    struct CropConfig {
-        CropRect cropRect;
-        bool enableCenterCropRectangle = false;
-        // if enableCenterCropRectangle -> automatically calculated crop parameters
-        float cropRatio = 1.0f, widthHeightAspectRatio = 1.0f;
-    };
-
-    struct ResizeConfig {
-        int width = 0, height = 0;
-        bool lockAspectRatioFill = false;
-        char bgRed = 0, bgGreen = 0, bgBlue = 0;
-    };
-
-    struct FormatConfig {
-        RawImgFrame::Type type = RawImgFrame::Type::RGB888p;
-        bool flipHorizontal = false;
-    };
-
-    // crop stage, crops input image before passing to Resize stage
-    CropConfig cropConfig;
-
-    // Resize stage, resizes the image before passing to Format stage
-    ResizeConfig resizeConfig;
-
-    // Formats the final image
-    FormatConfig formatConfig;
-
-    bool enableCrop = false;
-    bool enableResize = false;
-    bool enableFormat = false;
+    RawImageManipConfig initialConfig;
 
     // Whether to wait for config at 'inputConfig' io
     bool inputConfigSync = false;
@@ -59,15 +22,6 @@ struct ImageManipProperties {
     int numFramesPool = 4;
 };
 
-NLOHMANN_DEFINE_TYPE_NON_INTRUSIVE(ImageManipProperties::CropRect, xmin, ymin, xmax, ymax)
-
-NLOHMANN_DEFINE_TYPE_NON_INTRUSIVE(ImageManipProperties::CropConfig, cropRect, enableCenterCropRectangle, cropRatio, widthHeightAspectRatio)
-
-NLOHMANN_DEFINE_TYPE_NON_INTRUSIVE(ImageManipProperties::ResizeConfig, width, height, lockAspectRatioFill, bgRed, bgGreen, bgBlue)
-
-NLOHMANN_DEFINE_TYPE_NON_INTRUSIVE(ImageManipProperties::FormatConfig, type, flipHorizontal)
-
-NLOHMANN_DEFINE_TYPE_NON_INTRUSIVE(
-    ImageManipProperties, cropConfig, resizeConfig, formatConfig, enableCrop, enableResize, enableFormat, inputConfigSync, outputFrameSize, numFramesPool)
+NLOHMANN_DEFINE_TYPE_NON_INTRUSIVE(ImageManipProperties, initialConfig, inputConfigSync, outputFrameSize, numFramesPool)
 
 }  // namespace dai
