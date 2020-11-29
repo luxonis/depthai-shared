@@ -13,18 +13,17 @@
 
 namespace dai {
 
+/**
+ * Properties for SPIOut which define stream name
+ */
+struct SPIOutProperties {
     /**
-     * Properties for SPIOut which define stream name
+     * Set a limit to how many packets will be sent further to host
      */
-    struct SPIOutProperties {
-        /**
-         * Set a limit to how many packets will be sent further to host
-         */
-        std::string streamName;
-        int busId;
+    std::string streamName;
+    int busId;
+};
 
-    };
+NLOHMANN_DEFINE_TYPE_NON_INTRUSIVE(SPIOutProperties, streamName, busId)
 
-    NLOHMANN_DEFINE_TYPE_NON_INTRUSIVE(SPIOutProperties, streamName, busId)
-
-}
+}  // namespace dai
