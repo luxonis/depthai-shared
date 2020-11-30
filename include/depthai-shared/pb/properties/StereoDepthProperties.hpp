@@ -17,7 +17,7 @@ struct StereoDepthProperties {
     /**
      * Calibration data byte array
      */
-    tl::optional<std::vector<std::uint8_t>> calibration;
+    std::vector<std::uint8_t> calibration;
     /**
      * Set kernel size for disparity/depth median filtering, or disable
      */
