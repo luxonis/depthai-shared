@@ -1,0 +1,18 @@
+{
+	"name": "SPIOut",
+    "description": "SPIOut transfers data from input to host",   
+    "category": "IO",
+    "properties": "SPIOut.properties.schema.json",
+    "inputs": [
+        {
+            "name": "in",
+            "type": "sreceiver",
+            "acceptedDatatypes": [
+                {
+                    "datatype": "PoBuf",
+                    "descendants": true
+                }
+            ]
+        }
+    ]
+}
