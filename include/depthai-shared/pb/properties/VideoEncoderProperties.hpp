@@ -59,9 +59,13 @@ struct VideoEncoderProperties {
      * Input and compressed output frame height
      */
     std::int32_t height = 1080;
+    /**
+     * Frame rate
+     */
+    float frameRate = 30.0f;
 };
 
 NLOHMANN_DEFINE_TYPE_NON_INTRUSIVE(
-    VideoEncoderProperties, bitrate, keyframeFrequency, maxBitrate, numBFrames, numFramesPool, profile, quality, rateCtrlMode, width, height)
+    VideoEncoderProperties, bitrate, keyframeFrequency, maxBitrate, numBFrames, numFramesPool, profile, quality, rateCtrlMode, width, height, frameRate)
 
 }  // namespace dai
