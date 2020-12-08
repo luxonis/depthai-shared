@@ -1,0 +1,81 @@
+{
+    "name": "StereoDepth",
+    "description": "Outputs disparity, depth, rectified and input passthrough/synced streams",
+    "properties": "StereoDepth.properties.schema.json",
+    "inputs": [
+        {
+            "name": "left",
+            "type": "sreceiver",
+            "acceptedDatatypes": [
+                {
+                    "datatype": "ImgFrame"
+                }
+            ]
+        },
+        {
+            "name": "right",
+            "type": "sreceiver",
+            "acceptedDatatypes": [
+                {
+                    "datatype": "ImgFrame"
+                }
+            ]
+        },
+    ],
+    "outputs": [
+        {
+            "name": "syncedLeft",
+            "type": "msender",
+            "possibleDatatypes": [
+                {
+                    "datatype": "ImgFrame"
+                }
+            ]
+        },
+        {
+            "name": "syncedRight",
+            "type": "msender",
+            "possibleDatatypes": [
+                {
+                    "datatype": "ImgFrame"
+                }
+            ]
+        },
+        {
+            "name": "rectifiedLeft",
+            "type": "msender",
+            "possibleDatatypes": [
+                {
+                    "datatype": "ImgFrame"
+                }
+            ]
+        },
+        {
+            "name": "rectifiedRight",
+            "type": "msender",
+            "possibleDatatypes": [
+                {
+                    "datatype": "ImgFrame"
+                }
+            ]
+        },
+        {
+            "name": "disparity",
+            "type": "msender",
+            "possibleDatatypes": [
+                {
+                    "datatype": "ImgFrame"
+                }
+            ]
+        },
+        {
+            "name": "depth",
+            "type": "msender",
+            "possibleDatatypes": [
+                {
+                    "datatype": "ImgFrame"
+                }
+            ]
+        },
+    ]
+}

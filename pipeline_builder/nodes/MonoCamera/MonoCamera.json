@@ -1,0 +1,16 @@
+{
+    "name": "MonoCamera",
+    "description": "Outputs grayscale stream off selected camera",
+    "properties": "MonoCamera.properties.schema.json",
+    "outputs": [
+        {
+            "name": "out",
+            "type": "msender",
+            "possibleDatatypes": [
+                {
+                    "datatype": "ImgFrame"
+                }
+            ]
+        }
+    ]
+}
