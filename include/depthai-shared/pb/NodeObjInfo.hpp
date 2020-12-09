@@ -13,6 +13,6 @@ struct NodeObjInfo {
     std::vector<NodeIoInfo> ioInfo;
 };
 
-NLOHMANN_DEFINE_TYPE_NON_INTRUSIVE(NodeObjInfo, id, name, properties)
+NLOHMANN_DEFINE_TYPE_NON_INTRUSIVE(NodeObjInfo, id, name, properties, ioInfo)
 
 }  // namespace dai
