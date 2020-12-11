@@ -5,9 +5,7 @@
 namespace dai {
 
 struct NodeIoInfo {
-    enum class Type {
-        MSender, SSender, MReceiver, SReceiver
-    };
+    enum class Type { MSender, SSender, MReceiver, SReceiver };
 
     std::string name;
     Type type = Type::SReceiver;
