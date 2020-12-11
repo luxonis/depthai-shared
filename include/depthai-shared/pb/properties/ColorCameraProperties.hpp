@@ -31,6 +31,10 @@ struct ColorCameraProperties {
      */
     bool interleaved = true;
     /**
+     * Are values FP16 type (0.0 - 255.0)
+     */
+    bool fp16 = false;
+    /**
      * Preview frame output height
      */
     uint32_t previewHeight = 300;
@@ -48,6 +52,6 @@ struct ColorCameraProperties {
     float fps = 30.0;
 };
 
-NLOHMANN_DEFINE_TYPE_NON_INTRUSIVE(ColorCameraProperties, camId, colorOrder, interleaved, previewHeight, previewWidth, resolution, fps)
+NLOHMANN_DEFINE_TYPE_NON_INTRUSIVE(ColorCameraProperties, camId, colorOrder, interleaved, fp16, previewHeight, previewWidth, resolution, fps)
 
 }  // namespace dai
