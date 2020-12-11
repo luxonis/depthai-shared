@@ -23,6 +23,6 @@ struct GlobalProperties {
     tl::optional<std::string> pipelineVersion;
 };
 
-NLOHMANN_DEFINE_TYPE_NON_INTRUSIVE(GlobalProperties, leonOsFrequencyHz, leonRtFrequencyHz, pipelineName, pipelineVersion)
+NLOHMANN_DEFINE_TYPE_NON_INTRUSIVE(GlobalProperties, leonOsFrequencyHz, leonRtFrequencyHz, pipelineName, pipelineVersion);
 
 }  // namespace dai

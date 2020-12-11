@@ -16,6 +16,6 @@ struct MyConsumerProperties {
     ProcessorType processorPlacement;
 };
 
-NLOHMANN_DEFINE_TYPE_NON_INTRUSIVE(MyConsumerProperties, processorPlacement)
+NLOHMANN_DEFINE_TYPE_NON_INTRUSIVE(MyConsumerProperties, processorPlacement);
 
 }  // namespace dai

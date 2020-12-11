@@ -66,6 +66,6 @@ struct VideoEncoderProperties {
 };
 
 NLOHMANN_DEFINE_TYPE_NON_INTRUSIVE(
-    VideoEncoderProperties, bitrate, keyframeFrequency, maxBitrate, numBFrames, numFramesPool, profile, quality, rateCtrlMode, width, height, frameRate)
+    VideoEncoderProperties, bitrate, keyframeFrequency, maxBitrate, numBFrames, numFramesPool, profile, quality, rateCtrlMode, width, height, frameRate);
 
 }  // namespace dai

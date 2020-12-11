@@ -23,6 +23,6 @@ struct NeuralNetworkProperties {
     std::uint32_t numFrames = 8;
 };
 
-NLOHMANN_DEFINE_TYPE_NON_INTRUSIVE(NeuralNetworkProperties, blobSize, blobUri, numFrames)
+NLOHMANN_DEFINE_TYPE_NON_INTRUSIVE(NeuralNetworkProperties, blobSize, blobUri, numFrames);
 
 }  // namespace dai

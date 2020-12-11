@@ -12,6 +12,6 @@ struct NodeIoInfo {
     bool blocking = true;
 };
 
-NLOHMANN_DEFINE_TYPE_NON_INTRUSIVE(NodeIoInfo, name, type, blocking)
+NLOHMANN_DEFINE_TYPE_NON_INTRUSIVE(NodeIoInfo, name, type, blocking);
 
 }  // namespace dai

@@ -81,6 +81,6 @@ NLOHMANN_DEFINE_TYPE_NON_INTRUSIVE(StereoDepthProperties,
                                    enableOutputRectified,
                                    enableOutputDepth,
                                    width,
-                                   height)
+                                   height);
 
 }  // namespace dai

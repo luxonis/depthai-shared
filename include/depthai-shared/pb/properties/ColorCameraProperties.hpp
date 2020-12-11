@@ -52,6 +52,6 @@ struct ColorCameraProperties {
     float fps = 30.0;
 };
 
-NLOHMANN_DEFINE_TYPE_NON_INTRUSIVE(ColorCameraProperties, camId, colorOrder, interleaved, fp16, previewHeight, previewWidth, resolution, fps)
+NLOHMANN_DEFINE_TYPE_NON_INTRUSIVE(ColorCameraProperties, camId, colorOrder, interleaved, fp16, previewHeight, previewWidth, resolution, fps);
 
 }  // namespace dai

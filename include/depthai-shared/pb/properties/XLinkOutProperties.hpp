@@ -19,6 +19,6 @@ struct XLinkOutProperties {
     std::string streamName;
 };
 
-NLOHMANN_DEFINE_TYPE_NON_INTRUSIVE(XLinkOutProperties, maxFpsLimit, streamName)
+NLOHMANN_DEFINE_TYPE_NON_INTRUSIVE(XLinkOutProperties, maxFpsLimit, streamName);
 
 }  // namespace dai

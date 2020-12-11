@@ -24,6 +24,6 @@ struct SPIOutProperties {
     int busId;
 };
 
-NLOHMANN_DEFINE_TYPE_NON_INTRUSIVE(SPIOutProperties, streamName, busId)
+NLOHMANN_DEFINE_TYPE_NON_INTRUSIVE(SPIOutProperties, streamName, busId);
 
 }  // namespace dai

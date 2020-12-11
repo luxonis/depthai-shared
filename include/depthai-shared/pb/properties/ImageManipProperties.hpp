@@ -22,6 +22,6 @@ struct ImageManipProperties {
     int numFramesPool = 4;
 };
 
-NLOHMANN_DEFINE_TYPE_NON_INTRUSIVE(ImageManipProperties, initialConfig, inputConfigSync, outputFrameSize, numFramesPool)
+NLOHMANN_DEFINE_TYPE_NON_INTRUSIVE(ImageManipProperties, initialConfig, inputConfigSync, outputFrameSize, numFramesPool);
 
 }  // namespace dai
