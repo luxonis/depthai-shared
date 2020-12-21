@@ -2,13 +2,8 @@
 
 #include "RawBuffer.hpp"
 
+#include "depthai-shared/common/Timestamp.hpp"
 namespace dai {
-
-struct Timestamp {
-    uint64_t sec, nsec;
-
-    NLOHMANN_DEFINE_TYPE_INTRUSIVE(Timestamp, sec, nsec);
-};
 
 struct RawImgFrame : public RawBuffer {
     enum class Type {
