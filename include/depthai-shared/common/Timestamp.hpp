@@ -6,7 +6,6 @@
 // libraries
 #include "nlohmann/json.hpp"
 
-
 namespace dai {
 
 struct Timestamp {
@@ -15,4 +14,4 @@ struct Timestamp {
     NLOHMANN_DEFINE_TYPE_INTRUSIVE(Timestamp, sec, nsec);
 };
 
-} // namespace dai
+}  // namespace dai

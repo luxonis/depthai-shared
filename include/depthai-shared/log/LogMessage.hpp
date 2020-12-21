@@ -12,18 +12,15 @@
 
 namespace dai {
 
-
 struct LogMessage {
-
     std::string nodeIdName;
     LogLevel level;
     Timestamp time;
     size_t colorRangeStart{0};
     size_t colorRangeEnd{0};
     std::string payload;
-
 };
 
 NLOHMANN_DEFINE_TYPE_NON_INTRUSIVE(LogMessage, nodeIdName, level, time, colorRangeStart, colorRangeEnd, payload);
 
-} // namespace dai
+}  // namespace dai

@@ -1,7 +1,6 @@
 #pragma once
 
 #include "RawBuffer.hpp"
-
 #include "depthai-shared/common/Timestamp.hpp"
 namespace dai {
 
