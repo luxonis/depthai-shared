@@ -26,6 +26,6 @@ struct XLinkInProperties {
     std::uint32_t numFrames = 8;
 };
 
-NLOHMANN_DEFINE_TYPE_NON_INTRUSIVE(XLinkInProperties, streamName)
+NLOHMANN_DEFINE_TYPE_NON_INTRUSIVE(XLinkInProperties, streamName, maxDataSize, numFrames);
 
 }  // namespace dai

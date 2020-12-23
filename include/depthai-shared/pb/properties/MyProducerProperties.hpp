@@ -22,6 +22,6 @@ struct MyProducerProperties {
     ProcessorType processorPlacement = ProcessorType::LOS;
 };
 
-NLOHMANN_DEFINE_TYPE_NON_INTRUSIVE(MyProducerProperties, message, processorPlacement)
+NLOHMANN_DEFINE_TYPE_NON_INTRUSIVE(MyProducerProperties, message, processorPlacement);
 
 }  // namespace dai
