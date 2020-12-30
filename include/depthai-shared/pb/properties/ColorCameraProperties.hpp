@@ -34,6 +34,7 @@ struct ColorCameraProperties {
      * Are values FP16 type (0.0 - 255.0)
      */
     bool fp16 = false;
+
     /**
      * Preview frame output height
      */
@@ -42,6 +43,27 @@ struct ColorCameraProperties {
      * Preview frame output width
      */
     uint32_t previewWidth = 300;
+
+    /**
+     * Preview frame output width
+     */
+    int32_t videoWidth = -1;
+    
+    /**
+     * Preview frame output height
+     */
+    int32_t videoHeight = -1;
+
+    /**
+     * Preview frame output width
+     */
+    int32_t stillWidth = -1;
+
+    /**
+     * Preview frame output height
+     */
+    int32_t stillHeight = -1;
+
     /**
      * Select the camera sensor resolution
      */
