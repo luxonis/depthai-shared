@@ -2,6 +2,8 @@
 
 #include <nlohmann/json.hpp>
 
+#include "depthai-shared/pb/common/CameraBoardSocket.hpp"
+
 namespace dai {
 
 /**
@@ -19,9 +21,10 @@ struct ColorCameraProperties {
     enum class ColorOrder : int32_t { BGR, RGB };
 
     /**
-     * Which color camera the node will use
+     * Which socket will color camera use
      */
-    int32_t camId = 0;
+    CameraBoardSocket boardSocket = CameraBoardSocket::AUTO;
+
     /**
      * For 24 bit color these can be either RGB or BGR
      */
@@ -48,7 +51,7 @@ struct ColorCameraProperties {
      * Preview frame output width
      */
     int32_t videoWidth = -1;
-    
+
     /**
      * Preview frame output height
      */
@@ -74,6 +77,18 @@ struct ColorCameraProperties {
     float fps = 30.0;
 };
 
-NLOHMANN_DEFINE_TYPE_NON_INTRUSIVE(ColorCameraProperties, camId, colorOrder, interleaved, fp16, previewHeight, previewWidth, resolution, fps);
+NLOHMANN_DEFINE_TYPE_NON_INTRUSIVE(ColorCameraProperties,
+                                   boardSocket,
+                                   colorOrder,
+                                   interleaved,
+                                   fp16,
+                                   previewHeight,
+                                   previewWidth,
+                                   videoWidth,
+                                   videoHeight,
+                                   stillWidth,
+                                   stillHeight,
+                                   resolution,
+                                   fps);
 
 }  // namespace dai
