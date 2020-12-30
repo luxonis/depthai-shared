@@ -10,27 +10,27 @@ namespace dai {
  * Properties for DetectionNetwork
  */
 struct DetectionNetworkProperties {
-    /**
-     * Set a limit to how many packets will be sent further to host
-     */
-    std::string streamName;
-    /**
-     * Uri which points to blob
-     */
-    std::string nnConfig;
 
+    std::string streamName;
+    std::string blobUri;
+    tl::optional<std::uint32_t> blobSize;
+
+    // Generic Neural Network Info
     std::string nnFamily;
-    std::string confidenceThreshold;
+    float confidenceThreshold;
 
     // YOLO specific
     int classes;
     int coordinates;
     std::vector<float> anchors;
-    std::vector<std::vector<int>> anchor_masks;
+    std::vector<int> anchorMasks;
     float iouThreshold;
+
+    // Misc Stuff
+    std::uint32_t numFrames = 8;
 
 };
 
-NLOHMANN_DEFINE_TYPE_NON_INTRUSIVE(DetectionNetworkProperties, streamName, nnConfig, classes, coordinates, anchors, anchor_masks, iouThreshold)
+NLOHMANN_DEFINE_TYPE_NON_INTRUSIVE(DetectionNetworkProperties, streamName, nnFamily, blobUri, blobSize, confidenceThreshold, classes, coordinates, anchors, anchorMasks, iouThreshold, numFrames)
 
 }  // namespace dai
