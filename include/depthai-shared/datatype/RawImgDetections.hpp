@@ -5,7 +5,6 @@
 namespace dai {
 
 struct ImgDetection {
-    
     uint32_t label;
     float confidence;
     float xmin;
@@ -20,7 +19,6 @@ struct ImgDetection {
 };
 
 struct RawImgDetections : public RawBuffer {
-    
     std::vector<ImgDetection> detections;
 
     void serialize(std::vector<std::uint8_t>& metadata, DatatypeEnum& datatype) override {

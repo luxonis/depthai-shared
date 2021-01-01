@@ -10,7 +10,6 @@ namespace dai {
  * Properties for DetectionNetwork
  */
 struct DetectionNetworkProperties {
-
     std::string streamName;
     std::string blobUri;
     tl::optional<std::uint32_t> blobSize;
@@ -23,14 +22,24 @@ struct DetectionNetworkProperties {
     int classes;
     int coordinates;
     std::vector<float> anchors;
-    std::map<std::string,std::vector<int>> anchorMasks;
+    std::map<std::string, std::vector<int>> anchorMasks;
     float iouThreshold;
 
     // Misc Stuff
     std::uint32_t numFrames = 8;
-
 };
 
-NLOHMANN_DEFINE_TYPE_NON_INTRUSIVE(DetectionNetworkProperties, streamName, nnFamily, blobUri, blobSize, confidenceThreshold, classes, coordinates, anchors, anchorMasks, iouThreshold, numFrames)
+NLOHMANN_DEFINE_TYPE_NON_INTRUSIVE(DetectionNetworkProperties,
+                                   streamName,
+                                   nnFamily,
+                                   blobUri,
+                                   blobSize,
+                                   confidenceThreshold,
+                                   classes,
+                                   coordinates,
+                                   anchors,
+                                   anchorMasks,
+                                   iouThreshold,
+                                   numFrames)
 
 }  // namespace dai
