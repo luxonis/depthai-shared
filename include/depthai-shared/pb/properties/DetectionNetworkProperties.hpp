@@ -23,7 +23,7 @@ struct DetectionNetworkProperties {
     int classes;
     int coordinates;
     std::vector<float> anchors;
-    std::vector<int> anchorMasks;
+    std::map<std::string,std::vector<int>> anchorMasks;
     float iouThreshold;
 
     // Misc Stuff
