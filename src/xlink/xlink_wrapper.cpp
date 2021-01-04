@@ -441,8 +441,6 @@ bool XLinkWrapper::openWriteAndCloseStream(const StreamInfo& stream, const void*
 bool XLinkWrapper::openStreamInThreadAndNotifyObservers(const StreamInfo& stream, bool async_connect) {
     assert(_device_link_id != -1);
 
-    bool result = false;
-
     do {
         std::lock_guard<std::mutex> guard(_threads_subject_list_lock);
 
@@ -467,7 +465,6 @@ bool XLinkWrapper::openStreamInThreadAndNotifyObservers(const StreamInfo& stream
 
         _threads_subject.push_back(std::thread(&XLinkWrapper::openAndReadDataThreadFunc, this, stream, stream_id));
 
-        result = true;
     } while(false);
 
     return true;
