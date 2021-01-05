@@ -16,7 +16,7 @@ struct DetectionNetworkProperties {
     tl::optional<std::uint32_t> blobSize;
 
     // Generic Neural Network Info
-    DetectionNetworkTypeEnum nnFamily;
+    int nnFamily;
     float confidenceThreshold;
 
     // YOLO specific

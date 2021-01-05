@@ -2,8 +2,5 @@
 
 #include <cstdint>
 
-namespace dai {
+enum DetectionNetworkTypeEnum { dntype_yolo, dntype_mobilenet };
 
-enum DetectionNetworkTypeEnum { yolo, mobilenet };
-
-}  // namespace dai
