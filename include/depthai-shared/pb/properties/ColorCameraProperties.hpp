@@ -81,6 +81,11 @@ struct ColorCameraProperties {
      */
     float sensorCropX = -1;
     float sensorCropY = -1;
+
+    /**
+     * Whether to wait for config at 'inputConfig' io
+     */
+    bool inputConfigSync = false;
 };
 
 NLOHMANN_DEFINE_TYPE_NON_INTRUSIVE(ColorCameraProperties,
@@ -97,6 +102,7 @@ NLOHMANN_DEFINE_TYPE_NON_INTRUSIVE(ColorCameraProperties,
                                    resolution,
                                    fps,
                                    sensorCropX,
-                                   sensorCropY);
+                                   sensorCropY,
+                                   inputConfigSync);
 
 }  // namespace dai
