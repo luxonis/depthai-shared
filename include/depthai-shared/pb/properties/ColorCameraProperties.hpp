@@ -75,6 +75,12 @@ struct ColorCameraProperties {
      * Camera sensor FPS
      */
     float fps = 30.0;
+
+    /**
+     * Initial sensor crop, -1 signifies center crop
+     */
+    float sensorCropX = -1;
+    float sensorCropY = -1;
 };
 
 NLOHMANN_DEFINE_TYPE_NON_INTRUSIVE(ColorCameraProperties,
@@ -89,6 +95,8 @@ NLOHMANN_DEFINE_TYPE_NON_INTRUSIVE(ColorCameraProperties,
                                    stillWidth,
                                    stillHeight,
                                    resolution,
-                                   fps);
+                                   fps,
+                                   sensorCropX,
+                                   sensorCropY);
 
 }  // namespace dai

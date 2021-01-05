@@ -9,11 +9,8 @@
 namespace dai {
 
 struct RawCameraControl : public RawBuffer {
-    
     // TODO(themarpe/alex) - this is a placeholder for vairous camera control commands
     bool captureStill = false;
-
-
 
     void serialize(std::vector<std::uint8_t>& metadata, DatatypeEnum& datatype) override {
         nlohmann::json j = *this;
