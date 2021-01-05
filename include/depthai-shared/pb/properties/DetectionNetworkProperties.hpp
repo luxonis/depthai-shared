@@ -3,6 +3,7 @@
 #include <depthai-shared/pb/common/optional.hpp>
 #include <nlohmann/json.hpp>
 #include <vector>
+#include "depthai-shared/datatype/DetectionNetworkTypeEnum.hpp"
 
 namespace dai {
 
@@ -15,7 +16,7 @@ struct DetectionNetworkProperties {
     tl::optional<std::uint32_t> blobSize;
 
     // Generic Neural Network Info
-    std::string nnFamily;
+    DetectionNetworkTypeEnum nnFamily;
     float confidenceThreshold;
 
     // YOLO specific
