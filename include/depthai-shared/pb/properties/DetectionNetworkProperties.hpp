@@ -3,6 +3,7 @@
 #include <depthai-shared/pb/common/optional.hpp>
 #include <nlohmann/json.hpp>
 #include <vector>
+
 #include "depthai-shared/datatype/DetectionNetworkTypeEnum.hpp"
 
 namespace dai {
