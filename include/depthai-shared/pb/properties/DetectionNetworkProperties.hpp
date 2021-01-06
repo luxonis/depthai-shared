@@ -4,8 +4,6 @@
 #include <nlohmann/json.hpp>
 #include <vector>
 
-#include "depthai-shared/datatype/DetectionNetworkTypeEnum.hpp"
-
 namespace dai {
 
 /**
