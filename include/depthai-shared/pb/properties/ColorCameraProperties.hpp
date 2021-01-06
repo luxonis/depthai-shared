@@ -86,6 +86,11 @@ struct ColorCameraProperties {
      * Whether to wait for config at 'inputConfig' io
      */
     bool inputConfigSync = false;
+
+    /**
+     * Whether to keep aspect ratio of input (video size) or not
+     */
+    bool previewKeepAspectRatio = true;
 };
 
 NLOHMANN_DEFINE_TYPE_NON_INTRUSIVE(ColorCameraProperties,
@@ -103,6 +108,7 @@ NLOHMANN_DEFINE_TYPE_NON_INTRUSIVE(ColorCameraProperties,
                                    fps,
                                    sensorCropX,
                                    sensorCropY,
-                                   inputConfigSync);
+                                   inputConfigSync,
+                                   previewKeepAspectRatio);
 
 }  // namespace dai
