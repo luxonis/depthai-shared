@@ -10,6 +10,8 @@ namespace dai {
  * Specify ColorCamera options such as camera ID, ...
  */
 struct ColorCameraProperties {
+    static constexpr int AUTO = -1;
+
     /**
      * Select the camera sensor resolution
      */
@@ -50,22 +52,22 @@ struct ColorCameraProperties {
     /**
      * Preview frame output width
      */
-    int32_t videoWidth = -1;
+    int32_t videoWidth = AUTO;
 
     /**
      * Preview frame output height
      */
-    int32_t videoHeight = -1;
+    int32_t videoHeight = AUTO;
 
     /**
      * Preview frame output width
      */
-    int32_t stillWidth = -1;
+    int32_t stillWidth = AUTO;
 
     /**
      * Preview frame output height
      */
-    int32_t stillHeight = -1;
+    int32_t stillHeight = AUTO;
 
     /**
      * Select the camera sensor resolution
@@ -79,8 +81,8 @@ struct ColorCameraProperties {
     /**
      * Initial sensor crop, -1 signifies center crop
      */
-    float sensorCropX = -1;
-    float sensorCropY = -1;
+    float sensorCropX = AUTO;
+    float sensorCropY = AUTO;
 
     /**
      * Whether to wait for config at 'inputConfig' io
