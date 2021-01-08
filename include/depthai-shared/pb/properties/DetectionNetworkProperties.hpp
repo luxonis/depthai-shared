@@ -4,15 +4,15 @@
 #include <nlohmann/json.hpp>
 #include <vector>
 
+#include "NeuralNetworkProperties.hpp"
+
 namespace dai {
 
 /**
  * Properties for DetectionNetwork
  */
-struct DetectionNetworkProperties {
+struct DetectionNetworkProperties : NeuralNetworkProperties {
     std::string streamName;
-    std::string blobUri;
-    tl::optional<std::uint32_t> blobSize;
 
     // Generic Neural Network Info
     uint32_t nnFamily;
@@ -24,9 +24,6 @@ struct DetectionNetworkProperties {
     std::vector<float> anchors;
     std::map<std::string, std::vector<int>> anchorMasks;
     float iouThreshold;
-
-    // Misc Stuff
-    std::uint32_t numFrames = 8;
 };
 
 NLOHMANN_DEFINE_TYPE_NON_INTRUSIVE(DetectionNetworkProperties,
