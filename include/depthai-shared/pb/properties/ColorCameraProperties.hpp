@@ -2,12 +2,16 @@
 
 #include <nlohmann/json.hpp>
 
+#include "depthai-shared/pb/common/CameraBoardSocket.hpp"
+
 namespace dai {
 
 /**
  * Specify ColorCamera options such as camera ID, ...
  */
 struct ColorCameraProperties {
+    static constexpr int AUTO = -1;
+
     /**
      * Select the camera sensor resolution
      */
@@ -19,9 +23,10 @@ struct ColorCameraProperties {
     enum class ColorOrder : int32_t { BGR, RGB };
 
     /**
-     * Which color camera the node will use
+     * Which socket will color camera use
      */
-    int32_t camId = 0;
+    CameraBoardSocket boardSocket = CameraBoardSocket::AUTO;
+
     /**
      * For 24 bit color these can be either RGB or BGR
      */
@@ -34,6 +39,7 @@ struct ColorCameraProperties {
      * Are values FP16 type (0.0 - 255.0)
      */
     bool fp16 = false;
+
     /**
      * Preview frame output height
      */
@@ -42,6 +48,27 @@ struct ColorCameraProperties {
      * Preview frame output width
      */
     uint32_t previewWidth = 300;
+
+    /**
+     * Preview frame output width
+     */
+    int32_t videoWidth = AUTO;
+
+    /**
+     * Preview frame output height
+     */
+    int32_t videoHeight = AUTO;
+
+    /**
+     * Preview frame output width
+     */
+    int32_t stillWidth = AUTO;
+
+    /**
+     * Preview frame output height
+     */
+    int32_t stillHeight = AUTO;
+
     /**
      * Select the camera sensor resolution
      */
@@ -50,8 +77,40 @@ struct ColorCameraProperties {
      * Camera sensor FPS
      */
     float fps = 30.0;
+
+    /**
+     * Initial sensor crop, -1 signifies center crop
+     */
+    float sensorCropX = AUTO;
+    float sensorCropY = AUTO;
+
+    /**
+     * Whether to wait for config at 'inputConfig' io
+     */
+    bool inputConfigSync = false;
+
+    /**
+     * Whether to keep aspect ratio of input (video size) or not
+     */
+    bool previewKeepAspectRatio = true;
 };
 
-NLOHMANN_DEFINE_TYPE_NON_INTRUSIVE(ColorCameraProperties, camId, colorOrder, interleaved, fp16, previewHeight, previewWidth, resolution, fps);
+NLOHMANN_DEFINE_TYPE_NON_INTRUSIVE(ColorCameraProperties,
+                                   boardSocket,
+                                   colorOrder,
+                                   interleaved,
+                                   fp16,
+                                   previewHeight,
+                                   previewWidth,
+                                   videoWidth,
+                                   videoHeight,
+                                   stillWidth,
+                                   stillHeight,
+                                   resolution,
+                                   fps,
+                                   sensorCropX,
+                                   sensorCropY,
+                                   inputConfigSync,
+                                   previewKeepAspectRatio);
 
 }  // namespace dai
