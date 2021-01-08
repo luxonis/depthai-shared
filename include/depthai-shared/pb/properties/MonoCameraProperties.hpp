@@ -2,6 +2,8 @@
 
 #include <nlohmann/json.hpp>
 
+#include "depthai-shared/pb/common/CameraBoardSocket.hpp"
+
 namespace dai {
 
 /**
@@ -14,9 +16,10 @@ struct MonoCameraProperties {
     enum class SensorResolution : int32_t { THE_720_P, THE_800_P, THE_400_P };
 
     /**
-     * Which mono camera the node will use
+     * Which socket will mono camera use
      */
-    int32_t camId = 1;
+    CameraBoardSocket boardSocket = CameraBoardSocket::AUTO;
+
     /**
      * Select the camera sensor resolution
      */
@@ -27,6 +30,6 @@ struct MonoCameraProperties {
     float fps = 30.0;
 };
 
-NLOHMANN_DEFINE_TYPE_NON_INTRUSIVE(MonoCameraProperties, camId, resolution, fps);
+NLOHMANN_DEFINE_TYPE_NON_INTRUSIVE(MonoCameraProperties, boardSocket, resolution, fps);
 
 }  // namespace dai
