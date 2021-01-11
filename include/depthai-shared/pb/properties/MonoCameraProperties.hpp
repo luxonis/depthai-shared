@@ -3,6 +3,7 @@
 #include <nlohmann/json.hpp>
 
 #include "depthai-shared/pb/common/CameraBoardSocket.hpp"
+#include "depthai-shared/pb/common/CameraImageOrientation.hpp"
 
 namespace dai {
 
@@ -21,6 +22,11 @@ struct MonoCameraProperties {
     CameraBoardSocket boardSocket = CameraBoardSocket::AUTO;
 
     /**
+     * Camera sensor image orientation / pixel readout
+     */
+    CameraImageOrientation imageOrientation = CameraImageOrientation::AUTO;
+
+    /**
      * Select the camera sensor resolution
      */
     SensorResolution resolution = SensorResolution::THE_720_P;
@@ -30,6 +36,6 @@ struct MonoCameraProperties {
     float fps = 30.0;
 };
 
-NLOHMANN_DEFINE_TYPE_NON_INTRUSIVE(MonoCameraProperties, boardSocket, resolution, fps);
+NLOHMANN_DEFINE_TYPE_NON_INTRUSIVE(MonoCameraProperties, boardSocket, imageOrientation, resolution, fps);
 
 }  // namespace dai
