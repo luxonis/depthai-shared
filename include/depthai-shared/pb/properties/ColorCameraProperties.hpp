@@ -3,6 +3,7 @@
 #include <nlohmann/json.hpp>
 
 #include "depthai-shared/pb/common/CameraBoardSocket.hpp"
+#include "depthai-shared/pb/common/CameraImageOrientation.hpp"
 
 namespace dai {
 
@@ -26,6 +27,11 @@ struct ColorCameraProperties {
      * Which socket will color camera use
      */
     CameraBoardSocket boardSocket = CameraBoardSocket::AUTO;
+
+    /**
+     * Camera sensor image orientation / pixel readout
+     */
+    CameraImageOrientation imageOrientation = CameraImageOrientation::AUTO;
 
     /**
      * For 24 bit color these can be either RGB or BGR
@@ -97,6 +103,7 @@ struct ColorCameraProperties {
 
 NLOHMANN_DEFINE_TYPE_NON_INTRUSIVE(ColorCameraProperties,
                                    boardSocket,
+                                   imageOrientation,
                                    colorOrder,
                                    interleaved,
                                    fp16,
