@@ -12,8 +12,6 @@ namespace dai {
  * Properties for DetectionNetwork
  */
 struct DetectionNetworkProperties : NeuralNetworkProperties {
-    std::string streamName;
-
     // Generic Neural Network Info
     uint32_t nnFamily;
     float confidenceThreshold;
@@ -26,17 +24,7 @@ struct DetectionNetworkProperties : NeuralNetworkProperties {
     float iouThreshold;
 };
 
-NLOHMANN_DEFINE_TYPE_NON_INTRUSIVE(DetectionNetworkProperties,
-                                   streamName,
-                                   nnFamily,
-                                   blobUri,
-                                   blobSize,
-                                   confidenceThreshold,
-                                   classes,
-                                   coordinates,
-                                   anchors,
-                                   anchorMasks,
-                                   iouThreshold,
-                                   numFrames)
+NLOHMANN_DEFINE_TYPE_NON_INTRUSIVE(
+    DetectionNetworkProperties, nnFamily, blobUri, blobSize, confidenceThreshold, classes, coordinates, anchors, anchorMasks, iouThreshold, numFrames)
 
 }  // namespace dai
