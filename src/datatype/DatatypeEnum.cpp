@@ -21,10 +21,11 @@ struct hash<dai::DatatypeEnum> {
 namespace dai {
 
 const std::unordered_map<DatatypeEnum, std::vector<DatatypeEnum>> hierarchy = {
-    {DatatypeEnum::Buffer, {DatatypeEnum::ImgFrame, DatatypeEnum::NNData, DatatypeEnum::ImageManipConfig, DatatypeEnum::CameraControl}},
+    {DatatypeEnum::Buffer, {DatatypeEnum::ImgFrame, DatatypeEnum::NNData, DatatypeEnum::ImageManipConfig, DatatypeEnum::CameraControl, DatatypeEnum::SystemInformation}},
     {DatatypeEnum::ImgFrame, {}},
     {DatatypeEnum::NNData, {}},
     {DatatypeEnum::ImageManipConfig, {}},
+    {DatatypeEnum::SystemInformation, {}},
     {DatatypeEnum::CameraControl, {}}};
 
 bool isDatatypeSubclassOf(DatatypeEnum parent, DatatypeEnum children) {
