@@ -12,8 +12,8 @@ namespace core
 		
 
 inline type::id hash_id(const std::string& str) {
-	type::id h = 1125899906842597L; // prime
-	for(const auto& c : str) h = 31 * h + c;
+	type::id h = UINT64_C(1125899906842597); // prime
+	for(const auto& c : str) h = 31 * h + c; // as 'h' is unsigned, both 31 and 'c' are promoted to unsigned
 	return h;
 }
 
