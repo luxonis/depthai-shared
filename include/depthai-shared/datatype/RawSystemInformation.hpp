@@ -5,15 +5,13 @@
 
 #include "DatatypeEnum.hpp"
 #include "RawBuffer.hpp"
-
-#include "depthai-shared/pb/common/MemoryInfo.hpp"
-#include "depthai-shared/pb/common/CpuUsage.hpp"
 #include "depthai-shared/pb/common/ChipTemperature.hpp"
+#include "depthai-shared/pb/common/CpuUsage.hpp"
+#include "depthai-shared/pb/common/MemoryInfo.hpp"
 
 namespace dai {
 
 struct RawSystemInformation : public RawBuffer {
-    
     MemoryInfo memoryDdrUsage, memoryLeonOsUsage, memoryLeonRtUsage;
     CpuUsage cpuLeonOsUsage, cpuLeonRtUsage;
     ChipTemperature chipTemperature;

@@ -11,7 +11,6 @@ namespace dai {
  * SystemLoggerProperties
  */
 struct SystemLoggerProperties {
-    
     /**
      * Rate at which the messages are going to be sent in hertz
      */

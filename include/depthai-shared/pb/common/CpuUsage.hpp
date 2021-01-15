@@ -9,12 +9,11 @@ namespace dai {
  *
  * Average usage in percent and time span of the average (since last query)
  */
-struct CpuUsage { 
+struct CpuUsage {
     float average;
     int32_t msTime;
 };
 
 NLOHMANN_DEFINE_TYPE_NON_INTRUSIVE(CpuUsage, average, msTime);
-
 
 }  // namespace dai
