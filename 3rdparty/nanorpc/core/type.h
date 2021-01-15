@@ -24,7 +24,7 @@ namespace type
 {
 
 
-using id = std::int64_t;
+using id = std::uint64_t;
 using buffer = std::vector<std::uint8_t>;
 using executor = std::function<buffer (buffer)>;
 using executor_map = std::map<std::string, executor>;
