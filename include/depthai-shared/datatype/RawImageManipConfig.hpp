@@ -99,6 +99,7 @@ struct RawImageManipConfig : public RawBuffer {
     bool enableCrop = false;
     bool enableResize = false;
     bool enableFormat = false;
+    bool reusePreviousImage = false;
 
     void serialize(std::vector<std::uint8_t>& metadata, DatatypeEnum& datatype) override {
         nlohmann::json j = *this;
@@ -106,7 +107,7 @@ struct RawImageManipConfig : public RawBuffer {
         datatype = DatatypeEnum::ImageManipConfig;
     };
 
-    NLOHMANN_DEFINE_TYPE_INTRUSIVE(RawImageManipConfig, cropConfig, resizeConfig, formatConfig, enableCrop, enableResize, enableFormat);
+    NLOHMANN_DEFINE_TYPE_INTRUSIVE(RawImageManipConfig, cropConfig, resizeConfig, formatConfig, enableCrop, enableResize, enableFormat, reusePreviousImage);
 };
 
 }  // namespace dai
