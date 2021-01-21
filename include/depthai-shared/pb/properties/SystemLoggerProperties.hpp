@@ -14,7 +14,7 @@ struct SystemLoggerProperties {
     /**
      * Rate at which the messages are going to be sent in hertz
      */
-    float rateHz = true;
+    float rateHz = 1.0f;
 };
 
 NLOHMANN_DEFINE_TYPE_NON_INTRUSIVE(SystemLoggerProperties, rateHz);

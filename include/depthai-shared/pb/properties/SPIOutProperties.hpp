@@ -14,13 +14,12 @@
 namespace dai {
 
 /**
- * Properties for SPIOut which define stream name
+ * Properties for SPIOut node
  */
 struct SPIOutProperties {
-    /**
-     * Set a limit to how many packets will be sent further to host
-     */
+    /// Output stream name
     std::string streamName;
+    /// SPI bus to use
     int busId;
 };
 

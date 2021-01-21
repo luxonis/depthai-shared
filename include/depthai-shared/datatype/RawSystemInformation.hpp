@@ -10,10 +10,23 @@
 #include "depthai-shared/pb/common/MemoryInfo.hpp"
 
 namespace dai {
-
+/**
+ * System information of device
+ *
+ * Memory usage, cpu usage and chip temperature
+ */
 struct RawSystemInformation : public RawBuffer {
-    MemoryInfo memoryDdrUsage, memoryLeonOsUsage, memoryLeonRtUsage;
-    CpuUsage cpuLeonOsUsage, cpuLeonRtUsage;
+    /// DDR memory usage
+    MemoryInfo ddrMemoryUsage;
+    /// LeonCss heap usage
+    MemoryInfo leonCssMemoryUsage;
+    /// LeonMss heap usage
+    MemoryInfo leonMssMemoryUsage;
+    /// LeonCss cpu usage
+    CpuUsage leonCssCpuUsage;
+    /// LeonMss cpu usage
+    CpuUsage leonMssCpuUsage;
+    /// Chip temperatures
     ChipTemperature chipTemperature;
 
     void serialize(std::vector<std::uint8_t>& metadata, DatatypeEnum& datatype) override {
@@ -22,7 +35,8 @@ struct RawSystemInformation : public RawBuffer {
         datatype = DatatypeEnum::SystemInformation;
     };
 
-    NLOHMANN_DEFINE_TYPE_INTRUSIVE(RawSystemInformation, memoryDdrUsage, memoryLeonOsUsage, memoryLeonRtUsage, cpuLeonOsUsage, cpuLeonRtUsage, chipTemperature);
+    NLOHMANN_DEFINE_TYPE_INTRUSIVE(
+        RawSystemInformation, ddrMemoryUsage, leonCssMemoryUsage, leonMssMemoryUsage, leonCssCpuUsage, leonMssCpuUsage, chipTemperature);
 };
 
 }  // namespace dai

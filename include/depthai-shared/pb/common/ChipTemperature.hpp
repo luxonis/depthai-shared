@@ -10,10 +10,18 @@ namespace dai {
  * Multiple temperature measurement points and their average
  */
 struct ChipTemperature {
-    float css, mss, upa0, upa1;
+    /// CPU Subsystem
+    float css;
+    /// Media Subsystem
+    float mss;
+    /// Shave Array
+    float upa;
+    /// DRAM Subsystem
+    float dss;
+    /// Average of measurements
     float average;
 };
 
-NLOHMANN_DEFINE_TYPE_NON_INTRUSIVE(ChipTemperature, css, mss, upa0, upa1, average);
+NLOHMANN_DEFINE_TYPE_NON_INTRUSIVE(ChipTemperature, css, mss, upa, dss, average);
 
 }  // namespace dai

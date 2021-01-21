@@ -13,16 +13,16 @@ struct GlobalProperties {
      * Set frequency of Leon OS - Incresing can improve performance, at the cost of higher power
      * draw
      */
-    double leonOsFrequencyHz = 600 * 1000 * 1000;
+    double leonCssFrequencyHz = 600 * 1000 * 1000;
     /**
      * Set frequency of Leon RT - Incresing can improve performance, at the cost of higher power
      * draw
      */
-    double leonRtFrequencyHz = 600 * 1000 * 1000;
+    double leonMssFrequencyHz = 600 * 1000 * 1000;
     tl::optional<std::string> pipelineName;
     tl::optional<std::string> pipelineVersion;
 };
 
-NLOHMANN_DEFINE_TYPE_NON_INTRUSIVE(GlobalProperties, leonOsFrequencyHz, leonRtFrequencyHz, pipelineName, pipelineVersion);
+NLOHMANN_DEFINE_TYPE_NON_INTRUSIVE(GlobalProperties, leonCssFrequencyHz, leonMssFrequencyHz, pipelineName, pipelineVersion);
 
 }  // namespace dai

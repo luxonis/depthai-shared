@@ -12,13 +12,13 @@ namespace dai {
 struct ImageManipProperties {
     RawImageManipConfig initialConfig;
 
-    // Whether to wait for config at 'inputConfig' io
+    /// Whether to wait for config at 'inputConfig' IO
     bool inputConfigSync = false;
 
-    // Maximum output frame size in bytes (eg: 300x300 BGR image -> 300*300*3 bytes)
+    /// Maximum output frame size in bytes (eg: 300x300 BGR image -> 300*300*3 bytes)
     int outputFrameSize = 1 * 1024 * 1024;
 
-    // Num frames in pool
+    /// Num frames in output pool
     int numFramesPool = 4;
 };
 
