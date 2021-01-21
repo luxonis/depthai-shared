@@ -9,7 +9,7 @@
 namespace dai {
 
 struct Timestamp {
-    uint64_t sec, nsec;
+    int64_t sec, nsec;
 
     NLOHMANN_DEFINE_TYPE_INTRUSIVE(Timestamp, sec, nsec);
 };
