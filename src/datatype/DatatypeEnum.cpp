@@ -22,12 +22,19 @@ namespace dai {
 
 const std::unordered_map<DatatypeEnum, std::vector<DatatypeEnum>> hierarchy = {
     {DatatypeEnum::Buffer,
-     {DatatypeEnum::ImgFrame, DatatypeEnum::NNData, DatatypeEnum::ImageManipConfig, DatatypeEnum::ImgDetections, DatatypeEnum::CameraControl}},
+     {DatatypeEnum::ImgFrame,
+      DatatypeEnum::NNData,
+      DatatypeEnum::ImageManipConfig,
+      DatatypeEnum::CameraControl,
+      DatatypeEnum::ImgDetections,
+      DatatypeEnum::SystemInformation}},
     {DatatypeEnum::ImgFrame, {}},
     {DatatypeEnum::NNData, {}},
     {DatatypeEnum::ImageManipConfig, {}},
+    {DatatypeEnum::CameraControl, {}},
     {DatatypeEnum::ImgDetections, {}},
-    {DatatypeEnum::CameraControl, {}}};
+    {DatatypeEnum::SystemInformation, {}},
+};
 
 bool isDatatypeSubclassOf(DatatypeEnum parent, DatatypeEnum children) {
     for(const auto& d : hierarchy.at(parent)) {
