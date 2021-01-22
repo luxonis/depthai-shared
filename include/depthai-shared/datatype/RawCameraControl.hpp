@@ -9,6 +9,17 @@
 namespace dai {
 
 struct RawCameraControl : public RawBuffer {
+    enum class AutoFocusMode : uint8_t {
+        OFF = 0,
+        AUTO,
+        MACRO,
+        CONTINUOUS_VIDEO,
+        CONTINUOUS_PICTURE,
+        EDOF,
+    };
+
+    AutoFocusMode autoFocusMode = AutoFocusMode::CONTINUOUS_VIDEO;
+
     // TODO(themarpe/alex) - this is a placeholder for vairous camera control commands
     bool captureStill = false;
 
@@ -18,7 +29,7 @@ struct RawCameraControl : public RawBuffer {
         datatype = DatatypeEnum::CameraControl;
     };
 
-    NLOHMANN_DEFINE_TYPE_INTRUSIVE(RawCameraControl, captureStill);
+    NLOHMANN_DEFINE_TYPE_INTRUSIVE(RawCameraControl, captureStill, autoFocusMode);
 };
 
 }  // namespace dai
