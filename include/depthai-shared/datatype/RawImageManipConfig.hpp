@@ -45,9 +45,8 @@ struct RawImageManipConfig : public RawBuffer {
     struct CropQuadrilateral {
         // pt[0] is mapped to the top-left output corner, clockwise order
         std::vector<Point2f> pt;
-        Size2f outSize;
 
-        NLOHMANN_DEFINE_TYPE_INTRUSIVE(CropQuadrilateral, pt, outSize);
+        NLOHMANN_DEFINE_TYPE_INTRUSIVE(CropQuadrilateral, pt);
     };
 
     struct CropConfig {
