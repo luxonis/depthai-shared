@@ -26,11 +26,11 @@ struct CameraInfo {
     std::vector<std::vector<double>> intrinsicMatrix;
     std::vector<double> distortionCoeff;
     CameraExtrinsics extrinsics;
+    double fovRad;
 };
 
 struct EepromData {
     bool swapLeftRightCam;
-    double monoFovRad, rgbFovRad;
     std::string name, revision;
     std::vector<CameraInfo> cameraData;
     StereoRectification stereoRectificationData;
