@@ -1,9 +1,0 @@
-{
-    "$id": "https://lpb.luxonis.com/schema/ProcessorType.schema.json",
-    "$schema": "http://json-schema.org/draft-07/schema#",
-    "title": "Processor Type",
-    "description": "Enum specifying processor",
-    "required": [ "processor" ],
-    "type": "string",
-    "enum": ["LOS", "LRT"]
-}
