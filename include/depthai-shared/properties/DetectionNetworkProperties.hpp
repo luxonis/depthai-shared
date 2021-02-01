@@ -1,10 +1,15 @@
 #pragma once
 
-#include <depthai-shared/common/optional.hpp>
-#include <nlohmann/json.hpp>
+// std
 #include <vector>
 
+// libraries
+#include <nlohmann/json.hpp>
+
+// project
 #include "NeuralNetworkProperties.hpp"
+#include "depthai-shared/common/DetectionNetworkType.hpp"
+#include "depthai-shared/common/optional.hpp"
 
 namespace dai {
 
@@ -12,11 +17,11 @@ namespace dai {
  * Properties for DetectionNetwork
  */
 struct DetectionNetworkProperties : NeuralNetworkProperties {
-    // Generic Neural Network Info
-    uint32_t nnFamily;
+    /// Generic Neural Network properties
+    DetectionNetworkType nnFamily;
     float confidenceThreshold;
 
-    // YOLO specific
+    /// YOLO specific network properties
     int classes;
     int coordinates;
     std::vector<float> anchors;

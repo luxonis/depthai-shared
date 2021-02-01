@@ -1,7 +1,7 @@
 #pragma once
 
-#include <depthai-shared/datatype/RawImageManipConfig.hpp>
 #include <depthai-shared/common/optional.hpp>
+#include <depthai-shared/datatype/RawImageManipConfig.hpp>
 #include <nlohmann/json.hpp>
 
 namespace dai {
@@ -10,6 +10,7 @@ namespace dai {
  * Specify ImageManip options
  */
 struct ImageManipProperties {
+    /// Initial configuration for ImageManip node
     RawImageManipConfig initialConfig;
 
     /// Whether to wait for config at 'inputConfig' IO
