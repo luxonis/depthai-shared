@@ -98,7 +98,11 @@ struct RawImageManipConfig : public RawBuffer {
     bool enableCrop = false;
     bool enableResize = false;
     bool enableFormat = false;
+
+    // Usable with runtime config only,
+    // when ImageManipProperties.inputConfigSync is set
     bool reusePreviousImage = false;
+    bool skipCurrentImage = false;
 
     void serialize(std::vector<std::uint8_t>& metadata, DatatypeEnum& datatype) override {
         nlohmann::json j = *this;
@@ -106,7 +110,15 @@ struct RawImageManipConfig : public RawBuffer {
         datatype = DatatypeEnum::ImageManipConfig;
     };
 
-    NLOHMANN_DEFINE_TYPE_INTRUSIVE(RawImageManipConfig, cropConfig, resizeConfig, formatConfig, enableCrop, enableResize, enableFormat, reusePreviousImage);
+    NLOHMANN_DEFINE_TYPE_INTRUSIVE(RawImageManipConfig,
+                                   cropConfig,
+                                   resizeConfig,
+                                   formatConfig,
+                                   enableCrop,
+                                   enableResize,
+                                   enableFormat,
+                                   reusePreviousImage,
+                                   skipCurrentImage);
 };
 
 }  // namespace dai
