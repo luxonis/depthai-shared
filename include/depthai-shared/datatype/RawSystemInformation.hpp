@@ -5,9 +5,9 @@
 
 #include "DatatypeEnum.hpp"
 #include "RawBuffer.hpp"
-#include "depthai-shared/pb/common/ChipTemperature.hpp"
-#include "depthai-shared/pb/common/CpuUsage.hpp"
-#include "depthai-shared/pb/common/MemoryInfo.hpp"
+#include "depthai-shared/common/ChipTemperature.hpp"
+#include "depthai-shared/common/CpuUsage.hpp"
+#include "depthai-shared/common/MemoryInfo.hpp"
 
 namespace dai {
 /**
