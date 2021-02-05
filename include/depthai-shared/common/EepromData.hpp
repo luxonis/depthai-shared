@@ -9,6 +9,7 @@
 
 namespace dai {
 
+<<<<<<< HEAD
 struct CameraExtrinsics {
     std::vector<std::vector<double>> rotationMatrix;
     std::vector<double> translation;
@@ -36,7 +37,6 @@ struct EepromData {
     StereoRectification stereoRectificationData;
 }
 
-
 // struct EepromData {
 //     // int64_t sec, nsec;
 //     bool swapLeftRightCam;
@@ -59,8 +59,6 @@ struct EepromData {
 //     std::vector<double> translationLeftRight, translationRightRGB;
 //     // Distortion Coefficients
 //     std::vector<double> distortionCoeffLeft, distortionCoeffRight, distortionCoeffRGB;
-
-
 
 //     NLOHMANN_DEFINE_TYPE_INTRUSIVE(EepromData,
 //                                    swapLeftRightCam,
