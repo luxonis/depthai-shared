@@ -14,6 +14,7 @@ namespace dai {
 struct CameraExtrinsics {
     std::vector<std::vector<double>> rotationMatrix;
     std::vector<double> translation;
+    std::vector<double> measured_translation;
     CameraBoardSocket destBoardSocket;
 };
 
