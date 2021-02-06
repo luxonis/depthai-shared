@@ -1,2 +1,4 @@
 # generated backup
 pipeline_builder/generated_backup
+.vscode
+.vscode/*
