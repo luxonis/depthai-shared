@@ -4,6 +4,8 @@
 #include <cstdint>
 #include <vector>
 
+#include "depthai-shared/common/CameraBoardSocket.hpp"
+
 // libraries
 #include "nlohmann/json.hpp"
 
@@ -12,12 +14,12 @@ namespace dai {
 struct CameraExtrinsics {
     std::vector<std::vector<double>> rotationMatrix;
     std::vector<double> translation;
-    std::shared_ptr<CameraInfo> destCamera; // Does using pointer makes sense while writing to eeprom or should we just use an number index for cameras and link using that ?
+    CameraBoardSocket destBoardSocket;
 };
 
 struct StereoRectification {
     std::vector<std::vector<double>> rectifiedRotationLeft, rectifiedRotationRight;
-    std::shared_ptr<CameraInfo> *leftCamera, *rightCamera;
+    CameraBoardSocket leftCameraSocket, rightCameraSocket;
     int baseline;
 };
 
@@ -29,10 +31,12 @@ struct CameraInfo {
     double fovRad;
 };
 
+
 struct EepromData {
+    int16_t camera_rig_size = 3; // or we can use this for size of the array in cameraData 
     bool swapLeftRightCam;
     std::string name, revision;
-    std::vector<CameraInfo> cameraData;
+    std::array<CameraInfo, CameraBoardSocket::END> cameraData;
     StereoRectification stereoRectificationData;
 }
 
