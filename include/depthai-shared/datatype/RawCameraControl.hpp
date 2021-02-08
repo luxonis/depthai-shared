@@ -9,86 +9,85 @@
 namespace dai {
 
 struct RawCameraControl : public RawBuffer {
-
     enum class Command : uint8_t {
-        START_STREAM             =  1,
-        STOP_STREAM              =  2,
-        STILL_CAPTURE            =  3,
-        MOVE_LENS                =  4, /* [1] lens position: 0-255
+        START_STREAM = 1,
+        STOP_STREAM = 2,
+        STILL_CAPTURE = 3,
+        MOVE_LENS = 4, /* [1] lens position: 0-255
+                        */
+        AF_TRIGGER = 5,
+        AE_MANUAL = 6, /* [1] exposure time [us]
+                        * [2] sensitivity [iso]
+                        * [3] frame duration [us]
+                        */
+        AE_AUTO = 7,
+        AWB_MODE = 8,                  /* [1] awb_mode: AutoWhiteBalanceMode
                                         */
-        AF_TRIGGER               =  5,
-        AE_MANUAL                =  6, /* [1] exposure time [us]
-                                        * [2] sensitivity [iso]
-                                        * [3] frame duration [us]
+        SCENE_MODE = 9,                /* [1] scene_mode: SceneMode
                                         */
-        AE_AUTO                  =  7,
-        AWB_MODE                 =  8, /* [1] awb_mode: AutoWhiteBalanceMode
+        ANTIBANDING_MODE = 10,         /* [1] antibanding_mode: AntiBandingMode
                                         */
-        SCENE_MODE               =  9, /* [1] scene_mode: SceneMode
+        EXPOSURE_COMPENSATION = 11,    /* [1] value
                                         */
-        ANTIBANDING_MODE        =  10, /* [1] antibanding_mode: AntiBandingMode
+        AE_LOCK = 13,                  /* [1] ae_lock_mode: bool
                                         */
-        EXPOSURE_COMPENSATION    = 11, /* [1] value
-                                        */
-        AE_LOCK                  = 13, /* [1] ae_lock_mode: bool
-                                        */
-        AE_TARGET_FPS_RANGE      = 14, /* [1] min_fps
+        AE_TARGET_FPS_RANGE = 14,      /* [1] min_fps
                                         * [2] max_fps
                                         */
-        AWB_LOCK                 = 16, /* [1] awb_lock_mode: bool
+        AWB_LOCK = 16,                 /* [1] awb_lock_mode: bool
                                         */
-        CAPTURE_INTENT           = 17, /* [1] capture_intent_mode: CaptureIntent
+        CAPTURE_INTENT = 17,           /* [1] capture_intent_mode: CaptureIntent
                                         */
-        CONTROL_MODE             = 18, /* [1] control_mode: ControlMode
+        CONTROL_MODE = 18,             /* [1] control_mode: ControlMode
                                         */
-        FRAME_DURATION           = 21, /* [1] frame_duration
+        FRAME_DURATION = 21,           /* [1] frame_duration
                                         */
-        SENSITIVITY              = 23, /* [1] iso_val
+        SENSITIVITY = 23,              /* [1] iso_val
                                         */
-        EFFECT_MODE              = 24, /* [1] effect_mode: EffectMode
+        EFFECT_MODE = 24,              /* [1] effect_mode: EffectMode
                                         */
-        AF_MODE                  = 26, /* [1] af_mode: AutoFocusMode
+        AF_MODE = 26,                  /* [1] af_mode: AutoFocusMode
                                         */
         NOISE_REDUCTION_STRENGTH = 27, /* [1] value
                                         */
-        SATURATION               = 28, /* [1] value
+        SATURATION = 28,               /* [1] value
                                         */
-        BRIGHTNESS               = 31, /* [1] value
+        BRIGHTNESS = 31,               /* [1] value
                                         */
-        STREAM_FORMAT            = 33, /* [1] format
+        STREAM_FORMAT = 33,            /* [1] format
                                         */
-        RESOLUTION               = 34, /* [1] width
+        RESOLUTION = 34,               /* [1] width
                                         * [2] height
                                         */
-        SHARPNESS                = 35, /* [1] value
+        SHARPNESS = 35,                /* [1] value
                                         */
-        CUSTOM_USECASE           = 40, /* [1] value
+        CUSTOM_USECASE = 40,           /* [1] value
                                         */
-        CUSTOM_CAPT_MODE         = 41, /* [1] value
+        CUSTOM_CAPT_MODE = 41,         /* [1] value
                                         */
-        CUSTOM_EXP_BRACKETS      = 42, /* [1] val1
+        CUSTOM_EXP_BRACKETS = 42,      /* [1] val1
                                         * [2] val2
                                         * [3] val3
                                         */
-        CUSTOM_CAPTURE           = 43, /* [1] value
+        CUSTOM_CAPTURE = 43,           /* [1] value
                                         */
-        CONTRAST                 = 44, /* [1] value
+        CONTRAST = 44,                 /* [1] value
                                         */
-        AE_REGION                = 45, /* [1] x
+        AE_REGION = 45,                /* [1] x
                                         * [2] y
                                         * [3] width
                                         * [4] height
                                         * [5] priority
                                         */
-        AF_REGION                = 46, /* [1] x
+        AF_REGION = 46,                /* [1] x
                                         * [2] y
                                         * [3] width
                                         * [4] height
                                         * [5] priority
                                         */
-        LUMA_DENOISE             = 47, /* [1] value
+        LUMA_DENOISE = 47,             /* [1] value
                                         */
-        CHROMA_DENOISE           = 48, /* [1] value
+        CHROMA_DENOISE = 48,           /* [1] value
                                         */
     };
 
@@ -223,8 +222,10 @@ struct RawCameraControl : public RawBuffer {
 
     void setCommand(Command cmd, bool value = true) {
         uint64_t mask = 1ull << (uint8_t)cmd;
-        if (value) cmdMask |=  mask;
-        else       cmdMask &= ~mask;
+        if(value)
+            cmdMask |= mask;
+        else
+            cmdMask &= ~mask;
     }
     void clearCommand(Command cmd) {
         setCommand(cmd, false);

@@ -1,8 +1,8 @@
 #pragma once
 
+#include <depthai-shared/datatype/RawCameraControl.hpp>
 #include <nlohmann/json.hpp>
 
-#include <depthai-shared/datatype/RawCameraControl.hpp>
 #include "depthai-shared/common/CameraBoardSocket.hpp"
 #include "depthai-shared/common/CameraImageOrientation.hpp"
 

@@ -55,14 +55,8 @@ struct RawImageManipConfig : public RawBuffer {
         // Range 0..1 by default. Set 'false' to specify in pixels
         bool normalizedCoords = true;
 
-        NLOHMANN_DEFINE_TYPE_INTRUSIVE(CropConfig,
-                                       cropRect,
-                                       cropRotatedRect,
-                                       enableCenterCropRectangle,
-                                       cropRatio,
-                                       widthHeightAspectRatio,
-                                       enableRotatedRect,
-                                       normalizedCoords);
+        NLOHMANN_DEFINE_TYPE_INTRUSIVE(
+            CropConfig, cropRect, cropRotatedRect, enableCenterCropRectangle, cropRatio, widthHeightAspectRatio, enableRotatedRect, normalizedCoords);
     };
 
     struct ResizeConfig {
@@ -127,15 +121,8 @@ struct RawImageManipConfig : public RawBuffer {
         datatype = DatatypeEnum::ImageManipConfig;
     };
 
-    NLOHMANN_DEFINE_TYPE_INTRUSIVE(RawImageManipConfig,
-                                   cropConfig,
-                                   resizeConfig,
-                                   formatConfig,
-                                   enableCrop,
-                                   enableResize,
-                                   enableFormat,
-                                   reusePreviousImage,
-                                   skipCurrentImage);
+    NLOHMANN_DEFINE_TYPE_INTRUSIVE(
+        RawImageManipConfig, cropConfig, resizeConfig, formatConfig, enableCrop, enableResize, enableFormat, reusePreviousImage, skipCurrentImage);
 };
 
 }  // namespace dai
