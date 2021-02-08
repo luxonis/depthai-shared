@@ -11,11 +11,17 @@
 
 namespace dai {
 
+struct point {
+    float x,y,z;
+}
+
 struct CameraExtrinsics {
     std::vector<std::vector<double>> rotationMatrix;
-    std::vector<double> translation;
-    std::vector<double> measured_translation;
-    CameraBoardSocket destBoardSocket;
+    // (x, y, z) pose of destCameraSocket w.r.t currentCameraSocket obtained through calibration
+    point translation; 
+    // (x, y, z) pose of destCameraSocket w.r.t currentCameraSocket measured through CAD design
+    point measured_translation;
+    CameraBoardSocket destCameraSocket;
 };
 
 struct StereoRectification {
@@ -34,10 +40,9 @@ struct CameraInfo {
 
 
 struct EepromData {
-    int16_t camera_rig_size = 3; // or we can use this for size of the array in cameraData 
     bool swapLeftRightCam;
     std::string name, revision;
-    std::array<CameraInfo, CameraBoardSocket::END> cameraData;
+    std::unordered_map<CameraBoardSocket, CameraInfo> cameraData
     StereoRectification stereoRectificationData;
 }
 
