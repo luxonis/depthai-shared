@@ -42,24 +42,15 @@ struct RawImageManipConfig : public RawBuffer {
         NLOHMANN_DEFINE_TYPE_INTRUSIVE(RotatedRect, center, size, angle);
     };
 
-    struct CropQuadrilateral {
-        // pt[0] is mapped to the top-left output corner, clockwise order
-        std::vector<Point2f> pt;
-
-        NLOHMANN_DEFINE_TYPE_INTRUSIVE(CropQuadrilateral, pt);
-    };
-
     struct CropConfig {
         CropRect cropRect;
         RotatedRect cropRotatedRect;
-        CropQuadrilateral cropQuadrilateral;
 
         bool enableCenterCropRectangle = false;
         // if enableCenterCropRectangle -> automatically calculated crop parameters
         float cropRatio = 1.0f, widthHeightAspectRatio = 1.0f;
 
         bool enableRotatedRect = false;
-        bool enableCropQuadrilateral = false;
 
         // Range 0..1 by default. Set 'false' to specify in pixels
         bool normalizedCoords = true;
@@ -67,12 +58,10 @@ struct RawImageManipConfig : public RawBuffer {
         NLOHMANN_DEFINE_TYPE_INTRUSIVE(CropConfig,
                                        cropRect,
                                        cropRotatedRect,
-                                       cropQuadrilateral,
                                        enableCenterCropRectangle,
                                        cropRatio,
                                        widthHeightAspectRatio,
                                        enableRotatedRect,
-                                       enableCropQuadrilateral,
                                        normalizedCoords);
     };
 
@@ -81,7 +70,35 @@ struct RawImageManipConfig : public RawBuffer {
         bool lockAspectRatioFill = false;
         char bgRed = 0, bgGreen = 0, bgBlue = 0;
 
-        NLOHMANN_DEFINE_TYPE_INTRUSIVE(ResizeConfig, width, height, lockAspectRatioFill, bgRed, bgGreen, bgBlue);
+        //  clockwise order, pt[0] is mapped to the top-left output corner
+        std::vector<Point2f> warpFourPoints;
+        bool normalizedCoords = true;
+        bool enableWarp4pt = false;
+
+        std::vector<float> warpMatrix3x3;
+        bool enableWarpMatrix = false;
+
+        // clockwise
+        float rotationAngle;
+        // false -> degrees
+        bool angleInRadians = false;
+        bool enableRotation = false;
+
+        NLOHMANN_DEFINE_TYPE_INTRUSIVE(ResizeConfig,
+                                       width,
+                                       height,
+                                       lockAspectRatioFill,
+                                       bgRed,
+                                       bgGreen,
+                                       bgBlue,
+                                       warpFourPoints,
+                                       normalizedCoords,
+                                       enableWarp4pt,
+                                       warpMatrix3x3,
+                                       enableWarpMatrix,
+                                       rotationAngle,
+                                       angleInRadians,
+                                       enableRotation);
     };
 
     struct FormatConfig {
