@@ -12,13 +12,13 @@
 namespace dai {
 
 struct point {
-    float x,y,z;
+    float x, y, z;
 }
 
 struct CameraExtrinsics {
     std::vector<std::vector<double>> rotationMatrix;
     // (x, y, z) pose of destCameraSocket w.r.t currentCameraSocket obtained through calibration
-    point translation; 
+    point translation;
     // (x, y, z) pose of destCameraSocket w.r.t currentCameraSocket measured through CAD design
     point measured_translation;
     CameraBoardSocket destCameraSocket;
@@ -30,19 +30,16 @@ struct StereoRectification {
     int baseline;
 };
 
-
 struct CameraInfo {
     std::vector<std::vector<double>> intrinsicMatrix;
     std::vector<double> distortionCoeff;
     CameraExtrinsics extrinsics;
 };
 
-
 struct EepromData {
     bool swapLeftRightCam;
     std::string name, revision;
-    std::unordered_map<CameraBoardSocket, CameraInfo> cameraData
-    StereoRectification stereoRectificationData;
+    std::unordered_map<CameraBoardSocket, CameraInfo> cameraData StereoRectification stereoRectificationData;
 }
 
 // struct EepromData {
