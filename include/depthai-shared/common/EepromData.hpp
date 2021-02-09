@@ -13,9 +13,9 @@ namespace dai {
 
 struct point {
     float x, y, z;
-}
+};
 
-struct CameraExtrinsics {
+struct Extrinsics {
     std::vector<std::vector<double>> rotationMatrix;
     // (x, y, z) pose of destCameraSocket w.r.t currentCameraSocket obtained through calibration
     point translation;
@@ -33,15 +33,17 @@ struct StereoRectification {
 struct CameraInfo {
     std::vector<std::vector<double>> intrinsicMatrix;
     std::vector<double> distortionCoeff;
-    CameraExtrinsics extrinsics;
-    double fovRad;
+    Extrinsics extrinsics;
+    double fovRad; //fov in radians
 };
 
 struct EepromData {
     bool swapLeftRightCam;
     std::string name, revision;
-    std::unordered_map<CameraBoardSocket, CameraInfo> cameraData StereoRectification stereoRectificationData;
-}
+    std::unordered_map<CameraBoardSocket, CameraInfo> cameraData;
+    StereoRectification stereoRectificationData;
+    Extrinsics imuExtrinsics;
+};
 
 
 // struct EepromData {
