@@ -37,8 +37,9 @@ struct CameraInfo {
 };
 
 struct EepromData {
+    uint32_t version;
     bool swapLeftRightCam;
-    std::string name, revision;
+    std::string board_name, board_rev;
     std::unordered_map<CameraBoardSocket, CameraInfo> cameraData;
     StereoRectification stereoRectificationData;
     Extrinsics imuExtrinsics;
