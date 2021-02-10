@@ -13,13 +13,13 @@ struct RawCameraControl : public RawBuffer {
         START_STREAM = 1,
         STOP_STREAM = 2,
         STILL_CAPTURE = 3,
-        MOVE_LENS = 4, /* [1] lens position: 0-255
-                        */
+        MOVE_LENS = 4,                 /* [1] lens position: 0-255
+                                        */
         AF_TRIGGER = 5,
-        AE_MANUAL = 6, /* [1] exposure time [us]
-                        * [2] sensitivity [iso]
-                        * [3] frame duration [us]
-                        */
+        AE_MANUAL = 6,                 /* [1] exposure time [us]
+                                        * [2] sensitivity [iso]
+                                        * [3] frame duration [us]
+                                        */
         AE_AUTO = 7,
         AWB_MODE = 8,                  /* [1] awb_mode: AutoWhiteBalanceMode
                                         */
@@ -138,8 +138,8 @@ struct RawCameraControl : public RawBuffer {
 
     enum class AntiBandingMode : uint8_t {
         OFF = 0,
-        _50HZ,
-        _60HZ,
+        MAINS_50_HZ,
+        MAINS_60_HZ,
         AUTO,
     };
 
@@ -208,9 +208,9 @@ struct RawCameraControl : public RawBuffer {
     AutoWhiteBalanceMode awbMode;
     SceneMode sceneMode;
     AntiBandingMode antiBandingMode;
+    EffectMode effectMode;
     bool aeLockMode;
     bool awbLockMode;
-    EffectMode effectMode;
     int8_t expCompensation;
     uint16_t brightness;
     uint16_t contrast;
@@ -222,10 +222,11 @@ struct RawCameraControl : public RawBuffer {
 
     void setCommand(Command cmd, bool value = true) {
         uint64_t mask = 1ull << (uint8_t)cmd;
-        if(value)
+        if(value) {
             cmdMask |= mask;
-        else
+        } else {
             cmdMask &= ~mask;
+        }
     }
     void clearCommand(Command cmd) {
         setCommand(cmd, false);
