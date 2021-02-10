@@ -32,7 +32,12 @@ struct RawImageManipConfig : public RawBuffer {
         bool lockAspectRatioFill = false;
         char bgRed = 0, bgGreen = 0, bgBlue = 0;
 
-        NLOHMANN_DEFINE_TYPE_INTRUSIVE(ResizeConfig, width, height, lockAspectRatioFill, bgRed, bgGreen, bgBlue);
+        /**
+         * Whether to keep aspect ratio of input or not
+         */
+        bool keepAspectRatio = true;
+
+        NLOHMANN_DEFINE_TYPE_INTRUSIVE(ResizeConfig, width, height, lockAspectRatioFill, bgRed, bgGreen, bgBlue, keepAspectRatio);
     };
 
     struct FormatConfig {
