@@ -4,6 +4,7 @@
 
 #include "depthai-shared/common/CameraBoardSocket.hpp"
 #include "depthai-shared/common/CameraImageOrientation.hpp"
+#include <depthai-shared/datatype/RawCameraControl.hpp>
 
 namespace dai {
 
@@ -15,6 +16,11 @@ struct MonoCameraProperties {
      * Select the camera sensor resolution: 1280×720, 1280×800, 640×400
      */
     enum class SensorResolution : int32_t { THE_720_P, THE_800_P, THE_400_P };
+
+    /*
+     * Initial configuration for MonoCamera node
+     */
+    RawCameraControl initialConfig;
 
     /**
      * Which socket will mono camera use

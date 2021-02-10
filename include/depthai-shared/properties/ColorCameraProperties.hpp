@@ -1,10 +1,10 @@
 #pragma once
 
-#include <depthai-shared/datatype/RawCameraControl.hpp>
 #include <nlohmann/json.hpp>
 
 #include "depthai-shared/common/CameraBoardSocket.hpp"
 #include "depthai-shared/common/CameraImageOrientation.hpp"
+#include <depthai-shared/datatype/RawCameraControl.hpp>
 
 namespace dai {
 
@@ -24,6 +24,9 @@ struct ColorCameraProperties {
      */
     enum class ColorOrder : int32_t { BGR, RGB };
 
+    /*
+     * Initial configuration for ColorCamera node
+     */
     RawCameraControl initialConfig;
 
     /**
