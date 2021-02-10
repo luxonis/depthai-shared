@@ -53,6 +53,10 @@ struct RawImageManipConfig : public RawBuffer {
         std::vector<float> warpMatrix3x3;
         bool enableWarpMatrix = false;
 
+        // Warp background / border mode: replicates pixels if true,
+        // otherwise fills with a constant color defined by: bgRed, bgGreen, bgBlue
+        bool warpBorderReplicate = false;
+
         // clockwise
         float rotationAngleDeg;
         bool enableRotation = false;
@@ -69,6 +73,7 @@ struct RawImageManipConfig : public RawBuffer {
                                        enableWarp4pt,
                                        warpMatrix3x3,
                                        enableWarpMatrix,
+                                       warpBorderReplicate,
                                        rotationAngleDeg,
                                        enableRotation);
     };
