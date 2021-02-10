@@ -7,6 +7,11 @@
 #include "RawBuffer.hpp"
 #include "RawImgFrame.hpp"
 
+// shared
+#include "depthai-shared/common/Point2f.hpp"
+#include "depthai-shared/common/Size2f.hpp"
+#include "depthai-shared/common/RotatedRect.hpp"
+
 namespace dai {
 
 struct RawImageManipConfig : public RawBuffer {
@@ -16,30 +21,6 @@ struct RawImageManipConfig : public RawBuffer {
         float xmin = 0.0f, ymin = 0.0f, xmax = 0.0f, ymax = 0.0f;
 
         NLOHMANN_DEFINE_TYPE_INTRUSIVE(CropRect, xmin, ymin, xmax, ymax);
-    };
-
-    // Point2f, Size2f, RotatedRect are defined similar to OpenCV types
-    struct Point2f {
-        float x;
-        float y;
-
-        NLOHMANN_DEFINE_TYPE_INTRUSIVE(Point2f, x, y);
-    };
-
-    struct Size2f {
-        float width;
-        float height;
-
-        NLOHMANN_DEFINE_TYPE_INTRUSIVE(Size2f, width, height);
-    };
-
-    struct RotatedRect {
-        Point2f center;
-        Size2f size;
-        // degrees, increasing clockwise
-        float angle;
-
-        NLOHMANN_DEFINE_TYPE_INTRUSIVE(RotatedRect, center, size, angle);
     };
 
     struct CropConfig {
@@ -73,9 +54,7 @@ struct RawImageManipConfig : public RawBuffer {
         bool enableWarpMatrix = false;
 
         // clockwise
-        float rotationAngle;
-        // false -> degrees
-        bool angleInRadians = false;
+        float rotationAngleDeg;
         bool enableRotation = false;
 
         NLOHMANN_DEFINE_TYPE_INTRUSIVE(ResizeConfig,
@@ -90,8 +69,7 @@ struct RawImageManipConfig : public RawBuffer {
                                        enableWarp4pt,
                                        warpMatrix3x3,
                                        enableWarpMatrix,
-                                       rotationAngle,
-                                       angleInRadians,
+                                       rotationAngleDeg,
                                        enableRotation);
     };
 
