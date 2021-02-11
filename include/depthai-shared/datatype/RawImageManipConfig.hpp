@@ -9,8 +9,8 @@
 
 // shared
 #include "depthai-shared/common/Point2f.hpp"
-#include "depthai-shared/common/Size2f.hpp"
 #include "depthai-shared/common/RotatedRect.hpp"
+#include "depthai-shared/common/Size2f.hpp"
 
 namespace dai {
 

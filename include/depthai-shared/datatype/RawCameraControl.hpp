@@ -13,13 +13,13 @@ struct RawCameraControl : public RawBuffer {
         START_STREAM = 1,
         STOP_STREAM = 2,
         STILL_CAPTURE = 3,
-        MOVE_LENS = 4,                 /* [1] lens position: 0-255
-                                        */
+        MOVE_LENS = 4, /* [1] lens position: 0-255
+                        */
         AF_TRIGGER = 5,
-        AE_MANUAL = 6,                 /* [1] exposure time [us]
-                                        * [2] sensitivity [iso]
-                                        * [3] frame duration [us]
-                                        */
+        AE_MANUAL = 6, /* [1] exposure time [us]
+                        * [2] sensitivity [iso]
+                        * [3] frame duration [us]
+                        */
         AE_AUTO = 7,
         AWB_MODE = 8,                  /* [1] awb_mode: AutoWhiteBalanceMode
                                         */
