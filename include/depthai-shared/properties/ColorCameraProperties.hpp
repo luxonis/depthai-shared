@@ -14,6 +14,15 @@ namespace dai {
 struct ColorCameraProperties {
     static constexpr int AUTO = -1;
 
+    struct IspScale {
+        uint8_t horizNumerator = 0;
+        uint8_t horizDenominator = 0;
+        uint8_t vertNumerator = 0;
+        uint8_t vertDenominator = 0;
+
+        NLOHMANN_DEFINE_TYPE_INTRUSIVE(IspScale, horizNumerator, horizDenominator, vertNumerator, vertDenominator);
+    };
+
     /**
      * Select the camera sensor resolution
      */
@@ -105,6 +114,11 @@ struct ColorCameraProperties {
      * Whether to keep aspect ratio of input (video size) or not
      */
     bool previewKeepAspectRatio = true;
+
+    /**
+     * Configure scaling for `isp` output.
+     */
+    IspScale ispScale;
 };
 
 NLOHMANN_DEFINE_TYPE_NON_INTRUSIVE(ColorCameraProperties,
@@ -125,6 +139,7 @@ NLOHMANN_DEFINE_TYPE_NON_INTRUSIVE(ColorCameraProperties,
                                    sensorCropX,
                                    sensorCropY,
                                    inputConfigSync,
-                                   previewKeepAspectRatio);
+                                   previewKeepAspectRatio,
+                                   ispScale);
 
 }  // namespace dai
