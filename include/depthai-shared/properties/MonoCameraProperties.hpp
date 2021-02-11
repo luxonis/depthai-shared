@@ -18,9 +18,9 @@ struct MonoCameraProperties {
     enum class SensorResolution : int32_t { THE_720_P, THE_800_P, THE_400_P };
 
     /*
-     * Initial configuration for MonoCamera node
+     * Initial controls applied to MonoCamera node
      */
-    RawCameraControl initialConfig;
+    RawCameraControl initialControl;
 
     /**
      * Which socket will mono camera use

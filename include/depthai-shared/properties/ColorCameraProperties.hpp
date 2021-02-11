@@ -25,9 +25,9 @@ struct ColorCameraProperties {
     enum class ColorOrder : int32_t { BGR, RGB };
 
     /*
-     * Initial configuration for ColorCamera node
+     * Initial controls applied to ColorCamera node
      */
-    RawCameraControl initialConfig;
+    RawCameraControl initialControl;
 
     /**
      * Which socket will color camera use
@@ -108,7 +108,7 @@ struct ColorCameraProperties {
 };
 
 NLOHMANN_DEFINE_TYPE_NON_INTRUSIVE(ColorCameraProperties,
-                                   initialConfig,
+                                   initialControl,
                                    boardSocket,
                                    imageOrientation,
                                    colorOrder,
