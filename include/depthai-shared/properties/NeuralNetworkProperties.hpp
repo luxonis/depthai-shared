@@ -21,8 +21,12 @@ struct NeuralNetworkProperties {
      * Number of available output tensors in pool
      */
     std::uint32_t numFrames = 8;
+    /**
+     * Number of threads to create for running inference. 0 = auto
+     */
+    std::uint32_t numThreads = 0;
 };
 
-NLOHMANN_DEFINE_TYPE_NON_INTRUSIVE(NeuralNetworkProperties, blobSize, blobUri, numFrames);
+NLOHMANN_DEFINE_TYPE_NON_INTRUSIVE(NeuralNetworkProperties, blobSize, blobUri, numFrames, numThreads);
 
 }  // namespace dai

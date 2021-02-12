@@ -1,5 +1,6 @@
 #pragma once
 
+#include <depthai-shared/datatype/RawCameraControl.hpp>
 #include <nlohmann/json.hpp>
 
 #include "depthai-shared/common/CameraBoardSocket.hpp"
@@ -22,6 +23,11 @@ struct ColorCameraProperties {
      * For 24 bit color these can be either RGB or BGR
      */
     enum class ColorOrder : int32_t { BGR, RGB };
+
+    /*
+     * Initial controls applied to ColorCamera node
+     */
+    RawCameraControl initialControl;
 
     /**
      * Which socket will color camera use
@@ -102,6 +108,7 @@ struct ColorCameraProperties {
 };
 
 NLOHMANN_DEFINE_TYPE_NON_INTRUSIVE(ColorCameraProperties,
+                                   initialControl,
                                    boardSocket,
                                    imageOrientation,
                                    colorOrder,
