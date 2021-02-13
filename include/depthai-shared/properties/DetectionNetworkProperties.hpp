@@ -29,7 +29,17 @@ struct DetectionNetworkProperties : NeuralNetworkProperties {
     float iouThreshold;
 };
 
-NLOHMANN_DEFINE_TYPE_NON_INTRUSIVE(
-    DetectionNetworkProperties, nnFamily, blobSize, blobUri, numFrames, numThreads, confidenceThreshold, classes, coordinates, anchors, anchorMasks, iouThreshold)
+NLOHMANN_DEFINE_TYPE_NON_INTRUSIVE(DetectionNetworkProperties,
+                                   nnFamily,
+                                   blobSize,
+                                   blobUri,
+                                   numFrames,
+                                   numThreads,
+                                   confidenceThreshold,
+                                   classes,
+                                   coordinates,
+                                   anchors,
+                                   anchorMasks,
+                                   iouThreshold)
 
 }  // namespace dai
