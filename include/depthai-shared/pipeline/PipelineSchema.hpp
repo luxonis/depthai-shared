@@ -23,7 +23,7 @@ namespace dai {
 struct PipelineSchema {
     std::vector<NodeConnectionSchema> connections;
     GlobalProperties globalProperties;
-    std::vector<NodeObjInfo> nodes;
+    std::unordered_map<int64_t, NodeObjInfo> nodes;
 };
 
 NLOHMANN_DEFINE_TYPE_NON_INTRUSIVE(PipelineSchema, connections, globalProperties, nodes);

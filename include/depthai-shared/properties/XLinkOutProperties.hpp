@@ -17,8 +17,13 @@ struct XLinkOutProperties {
      * Name of stream
      */
     std::string streamName;
+
+    /**
+     * Whether to transfer data or only object attributes
+     */
+    bool metadataOnly;
 };
 
-NLOHMANN_DEFINE_TYPE_NON_INTRUSIVE(XLinkOutProperties, maxFpsLimit, streamName);
+NLOHMANN_DEFINE_TYPE_NON_INTRUSIVE(XLinkOutProperties, maxFpsLimit, streamName, metadataOnly);
 
 }  // namespace dai
