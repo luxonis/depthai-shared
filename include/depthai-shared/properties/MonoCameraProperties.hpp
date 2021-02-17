@@ -1,5 +1,6 @@
 #pragma once
 
+#include <depthai-shared/datatype/RawCameraControl.hpp>
 #include <nlohmann/json.hpp>
 
 #include "depthai-shared/common/CameraBoardSocket.hpp"
@@ -15,6 +16,11 @@ struct MonoCameraProperties {
      * Select the camera sensor resolution: 1280×720, 1280×800, 640×400
      */
     enum class SensorResolution : int32_t { THE_720_P, THE_800_P, THE_400_P };
+
+    /*
+     * Initial controls applied to MonoCamera node
+     */
+    RawCameraControl initialControl;
 
     /**
      * Which socket will mono camera use
