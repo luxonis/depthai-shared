@@ -60,7 +60,7 @@ struct RawImageManipConfig : public RawBuffer {
         // clockwise
         float rotationAngleDeg;
         bool enableRotation = false;
-        
+
         /**
          * Whether to keep aspect ratio of input or not
          */
