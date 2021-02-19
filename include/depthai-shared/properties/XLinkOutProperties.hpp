@@ -21,7 +21,7 @@ struct XLinkOutProperties {
     /**
      * Whether to transfer data or only object attributes
      */
-    bool metadataOnly;
+    bool metadataOnly = false;
 };
 
 NLOHMANN_DEFINE_TYPE_NON_INTRUSIVE(XLinkOutProperties, maxFpsLimit, streamName, metadataOnly);
