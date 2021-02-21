@@ -5,21 +5,18 @@
 
 #include "DatatypeEnum.hpp"
 #include "RawBuffer.hpp"
-#include "RawImgFrame.hpp"
 #include "RawDepthCalculatorConfig.hpp"
+#include "RawImgFrame.hpp"
 
 namespace dai {
 
 struct DepthCalculatorDataOut {
     DepthCalculatorConfig config;
     float depth_avg;
-
 };
 NLOHMANN_DEFINE_TYPE_NON_INTRUSIVE(DepthCalculatorDataOut, config, depth_avg);
 
-
 struct RawDepthCalculatorData : public RawBuffer {
-
     std::vector<DepthCalculatorDataOut> depth;
 
     void serialize(std::vector<std::uint8_t>& metadata, DatatypeEnum& datatype) override {
