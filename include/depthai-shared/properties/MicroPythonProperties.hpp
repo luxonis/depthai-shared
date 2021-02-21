@@ -1,7 +1,7 @@
 #pragma once
 
-#include <depthai-shared/common/optional.hpp>
 #include <depthai-shared/common/ProcessorType.hpp>
+#include <depthai-shared/common/optional.hpp>
 #include <nlohmann/json.hpp>
 
 namespace dai {
