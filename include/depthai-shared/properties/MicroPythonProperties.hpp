@@ -1,6 +1,7 @@
 #pragma once
 
 #include <depthai-shared/common/optional.hpp>
+#include <depthai-shared/common/ProcessorType.hpp>
 #include <nlohmann/json.hpp>
 
 namespace dai {
@@ -17,8 +18,12 @@ struct MicroPythonProperties {
      * Uri which points to blob
      */
     std::string scriptUri = "";
+    /**
+     * Which processor should execute the MicroPython script
+     */
+    ProcessorType processor;
 };
 
-NLOHMANN_DEFINE_TYPE_NON_INTRUSIVE(MicroPythonProperties, scriptSize, scriptUri);
+NLOHMANN_DEFINE_TYPE_NON_INTRUSIVE(MicroPythonProperties, scriptSize, scriptUri, processor);
 
 }  // namespace dai
