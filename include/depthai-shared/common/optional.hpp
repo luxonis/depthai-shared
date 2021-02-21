@@ -1,5 +1,7 @@
 #pragma once
 
+#include <nlohmann/json.hpp>
+
 #include "tl/optional.hpp"
 
 // partial specialization (full specialization works too)
