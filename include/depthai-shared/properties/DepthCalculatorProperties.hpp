@@ -1,7 +1,7 @@
 #pragma once
 
 #include <depthai-shared/datatype/RawDepthCalculatorConfig.hpp>
-#include <depthai-shared/pb/common/optional.hpp>
+#include <depthai-shared/common/optional.hpp>
 #include <nlohmann/json.hpp>
 #include <vector>
 
