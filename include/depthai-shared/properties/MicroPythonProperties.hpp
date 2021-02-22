@@ -21,7 +21,7 @@ struct MicroPythonProperties {
     /**
      * Which processor should execute the MicroPython script
      */
-    ProcessorType processor;
+    ProcessorType processor = ProcessorType::LEON_MSS;
 };
 
 NLOHMANN_DEFINE_TYPE_NON_INTRUSIVE(MicroPythonProperties, scriptSize, scriptUri, processor);
