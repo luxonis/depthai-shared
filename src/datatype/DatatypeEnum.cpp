@@ -28,6 +28,7 @@ const std::unordered_map<DatatypeEnum, std::vector<DatatypeEnum>> hierarchy = {
       DatatypeEnum::CameraControl,
       DatatypeEnum::ImgDetections,
       DatatypeEnum::SystemInformation,
+      DatatypeEnum::DepthCalculatorConfig,
       DatatypeEnum::DepthCalculatorData}},
     {DatatypeEnum::ImgFrame, {}},
     {DatatypeEnum::NNData, {}},
@@ -35,6 +36,7 @@ const std::unordered_map<DatatypeEnum, std::vector<DatatypeEnum>> hierarchy = {
     {DatatypeEnum::CameraControl, {}},
     {DatatypeEnum::ImgDetections, {}},
     {DatatypeEnum::SystemInformation, {}},
+    {DatatypeEnum::DepthCalculatorConfig, {}},
     {DatatypeEnum::DepthCalculatorData, {}},
 
 };

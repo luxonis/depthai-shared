@@ -37,16 +37,16 @@ struct Rect {
 };
 NLOHMANN_DEFINE_TYPE_NON_INTRUSIVE(Rect, xmin, ymin, xmax, ymax);
 
-struct DepthCalculatorConfig {
+struct DepthCalculatorConfigData {
     // Normalized range 0-1
     Rect roi;
     uint32_t lower_threshold = 0;
     uint32_t upper_threshold = 65000;
 };
-NLOHMANN_DEFINE_TYPE_NON_INTRUSIVE(DepthCalculatorConfig, roi, lower_threshold, upper_threshold);
+NLOHMANN_DEFINE_TYPE_NON_INTRUSIVE(DepthCalculatorConfigData, roi, lower_threshold, upper_threshold);
 
 struct RawDepthCalculatorConfig : public RawBuffer {
-    DepthCalculatorConfig config;
+    std::vector<DepthCalculatorConfigData> config;
 
     void serialize(std::vector<std::uint8_t>& metadata, DatatypeEnum& datatype) override {
         nlohmann::json j = *this;

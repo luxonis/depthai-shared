@@ -11,7 +11,7 @@
 namespace dai {
 
 struct DepthCalculatorDataOut {
-    DepthCalculatorConfig config;
+    DepthCalculatorConfigData config;
     float depth_avg;
 };
 NLOHMANN_DEFINE_TYPE_NON_INTRUSIVE(DepthCalculatorDataOut, config, depth_avg);

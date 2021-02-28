@@ -11,9 +11,12 @@ namespace dai {
  * Specify DepthCalculator options
  */
 struct DepthCalculatorProperties {
-    std::vector<DepthCalculatorConfig> roiConfig;
+    RawDepthCalculatorConfig roiConfig;
+
+    /// Whether to wait for config at 'inputConfig' IO
+    bool inputConfigSync = false;
 };
 
-NLOHMANN_DEFINE_TYPE_NON_INTRUSIVE(DepthCalculatorProperties, roiConfig);
+NLOHMANN_DEFINE_TYPE_NON_INTRUSIVE(DepthCalculatorProperties, roiConfig, inputConfigSync);
 
 }  // namespace dai
