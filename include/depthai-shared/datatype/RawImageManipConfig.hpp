@@ -61,6 +61,11 @@ struct RawImageManipConfig : public RawBuffer {
         float rotationAngleDeg;
         bool enableRotation = false;
 
+        /**
+         * Whether to keep aspect ratio of input or not
+         */
+        bool keepAspectRatio = true;
+
         NLOHMANN_DEFINE_TYPE_INTRUSIVE(ResizeConfig,
                                        width,
                                        height,
@@ -75,7 +80,8 @@ struct RawImageManipConfig : public RawBuffer {
                                        enableWarpMatrix,
                                        warpBorderReplicate,
                                        rotationAngleDeg,
-                                       enableRotation);
+                                       enableRotation,
+                                       keepAspectRatio);
     };
 
     struct FormatConfig {
