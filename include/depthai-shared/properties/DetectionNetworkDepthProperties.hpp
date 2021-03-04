@@ -17,7 +17,6 @@ namespace dai {
  * Properties for DetectionNetworkDepth
  */
 struct DetectionNetworkDepthProperties : DetectionNetworkProperties {
-
     float detectedBBScaleFactor = 1.0;
     uint32_t lower_threshold = 100;
     uint32_t upper_threshold = 10000;
