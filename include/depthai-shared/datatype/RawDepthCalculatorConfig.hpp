@@ -13,23 +13,25 @@ namespace dai {
 struct Rect {
    public:
     Rect(float xmin, float ymin, float xmax, float ymax) {
-        setRect(xmin, ymin, xmax, ymax);
+        set(xmin, ymin, xmax, ymax);
     };
     Rect(){};
 
-    void setRect(float xmin, float ymin, float xmax, float ymax) {
-#ifdef __cpp_exceptions
-        if(xmin < 0 || xmin > 1) throw std::out_of_range("xmin out of range [0,1]");
-        if(xmax < 0 || xmax > 1) throw std::out_of_range("xmax out of range [0,1]");
-        if(ymin < 0 || ymin > 1) throw std::out_of_range("ymin out of range [0,1]");
-        if(ymax < 0 || ymax > 1) throw std::out_of_range("ymax out of range [0,1]");
-        if(xmin >= xmax) throw std::out_of_range("xmin should be less than xmax");
-        if(ymin >= ymax) throw std::out_of_range("ymin should be less than ymax");
-#endif
+    void set(float xmin, float ymin, float xmax, float ymax) {
         this->xmin = xmin;
         this->xmax = xmax;
         this->ymin = ymin;
         this->ymax = ymax;
+    }
+
+    bool valid() {
+        if(xmin < 0 || xmin > 1) return false;
+        if(xmax < 0 || xmax > 1) return false;
+        if(ymin < 0 || ymin > 1) return false;
+        if(ymax < 0 || ymax > 1) return false;
+        if(xmin >= xmax) return false;
+        if(ymin >= ymax) return false;
+        return true;
     }
 
     // Normalized range 0-1
