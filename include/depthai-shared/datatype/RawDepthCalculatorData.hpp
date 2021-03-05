@@ -17,7 +17,7 @@ struct DepthCalculatorDataOut {
     float depth_y;
     float depth_z;
 };
-NLOHMANN_DEFINE_TYPE_NON_INTRUSIVE(DepthCalculatorDataOut, config, depth_avg);
+NLOHMANN_DEFINE_TYPE_NON_INTRUSIVE(DepthCalculatorDataOut, config, depth_avg, depth_x, depth_y, depth_z);
 
 struct RawDepthCalculatorData : public RawBuffer {
     std::vector<DepthCalculatorDataOut> depth;
