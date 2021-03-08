@@ -1,11 +1,9 @@
 #pragma once
 
-
 // libraries
 #include "nlohmann/json.hpp"
 
 namespace dai {
-
 
 struct Rect {
    public:
@@ -36,4 +34,4 @@ struct Rect {
 };
 NLOHMANN_DEFINE_TYPE_NON_INTRUSIVE(Rect, xmin, ymin, xmax, ymax);
 
-}
+}  // namespace dai

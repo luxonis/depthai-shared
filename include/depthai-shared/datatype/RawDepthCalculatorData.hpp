@@ -15,9 +15,9 @@ namespace dai {
 struct DepthCalculatorDataOut {
     DepthCalculatorConfigData config;
     float depthAverage;
-    Point3f depthCoordinates;
+    Point3f spatialCoordinates;
 };
-NLOHMANN_DEFINE_TYPE_NON_INTRUSIVE(DepthCalculatorDataOut, config, depthAverage, depthCoordinates);
+NLOHMANN_DEFINE_TYPE_NON_INTRUSIVE(DepthCalculatorDataOut, config, depthAverage, spatialCoordinates);
 
 struct RawDepthCalculatorData : public RawBuffer {
     std::vector<DepthCalculatorDataOut> depth;

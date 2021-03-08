@@ -11,6 +11,7 @@ enum class DatatypeEnum : std::int32_t {
     ImageManipConfig,
     CameraControl,
     ImgDetections,
+    SpatialImgDetections,
     SystemInformation,
     DepthCalculatorConfig,
     DepthCalculatorData
