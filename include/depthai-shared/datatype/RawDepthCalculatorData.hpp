@@ -7,17 +7,17 @@
 #include "RawBuffer.hpp"
 #include "RawDepthCalculatorConfig.hpp"
 #include "RawImgFrame.hpp"
+#include "depthai-shared/common/Point3f.hpp"
+#include "depthai-shared/common/Rect.hpp"
 
 namespace dai {
 
 struct DepthCalculatorDataOut {
     DepthCalculatorConfigData config;
-    float depth_avg;
-    float depth_x;
-    float depth_y;
-    float depth_z;
+    float depthAverage;
+    Point3f depthCoordinates;
 };
-NLOHMANN_DEFINE_TYPE_NON_INTRUSIVE(DepthCalculatorDataOut, config, depth_avg, depth_x, depth_y, depth_z);
+NLOHMANN_DEFINE_TYPE_NON_INTRUSIVE(DepthCalculatorDataOut, config, depthAverage, depthCoordinates);
 
 struct RawDepthCalculatorData : public RawBuffer {
     std::vector<DepthCalculatorDataOut> depth;

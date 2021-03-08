@@ -10,6 +10,7 @@
 #include "DetectionNetworkProperties.hpp"
 #include "depthai-shared/common/DetectionNetworkType.hpp"
 #include "depthai-shared/common/optional.hpp"
+#include "depthai-shared/datatype/RawDepthCalculatorConfig.hpp"
 
 namespace dai {
 
@@ -18,8 +19,7 @@ namespace dai {
  */
 struct DetectionNetworkDepthProperties : DetectionNetworkProperties {
     float detectedBBScaleFactor = 1.0;
-    uint32_t lower_threshold = 100;
-    uint32_t upper_threshold = 10000;
+    DepthCalculatorConfigThresholds depthThresholds;
 };
 
 NLOHMANN_DEFINE_TYPE_NON_INTRUSIVE(DetectionNetworkDepthProperties,
@@ -35,6 +35,7 @@ NLOHMANN_DEFINE_TYPE_NON_INTRUSIVE(DetectionNetworkDepthProperties,
                                    anchors,
                                    anchorMasks,
                                    iouThreshold,
-                                   detectedBBScaleFactor)
+                                   detectedBBScaleFactor,
+                                   depthThresholds)
 
 }  // namespace dai
