@@ -49,15 +49,6 @@ struct StereoDepthProperties {
      */
     std::int32_t rectifyEdgeFillColor = -1;
     /**
-     * Enable outputting rectified frames. Optimizes computation on device side when disabled
-     */
-    bool enableOutputRectified = false;
-    /**
-     * Enable outputting 'depth' stream (converted from disparity).
-     * In certain configurations, this will disable 'disparity' stream
-     */
-    bool enableOutputDepth = false;
-    /**
      * Input frame width. Optional (taken from MonoCamera nodes if they exist)
      */
     tl::optional<std::int32_t> width;
@@ -78,8 +69,6 @@ NLOHMANN_DEFINE_TYPE_NON_INTRUSIVE(StereoDepthProperties,
                                    enableExtendedDisparity,
                                    rectifyMirrorFrame,
                                    rectifyEdgeFillColor,
-                                   enableOutputRectified,
-                                   enableOutputDepth,
                                    width,
                                    height);
 
