@@ -11,19 +11,21 @@ namespace dai {
  */
 struct MicroPythonProperties {
     /**
-     * Blob binary size in bytes
-     */
-    tl::optional<std::uint32_t> scriptSize;
-    /**
      * Uri which points to blob
      */
     std::string scriptUri = "";
+
+    /**
+     * Map of asset name to uri
+     */
+    std::map<std::string, std::string> assetUriMap;
+
     /**
      * Which processor should execute the MicroPython script
      */
     ProcessorType processor = ProcessorType::LEON_MSS;
 };
 
-NLOHMANN_DEFINE_TYPE_NON_INTRUSIVE(MicroPythonProperties, scriptSize, scriptUri, processor);
+NLOHMANN_DEFINE_TYPE_NON_INTRUSIVE(MicroPythonProperties, scriptUri, assetUriMap, processor);
 
 }  // namespace dai
