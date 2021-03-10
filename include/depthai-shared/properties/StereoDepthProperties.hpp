@@ -21,7 +21,7 @@ struct StereoDepthProperties {
     /**
      * Set kernel size for disparity/depth median filtering, or disable
      */
-    MedianFilter median = MedianFilter::KERNEL_7x7;
+    MedianFilter median = MedianFilter::KERNEL_5x5;
     /**
      * Confidence threshold for disparity calculation, 0..255
      */

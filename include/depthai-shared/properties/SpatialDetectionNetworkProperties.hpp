@@ -10,7 +10,7 @@
 #include "DetectionNetworkProperties.hpp"
 #include "depthai-shared/common/DetectionNetworkType.hpp"
 #include "depthai-shared/common/optional.hpp"
-#include "depthai-shared/datatype/RawDepthCalculatorConfig.hpp"
+#include "depthai-shared/datatype/RawSpatialLocationCalculatorConfig.hpp"
 
 namespace dai {
 
@@ -19,7 +19,7 @@ namespace dai {
  */
 struct SpatialDetectionNetworkProperties : DetectionNetworkProperties {
     float detectedBBScaleFactor = 1.0;
-    DepthCalculatorConfigThresholds depthThresholds;
+    SpatialLocationCalculatorConfigThresholds depthThresholds;
 };
 
 NLOHMANN_DEFINE_TYPE_NON_INTRUSIVE(SpatialDetectionNetworkProperties,

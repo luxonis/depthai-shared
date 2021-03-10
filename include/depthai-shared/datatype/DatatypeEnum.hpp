@@ -13,8 +13,8 @@ enum class DatatypeEnum : std::int32_t {
     ImgDetections,
     SpatialImgDetections,
     SystemInformation,
-    DepthCalculatorConfig,
-    DepthCalculatorData
+    SpatialLocationCalculatorConfig,
+    SpatialLocationCalculatorData
 };
 bool isDatatypeSubclassOf(DatatypeEnum parent, DatatypeEnum children);
 
