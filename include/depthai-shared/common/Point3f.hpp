@@ -8,6 +8,11 @@
 
 namespace dai {
 
+/**
+ * Point3f structure
+ *
+ * x,y,z coordinates that define a 3D point.
+ */
 struct Point3f {
     float x, y, z;
 

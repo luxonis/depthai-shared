@@ -10,6 +10,12 @@
 
 namespace dai {
 
+/**
+ * Spatial location configuration thresholds structure
+ *
+ * Contains configuration data for lower and upper threshold for ROI.
+ * Values outside of threshold range will be ignored when calculating spatial coordinates from depth map.
+ */
 struct SpatialLocationCalculatorConfigThresholds {
     uint32_t lowerThreshold = 0;
     uint32_t upperThreshold = 65000;

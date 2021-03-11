@@ -8,6 +8,11 @@
 
 namespace dai {
 
+/**
+ * Point2f structure
+ *
+ * x and y coordinates that define a 2D point.
+ */
 struct Point2f {
     float x, y;
 

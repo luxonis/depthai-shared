@@ -5,6 +5,11 @@
 
 namespace dai {
 
+/**
+ * Rect structure
+ *
+ * xmin, ymin, xmax, ymax coordinates that define a rectangle.
+ */
 struct Rect {
    public:
     Rect(float xmin, float ymin, float xmax, float ymax) {

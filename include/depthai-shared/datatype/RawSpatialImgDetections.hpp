@@ -6,6 +6,11 @@
 
 namespace dai {
 
+/**
+ * Spatial image detection structure
+ *
+ * Contains image detection results together with spatial location data.
+ */
 struct SpatialImgDetection : ImgDetection {
     Point3f spatialCoordinates;
 
