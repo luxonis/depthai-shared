@@ -15,6 +15,11 @@ struct StereoDepthProperties {
     enum class MedianFilter : int32_t { MEDIAN_OFF = 0, KERNEL_3x3 = 3, KERNEL_5x5 = 5, KERNEL_7x7 = 7 };
 
     /**
+     * Align the disparity/depth output to the perspective of one camera, or center it
+     */
+    enum class DepthAlign : int32_t { AUTO = -1, RIGHT, LEFT, CENTER, RGB };
+
+    /**
      * Calibration data byte array
      */
     std::vector<std::uint8_t> calibration;
@@ -22,6 +27,10 @@ struct StereoDepthProperties {
      * Set kernel size for disparity/depth median filtering, or disable
      */
     MedianFilter median = MedianFilter::KERNEL_7x7;
+    /**
+     * Set the disparity/depth alignment to the perspective of one camera
+     */
+    DepthAlign depthAlign = DepthAlign::AUTO;
     /**
      * Confidence threshold for disparity calculation, 0..255
      */
@@ -71,6 +80,7 @@ struct StereoDepthProperties {
 NLOHMANN_DEFINE_TYPE_NON_INTRUSIVE(StereoDepthProperties,
                                    calibration,
                                    median,
+                                   depthAlign,
                                    confidenceThreshold,
                                    enableLeftRightCheck,
                                    enableSubpixel,
