@@ -14,6 +14,12 @@ namespace dai {
  * x,y,z coordinates that define a 3D point.
  */
 struct Point3f {
+    Point3f() {}
+    Point3f(float x, float y, float z) {
+        this->x = x;
+        this->y = y;
+        this->z = z;
+    }
     float x, y, z;
 
     NLOHMANN_DEFINE_TYPE_INTRUSIVE(Point3f, x, y, z);
