@@ -24,12 +24,13 @@ struct Extrinsics {
     // (x, y, z) pose of destCameraSocket w.r.t currentCameraSocket measured through CAD design
     point measuredTranslation;
     CameraBoardSocket destCameraSocket;
+    std::vector<CameraBoardSocket> srcCameraSockets;
 };
 
 struct StereoRectification {
     std::vector<std::vector<float>> rectifiedRotationLeft, rectifiedRotationRight;
     CameraBoardSocket leftCameraSocket, rightCameraSocket;
-    int baseline;
+    float baseline; // distance between left and right camera in cm
 };
 
 struct CameraInfo {
