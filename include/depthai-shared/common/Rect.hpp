@@ -24,12 +24,7 @@ struct Rect {
         this->width = width;
         this->height = height;
     }
-    Rect(int x, int y, int width, int height) {
-        this->x = x;
-        this->y = y;
-        this->width = width;
-        this->height = height;
-    }
+
     Rect(const Rect& r) : x(r.x), y(r.y), width(r.width), height(r.height) {}
     Rect(const Point2f& org, const Size2f& sz) : x(org.x), y(org.y), width(sz.width), height(sz.height) {}
     Rect(const Point2f& pt1, const Point2f& pt2) {
@@ -93,7 +88,7 @@ struct Rect {
      * Whether rectangle is normalized (coordinates in [0,1] range). or not.
      */
     bool isNormalized() const {
-        return x + width <= 1.f && y + height < 1.f;
+        return x + width <= 1.f && y + height <= 1.f;
     }
 
     /**
