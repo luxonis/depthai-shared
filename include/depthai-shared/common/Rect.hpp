@@ -85,10 +85,11 @@ struct Rect {
     }
 
     /**
-     * Whether rectangle is normalized (coordinates in [0,1] range). or not.
+     * Whether rectangle is normalized (coordinates in [0,1] range) or not.
      */
     bool isNormalized() const {
-        return x + width <= 1.f && y + height <= 1.f;
+        if(x + width <= 1.f && y + height <= 1.f) return true;
+        return !(x == static_cast<int>(x) && y == static_cast<int>(y) && width == static_cast<int>(width) && height == static_cast<int>(height));
     }
 
     /**
