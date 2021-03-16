@@ -5,9 +5,9 @@
 
 #include "DatatypeEnum.hpp"
 #include "RawBuffer.hpp"
-#include "depthai-shared/pb/common/ChipTemperature.hpp"
-#include "depthai-shared/pb/common/CpuUsage.hpp"
-#include "depthai-shared/pb/common/MemoryInfo.hpp"
+#include "depthai-shared/common/ChipTemperature.hpp"
+#include "depthai-shared/common/CpuUsage.hpp"
+#include "depthai-shared/common/MemoryInfo.hpp"
 
 namespace dai {
 /**
@@ -18,6 +18,8 @@ namespace dai {
 struct RawSystemInformation : public RawBuffer {
     /// DDR memory usage
     MemoryInfo ddrMemoryUsage;
+    /// CMX memory usage
+    MemoryInfo cmxMemoryUsage;
     /// LeonCss heap usage
     MemoryInfo leonCssMemoryUsage;
     /// LeonMss heap usage
@@ -36,7 +38,7 @@ struct RawSystemInformation : public RawBuffer {
     };
 
     NLOHMANN_DEFINE_TYPE_INTRUSIVE(
-        RawSystemInformation, ddrMemoryUsage, leonCssMemoryUsage, leonMssMemoryUsage, leonCssCpuUsage, leonMssCpuUsage, chipTemperature);
+        RawSystemInformation, ddrMemoryUsage, cmxMemoryUsage, leonCssMemoryUsage, leonMssMemoryUsage, leonCssCpuUsage, leonMssCpuUsage, chipTemperature);
 };
 
 }  // namespace dai
