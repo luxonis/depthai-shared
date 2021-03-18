@@ -211,14 +211,13 @@ struct RawCameraControl : public RawBuffer {
     EffectMode effectMode;
     bool aeLockMode;
     bool awbLockMode;
-    int8_t expCompensation;
-    uint16_t brightness;
-    uint16_t contrast;
-    uint16_t saturation;
-    uint16_t sharpness;
-    uint16_t noiseReductionStrength;
-    uint16_t lumaDenoise;
-    uint16_t chromaDenoise;
+    int8_t expCompensation;  //  -9 ..  9
+    int8_t brightness;       // -10 .. 10
+    int8_t contrast;         // -10 .. 10
+    int8_t saturation;       // -10 .. 10
+    uint8_t sharpness;       //   0 ..  4
+    uint8_t lumaDenoise;     //   0 ..  4
+    uint8_t chromaDenoise;   //   0 ..  4
 
     void setCommand(Command cmd, bool value = true) {
         uint64_t mask = 1ull << (uint8_t)cmd;
@@ -259,7 +258,6 @@ struct RawCameraControl : public RawBuffer {
                                    contrast,
                                    saturation,
                                    sharpness,
-                                   noiseReductionStrength,
                                    lumaDenoise,
                                    chromaDenoise);
 };
