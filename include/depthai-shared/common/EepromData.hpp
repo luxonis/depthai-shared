@@ -23,8 +23,9 @@ struct Extrinsics {
     point translation;
     // (x, y, z) pose of destCameraSocket w.r.t currentCameraSocket measured through CAD design
     point measuredTranslation;
-    CameraBoardSocket destCameraSocket;
-    std::vector<CameraBoardSocket> srcCameraSockets;
+    CameraBoardSocket toCameraSocket;
+    // FIXME(sachin): Why does fromCameraSocket needs to be vector?
+    std::vector<CameraBoardSocket> fromCameraSockets;
 };
 
 struct StereoRectification {
@@ -37,7 +38,8 @@ struct CameraInfo {
     std::vector<std::vector<float>> intrinsicMatrix;
     std::vector<float> distortionCoeff;
     Extrinsics extrinsics;
-    double fovRad; //fov in radians
+    double measuredFovRad; //fov in radians
+    // TODO(sachin): Should I add type of distortion model here ?
 };
 
 struct EepromData {
@@ -49,52 +51,5 @@ struct EepromData {
     Extrinsics imuExtrinsics;
 };
 
-
-// struct EepromData {
-//     // int64_t sec, nsec;
-//     bool swapLeftRightCam;
-//     // Can we change this to radians? most of the standard api's prefer radian. would make things easier to integrate
-//     float monoFovRad, rgbFovRad;
-//     // since gen2 is more flexible can we move distance vars to setting during pipeline creation or can be used from calibration
-//     float leftRightDistanceMtrs, leftRGBDistanceMtrs;
-//     // board name. do we need this ? it might help in debugging which device the user is using.
-//     std::string name, revision;
-//     /**
-//      * While helping OPAL I realized this can also be produced rectification from the other information we get during calibration.
-//      * we might need to add that function on the host side if the users want to use rgb camera like OPAL did
-//      **/
-//     std::vector<std::vector<float>> rectifiedRotationLeft, rectifiedRotationRight;
-//     // Intriniscs of the cameras
-//     std::vector<std::vector<float>> intrinsicMatrixLeft, intrinsicMatrixRight, intrinsicMatrixRGB;
-//     // Relative rotation between cameras
-//     std::vector<std::vector<float>> rotationMatrixLeftRight, rotationMatrixRightRGB;  // need to add IMU extrinsics later
-//     // Relative translation between cameras
-//     std::vector<float> translationLeftRight, translationRightRGB;
-//     // Distortion Coefficients
-//     std::vector<float> distortionCoeffLeft, distortionCoeffRight, distortionCoeffRGB;
-
-
-
-//     NLOHMANN_DEFINE_TYPE_INTRUSIVE(EepromData,
-//                                    swapLeftRightCam,
-//                                    monoFovRad,
-//                                    rgbFovRad,
-//                                    leftRightDistanceMtrs,
-//                                    leftRGBDistanceMtrs,
-//                                    name,
-//                                    revision,
-//                                    rectifiedRotationLeft,
-//                                    rectifiedRotationRight,
-//                                    intrinsicMatrixLeft,
-//                                    intrinsicMatrixRight,
-//                                    intrinsicMatrixRGB,
-//                                    rotationMatrixLeftRight,
-//                                    rotationMatrixRightRGB,
-//                                    translationLeftRight,
-//                                    translationRightRGB,
-//                                    distortionCoeffLeft,
-//                                    distortionCoeffRight,
-//                                    distortionCoeffRGB);
-// };
 
 }  // namespace dai
