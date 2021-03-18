@@ -21,5 +21,4 @@ struct EepromData {
     NLOHMANN_DEFINE_TYPE_INTRUSIVE(EepromData, version, swapLeftRightCam, boardName, boardRev, cameraData, stereoRectificationData, imuExtrinsics);
 };
 
-
 }  // namespace dai
