@@ -17,7 +17,7 @@ struct Extrinsics {
     /** FIXME(sachin): Why does fromCameraSocket needs to be vector? fromCameraSockets 
      * is not part of eeprom write. it just enables in linking between cameras after eeprom read.
      */
-    std::vector<CameraBoardSocket> fromCameraSockets;
+    CameraBoardSocket fromCameraSockets;
     NLOHMANN_DEFINE_TYPE_INTRUSIVE(Extrinsics, rotationMatrix, translation, measuredTranslation, toCameraSocket, fromCameraSockets);
 };
 
