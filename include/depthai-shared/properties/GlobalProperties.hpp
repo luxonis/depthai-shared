@@ -10,15 +10,15 @@ namespace dai {
  */
 struct GlobalProperties {
     /**
-     * Set frequency of Leon OS - Incresing can improve performance, at the cost of higher power
+     * Set frequency of Leon OS - Increasing can improve performance, at the cost of higher power
      * draw
      */
-    double leonCssFrequencyHz = 600 * 1000 * 1000;
+    double leonCssFrequencyHz = 700 * 1000 * 1000;
     /**
-     * Set frequency of Leon RT - Incresing can improve performance, at the cost of higher power
+     * Set frequency of Leon RT - Increasing can improve performance, at the cost of higher power
      * draw
      */
-    double leonMssFrequencyHz = 600 * 1000 * 1000;
+    double leonMssFrequencyHz = 700 * 1000 * 1000;
     tl::optional<std::string> pipelineName;
     tl::optional<std::string> pipelineVersion;
 };
