@@ -4,6 +4,9 @@
 #include "depthai-shared/common/CameraBoardSocket.hpp"
 #include "depthai-shared/common/Point3f.hpp"
 
+namespace dai {
+
+
 struct Extrinsics {
     std::vector<std::vector<float>> rotationMatrix;
     // (x, y, z) pose of destCameraSocket w.r.t currentCameraSocket obtained through calibration
@@ -17,3 +20,5 @@ struct Extrinsics {
     std::vector<CameraBoardSocket> fromCameraSockets;
     NLOHMANN_DEFINE_TYPE_INTRUSIVE(Extrinsics, rotationMatrix, translation, measuredTranslation, toCameraSocket, fromCameraSockets);
 };
+
+}  // namespace dai

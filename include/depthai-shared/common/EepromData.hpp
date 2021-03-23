@@ -11,6 +11,7 @@
 #include "nlohmann/json.hpp"
 
 namespace dai {
+    
 struct EepromData {
     uint32_t version;
     bool swapLeftRightCam;
