@@ -19,6 +19,7 @@ struct EepromData {
     std::unordered_map<CameraBoardSocket, CameraInfo> cameraData;
     StereoRectification stereoRectificationData;
     Extrinsics imuExtrinsics;
+    // TODO(sachin): Do I need to add something for IR projector
     NLOHMANN_DEFINE_TYPE_INTRUSIVE(EepromData, version, swapLeftRightCam, boardName, boardRev, cameraData, stereoRectificationData, imuExtrinsics);
 };
 
