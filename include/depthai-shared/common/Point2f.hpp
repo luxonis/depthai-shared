@@ -14,7 +14,7 @@ namespace dai {
  * x and y coordinates that define a 2D point.
  */
 struct Point2f {
-    Point2f() {}
+    Point2f() : x(0), y(0) {}
     Point2f(float x, float y) {
         this->x = x;
         this->y = y;

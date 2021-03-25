@@ -9,7 +9,7 @@
 namespace dai {
 
 struct Size2f {
-    Size2f() {}
+    Size2f() : width(0), height(0) {}
     Size2f(float width, float height) {
         this->width = width;
         this->height = height;
