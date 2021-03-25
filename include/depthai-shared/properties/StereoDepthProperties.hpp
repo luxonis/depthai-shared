@@ -72,14 +72,6 @@ struct StereoDepthProperties {
      * Input frame height. Optional (taken from MonoCamera nodes if they exist)
      */
     tl::optional<std::int32_t> height;
-    /**
-     * Overrides the baseline used for depth calculation. In centimeters
-     */
-    float baselineOverrideCm = 0;
-    /**
-     * Overrides the camera horizontal field of view used for depth calculation. In degrees
-     */
-    float fovOverrideDegrees = 0;
 
     // TODO: rectification mesh option for fisheye camera use-cases
 };
@@ -96,8 +88,6 @@ NLOHMANN_DEFINE_TYPE_NON_INTRUSIVE(StereoDepthProperties,
                                    rectifyMirrorFrame,
                                    rectifyEdgeFillColor,
                                    width,
-                                   height,
-                                   baselineOverrideCm,
-                                   fovOverrideDegrees);
+                                   height);
 
 }  // namespace dai
