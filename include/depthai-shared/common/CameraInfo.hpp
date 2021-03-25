@@ -5,7 +5,7 @@ namespace dai {
 
 struct CameraInfo {
     CameraInfo() : width(0), height(0), measuredFovDeg(0) {}
-    int width, height;
+    uint16_t width, height;
     std::vector<std::vector<float>> intrinsicMatrix;
     std::vector<float> distortionCoeff;
     Extrinsics extrinsics;
