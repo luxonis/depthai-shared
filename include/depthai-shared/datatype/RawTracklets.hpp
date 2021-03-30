@@ -21,17 +21,35 @@ struct Tracklet {
         LOST /**< The object gets lost now. The object can be tracked again automatically(long term tracking) or by specifying detected object manually(short
                 term and zero term tracking). */
     };
+    /**
+     * Tracked region of interest.
+     */
     Rect roi;
+    /**
+     * Tracklet's ID.
+     */
     std::int32_t id;
+    /**
+     * Tracklet's label ID.
+     */
     std::int32_t label;
+    /**
+     * Status of tracklet.
+     */
     TrackingStatus status;
 
+    /**
+     * Image detection that is tracked.
+     */
     ImgDetection srcImgDetection;
+    /**
+     * Spatial coordinates of tracklet.
+     */
     Point3f spatialCoordinates;
     NLOHMANN_DEFINE_TYPE_INTRUSIVE(Tracklet, roi, id, label, status, srcImgDetection, spatialCoordinates);
 };
 
-inline std::ostream& operator<<(std::ostream& out, Tracklet::TrackingStatus& status) {
+inline std::ostream& operator<<(std::ostream& out, const Tracklet::TrackingStatus& status) {
     switch(status) {
         case Tracklet::TrackingStatus::NEW:
             out << "NEW";
