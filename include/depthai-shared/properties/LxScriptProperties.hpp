@@ -7,11 +7,11 @@
 namespace dai {
 
 /**
- * Specify MicropythonProperties options such as script uri, script size, ...
+ * Specify LxScriptProperties options such as script uri, script size, ...
  */
-struct MicroPythonProperties {
+struct LxScriptProperties {
     /**
-     * Node name. This will be used to identify the node in the micropython script.
+     * Node name. This will be used to identify the node in the LxScript script.
      */
     std::string nodeName = "";
 
@@ -26,11 +26,11 @@ struct MicroPythonProperties {
     std::map<std::string, std::string> assetUriMap;
 
     /**
-     * Which processor should execute the MicroPython script
+     * Which processor should execute the LxScript script
      */
     ProcessorType processor = ProcessorType::LEON_MSS;
 };
 
-NLOHMANN_DEFINE_TYPE_NON_INTRUSIVE(MicroPythonProperties, nodeName, scriptUri, assetUriMap, processor);
+NLOHMANN_DEFINE_TYPE_NON_INTRUSIVE(LxScriptProperties, nodeName, scriptUri, assetUriMap, processor);
 
 }  // namespace dai
