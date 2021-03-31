@@ -34,6 +34,10 @@ struct Tracklet {
      */
     std::int32_t label;
     /**
+     * Number of frames it is being tracked for.
+     */
+    std::int32_t age;
+    /**
      * Status of tracklet.
      */
     TrackingStatus status;
@@ -46,23 +50,8 @@ struct Tracklet {
      * Spatial coordinates of tracklet.
      */
     Point3f spatialCoordinates;
-    NLOHMANN_DEFINE_TYPE_INTRUSIVE(Tracklet, roi, id, label, status, srcImgDetection, spatialCoordinates);
+    NLOHMANN_DEFINE_TYPE_INTRUSIVE(Tracklet, roi, id, label, age, status, srcImgDetection, spatialCoordinates);
 };
-
-inline std::ostream& operator<<(std::ostream& out, const Tracklet::TrackingStatus& status) {
-    switch(status) {
-        case Tracklet::TrackingStatus::NEW:
-            out << "NEW";
-            break;
-        case Tracklet::TrackingStatus::TRACKED:
-            out << "TRACKED";
-            break;
-        case Tracklet::TrackingStatus::LOST:
-            out << "LOST";
-            break;
-    }
-    return out;
-}
 
 struct RawTracklets : public RawBuffer {
     std::vector<Tracklet> tracklets;

@@ -12,11 +12,18 @@
 
 namespace dai {
 
-enum class TrackType : std::int32_t {
+enum class TrackerType : std::int32_t {
     // Ability to track the objects without accessing image data.
     ZERO_TERM_IMAGELESS = 5,
     // Tracking based on histogram.
     ZERO_TERM_COLOR_HISTOGRAM
+};
+
+enum class TrackerIdAssigmentPolicy : std::int32_t {
+    // Always take a new, unique ID
+    UNIQUE_ID,
+    // Take the smallest available ID
+    SMALLEST_ID
 };
 
 /**
@@ -26,9 +33,10 @@ struct ObjectTrackerProperties {
     float trackerThreshold = 0.0;
     std::int32_t maxObjectsToTrack = 60;
     std::vector<std::uint32_t> detectionLabelsToTrack;
-    TrackType trackType = TrackType::ZERO_TERM_IMAGELESS;
+    TrackerType trackerType = TrackerType::ZERO_TERM_IMAGELESS;
+    TrackerIdAssigmentPolicy trackerIdAssigmentPolicy = TrackerIdAssigmentPolicy::UNIQUE_ID;
 };
 
-NLOHMANN_DEFINE_TYPE_NON_INTRUSIVE(ObjectTrackerProperties, trackerThreshold, maxObjectsToTrack, detectionLabelsToTrack, trackType)
+NLOHMANN_DEFINE_TYPE_NON_INTRUSIVE(ObjectTrackerProperties, trackerThreshold, maxObjectsToTrack, detectionLabelsToTrack, trackerType, trackerIdAssigmentPolicy)
 
 }  // namespace dai
