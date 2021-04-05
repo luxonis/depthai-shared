@@ -15,7 +15,7 @@ namespace dai {
 enum class TrackerType : std::int32_t {
     // Ability to track the objects without accessing image data.
     ZERO_TERM_IMAGELESS = 5,
-    // Tracking based on histogram.
+    // Tracking using image data too.
     ZERO_TERM_COLOR_HISTOGRAM
 };
 
