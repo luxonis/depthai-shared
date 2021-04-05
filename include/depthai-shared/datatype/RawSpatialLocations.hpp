@@ -16,7 +16,7 @@ namespace dai {
  * Spatial location information structure
  *
  * Contains configuration data, average depth for the calculated ROI on depth map.
- * Together with spatial coordinates: x,y,z. Origin is the center of ROI.
+ * Together with spatial coordinates: x,y,z relative to the center of depth map.
  * Units are in millimeters.
  */
 struct SpatialLocations {
