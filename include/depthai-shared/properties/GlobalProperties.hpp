@@ -21,8 +21,22 @@ struct GlobalProperties {
     double leonMssFrequencyHz = 700 * 1000 * 1000;
     tl::optional<std::string> pipelineName;
     tl::optional<std::string> pipelineVersion;
+    /**
+     * Camera tuning binary blob size in bytes
+     */
+    tl::optional<std::uint32_t> cameraTuningBlobSize;
+    /**
+     * Uri which points to camera tuning binary blob
+     */
+    std::string cameraTuningBlobUri;
 };
 
-NLOHMANN_DEFINE_TYPE_NON_INTRUSIVE(GlobalProperties, leonCssFrequencyHz, leonMssFrequencyHz, pipelineName, pipelineVersion);
+NLOHMANN_DEFINE_TYPE_NON_INTRUSIVE(GlobalProperties,
+                                   leonCssFrequencyHz,
+                                   leonMssFrequencyHz,
+                                   pipelineName,
+                                   pipelineVersion,
+                                   cameraTuningBlobSize,
+                                   cameraTuningBlobUri);
 
 }  // namespace dai
