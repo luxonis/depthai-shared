@@ -6,15 +6,12 @@
 namespace dai {
 
 struct CameraInfo {
-    CameraInfo() : width(0), height(0), measuredFovDeg(0) {
-        cameraType = CameraModel::Perspective;
-    }
-    uint16_t width, height;
+    uint16_t width = 0, height = 0;
     std::vector<std::vector<float>> intrinsicMatrix;
     std::vector<float> distortionCoeff;
     Extrinsics extrinsics;
-    float measuredFovDeg;  // fov in deg
-    CameraModel cameraType;
+    float measuredFovDeg = 0.0f;  // fov in deg
+    CameraModel cameraType = CameraModel::Perspective;
     NLOHMANN_DEFINE_TYPE_INTRUSIVE(CameraInfo, cameraType, width, height, measuredFovDeg, intrinsicMatrix, distortionCoeff, extrinsics);
 };
 
