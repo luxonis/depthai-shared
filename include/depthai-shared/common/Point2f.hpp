@@ -19,7 +19,7 @@ struct Point2f {
         this->x = x;
         this->y = y;
     }
-    float x, y;
+    float x = 0, y = 0;
 
     NLOHMANN_DEFINE_TYPE_INTRUSIVE(Point2f, x, y);
 };

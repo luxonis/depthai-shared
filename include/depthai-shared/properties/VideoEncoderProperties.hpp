@@ -48,6 +48,10 @@ struct VideoEncoderProperties {
      */
     std::int32_t quality = 80;
     /**
+     * Lossless mode ([M]JPEG only)
+     */
+    bool lossless = false;
+    /**
      * Rate control mode specifies if constant or variable bitrate should be used (H264 / H265)
      */
     RateControlMode rateCtrlMode = RateControlMode::CBR;
