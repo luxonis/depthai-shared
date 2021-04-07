@@ -14,7 +14,7 @@ struct Size2f {
         this->width = width;
         this->height = height;
     }
-    float width, height;
+    float width = 0, height = 0;
 
     NLOHMANN_DEFINE_TYPE_INTRUSIVE(Size2f, width, height);
 };
