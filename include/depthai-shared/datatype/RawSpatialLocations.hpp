@@ -24,7 +24,7 @@ struct SpatialLocations {
     // Average of depth values inside the ROI between the specified thresholds in config
     float depthAverage;
     // Number of depth values used to calculate depthAverage based on config
-    std::int32_t depthAveragePixelCount;
+    std::uint32_t depthAveragePixelCount;
     // Spatial coordinates: x,y,z; x,y are the relative positions of the center of ROI to the center of depth map
     Point3f spatialCoordinates;
 };
