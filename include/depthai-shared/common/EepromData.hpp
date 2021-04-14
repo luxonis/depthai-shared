@@ -17,7 +17,7 @@ namespace dai {
  * Contains the Calibration and Board data stored on device
  */
 struct EepromData {
-    uint32_t version = 0;
+    uint32_t version = 6;
     bool swapLeftRightCam = false;
     std::string boardName, boardRev;
     std::unordered_map<CameraBoardSocket, CameraInfo> cameraData;
