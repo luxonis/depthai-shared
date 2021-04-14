@@ -1,4 +1,6 @@
 #pragma once
+#include <string>
+#include <unordered_map>
 #include <vector>
 
 #include "depthai-shared/common/CameraBoardSocket.hpp"
