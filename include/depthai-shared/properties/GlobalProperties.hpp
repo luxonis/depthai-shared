@@ -1,6 +1,8 @@
 #pragma once
 
 #include <depthai-shared/common/optional.hpp>
+#include "depthai-shared/common/EepromData.hpp"
+
 #include <nlohmann/json.hpp>
 
 namespace dai {
