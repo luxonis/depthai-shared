@@ -21,6 +21,8 @@ struct GlobalProperties {
     double leonMssFrequencyHz = 700 * 1000 * 1000;
     tl::optional<std::string> pipelineName;
     tl::optional<std::string> pipelineVersion;
+    tl::optional<dai::EepromData> calibData;
+
 };
 
 NLOHMANN_DEFINE_TYPE_NON_INTRUSIVE(GlobalProperties, leonCssFrequencyHz, leonMssFrequencyHz, pipelineName, pipelineVersion);
