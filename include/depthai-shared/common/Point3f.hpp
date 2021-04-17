@@ -20,7 +20,7 @@ struct Point3f {
         this->y = y;
         this->z = z;
     }
-    float x, y, z;
+    float x = 0, y = 0, z = 0;
 
     NLOHMANN_DEFINE_TYPE_INTRUSIVE(Point3f, x, y, z);
 };
