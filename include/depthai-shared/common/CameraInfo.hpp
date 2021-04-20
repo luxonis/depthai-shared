@@ -13,7 +13,7 @@ struct CameraInfo {
     Extrinsics extrinsics;
     float measuredFovDeg = 0.0f;  // fov in deg
     CameraModel cameraType = CameraModel::Perspective;
-    NLOHMANN_DEFINE_TYPE_INTRUSIVE(CameraInfo, cameraType, width, height, measuredFovDeg, intrinsicMatrix, distortionCoeff, extrinsics);
+    NLOHMANN_DEFINE_TYPE_INTRUSIVE(CameraInfo, cameraType, width, height, measuredFovDeg, lensPosition, intrinsicMatrix, distortionCoeff, extrinsics);
 };
 
 }  // namespace dai
