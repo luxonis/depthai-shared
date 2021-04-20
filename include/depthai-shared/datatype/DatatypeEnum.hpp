@@ -15,7 +15,8 @@ enum class DatatypeEnum : std::int32_t {
     SystemInformation,
     SpatialLocationCalculatorConfig,
     SpatialLocationCalculatorData,
-    Tracklets
+    Tracklets,
+    IMUDatas,
 };
 bool isDatatypeSubclassOf(DatatypeEnum parent, DatatypeEnum children);
 
