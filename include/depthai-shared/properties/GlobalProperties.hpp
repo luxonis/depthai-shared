@@ -1,9 +1,9 @@
 #pragma once
 
 #include <depthai-shared/common/optional.hpp>
-#include "depthai-shared/common/EepromData.hpp"
-
 #include <nlohmann/json.hpp>
+
+#include "depthai-shared/common/EepromData.hpp"
 
 namespace dai {
 
@@ -24,7 +24,6 @@ struct GlobalProperties {
     tl::optional<std::string> pipelineName;
     tl::optional<std::string> pipelineVersion;
     tl::optional<dai::EepromData> calibData;
-
 };
 
 NLOHMANN_DEFINE_TYPE_NON_INTRUSIVE(GlobalProperties, leonCssFrequencyHz, leonMssFrequencyHz, pipelineName, pipelineVersion, calibData);
