@@ -15,10 +15,10 @@ struct ColorCameraProperties {
     static constexpr int AUTO = -1;
 
     struct IspScale {
-        uint8_t horizNumerator = 0;
-        uint8_t horizDenominator = 0;
-        uint8_t vertNumerator = 0;
-        uint8_t vertDenominator = 0;
+        int32_t horizNumerator = 0;
+        int32_t horizDenominator = 0;
+        int32_t vertNumerator = 0;
+        int32_t vertDenominator = 0;
 
         NLOHMANN_DEFINE_TYPE_INTRUSIVE(IspScale, horizNumerator, horizDenominator, vertNumerator, vertDenominator);
     };
