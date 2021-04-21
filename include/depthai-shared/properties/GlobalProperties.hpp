@@ -3,6 +3,8 @@
 #include <depthai-shared/common/optional.hpp>
 #include <nlohmann/json.hpp>
 
+#include "depthai-shared/common/EepromData.hpp"
+
 namespace dai {
 
 /**
@@ -21,8 +23,9 @@ struct GlobalProperties {
     double leonMssFrequencyHz = 700 * 1000 * 1000;
     tl::optional<std::string> pipelineName;
     tl::optional<std::string> pipelineVersion;
+    tl::optional<dai::EepromData> calibData;
 };
 
-NLOHMANN_DEFINE_TYPE_NON_INTRUSIVE(GlobalProperties, leonCssFrequencyHz, leonMssFrequencyHz, pipelineName, pipelineVersion);
+NLOHMANN_DEFINE_TYPE_NON_INTRUSIVE(GlobalProperties, leonCssFrequencyHz, leonMssFrequencyHz, pipelineName, pipelineVersion, calibData);
 
 }  // namespace dai
