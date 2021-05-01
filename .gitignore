@@ -3,3 +3,5 @@ pipeline_builder/generated_backup
 
 # git
 *.orig
+.vscode
+.vscode/*
