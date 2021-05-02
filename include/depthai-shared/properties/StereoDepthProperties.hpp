@@ -3,6 +3,8 @@
 #include <depthai-shared/common/optional.hpp>
 #include <nlohmann/json.hpp>
 
+#include "depthai-shared/common/CameraBoardSocket.hpp"
+
 namespace dai {
 
 /**
@@ -15,13 +17,27 @@ struct StereoDepthProperties {
     enum class MedianFilter : int32_t { MEDIAN_OFF = 0, KERNEL_3x3 = 3, KERNEL_5x5 = 5, KERNEL_7x7 = 7 };
 
     /**
+     * Align the disparity/depth to the perspective of a rectified output, or center it
+     */
+    enum class DepthAlign : int32_t { RECTIFIED_RIGHT, RECTIFIED_LEFT, CENTER };
+
+    /**
      * Calibration data byte array
      */
     std::vector<std::uint8_t> calibration;
     /**
      * Set kernel size for disparity/depth median filtering, or disable
      */
-    MedianFilter median = MedianFilter::KERNEL_7x7;
+    MedianFilter median = MedianFilter::KERNEL_5x5;
+    /**
+     * Set the disparity/depth alignment to the perspective of a rectified output, or center it
+     */
+    DepthAlign depthAlign = DepthAlign::RECTIFIED_RIGHT;
+    /**
+     * Which camera to align disparity/depth to.
+     * When configured (not AUTO), takes precedence over 'depthAlign'
+     */
+    CameraBoardSocket depthAlignCamera = CameraBoardSocket::AUTO;
     /**
      * Confidence threshold for disparity calculation, 0..255
      */
@@ -49,15 +65,6 @@ struct StereoDepthProperties {
      */
     std::int32_t rectifyEdgeFillColor = -1;
     /**
-     * Enable outputting rectified frames. Optimizes computation on device side when disabled
-     */
-    bool enableOutputRectified = false;
-    /**
-     * Enable outputting 'depth' stream (converted from disparity).
-     * In certain configurations, this will disable 'disparity' stream
-     */
-    bool enableOutputDepth = false;
-    /**
      * Input frame width. Optional (taken from MonoCamera nodes if they exist)
      */
     tl::optional<std::int32_t> width;
@@ -72,14 +79,14 @@ struct StereoDepthProperties {
 NLOHMANN_DEFINE_TYPE_NON_INTRUSIVE(StereoDepthProperties,
                                    calibration,
                                    median,
+                                   depthAlign,
+                                   depthAlignCamera,
                                    confidenceThreshold,
                                    enableLeftRightCheck,
                                    enableSubpixel,
                                    enableExtendedDisparity,
                                    rectifyMirrorFrame,
                                    rectifyEdgeFillColor,
-                                   enableOutputRectified,
-                                   enableOutputDepth,
                                    width,
                                    height);
 

@@ -1,6 +1,7 @@
 #pragma once
 
 #include "RawBuffer.hpp"
+#include "depthai-shared/common/Point3f.hpp"
 
 namespace dai {
 
@@ -11,11 +12,8 @@ struct ImgDetection {
     float ymin;
     float xmax;
     float ymax;
-    float xdepth;
-    float ydepth;
-    float zdepth;
 
-    NLOHMANN_DEFINE_TYPE_INTRUSIVE(ImgDetection, label, confidence, xmin, ymin, xmax, ymax, xdepth, ydepth, zdepth);
+    NLOHMANN_DEFINE_TYPE_INTRUSIVE(ImgDetection, label, confidence, xmin, ymin, xmax, ymax);
 };
 
 struct RawImgDetections : public RawBuffer {

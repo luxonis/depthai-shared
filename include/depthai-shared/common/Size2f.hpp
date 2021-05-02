@@ -9,7 +9,12 @@
 namespace dai {
 
 struct Size2f {
-    float width, height;
+    Size2f() {}
+    Size2f(float width, float height) {
+        this->width = width;
+        this->height = height;
+    }
+    float width = 0, height = 0;
 
     NLOHMANN_DEFINE_TYPE_INTRUSIVE(Size2f, width, height);
 };

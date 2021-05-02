@@ -7,29 +7,22 @@
 #include <nlohmann/json.hpp>
 
 // project
-#include "NeuralNetworkProperties.hpp"
+#include "DetectionNetworkProperties.hpp"
 #include "depthai-shared/common/DetectionNetworkType.hpp"
 #include "depthai-shared/common/optional.hpp"
+#include "depthai-shared/datatype/RawSpatialLocationCalculatorConfig.hpp"
 
 namespace dai {
 
 /**
- * Properties for DetectionNetwork
+ * Properties for SpatialDetectionNetwork
  */
-struct DetectionNetworkProperties : NeuralNetworkProperties {
-    /// Generic Neural Network properties
-    DetectionNetworkType nnFamily;
-    float confidenceThreshold;
-
-    /// YOLO specific network properties
-    int classes;
-    int coordinates;
-    std::vector<float> anchors;
-    std::map<std::string, std::vector<int>> anchorMasks;
-    float iouThreshold;
+struct SpatialDetectionNetworkProperties : DetectionNetworkProperties {
+    float detectedBBScaleFactor = 1.0;
+    SpatialLocationCalculatorConfigThresholds depthThresholds;
 };
 
-NLOHMANN_DEFINE_TYPE_NON_INTRUSIVE(DetectionNetworkProperties,
+NLOHMANN_DEFINE_TYPE_NON_INTRUSIVE(SpatialDetectionNetworkProperties,
                                    nnFamily,
                                    blobSize,
                                    blobUri,
@@ -41,6 +34,8 @@ NLOHMANN_DEFINE_TYPE_NON_INTRUSIVE(DetectionNetworkProperties,
                                    coordinates,
                                    anchors,
                                    anchorMasks,
-                                   iouThreshold)
+                                   iouThreshold,
+                                   detectedBBScaleFactor,
+                                   depthThresholds)
 
 }  // namespace dai

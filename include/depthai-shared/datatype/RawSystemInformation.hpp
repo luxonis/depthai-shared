@@ -18,6 +18,8 @@ namespace dai {
 struct RawSystemInformation : public RawBuffer {
     /// DDR memory usage
     MemoryInfo ddrMemoryUsage;
+    /// CMX memory usage
+    MemoryInfo cmxMemoryUsage;
     /// LeonCss heap usage
     MemoryInfo leonCssMemoryUsage;
     /// LeonMss heap usage
@@ -36,7 +38,7 @@ struct RawSystemInformation : public RawBuffer {
     };
 
     NLOHMANN_DEFINE_TYPE_INTRUSIVE(
-        RawSystemInformation, ddrMemoryUsage, leonCssMemoryUsage, leonMssMemoryUsage, leonCssCpuUsage, leonMssCpuUsage, chipTemperature);
+        RawSystemInformation, ddrMemoryUsage, cmxMemoryUsage, leonCssMemoryUsage, leonMssMemoryUsage, leonCssCpuUsage, leonMssCpuUsage, chipTemperature);
 };
 
 }  // namespace dai
