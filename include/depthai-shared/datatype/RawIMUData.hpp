@@ -18,15 +18,14 @@ struct IMUReport {
      * The sequence number increments once for each report sent.  Gaps
      * in the sequence numbers indicate missing or dropped reports.
      */
-    uint8_t sequence;
+    int32_t sequence = 0;
 
-    IMUReportAccuracy accuracy;
+    /** Accuracy of sensor */
+    IMUReportAccuracy accuracy = IMUReportAccuracy::UNRELIABLE;
 
-    Timestamp timestamp; /**< [uS] */
-
-    uint32_t delay; /**< @brief [uS] delay for batch reports, RESERVED for now */
+    Timestamp timestamp = {};
 };
-NLOHMANN_DEFINE_TYPE_NON_INTRUSIVE(IMUReport, sequence, accuracy, timestamp, delay);
+NLOHMANN_DEFINE_TYPE_NON_INTRUSIVE(IMUReport, sequence, accuracy, timestamp);
 
 /**
  * @brief Accelerometer
@@ -34,11 +33,11 @@ NLOHMANN_DEFINE_TYPE_NON_INTRUSIVE(IMUReport, sequence, accuracy, timestamp, del
  * See the SH-2 Reference Manual for more detail.
  */
 struct IMUReportAccelerometer : IMUReport {
-    float x;
-    float y;
-    float z;
+    float x = 0;
+    float y = 0;
+    float z = 0;
 };
-NLOHMANN_DEFINE_TYPE_NON_INTRUSIVE(IMUReportAccelerometer, x, y, z, sequence, accuracy, timestamp, delay);
+NLOHMANN_DEFINE_TYPE_NON_INTRUSIVE(IMUReportAccelerometer, x, y, z, sequence, accuracy, timestamp);
 
 /**
  * @brief Gyroscope
@@ -47,11 +46,11 @@ NLOHMANN_DEFINE_TYPE_NON_INTRUSIVE(IMUReportAccelerometer, x, y, z, sequence, ac
  */
 struct IMUReportGyroscope : IMUReport {
     /* Units are rad/s */
-    float x;
-    float y;
-    float z;
+    float x = 0;
+    float y = 0;
+    float z = 0;
 };
-NLOHMANN_DEFINE_TYPE_NON_INTRUSIVE(IMUReportGyroscope, x, y, z, sequence, accuracy, timestamp, delay);
+NLOHMANN_DEFINE_TYPE_NON_INTRUSIVE(IMUReportGyroscope, x, y, z, sequence, accuracy, timestamp);
 
 /**
  * @brief Uncalibrated gyroscope
@@ -60,14 +59,14 @@ NLOHMANN_DEFINE_TYPE_NON_INTRUSIVE(IMUReportGyroscope, x, y, z, sequence, accura
  */
 struct IMUReportGyroscopeUncalibrated : IMUReport {
     /* Units are rad/s */
-    float x;     /**< @brief [rad/s] */
-    float y;     /**< @brief [rad/s] */
-    float z;     /**< @brief [rad/s] */
-    float biasX; /**< @brief [rad/s] */
-    float biasY; /**< @brief [rad/s] */
-    float biasZ; /**< @brief [rad/s] */
+    float x = 0;     /**< @brief [rad/s] */
+    float y = 0;     /**< @brief [rad/s] */
+    float z = 0;     /**< @brief [rad/s] */
+    float biasX = 0; /**< @brief [rad/s] */
+    float biasY = 0; /**< @brief [rad/s] */
+    float biasZ = 0; /**< @brief [rad/s] */
 };
-NLOHMANN_DEFINE_TYPE_NON_INTRUSIVE(IMUReportGyroscopeUncalibrated, x, y, z, biasX, biasY, biasZ, sequence, accuracy, timestamp, delay);
+NLOHMANN_DEFINE_TYPE_NON_INTRUSIVE(IMUReportGyroscopeUncalibrated, x, y, z, biasX, biasY, biasZ, sequence, accuracy, timestamp);
 
 /**
  * @brief Magnetic field
@@ -76,11 +75,11 @@ NLOHMANN_DEFINE_TYPE_NON_INTRUSIVE(IMUReportGyroscopeUncalibrated, x, y, z, bias
  */
 struct IMUReportMagneticField : IMUReport {
     /* Units are uTesla */
-    float x; /**< @brief [uTesla] */
-    float y; /**< @brief [uTesla] */
-    float z; /**< @brief [uTesla] */
+    float x = 0; /**< @brief [uTesla] */
+    float y = 0; /**< @brief [uTesla] */
+    float z = 0; /**< @brief [uTesla] */
 };
-NLOHMANN_DEFINE_TYPE_NON_INTRUSIVE(IMUReportMagneticField, x, y, z, sequence, accuracy, timestamp, delay);
+NLOHMANN_DEFINE_TYPE_NON_INTRUSIVE(IMUReportMagneticField, x, y, z, sequence, accuracy, timestamp);
 
 /**
  * @brief Uncalibrated magnetic field
@@ -89,14 +88,14 @@ NLOHMANN_DEFINE_TYPE_NON_INTRUSIVE(IMUReportMagneticField, x, y, z, sequence, ac
  */
 struct IMUReportMagneticFieldUncalibrated : IMUReport {
     /* Units are uTesla */
-    float x;     /**< @brief [uTesla] */
-    float y;     /**< @brief [uTesla] */
-    float z;     /**< @brief [uTesla] */
-    float biasX; /**< @brief [uTesla] */
-    float biasY; /**< @brief [uTesla] */
-    float biasZ; /**< @brief [uTesla] */
+    float x = 0;     /**< @brief [uTesla] */
+    float y = 0;     /**< @brief [uTesla] */
+    float z = 0;     /**< @brief [uTesla] */
+    float biasX = 0; /**< @brief [uTesla] */
+    float biasY = 0; /**< @brief [uTesla] */
+    float biasZ = 0; /**< @brief [uTesla] */
 };
-NLOHMANN_DEFINE_TYPE_NON_INTRUSIVE(IMUReportMagneticFieldUncalibrated, x, y, z, biasX, biasY, biasZ, sequence, accuracy, timestamp, delay);
+NLOHMANN_DEFINE_TYPE_NON_INTRUSIVE(IMUReportMagneticFieldUncalibrated, x, y, z, biasX, biasY, biasZ, sequence, accuracy, timestamp);
 
 /**
  * @brief Rotation Vector with Accuracy
@@ -104,13 +103,13 @@ NLOHMANN_DEFINE_TYPE_NON_INTRUSIVE(IMUReportMagneticFieldUncalibrated, x, y, z, 
  * See the SH-2 Reference Manual for more detail.
  */
 struct IMUReportRotationVectorWAcc : IMUReport {
-    float i;        /**< @brief Quaternion component i */
-    float j;        /**< @brief Quaternion component j */
-    float k;        /**< @brief Quaternion component k */
-    float real;     /**< @brief Quaternion component, real */
-    float accuracy; /**< @brief Accuracy estimate [radians] */
+    float i = 0;        /**< @brief Quaternion component i */
+    float j = 0;        /**< @brief Quaternion component j */
+    float k = 0;        /**< @brief Quaternion component k */
+    float real = 0;     /**< @brief Quaternion component, real */
+    float accuracy = 0; /**< @brief Accuracy estimate [radians] */
 };
-NLOHMANN_DEFINE_TYPE_NON_INTRUSIVE(IMUReportRotationVectorWAcc, i, j, k, real, accuracy, sequence, accuracy, timestamp, delay);
+NLOHMANN_DEFINE_TYPE_NON_INTRUSIVE(IMUReportRotationVectorWAcc, i, j, k, real, accuracy, sequence, accuracy, timestamp);
 
 /**
  * @brief Rotation Vector
@@ -118,12 +117,12 @@ NLOHMANN_DEFINE_TYPE_NON_INTRUSIVE(IMUReportRotationVectorWAcc, i, j, k, real, a
  * See the SH-2 Reference Manual for more detail.
  */
 struct IMUReportRotationVector : IMUReport {
-    float i;    /**< @brief Quaternion component i */
-    float j;    /**< @brief Quaternion component j */
-    float k;    /**< @brief Quaternion component k */
-    float real; /**< @brief Quaternion component real */
+    float i = 0;    /**< @brief Quaternion component i */
+    float j = 0;    /**< @brief Quaternion component j */
+    float k = 0;    /**< @brief Quaternion component k */
+    float real = 0; /**< @brief Quaternion component real */
 };
-NLOHMANN_DEFINE_TYPE_NON_INTRUSIVE(IMUReportRotationVector, i, j, k, real, sequence, accuracy, timestamp, delay);
+NLOHMANN_DEFINE_TYPE_NON_INTRUSIVE(IMUReportRotationVector, i, j, k, real, sequence, accuracy, timestamp);
 
 /**
  * @brief heartRateMonitor
@@ -131,15 +130,15 @@ NLOHMANN_DEFINE_TYPE_NON_INTRUSIVE(IMUReportRotationVector, i, j, k, real, seque
  * See SH-2 Reference Manual for details.
  */
 struct IMUReportGyroIntegratedRV : IMUReport {
-    float i;       /**< @brief Quaternion component i */
-    float j;       /**< @brief Quaternion component j */
-    float k;       /**< @brief Quaternion component k */
-    float real;    /**< @brief Quaternion component real */
-    float angVelX; /**< @brief Angular velocity about x [rad/s] */
-    float angVelY; /**< @brief Angular velocity about y [rad/s] */
-    float angVelZ; /**< @brief Angular velocity about z [rad/s] */
+    float i = 0;       /**< @brief Quaternion component i */
+    float j = 0;       /**< @brief Quaternion component j */
+    float k = 0;       /**< @brief Quaternion component k */
+    float real = 0;    /**< @brief Quaternion component real */
+    float angVelX = 0; /**< @brief Angular velocity about x [rad/s] */
+    float angVelY = 0; /**< @brief Angular velocity about y [rad/s] */
+    float angVelZ = 0; /**< @brief Angular velocity about z [rad/s] */
 };
-NLOHMANN_DEFINE_TYPE_NON_INTRUSIVE(IMUReportGyroIntegratedRV, i, j, k, real, angVelX, angVelY, angVelZ, sequence, accuracy, timestamp, delay);
+NLOHMANN_DEFINE_TYPE_NON_INTRUSIVE(IMUReportGyroIntegratedRV, i, j, k, real, angVelX, angVelY, angVelZ, sequence, accuracy, timestamp);
 
 /**
  * IMU output
@@ -149,13 +148,17 @@ NLOHMANN_DEFINE_TYPE_NON_INTRUSIVE(IMUReportGyroIntegratedRV, i, j, k, real, ang
  * Units are in millimeters.
  */
 struct IMUDatas {
+    IMUReportAccelerometer rawAcceleroMeter;
+
     IMUReportAccelerometer acceleroMeter;
     IMUReportAccelerometer linearAcceleroMeter;
     IMUReportAccelerometer gravity;
 
+    IMUReportGyroscope rawGyroscope;
     IMUReportGyroscope gyroscope;
     IMUReportGyroscopeUncalibrated gyroscopeUncalibrated;
 
+    IMUReportMagneticField rawMagneticField;
     IMUReportMagneticField magneticField;
     IMUReportMagneticFieldUncalibrated magneticFieldUncalibrated;
 
@@ -169,11 +172,14 @@ struct IMUDatas {
 };
 
 NLOHMANN_DEFINE_TYPE_NON_INTRUSIVE(IMUDatas,
+                                   rawAcceleroMeter,
                                    acceleroMeter,
                                    linearAcceleroMeter,
                                    gravity,
+                                   rawGyroscope,
                                    gyroscope,
                                    gyroscopeUncalibrated,
+                                   rawMagneticField,
                                    magneticField,
                                    magneticFieldUncalibrated,
                                    rotationVector,
