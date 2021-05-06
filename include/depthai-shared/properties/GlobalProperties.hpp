@@ -22,11 +22,11 @@ struct GlobalProperties {
     tl::optional<std::string> pipelineName;
     tl::optional<std::string> pipelineVersion;
     /**
-     * Camera tuning binary blob size in bytes
+     * Camera tuning blob size in bytes
      */
     tl::optional<std::uint32_t> cameraTuningBlobSize;
     /**
-     * Uri which points to camera tuning binary blob
+     * Uri which points to camera tuning blob
      */
     std::string cameraTuningBlobUri;
 };
