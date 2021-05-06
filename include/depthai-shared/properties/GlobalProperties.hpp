@@ -31,12 +31,7 @@ struct GlobalProperties {
     std::string cameraTuningBlobUri;
 };
 
-NLOHMANN_DEFINE_TYPE_NON_INTRUSIVE(GlobalProperties,
-                                   leonCssFrequencyHz,
-                                   leonMssFrequencyHz,
-                                   pipelineName,
-                                   pipelineVersion,
-                                   cameraTuningBlobSize,
-                                   cameraTuningBlobUri);
+NLOHMANN_DEFINE_TYPE_NON_INTRUSIVE(
+    GlobalProperties, leonCssFrequencyHz, leonMssFrequencyHz, pipelineName, pipelineVersion, cameraTuningBlobSize, cameraTuningBlobUri);
 
 }  // namespace dai
