@@ -42,6 +42,6 @@ struct MonoCameraProperties {
     float fps = 30.0;
 };
 
-NLOHMANN_DEFINE_TYPE_NON_INTRUSIVE(MonoCameraProperties, boardSocket, imageOrientation, resolution, fps);
+NLOHMANN_DEFINE_TYPE_NON_INTRUSIVE(MonoCameraProperties, initialControl, boardSocket, imageOrientation, resolution, fps);
 
 }  // namespace dai
