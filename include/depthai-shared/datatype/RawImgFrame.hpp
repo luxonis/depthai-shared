@@ -53,8 +53,16 @@ struct RawImgFrame : public RawBuffer {
 
         NLOHMANN_DEFINE_TYPE_INTRUSIVE(Specs, type, width, height, stride, bytesPP, p1Offset, p2Offset, p3Offset);
     };
+    struct CameraSettings {
+        int32_t exposureTimeUs;
+        int32_t sensitivityIso;
+        int32_t lensPosition;
+
+        NLOHMANN_DEFINE_TYPE_INTRUSIVE(CameraSettings, exposureTimeUs, sensitivityIso, lensPosition);
+    };
 
     Specs fb;
+    CameraSettings cam;
     uint32_t category;     //
     uint32_t instanceNum;  // Which source created this frame (color, mono, ...)
     int sequenceNum;       // increments for each frame
@@ -67,7 +75,7 @@ struct RawImgFrame : public RawBuffer {
         datatype = DatatypeEnum::ImgFrame;
     };
 
-    NLOHMANN_DEFINE_TYPE_INTRUSIVE(RawImgFrame, fb, category, instanceNum, sequenceNum, ts, tsDevice);
+    NLOHMANN_DEFINE_TYPE_INTRUSIVE(RawImgFrame, fb, cam, category, instanceNum, sequenceNum, ts, tsDevice);
 };
 
 }  // namespace dai
