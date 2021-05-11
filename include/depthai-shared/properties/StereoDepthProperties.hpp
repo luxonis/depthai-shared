@@ -11,6 +11,32 @@ namespace dai {
  * Specify StereoDepth options
  */
 struct StereoDepthProperties {
+
+    struct RectificationMesh {
+        /**
+         * Uri which points to the mesh array for 'left' input rectification
+         */
+        std::string meshLeftUri;
+        /**
+         * Uri which points to the mesh array for 'right' input rectification
+         */
+        std::string meshRightUri;
+        /**
+         * Mesh array size in bytes, for each of 'left' and 'right' (need to match)
+         */
+        tl::optional<std::uint32_t> meshSize;
+        /**
+         * Distance between mesh points, in the horizontal direction
+         */
+        uint16_t stepWidth = 16;
+        /**
+         * Distance between mesh points, in the vertical direction
+         */
+        uint16_t stepHeight = 16;
+
+        NLOHMANN_DEFINE_TYPE_INTRUSIVE(RectificationMesh, meshLeftUri, meshRightUri, meshSize, stepWidth, stepHeight);
+    };
+
     /**
      * Median filter config for disparity post-processing
      */
@@ -81,7 +107,11 @@ struct StereoDepthProperties {
      */
     tl::optional<std::int32_t> outHeight;
 
-    // TODO: rectification mesh option for fisheye camera use-cases
+    /**
+     * Specify a direct warp mesh to be used for rectification,
+     * instead of intrinsics + extrinsic matrices
+     */
+    RectificationMesh mesh;
 };
 
 NLOHMANN_DEFINE_TYPE_NON_INTRUSIVE(StereoDepthProperties,
@@ -98,6 +128,7 @@ NLOHMANN_DEFINE_TYPE_NON_INTRUSIVE(StereoDepthProperties,
                                    width,
                                    height,
                                    outWidth,
-                                   outHeight);
+                                   outHeight,
+                                   mesh);
 
 }  // namespace dai
