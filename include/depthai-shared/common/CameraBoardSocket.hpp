@@ -21,5 +21,4 @@ struct hash<dai::CameraBoardSocket> {
         return std::hash<Type>{}(static_cast<Type>(s));
     }
 };
-
 }  // namespace std

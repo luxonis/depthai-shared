@@ -11,9 +11,9 @@ struct CameraInfo {
     std::vector<std::vector<float>> intrinsicMatrix;
     std::vector<float> distortionCoeff;
     Extrinsics extrinsics;
-    float measuredFovDeg = 0.0f;  // fov in deg
+    float specHfovDeg = 0.0f;  // fov in deg
     CameraModel cameraType = CameraModel::Perspective;
-    NLOHMANN_DEFINE_TYPE_INTRUSIVE(CameraInfo, cameraType, width, height, measuredFovDeg, lensPosition, intrinsicMatrix, distortionCoeff, extrinsics);
+    NLOHMANN_DEFINE_TYPE_INTRUSIVE(CameraInfo, cameraType, width, height, specHfovDeg, lensPosition, intrinsicMatrix, distortionCoeff, extrinsics);
 };
 
 }  // namespace dai

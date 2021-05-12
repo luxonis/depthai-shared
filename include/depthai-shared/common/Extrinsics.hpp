@@ -12,13 +12,9 @@ struct Extrinsics {
     // (x, y, z) pose of destCameraSocket w.r.t currentCameraSocket obtained through calibration
     Point3f translation;
     // (x, y, z) pose of destCameraSocket w.r.t currentCameraSocket measured through CAD design
-    Point3f measuredTranslation;
+    Point3f specTranslation;
     CameraBoardSocket toCameraSocket = CameraBoardSocket::AUTO;
-    /** FIXME(sachin): Why does fromCameraSocket needs to be vector? fromCameraSockets
-     * is not part of eeprom write. it just enables in linking between cameras after eeprom read.
-     */
-    CameraBoardSocket fromCameraSocket = CameraBoardSocket::AUTO;
-    NLOHMANN_DEFINE_TYPE_INTRUSIVE(Extrinsics, rotationMatrix, translation, measuredTranslation, toCameraSocket, fromCameraSocket);
+    NLOHMANN_DEFINE_TYPE_INTRUSIVE(Extrinsics, rotationMatrix, translation, specTranslation, toCameraSocket);
 };
 
 }  // namespace dai
