@@ -26,7 +26,7 @@ struct GlobalProperties {
     /**
      * Calibration data sent through pipeline
      */
-    
+
     tl::optional<dai::EepromData> calibData;
 
     /**
