@@ -25,7 +25,7 @@ struct EepromData {
     StereoRectification stereoRectificationData;
     Extrinsics imuExtrinsics;
     std::vector<uint8_t> miscellaneousData;
-    NLOHMANN_DEFINE_TYPE_INTRUSIVE(EepromData, version, swapLeftRightCam, boardName, boardRev, cameraData, stereoRectificationData, imuExtrinsics, miscellaneousData);
+    NLOHMANN_DEFINE_TYPE_INTRUSIVE(EepromData, version, boardName, boardRev, cameraData, stereoRectificationData, imuExtrinsics, miscellaneousData);
 };
 
 }  // namespace dai
