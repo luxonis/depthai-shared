@@ -20,7 +20,6 @@ namespace dai {
  */
 struct EepromData {
     uint32_t version = 6;
-    bool swapLeftRightCam = false;
     std::string boardName, boardRev;
     std::unordered_map<CameraBoardSocket, CameraInfo> cameraData;
     StereoRectification stereoRectificationData;
