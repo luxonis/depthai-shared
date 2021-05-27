@@ -72,6 +72,14 @@ struct StereoDepthProperties {
      * Input frame height. Optional (taken from MonoCamera nodes if they exist)
      */
     tl::optional<std::int32_t> height;
+    /**
+     * Output disparity/depth width. Currently only used when aligning to RGB
+     */
+    tl::optional<std::int32_t> outWidth;
+    /**
+     * Output disparity/depth height. Currently only used when aligning to RGB
+     */
+    tl::optional<std::int32_t> outHeight;
 
     // TODO: rectification mesh option for fisheye camera use-cases
 };
@@ -88,6 +96,8 @@ NLOHMANN_DEFINE_TYPE_NON_INTRUSIVE(StereoDepthProperties,
                                    rectifyMirrorFrame,
                                    rectifyEdgeFillColor,
                                    width,
-                                   height);
+                                   height,
+                                   outWidth,
+                                   outHeight);
 
 }  // namespace dai
