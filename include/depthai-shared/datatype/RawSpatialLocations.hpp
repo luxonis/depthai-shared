@@ -32,7 +32,7 @@ struct SpatialLocations {
     // Spatial coordinates: x,y,z; x,y are the relative positions of the center of ROI to the center of depth map
     Point3f spatialCoordinates;
 };
-NLOHMANN_DEFINE_TYPE_NON_INTRUSIVE(SpatialLocations, config, depthAverage, depthAveragePixelCount, spatialCoordinates);
+NLOHMANN_DEFINE_TYPE_NON_INTRUSIVE(SpatialLocations, config, depthAverage, depthMin, depthMax, depthAveragePixelCount, spatialCoordinates);
 
 struct RawSpatialLocations : public RawBuffer {
     std::vector<SpatialLocations> spatialLocations;
