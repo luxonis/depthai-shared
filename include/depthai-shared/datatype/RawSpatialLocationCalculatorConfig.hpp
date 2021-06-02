@@ -18,7 +18,7 @@ namespace dai {
  */
 struct SpatialLocationCalculatorConfigThresholds {
     uint32_t lowerThreshold = 0;
-    uint32_t upperThreshold = 65000;
+    uint32_t upperThreshold = 65535;
 };
 NLOHMANN_DEFINE_TYPE_NON_INTRUSIVE(SpatialLocationCalculatorConfigThresholds, lowerThreshold, upperThreshold);
 
