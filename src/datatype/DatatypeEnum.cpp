@@ -32,7 +32,7 @@ const std::unordered_map<DatatypeEnum, std::vector<DatatypeEnum>> hierarchy = {
       DatatypeEnum::SpatialLocationCalculatorConfig,
       DatatypeEnum::SpatialLocationCalculatorData,
       DatatypeEnum::Tracklets,
-      DatatypeEnum::IMUDatas}},
+      DatatypeEnum::IMUData}},
     {DatatypeEnum::ImgFrame, {}},
     {DatatypeEnum::NNData, {}},
     {DatatypeEnum::ImageManipConfig, {}},
@@ -43,7 +43,7 @@ const std::unordered_map<DatatypeEnum, std::vector<DatatypeEnum>> hierarchy = {
     {DatatypeEnum::SpatialLocationCalculatorConfig, {}},
     {DatatypeEnum::SpatialLocationCalculatorData, {}},
     {DatatypeEnum::Tracklets, {}},
-    {DatatypeEnum::IMUDatas, {}},
+    {DatatypeEnum::IMUData, {}},
 };
 
 bool isDatatypeSubclassOf(DatatypeEnum parent, DatatypeEnum children) {

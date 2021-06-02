@@ -13,8 +13,7 @@ struct IMUReport {
         MEDIUM = 2,
         HIGH = 3,
     };
-    /** @brief 8-bit unsigned integer used to track reports.
-     *
+    /**
      * The sequence number increments once for each report sent.  Gaps
      * in the sequence numbers indicate missing or dropped reports.
      */
@@ -125,7 +124,7 @@ struct IMUReportRotationVector : IMUReport {
 NLOHMANN_DEFINE_TYPE_NON_INTRUSIVE(IMUReportRotationVector, i, j, k, real, sequence, accuracy, timestamp);
 
 /**
- * @brief heartRateMonitor
+ * @brief Gyro integrated rotation vector
  *
  * See SH-2 Reference Manual for details.
  */
@@ -143,11 +142,9 @@ NLOHMANN_DEFINE_TYPE_NON_INTRUSIVE(IMUReportGyroIntegratedRV, i, j, k, real, ang
 /**
  * IMU output
  *
- * Contains configuration data, average depth for the calculated ROI on depth map.
- * Together with spatial coordinates: x,y,z relative to the center of depth map.
- * Units are in millimeters.
+ * Contains combined output for all possible modes. Only the enabled outputs are populated.
  */
-struct IMUDatas {
+struct IMUPacket {
     IMUReportAccelerometer rawAcceleroMeter;
 
     IMUReportAccelerometer acceleroMeter;
@@ -171,7 +168,7 @@ struct IMUDatas {
     IMUReportGyroIntegratedRV gyroIntegratedRotationVector;
 };
 
-NLOHMANN_DEFINE_TYPE_NON_INTRUSIVE(IMUDatas,
+NLOHMANN_DEFINE_TYPE_NON_INTRUSIVE(IMUPacket,
                                    rawAcceleroMeter,
                                    acceleroMeter,
                                    linearAcceleroMeter,
@@ -190,12 +187,12 @@ NLOHMANN_DEFINE_TYPE_NON_INTRUSIVE(IMUDatas,
                                    gyroIntegratedRotationVector);
 
 struct RawIMUData : public RawBuffer {
-    std::vector<IMUDatas> imuDatas;
+    std::vector<IMUPacket> imuDatas;
 
     void serialize(std::vector<std::uint8_t>& metadata, DatatypeEnum& datatype) override {
         nlohmann::json j = *this;
         metadata = nlohmann::json::to_msgpack(j);
-        datatype = DatatypeEnum::IMUDatas;
+        datatype = DatatypeEnum::IMUData;
     };
 
     NLOHMANN_DEFINE_TYPE_INTRUSIVE(RawIMUData, imuDatas);

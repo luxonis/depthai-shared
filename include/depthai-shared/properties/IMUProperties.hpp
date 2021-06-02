@@ -6,13 +6,9 @@
 namespace dai {
 
 /**
- * Specify IMU options
- */
-
-/**
  * Available IMU sensors
  */
-enum class IMUSensorId : std::int32_t {
+enum class IMUSensor : std::int32_t {
     RAW_ACCELEROMETER = 0x14,
     ACCELEROMETER = 0x01,
     LINEAR_ACCELERATION = 0x04,
@@ -28,7 +24,7 @@ enum class IMUSensorId : std::int32_t {
     GEOMAGNETIC_ROTATION_VECTOR = 0x09,
     ARVR_STABILIZED_ROTATION_VECTOR = 0x28,
     ARVR_STABILIZED_GAME_ROTATION_VECTOR = 0x29,
-    GYRO_INTEGRATED_ROTATION_VECTOR = 0x2A,
+    // GYRO_INTEGRATED_ROTATION_VECTOR = 0x2A,
 };
 
 struct IMUSensorConfig {
@@ -55,7 +51,7 @@ struct IMUSensorConfig {
      */
     uint32_t reportIntervalUs = 10000; /**< @brief [uS] Report interval */
 
-    IMUSensorId sensorId;
+    IMUSensor sensorId;
 };
 NLOHMANN_DEFINE_TYPE_NON_INTRUSIVE(IMUSensorConfig, sensitivityEnabled, sensitivityRelative, changeSensitivity, reportIntervalUs, sensorId);
 
@@ -63,9 +59,9 @@ struct IMUProperties {
     /* Enabled IMU sensors */
     std::vector<IMUSensorConfig> imuSensors;
     /* Above this packet threshold data will be sent to host, if queue is not blocked */
-    std::int32_t batchReportThreshold = 10;
-    /* Maximum number of IMU packets in a batch */
-    std::int32_t maxBatchReports = 50;
+    std::int32_t batchReportThreshold = 1;
+    /* Maximum number of IMU packets in a batch. Maximum 5. */
+    std::int32_t maxBatchReports = 5;
 };
 
 NLOHMANN_DEFINE_TYPE_NON_INTRUSIVE(IMUProperties, imuSensors, batchReportThreshold, maxBatchReports);
