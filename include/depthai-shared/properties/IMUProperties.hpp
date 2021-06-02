@@ -46,14 +46,14 @@ struct IMUSensorConfig {
      */
     uint16_t changeSensitivity = 0; /**< @brief Report-on-change threshold */
 
-    /* Interval in microseconds between asynchronous input reports.
+    /* Rate of reports per second. (hertz)
      * 0 means disabled
      */
-    uint32_t reportIntervalUs = 10000; /**< @brief [uS] Report interval */
+    uint32_t reportRate = 100;
 
     IMUSensor sensorId;
 };
-NLOHMANN_DEFINE_TYPE_NON_INTRUSIVE(IMUSensorConfig, sensitivityEnabled, sensitivityRelative, changeSensitivity, reportIntervalUs, sensorId);
+NLOHMANN_DEFINE_TYPE_NON_INTRUSIVE(IMUSensorConfig, sensitivityEnabled, sensitivityRelative, changeSensitivity, reportRate, sensorId);
 
 struct IMUProperties {
     /* Enabled IMU sensors */
