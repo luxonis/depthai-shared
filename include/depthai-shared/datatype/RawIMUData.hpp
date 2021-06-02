@@ -30,7 +30,7 @@ NLOHMANN_DEFINE_TYPE_NON_INTRUSIVE(IMUReport, sequence, accuracy, timestamp);
 /**
  * @brief Accelerometer
  *
- * See the SH-2 Reference Manual for more detail.
+ * Units are [m/s^2]
  */
 struct IMUReportAccelerometer : IMUReport {
     float x = 0;
@@ -42,15 +42,42 @@ NLOHMANN_DEFINE_TYPE_NON_INTRUSIVE(IMUReportAccelerometer, x, y, z, sequence, ac
 /**
  * @brief Gyroscope
  *
- * See the SH-2 Reference Manual for more detail.
+ * Units are [rad/s]
  */
 struct IMUReportGyroscope : IMUReport {
-    /* Units are rad/s */
     float x = 0;
     float y = 0;
     float z = 0;
 };
 NLOHMANN_DEFINE_TYPE_NON_INTRUSIVE(IMUReportGyroscope, x, y, z, sequence, accuracy, timestamp);
+
+/**
+ * @brief Magnetic field
+ *
+ * Units are [uTesla]
+ */
+struct IMUReportMagneticField : IMUReport {
+    float x = 0;
+    float y = 0;
+    float z = 0;
+};
+NLOHMANN_DEFINE_TYPE_NON_INTRUSIVE(IMUReportMagneticField, x, y, z, sequence, accuracy, timestamp);
+
+/**
+ * @brief Rotation Vector with Accuracy
+ *
+ * Contains quaternion components: i,j,k,real
+ */
+struct IMUReportRotationVectorWAcc : IMUReport {
+    float i = 0;        /**< @brief Quaternion component i */
+    float j = 0;        /**< @brief Quaternion component j */
+    float k = 0;        /**< @brief Quaternion component k */
+    float real = 0;     /**< @brief Quaternion component, real */
+    float accuracy = 0; /**< @brief Accuracy estimate [radians], 0 means no estimate */
+};
+NLOHMANN_DEFINE_TYPE_NON_INTRUSIVE(IMUReportRotationVectorWAcc, i, j, k, real, accuracy, sequence, accuracy, timestamp);
+
+#if 0
 
 /**
  * @brief Uncalibrated gyroscope
@@ -68,18 +95,6 @@ struct IMUReportGyroscopeUncalibrated : IMUReport {
 };
 NLOHMANN_DEFINE_TYPE_NON_INTRUSIVE(IMUReportGyroscopeUncalibrated, x, y, z, biasX, biasY, biasZ, sequence, accuracy, timestamp);
 
-/**
- * @brief Magnetic field
- *
- * See the SH-2 Reference Manual for more detail.
- */
-struct IMUReportMagneticField : IMUReport {
-    /* Units are uTesla */
-    float x = 0; /**< @brief [uTesla] */
-    float y = 0; /**< @brief [uTesla] */
-    float z = 0; /**< @brief [uTesla] */
-};
-NLOHMANN_DEFINE_TYPE_NON_INTRUSIVE(IMUReportMagneticField, x, y, z, sequence, accuracy, timestamp);
 
 /**
  * @brief Uncalibrated magnetic field
@@ -97,19 +112,6 @@ struct IMUReportMagneticFieldUncalibrated : IMUReport {
 };
 NLOHMANN_DEFINE_TYPE_NON_INTRUSIVE(IMUReportMagneticFieldUncalibrated, x, y, z, biasX, biasY, biasZ, sequence, accuracy, timestamp);
 
-/**
- * @brief Rotation Vector with Accuracy
- *
- * See the SH-2 Reference Manual for more detail.
- */
-struct IMUReportRotationVectorWAcc : IMUReport {
-    float i = 0;        /**< @brief Quaternion component i */
-    float j = 0;        /**< @brief Quaternion component j */
-    float k = 0;        /**< @brief Quaternion component k */
-    float real = 0;     /**< @brief Quaternion component, real */
-    float accuracy = 0; /**< @brief Accuracy estimate [radians] */
-};
-NLOHMANN_DEFINE_TYPE_NON_INTRUSIVE(IMUReportRotationVectorWAcc, i, j, k, real, accuracy, sequence, accuracy, timestamp);
 
 /**
  * @brief Rotation Vector
@@ -139,6 +141,7 @@ struct IMUReportGyroIntegratedRV : IMUReport {
     float angVelZ = 0; /**< @brief Angular velocity about z [rad/s] */
 };
 NLOHMANN_DEFINE_TYPE_NON_INTRUSIVE(IMUReportGyroIntegratedRV, i, j, k, real, angVelX, angVelY, angVelZ, sequence, accuracy, timestamp);
+#endif
 
 /**
  * IMU output
@@ -146,46 +149,33 @@ NLOHMANN_DEFINE_TYPE_NON_INTRUSIVE(IMUReportGyroIntegratedRV, i, j, k, real, ang
  * Contains combined output for all possible modes. Only the enabled outputs are populated.
  */
 struct IMUPacket {
+    IMUReportAccelerometer acceleroMeter;
+    IMUReportGyroscope gyroscope;
+    IMUReportMagneticField magneticField;
+    IMUReportRotationVectorWAcc rotationVector;
+
+#if 0
     IMUReportAccelerometer rawAcceleroMeter;
 
-    IMUReportAccelerometer acceleroMeter;
     IMUReportAccelerometer linearAcceleroMeter;
     IMUReportAccelerometer gravity;
 
     IMUReportGyroscope rawGyroscope;
-    IMUReportGyroscope gyroscope;
     IMUReportGyroscopeUncalibrated gyroscopeUncalibrated;
 
     IMUReportMagneticField rawMagneticField;
-    IMUReportMagneticField magneticField;
     IMUReportMagneticFieldUncalibrated magneticFieldUncalibrated;
 
-    IMUReportRotationVectorWAcc rotationVector;
     IMUReportRotationVector gameRotationVector;
     IMUReportRotationVectorWAcc geoMagRotationVector;
 
     IMUReportRotationVectorWAcc arvrStabilizedRotationVector;
     IMUReportRotationVector arvrStabilizedGameRotationVector;
     IMUReportGyroIntegratedRV gyroIntegratedRotationVector;
+#endif
 };
 
-NLOHMANN_DEFINE_TYPE_NON_INTRUSIVE(IMUPacket,
-                                   rawAcceleroMeter,
-                                   acceleroMeter,
-                                   linearAcceleroMeter,
-                                   gravity,
-                                   rawGyroscope,
-                                   gyroscope,
-                                   gyroscopeUncalibrated,
-                                   rawMagneticField,
-                                   magneticField,
-                                   magneticFieldUncalibrated,
-                                   rotationVector,
-                                   gameRotationVector,
-                                   geoMagRotationVector,
-                                   arvrStabilizedRotationVector,
-                                   arvrStabilizedGameRotationVector,
-                                   gyroIntegratedRotationVector);
+NLOHMANN_DEFINE_TYPE_NON_INTRUSIVE(IMUPacket, acceleroMeter, gyroscope, magneticField, rotationVector);
 
 struct RawIMUData : public RawBuffer {
     std::vector<IMUPacket> packets;
