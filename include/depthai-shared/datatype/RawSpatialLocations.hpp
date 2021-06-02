@@ -19,16 +19,32 @@ namespace dai {
  * Units are in millimeters.
  */
 struct SpatialLocations {
-    // Configuration for selected ROI
+    /**
+     *  Configuration for selected ROI
+     */
     SpatialLocationCalculatorConfigData config;
-    // Average of depth values inside the ROI between the specified thresholds in config
+    /**
+     *  Average of depth values inside the ROI between the specified thresholds in config
+     */
     float depthAverage;
-    // Number of depth values used to calculate depthAverage based on config
+    /**
+     *  Minimum of depth values inside the ROI between the specified thresholds in config
+     */
+    std::uint16_t depthMin;
+    /**
+     *  Maximum of depth values inside the ROI between the specified thresholds in config
+     */
+    std::uint16_t depthMax;
+    /**
+     *  Number of depth values used to calculate depthAverage based on config
+     */
     std::uint32_t depthAveragePixelCount;
-    // Spatial coordinates: x,y,z; x,y are the relative positions of the center of ROI to the center of depth map
+    /**
+     *  Spatial coordinates: x,y,z; x,y are the relative positions of the center of ROI to the center of depth map
+     */
     Point3f spatialCoordinates;
 };
-NLOHMANN_DEFINE_TYPE_NON_INTRUSIVE(SpatialLocations, config, depthAverage, depthAveragePixelCount, spatialCoordinates);
+NLOHMANN_DEFINE_TYPE_NON_INTRUSIVE(SpatialLocations, config, depthAverage, depthMin, depthMax, depthAveragePixelCount, spatialCoordinates);
 
 struct RawSpatialLocations : public RawBuffer {
     std::vector<SpatialLocations> spatialLocations;
