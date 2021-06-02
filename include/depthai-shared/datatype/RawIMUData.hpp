@@ -188,7 +188,7 @@ NLOHMANN_DEFINE_TYPE_NON_INTRUSIVE(IMUPacket,
                                    gyroIntegratedRotationVector);
 
 struct RawIMUData : public RawBuffer {
-    std::vector<IMUPacket> imuDatas;
+    std::vector<IMUPacket> packets;
 
     void serialize(std::vector<std::uint8_t>& metadata, DatatypeEnum& datatype) override {
         nlohmann::json j = *this;
@@ -196,7 +196,7 @@ struct RawIMUData : public RawBuffer {
         datatype = DatatypeEnum::IMUData;
     };
 
-    NLOHMANN_DEFINE_TYPE_INTRUSIVE(RawIMUData, imuDatas);
+    NLOHMANN_DEFINE_TYPE_INTRUSIVE(RawIMUData, packets);
 };
 
 }  // namespace dai
