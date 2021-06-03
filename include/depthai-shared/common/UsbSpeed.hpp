@@ -6,7 +6,7 @@
 namespace dai {
 
 /**
- * USB Speed
+ * Get USB Speed
  */
 
 enum class UsbSpeed : int32_t { UNKNOWN, LOW, FULL, HIGH, SUPER, SUPER_PLUS };

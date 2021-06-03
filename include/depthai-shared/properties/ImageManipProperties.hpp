@@ -7,7 +7,7 @@
 namespace dai {
 
 /**
- * Specify ImageManip options
+ * Specify properties for ImageManip
  */
 struct ImageManipProperties {
     /// Initial configuration for ImageManip node

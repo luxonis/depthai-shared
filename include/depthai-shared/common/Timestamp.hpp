@@ -8,6 +8,7 @@
 
 namespace dai {
 
+/// Timestamp structure
 struct Timestamp {
     int64_t sec, nsec;
 

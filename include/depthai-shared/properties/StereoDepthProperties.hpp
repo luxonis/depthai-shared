@@ -9,7 +9,7 @@
 namespace dai {
 
 /**
- * Specify StereoDepth options
+ * Specify properties for StereoDepth
  */
 struct StereoDepthProperties {
     /**

@@ -4,6 +4,7 @@
 #include "depthai-shared/common/Timestamp.hpp"
 namespace dai {
 
+/// RawImgFrame structure
 struct RawImgFrame : public RawBuffer {
     enum class Type {
         YUV422i,        // interleaved 8 bit

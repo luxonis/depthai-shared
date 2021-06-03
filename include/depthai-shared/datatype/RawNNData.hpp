@@ -4,6 +4,7 @@
 
 namespace dai {
 
+/// TensorInfo structure
 struct TensorInfo {
     enum class StorageOrder : int {
         NHWC = 0x4213,
@@ -41,6 +42,7 @@ struct TensorInfo {
     NLOHMANN_DEFINE_TYPE_INTRUSIVE(TensorInfo, order, dataType, numDimensions, dims, strides, name, offset);
 };
 
+/// RawNNData structure
 struct RawNNData : public RawBuffer {
     // NNData data is in PoBuf
     std::vector<TensorInfo> tensors;
