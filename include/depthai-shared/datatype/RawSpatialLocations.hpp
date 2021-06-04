@@ -12,7 +12,7 @@
 namespace dai {
 
 /**
- * SpatialLocation structure
+ * SpatialLocations structure
  *
  * Contains configuration data, average depth for the calculated ROI on depth map.
  * Together with spatial coordinates: x,y,z relative to the center of depth map.
