@@ -7,6 +7,7 @@
 
 namespace dai {
 
+/// Extrinsics structure
 struct Extrinsics {
     std::vector<std::vector<float>> rotationMatrix;
     /**
