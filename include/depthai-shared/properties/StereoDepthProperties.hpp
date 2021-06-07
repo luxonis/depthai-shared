@@ -12,7 +12,6 @@ namespace dai {
  * Specify properties for StereoDepth
  */
 struct StereoDepthProperties {
-
     struct RectificationMesh {
         /**
          * Uri which points to the mesh array for 'left' input rectification
