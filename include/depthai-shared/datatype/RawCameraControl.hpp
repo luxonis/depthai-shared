@@ -8,6 +8,7 @@
 
 namespace dai {
 
+/// RawCameraControl structure
 struct RawCameraControl : public RawBuffer {
     enum class Command : uint8_t {
         START_STREAM = 1,
