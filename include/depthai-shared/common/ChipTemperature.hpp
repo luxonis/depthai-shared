@@ -10,15 +10,25 @@ namespace dai {
  * Multiple temperature measurement points and their average
  */
 struct ChipTemperature {
-    /// CPU Subsystem
+    /**
+     *  CPU Subsystem
+     */
     float css;
-    /// Media Subsystem
+    /**
+     *  Media Subsystem
+     */
     float mss;
-    /// Shave Array
+    /**
+     *  Shave Array
+     */
     float upa;
-    /// DRAM Subsystem
+    /**
+     *  DRAM Subsystem
+     */
     float dss;
-    /// Average of measurements
+    /**
+     *  Average of measurements
+     */
     float average;
 };
 

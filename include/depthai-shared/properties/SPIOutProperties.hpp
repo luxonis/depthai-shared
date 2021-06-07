@@ -14,7 +14,7 @@
 namespace dai {
 
 /**
- * Properties for SPIOut node
+ * Specify properties for SPIOut node
  */
 struct SPIOutProperties {
     /// Output stream name

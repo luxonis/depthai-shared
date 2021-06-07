@@ -54,6 +54,7 @@ struct Tracklet {
     NLOHMANN_DEFINE_TYPE_INTRUSIVE(Tracklet, roi, id, label, age, status, srcImgDetection, spatialCoordinates);
 };
 
+/// RawTracklets structure
 struct RawTracklets : public RawBuffer {
     std::vector<Tracklet> tracklets;
 

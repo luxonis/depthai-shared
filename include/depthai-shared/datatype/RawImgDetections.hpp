@@ -5,6 +5,7 @@
 
 namespace dai {
 
+/// ImgDetection structure
 struct ImgDetection {
     uint32_t label;
     float confidence;
@@ -16,6 +17,7 @@ struct ImgDetection {
     NLOHMANN_DEFINE_TYPE_INTRUSIVE(ImgDetection, label, confidence, xmin, ymin, xmax, ymax);
 };
 
+/// RawImgDetections structure
 struct RawImgDetections : public RawBuffer {
     std::vector<ImgDetection> detections;
 

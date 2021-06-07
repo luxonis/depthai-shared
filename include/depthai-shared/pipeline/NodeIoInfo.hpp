@@ -4,6 +4,7 @@
 
 namespace dai {
 
+/// NodeIo informations such as name, type, ...
 struct NodeIoInfo {
     enum class Type { MSender, SSender, MReceiver, SReceiver };
 
