@@ -6,6 +6,7 @@
 #include "NodeIoInfo.hpp"
 namespace dai {
 
+/// NodeObj information structure
 struct NodeObjInfo {
     int64_t id = -1;
     std::string name;

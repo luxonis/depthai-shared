@@ -1,5 +1,6 @@
 #pragma once
 
+#include <depthai-shared/common/EepromData.hpp>
 #include <depthai-shared/common/optional.hpp>
 #include <nlohmann/json.hpp>
 
@@ -8,7 +9,7 @@
 namespace dai {
 
 /**
- * Specify StereoDepth options
+ * Specify properties for StereoDepth
  */
 struct StereoDepthProperties {
     /**
@@ -25,6 +26,9 @@ struct StereoDepthProperties {
      * Calibration data byte array
      */
     std::vector<std::uint8_t> calibration;
+
+    EepromData calibrationData;
+
     /**
      * Set kernel size for disparity/depth median filtering, or disable
      */
@@ -42,6 +46,8 @@ struct StereoDepthProperties {
      * Confidence threshold for disparity calculation, 0..255
      */
     std::int32_t confidenceThreshold = 200;
+
+    bool enableRectification = true;
     /**
      * Computes and combines disparities in both L-R and R-L directions, and combine them.
      * For better occlusion handling
@@ -78,10 +84,12 @@ struct StereoDepthProperties {
 
 NLOHMANN_DEFINE_TYPE_NON_INTRUSIVE(StereoDepthProperties,
                                    calibration,
+                                   calibrationData,
                                    median,
                                    depthAlign,
                                    depthAlignCamera,
                                    confidenceThreshold,
+                                   enableRectification,
                                    enableLeftRightCheck,
                                    enableSubpixel,
                                    enableExtendedDisparity,

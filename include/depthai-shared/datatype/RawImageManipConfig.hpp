@@ -14,6 +14,7 @@
 
 namespace dai {
 
+/// RawImageManipConfig structure
 struct RawImageManipConfig : public RawBuffer {
     // NNData data is in PoBuf
     struct CropRect {

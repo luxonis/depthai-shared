@@ -15,7 +15,7 @@
 namespace dai {
 
 /**
- * Properties for SpatialDetectionNetwork
+ * Specify properties for SpatialDetectionNetwork
  */
 struct SpatialDetectionNetworkProperties : DetectionNetworkProperties {
     float detectedBBScaleFactor = 1.0;

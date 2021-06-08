@@ -13,21 +13,21 @@
 namespace dai {
 
 enum class TrackerType : std::int32_t {
-    // Ability to track the objects without accessing image data.
+    /// Ability to track the objects without accessing image data.
     ZERO_TERM_IMAGELESS = 5,
-    // Tracking using image data too.
+    /// Tracking using image data too.
     ZERO_TERM_COLOR_HISTOGRAM
 };
 
 enum class TrackerIdAssigmentPolicy : std::int32_t {
-    // Always take a new, unique ID
+    /// Always take a new, unique ID
     UNIQUE_ID,
-    // Take the smallest available ID
+    /// Take the smallest available ID
     SMALLEST_ID
 };
 
 /**
- * Properties for ObjectTracker
+ * Specify properties for ObjectTracker
  */
 struct ObjectTrackerProperties {
     float trackerThreshold = 0.0;
