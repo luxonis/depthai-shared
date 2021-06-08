@@ -111,6 +111,10 @@ struct StereoDepthProperties {
      * Output disparity/depth height. Currently only used when aligning to RGB
      */
     tl::optional<std::int32_t> outHeight;
+    /**
+     * Whether to keep aspect ratio of the input (rectified) or not
+     */
+    bool outKeepAspectRatio = true;
 
     /**
      * Specify a direct warp mesh to be used for rectification,
@@ -136,6 +140,7 @@ NLOHMANN_DEFINE_TYPE_NON_INTRUSIVE(StereoDepthProperties,
                                    height,
                                    outWidth,
                                    outHeight,
+                                   outKeepAspectRatio,
                                    mesh);
 
 }  // namespace dai
