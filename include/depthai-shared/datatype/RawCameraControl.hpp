@@ -90,6 +90,8 @@ struct RawCameraControl : public RawBuffer {
                                         */
         CHROMA_DENOISE = 48,           /* [1] value
                                         */
+        WB_COLOR_TEMP = 49,            /* [1] value
+                                        */
         EXTERNAL_TRIGGER = 50,
     };
 
@@ -220,6 +222,7 @@ struct RawCameraControl : public RawBuffer {
     uint8_t sharpness;       //   0 ..  4
     uint8_t lumaDenoise;     //   0 ..  4
     uint8_t chromaDenoise;   //   0 ..  4
+    uint16_t wbColorTemp;    // 1000 .. 12000
     uint8_t lowPowerNumFramesBurst;
     uint8_t lowPowerNumFramesDiscard;
 
@@ -264,6 +267,7 @@ struct RawCameraControl : public RawBuffer {
                                    sharpness,
                                    lumaDenoise,
                                    chromaDenoise,
+                                   wbColorTemp,
                                    lowPowerNumFramesBurst,
                                    lowPowerNumFramesDiscard);
 };
