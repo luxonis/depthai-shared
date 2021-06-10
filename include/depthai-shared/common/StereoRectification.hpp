@@ -6,6 +6,7 @@
 
 namespace dai {
 
+/// StereoRectification structure
 struct StereoRectification {
     std::vector<std::vector<float>> rectifiedRotationLeft, rectifiedRotationRight;
     CameraBoardSocket leftCameraSocket = CameraBoardSocket::AUTO, rightCameraSocket = CameraBoardSocket::AUTO;

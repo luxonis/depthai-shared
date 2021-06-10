@@ -10,7 +10,7 @@
 namespace dai {
 
 /**
- * Specify ColorCamera options such as camera ID, ...
+ *  Specify properties for ColorCamera such as camera ID, ...
  */
 struct ColorCameraProperties {
     static constexpr int AUTO = -1;

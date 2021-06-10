@@ -7,6 +7,7 @@
 
 namespace dai {
 
+/// RawBuffer structure
 struct RawBuffer {
     virtual ~RawBuffer() = default;
     std::vector<std::uint8_t> data;
