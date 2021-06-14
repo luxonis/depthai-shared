@@ -13,12 +13,7 @@ namespace dai {
  * Specify properties for StereoDepth
  */
 struct StereoDepthProperties {
-    // backward compatibility
-
-    /**
-     * Median filter config for disparity post-processing
-     */
-    enum class MedianFilter : int32_t { MEDIAN_OFF = 0, KERNEL_3x3 = 3, KERNEL_5x5 = 5, KERNEL_7x7 = 7 };
+    using MedianFilter = dai::MedianFilter;
 
     RawStereoDepthConfig initialConfig;
 

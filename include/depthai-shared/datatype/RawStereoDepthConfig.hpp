@@ -9,17 +9,13 @@
 namespace dai {
 
 /**
- * BilateralFilter configuration
- *
- * Contains configuration for sigma value.
+ * Median filter config for disparity post-processing
  */
+enum class MedianFilter : int32_t { MEDIAN_OFF = 0, KERNEL_3x3 = 3, KERNEL_5x5 = 5, KERNEL_7x7 = 7 };
 
 /// BilateralFilter configuration data structure
 struct StereoDepthConfigData {
-    /**
-     * Median filter config for disparity post-processing
-     */
-    enum class MedianFilter : int32_t { MEDIAN_OFF = 0, KERNEL_3x3 = 3, KERNEL_5x5 = 5, KERNEL_7x7 = 7 };
+    using MedianFilter = dai::MedianFilter;
     /**
      * Set kernel size for disparity/depth median filtering, or disable
      */
