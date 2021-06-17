@@ -21,7 +21,7 @@ struct SpatialImgDetection : ImgDetection {
 struct RawSpatialImgDetections : public RawBuffer {
     std::vector<SpatialImgDetection> detections;
 
-    void serialize(std::vector<std::uint8_t>& metadata, DatatypeEnum& datatype) override {
+    void serialize(std::vector<std::uint8_t>& metadata, DatatypeEnum& datatype) const override {
         nlohmann::json j = *this;
         metadata = nlohmann::json::to_msgpack(j);
         datatype = DatatypeEnum::SpatialImgDetections;

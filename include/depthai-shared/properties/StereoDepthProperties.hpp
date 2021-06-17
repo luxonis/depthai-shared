@@ -13,12 +13,34 @@ namespace dai {
  * Specify properties for StereoDepth
  */
 struct StereoDepthProperties {
+    struct RectificationMesh {
+        /**
+         * Uri which points to the mesh array for 'left' input rectification
+         */
+        std::string meshLeftUri;
+        /**
+         * Uri which points to the mesh array for 'right' input rectification
+         */
+        std::string meshRightUri;
+        /**
+         * Mesh array size in bytes, for each of 'left' and 'right' (need to match)
+         */
+        tl::optional<std::uint32_t> meshSize;
+        /**
+         * Distance between mesh points, in the horizontal direction
+         */
+        uint16_t stepWidth = 16;
+        /**
+         * Distance between mesh points, in the vertical direction
+         */
+        uint16_t stepHeight = 16;
+
+        NLOHMANN_DEFINE_TYPE_INTRUSIVE(RectificationMesh, meshLeftUri, meshRightUri, meshSize, stepWidth, stepHeight);
+    };
+
+    /**
     using MedianFilter = dai::MedianFilter;
 
-    RawStereoDepthConfig initialConfig;
-
-    /// Whether to wait for config at 'inputConfig' IO
-    bool inputConfigSync = false;
 
     /**
      * Align the disparity/depth to the perspective of a rectified output, or center it
@@ -73,8 +95,24 @@ struct StereoDepthProperties {
      * Input frame height. Optional (taken from MonoCamera nodes if they exist)
      */
     tl::optional<std::int32_t> height;
+    /**
+     * Output disparity/depth width. Currently only used when aligning to RGB
+     */
+    tl::optional<std::int32_t> outWidth;
+    /**
+     * Output disparity/depth height. Currently only used when aligning to RGB
+     */
+    tl::optional<std::int32_t> outHeight;
+    /**
+     * Whether to keep aspect ratio of the input (rectified) or not
+     */
+    bool outKeepAspectRatio = true;
 
-    // TODO: rectification mesh option for fisheye camera use-cases
+    /**
+     * Specify a direct warp mesh to be used for rectification,
+     * instead of intrinsics + extrinsic matrices
+     */
+    RectificationMesh mesh;
 };
 
 NLOHMANN_DEFINE_TYPE_NON_INTRUSIVE(StereoDepthProperties,
@@ -91,6 +129,10 @@ NLOHMANN_DEFINE_TYPE_NON_INTRUSIVE(StereoDepthProperties,
                                    rectifyMirrorFrame,
                                    rectifyEdgeFillColor,
                                    width,
-                                   height);
+                                   height,
+                                   outWidth,
+                                   outHeight,
+                                   outKeepAspectRatio,
+                                   mesh);
 
 }  // namespace dai
