@@ -38,9 +38,13 @@ struct StereoDepthProperties {
         NLOHMANN_DEFINE_TYPE_INTRUSIVE(RectificationMesh, meshLeftUri, meshRightUri, meshSize, stepWidth, stepHeight);
     };
 
-    /**
-    using MedianFilter = dai::MedianFilter;
+    /// Initial stereo config
+    RawStereoDepthConfig initialConfig;
 
+    /// Whether to wait for config at 'inputConfig' IO
+    bool inputConfigSync = false;
+
+    using MedianFilter = dai::MedianFilter;
 
     /**
      * Align the disparity/depth to the perspective of a rectified output, or center it

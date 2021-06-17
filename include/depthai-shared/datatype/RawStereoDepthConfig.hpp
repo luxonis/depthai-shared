@@ -36,7 +36,7 @@ NLOHMANN_DEFINE_TYPE_NON_INTRUSIVE(StereoDepthConfigData, median, confidenceThre
 struct RawStereoDepthConfig : public RawBuffer {
     StereoDepthConfigData config;
 
-    void serialize(std::vector<std::uint8_t>& metadata, DatatypeEnum& datatype) override {
+    void serialize(std::vector<std::uint8_t>& metadata, DatatypeEnum& datatype) const override {
         nlohmann::json j = *this;
         metadata = nlohmann::json::to_msgpack(j);
         datatype = DatatypeEnum::StereoDepthConfig;
