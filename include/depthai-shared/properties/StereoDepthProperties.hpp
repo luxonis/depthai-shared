@@ -54,7 +54,7 @@ struct StereoDepthProperties {
     /**
      * Calibration data byte array
      */
-    tl::optional<std::vector<std::uint8_t>> calibration;
+    std::vector<std::uint8_t> calibration;
 
     EepromData calibrationData;
 
