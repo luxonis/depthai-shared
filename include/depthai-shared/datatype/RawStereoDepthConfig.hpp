@@ -13,7 +13,7 @@ namespace dai {
  */
 enum class MedianFilter : int32_t { MEDIAN_OFF = 0, KERNEL_3x3 = 3, KERNEL_5x5 = 5, KERNEL_7x7 = 7 };
 
-/// BilateralFilter configuration data structure
+/// StereoDepth configuration data structure
 struct StereoDepthConfigData {
     using MedianFilter = dai::MedianFilter;
 
@@ -29,9 +29,9 @@ struct StereoDepthConfigData {
 
     /**
      * Sigma value for bilateral filter. 0 means disabled
-     * A larger value of the parameter means that farther colors within the pixel neighborhood will be mixed together,
+     * A larger value of the parameter means that farther colors within the pixel neighborhood will be mixed together.
      */
-    int16_t bilateralSigmaValue = 0;
+    std::int16_t bilateralSigmaValue = 0;
 
     /**
      * Left-right check threshold for left-right, right-left disparity map combine, 0..128
@@ -42,7 +42,7 @@ struct StereoDepthConfigData {
 };
 NLOHMANN_DEFINE_TYPE_NON_INTRUSIVE(StereoDepthConfigData, median, confidenceThreshold, bilateralSigmaValue, leftRightCheckThreshold);
 
-/// RawBilateralFilter configuration structure
+/// RawStereoDepthConfig configuration structure
 struct RawStereoDepthConfig : public RawBuffer {
     StereoDepthConfigData config;
 
