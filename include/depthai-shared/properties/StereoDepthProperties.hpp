@@ -5,6 +5,7 @@
 #include <nlohmann/json.hpp>
 
 #include "depthai-shared/common/CameraBoardSocket.hpp"
+#include "depthai-shared/datatype/RawStereoDepthConfig.hpp"
 
 namespace dai {
 
@@ -37,10 +38,13 @@ struct StereoDepthProperties {
         NLOHMANN_DEFINE_TYPE_INTRUSIVE(RectificationMesh, meshLeftUri, meshRightUri, meshSize, stepWidth, stepHeight);
     };
 
-    /**
-     * Median filter config for disparity post-processing
-     */
-    enum class MedianFilter : int32_t { MEDIAN_OFF = 0, KERNEL_3x3 = 3, KERNEL_5x5 = 5, KERNEL_7x7 = 7 };
+    /// Initial stereo config
+    RawStereoDepthConfig initialConfig;
+
+    /// Whether to wait for config at 'inputConfig' IO
+    bool inputConfigSync = false;
+
+    using MedianFilter = dai::MedianFilter;
 
     /**
      * Align the disparity/depth to the perspective of a rectified output, or center it
@@ -55,10 +59,6 @@ struct StereoDepthProperties {
     EepromData calibrationData;
 
     /**
-     * Set kernel size for disparity/depth median filtering, or disable
-     */
-    MedianFilter median = MedianFilter::KERNEL_5x5;
-    /**
      * Set the disparity/depth alignment to the perspective of a rectified output, or center it
      */
     DepthAlign depthAlign = DepthAlign::RECTIFIED_RIGHT;
@@ -67,10 +67,6 @@ struct StereoDepthProperties {
      * When configured (not AUTO), takes precedence over 'depthAlign'
      */
     CameraBoardSocket depthAlignCamera = CameraBoardSocket::AUTO;
-    /**
-     * Confidence threshold for disparity calculation, 0..255
-     */
-    std::int32_t confidenceThreshold = 200;
 
     bool enableRectification = true;
     /**
@@ -124,12 +120,12 @@ struct StereoDepthProperties {
 };
 
 NLOHMANN_DEFINE_TYPE_NON_INTRUSIVE(StereoDepthProperties,
+                                   initialConfig,
+                                   inputConfigSync,
                                    calibration,
                                    calibrationData,
-                                   median,
                                    depthAlign,
                                    depthAlignCamera,
-                                   confidenceThreshold,
                                    enableRectification,
                                    enableLeftRightCheck,
                                    enableSubpixel,
