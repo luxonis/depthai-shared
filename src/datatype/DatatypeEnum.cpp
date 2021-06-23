@@ -20,29 +20,34 @@ struct hash<dai::DatatypeEnum> {
 
 namespace dai {
 
-const std::unordered_map<DatatypeEnum, std::vector<DatatypeEnum>> hierarchy = {
-    {DatatypeEnum::Buffer,
-     {DatatypeEnum::ImgFrame,
-      DatatypeEnum::NNData,
-      DatatypeEnum::ImageManipConfig,
-      DatatypeEnum::CameraControl,
-      DatatypeEnum::ImgDetections,
-      DatatypeEnum::SpatialImgDetections,
-      DatatypeEnum::SystemInformation,
-      DatatypeEnum::SpatialLocationCalculatorConfig,
-      DatatypeEnum::SpatialLocationCalculatorData,
-      DatatypeEnum::Tracklets}},
-    {DatatypeEnum::ImgFrame, {}},
-    {DatatypeEnum::NNData, {}},
-    {DatatypeEnum::ImageManipConfig, {}},
-    {DatatypeEnum::CameraControl, {}},
-    {DatatypeEnum::ImgDetections, {DatatypeEnum::SpatialImgDetections}},
-    {DatatypeEnum::SpatialImgDetections, {}},
-    {DatatypeEnum::SystemInformation, {}},
-    {DatatypeEnum::SpatialLocationCalculatorConfig, {}},
-    {DatatypeEnum::SpatialLocationCalculatorData, {}},
-    {DatatypeEnum::Tracklets, {}},
-};
+const std::unordered_map<DatatypeEnum, std::vector<DatatypeEnum>> hierarchy = {{DatatypeEnum::Buffer,
+                                                                                {DatatypeEnum::ImgFrame,
+                                                                                 DatatypeEnum::NNData,
+                                                                                 DatatypeEnum::ImageManipConfig,
+                                                                                 DatatypeEnum::CameraControl,
+                                                                                 DatatypeEnum::ImgDetections,
+                                                                                 DatatypeEnum::SpatialImgDetections,
+                                                                                 DatatypeEnum::SystemInformation,
+                                                                                 DatatypeEnum::SpatialLocationCalculatorConfig,
+                                                                                 DatatypeEnum::SpatialLocationCalculatorData,
+                                                                                 DatatypeEnum::Tracklets,
+                                                                                 DatatypeEnum::IMUData,
+                                                                                 DatatypeEnum::StereoDepthConfig}},
+                                                                               {DatatypeEnum::ImgFrame, {}},
+                                                                               {DatatypeEnum::NNData, {}},
+                                                                               {DatatypeEnum::ImageManipConfig, {}},
+                                                                               {DatatypeEnum::CameraControl, {}},
+                                                                               {DatatypeEnum::ImgDetections, {DatatypeEnum::SpatialImgDetections}},
+                                                                               {DatatypeEnum::SpatialImgDetections, {}},
+                                                                               {DatatypeEnum::SystemInformation, {}},
+                                                                               {DatatypeEnum::SpatialLocationCalculatorConfig, {}},
+                                                                               {DatatypeEnum::SpatialLocationCalculatorData, {}},
+                                                                               {DatatypeEnum::Tracklets, {}},
+                                                                               {DatatypeEnum::IMUData, {}},
+                                                                               {
+                                                                                   DatatypeEnum::StereoDepthConfig,
+                                                                                   {},
+                                                                               }};
 
 bool isDatatypeSubclassOf(DatatypeEnum parent, DatatypeEnum children) {
     for(const auto& d : hierarchy.at(parent)) {

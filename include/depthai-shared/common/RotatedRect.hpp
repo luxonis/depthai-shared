@@ -12,6 +12,7 @@
 
 namespace dai {
 
+/// RotatedRect structure
 struct RotatedRect {
     Point2f center;
     Size2f size;

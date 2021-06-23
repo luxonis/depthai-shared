@@ -4,6 +4,7 @@
 #include "depthai-shared/common/Timestamp.hpp"
 namespace dai {
 
+/// RawImgFrame structure
 struct RawImgFrame : public RawBuffer {
     enum class Type {
         YUV422i,        // interleaved 8 bit
@@ -59,7 +60,7 @@ struct RawImgFrame : public RawBuffer {
     int sequenceNum;       // increments for each frame
     Timestamp ts;          // generation timestamp
 
-    virtual void serialize(std::vector<std::uint8_t>& metadata, DatatypeEnum& datatype) {
+    void serialize(std::vector<std::uint8_t>& metadata, DatatypeEnum& datatype) const override {
         nlohmann::json j = *this;
         metadata = nlohmann::json::to_msgpack(j);
         datatype = DatatypeEnum::ImgFrame;
