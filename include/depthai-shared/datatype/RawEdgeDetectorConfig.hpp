@@ -17,19 +17,19 @@ struct EdgeDetectorConfigData {
      * Format: 3x3 matrix, 2nd column must be 0
      * Default: +1 0 -1; +2 0 -2; +1 0 -1
      */
-    std::vector<uint8_t> sobelEdgeHorizontalCoefficients;
+    std::vector<std::vector<int>> sobelFilterHorizontalKernel;
     /**
      * Used for vertical gradiant computation in 3x3 Sobel filter
      * Format: 3x3 matrix, 2nd row must be 0
      * Default: +1 +2 +1; 0 0 0; -1 -2 -1
      */
-    std::vector<uint8_t> sobelEdgeVerticalCoefficients;
+    std::vector<std::vector<int>> sobelFilterVerticalKernel;
 };
-NLOHMANN_DEFINE_TYPE_NON_INTRUSIVE(EdgeDetectorConfigData, sobelEdgeHorizontalCoefficients, sobelEdgeVerticalCoefficients);
+NLOHMANN_DEFINE_TYPE_NON_INTRUSIVE(EdgeDetectorConfigData, sobelFilterHorizontalKernel, sobelFilterVerticalKernel);
 
 /// RawEdgeDetectorConfig configuration structure
 struct RawEdgeDetectorConfig : public RawBuffer {
-    std::vector<EdgeDetectorConfigData> config;
+    EdgeDetectorConfigData config;
 
     void serialize(std::vector<std::uint8_t>& metadata, DatatypeEnum& datatype) const override {
         nlohmann::json j = *this;
