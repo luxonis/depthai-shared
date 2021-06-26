@@ -11,6 +11,7 @@ namespace dai {
  * Specify properties for EdgeDetector
  */
 struct EdgeDetectorProperties {
+    /// Initial edge detector config
     RawEdgeDetectorConfig initialConfig;
 
     /// Whether to wait for config at 'inputConfig' IO
