@@ -30,6 +30,8 @@ const std::unordered_map<DatatypeEnum, std::vector<DatatypeEnum>> hierarchy = {{
                                                                                  DatatypeEnum::SystemInformation,
                                                                                  DatatypeEnum::SpatialLocationCalculatorConfig,
                                                                                  DatatypeEnum::SpatialLocationCalculatorData,
+                                                                                 DatatypeEnum::AprilTagConfig,
+                                                                                 DatatypeEnum::AprilTagData,
                                                                                  DatatypeEnum::Tracklets,
                                                                                  DatatypeEnum::IMUData,
                                                                                  DatatypeEnum::StereoDepthConfig}},
@@ -42,6 +44,8 @@ const std::unordered_map<DatatypeEnum, std::vector<DatatypeEnum>> hierarchy = {{
                                                                                {DatatypeEnum::SystemInformation, {}},
                                                                                {DatatypeEnum::SpatialLocationCalculatorConfig, {}},
                                                                                {DatatypeEnum::SpatialLocationCalculatorData, {}},
+                                                                               {DatatypeEnum::AprilTagConfig, {}},
+                                                                               {DatatypeEnum::AprilTagData, {}},
                                                                                {DatatypeEnum::Tracklets, {}},
                                                                                {DatatypeEnum::IMUData, {}},
                                                                                {
