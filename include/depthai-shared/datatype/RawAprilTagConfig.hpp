@@ -24,7 +24,7 @@ NLOHMANN_DEFINE_TYPE_NON_INTRUSIVE(AprilTagConfigThresholds, lowerThreshold, upp
 
 /// AprilTag configuration data structure
 struct AprilTagConfigData {
-    enum class AprilTagType : std::int32_t { TAG_36H11 = 0, TAG_25H9, TAG_16H5, TAG_CIR21H7, TAG_CIR49H12, TAG_cust48H12, TAG_STAND41H12, TAG_STAND52H13 };
+    enum class AprilTagType : std::int32_t { TAG_36H11 = 0, TAG_25H9, TAG_16H5, TAG_CIR21H7, TAG_CIR49H12, TAG_CUST48H12, TAG_STAND41H12, TAG_STAND52H13 };
 
     AprilTagType type = AprilTagType::TAG_36H11;
 };
