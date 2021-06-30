@@ -8,7 +8,7 @@
 namespace dai {
 
 /**
- * Specify SpatialLocationCalculator options
+ * Specify properties for SpatialLocationCalculator
  */
 struct SpatialLocationCalculatorProperties {
     RawSpatialLocationCalculatorConfig roiConfig;

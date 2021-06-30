@@ -14,6 +14,7 @@
 
 namespace dai {
 
+/// RawImageManipConfig structure
 struct RawImageManipConfig : public RawBuffer {
     // NNData data is in PoBuf
     struct CropRect {
@@ -104,7 +105,7 @@ struct RawImageManipConfig : public RawBuffer {
     bool reusePreviousImage = false;
     bool skipCurrentImage = false;
 
-    void serialize(std::vector<std::uint8_t>& metadata, DatatypeEnum& datatype) override {
+    void serialize(std::vector<std::uint8_t>& metadata, DatatypeEnum& datatype) const override {
         nlohmann::json j = *this;
         metadata = nlohmann::json::to_msgpack(j);
         datatype = DatatypeEnum::ImageManipConfig;

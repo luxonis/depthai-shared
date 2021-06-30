@@ -6,7 +6,7 @@
 namespace dai {
 
 /**
- * Specify NeuralNetwork options such as blob path, ...
+ * Specify properties for NeuralNetwork such as blob path, ...
  */
 struct NeuralNetworkProperties {
     /**
