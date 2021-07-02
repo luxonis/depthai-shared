@@ -14,7 +14,7 @@
 namespace dai {
 
 /**
- * Properties for DetectionNetwork
+ *  Specify properties for DetectionNetwork
  */
 struct DetectionNetworkProperties : NeuralNetworkProperties {
     /// Generic Neural Network properties

@@ -5,6 +5,7 @@
 
 namespace dai {
 
+/// ImgDetection structure
 struct ImgDetection {
     uint32_t label;
     float confidence;
@@ -16,10 +17,11 @@ struct ImgDetection {
     NLOHMANN_DEFINE_TYPE_INTRUSIVE(ImgDetection, label, confidence, xmin, ymin, xmax, ymax);
 };
 
+/// RawImgDetections structure
 struct RawImgDetections : public RawBuffer {
     std::vector<ImgDetection> detections;
 
-    void serialize(std::vector<std::uint8_t>& metadata, DatatypeEnum& datatype) override {
+    void serialize(std::vector<std::uint8_t>& metadata, DatatypeEnum& datatype) const override {
         nlohmann::json j = *this;
         metadata = nlohmann::json::to_msgpack(j);
         datatype = DatatypeEnum::ImgDetections;

@@ -3,6 +3,8 @@
 #include <depthai-shared/common/optional.hpp>
 #include <nlohmann/json.hpp>
 
+#include "depthai-shared/common/EepromData.hpp"
+
 namespace dai {
 
 /**
@@ -22,6 +24,12 @@ struct GlobalProperties {
     tl::optional<std::string> pipelineName;
     tl::optional<std::string> pipelineVersion;
     /**
+     * Calibration data sent through pipeline
+     */
+
+    tl::optional<dai::EepromData> calibData;
+
+    /**
      * Camera tuning blob size in bytes
      */
     tl::optional<std::uint32_t> cameraTuningBlobSize;
@@ -32,6 +40,6 @@ struct GlobalProperties {
 };
 
 NLOHMANN_DEFINE_TYPE_NON_INTRUSIVE(
-    GlobalProperties, leonCssFrequencyHz, leonMssFrequencyHz, pipelineName, pipelineVersion, cameraTuningBlobSize, cameraTuningBlobUri);
+    GlobalProperties, leonCssFrequencyHz, leonMssFrequencyHz, pipelineName, pipelineVersion, cameraTuningBlobSize, cameraTuningBlobUri, calibData);
 
 }  // namespace dai
