@@ -90,6 +90,7 @@ struct RawCameraControl : public RawBuffer {
                                         */
         CHROMA_DENOISE = 48,           /* [1] value
                                         */
+        EXTERNAL_TRIGGER = 50,
     };
 
     enum class AutoFocusMode : uint8_t {
@@ -219,6 +220,7 @@ struct RawCameraControl : public RawBuffer {
     uint8_t sharpness;       //   0 ..  4
     uint8_t lumaDenoise;     //   0 ..  4
     uint8_t chromaDenoise;   //   0 ..  4
+    uint8_t lowPowerNumFramesBurst;
 
     void setCommand(Command cmd, bool value = true) {
         uint64_t mask = 1ull << (uint8_t)cmd;
@@ -260,7 +262,8 @@ struct RawCameraControl : public RawBuffer {
                                    saturation,
                                    sharpness,
                                    lumaDenoise,
-                                   chromaDenoise);
+                                   chromaDenoise,
+                                   lowPowerNumFramesBurst);
 };
 
 }  // namespace dai
