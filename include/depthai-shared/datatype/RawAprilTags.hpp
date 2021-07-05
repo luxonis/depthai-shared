@@ -6,7 +6,7 @@
 #include "DatatypeEnum.hpp"
 #include "RawAprilTagConfig.hpp"
 #include "RawBuffer.hpp"
-#include "depthai-shared/common/Point3f.hpp"
+#include "depthai-shared/common/Point2f.hpp"
 #include "depthai-shared/common/Rect.hpp"
 
 namespace dai {
@@ -31,21 +31,19 @@ struct AprilTags {
     // only for very small tags-- not effective for larger tags (where
     // we could have sampled anywhere within a bit cell and still
     // gotten a good detection.)
-    float decision_margin;
+    float decisionMargin;
 
     // The center of the detection in image pixel coordinates.
-    Point2f c;
+    Point2f center;
 
     // The corners of the tag in image pixel coordinates. These always
     // wrap counter-clock wise around the tag.
-    dai::Rect p;
+    dai::Rect points;
 
-    /**
-     *  Configuration for selected ROI
-     */
-    AprilTagConfigData config;
+    // Configuration
+    AprilTagType config;
 };
-NLOHMANN_DEFINE_TYPE_NON_INTRUSIVE(AprilTags, id, hamming, decision_margin, c, p, config);
+NLOHMANN_DEFINE_TYPE_NON_INTRUSIVE(AprilTags, id, hamming, decisionMargin, center, points, config);
 
 /// RawAprilTags structure
 struct RawAprilTags : public RawBuffer {
