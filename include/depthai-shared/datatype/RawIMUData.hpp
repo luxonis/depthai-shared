@@ -7,7 +7,7 @@
 namespace dai {
 
 struct IMUReport {
-    enum class IMUReportAccuracy : std::uint8_t {
+    enum class Accuracy : std::uint8_t {
         UNRELIABLE = 0,
         LOW = 1,
         MEDIUM = 2,
@@ -21,7 +21,7 @@ struct IMUReport {
     int32_t sequence = 0;
 
     /** Accuracy of sensor */
-    IMUReportAccuracy accuracy = IMUReportAccuracy::UNRELIABLE;
+    Accuracy accuracy = Accuracy::UNRELIABLE;
 
     Timestamp timestamp = {};
 };
