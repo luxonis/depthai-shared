@@ -69,13 +69,13 @@ NLOHMANN_DEFINE_TYPE_NON_INTRUSIVE(IMUReportMagneticField, x, y, z, sequence, ac
  * Contains quaternion components: i,j,k,real
  */
 struct IMUReportRotationVectorWAcc : IMUReport {
-    float i = 0;        /**< @brief Quaternion component i */
-    float j = 0;        /**< @brief Quaternion component j */
-    float k = 0;        /**< @brief Quaternion component k */
-    float real = 0;     /**< @brief Quaternion component, real */
-    float accuracy = 0; /**< @brief Accuracy estimate [radians], 0 means no estimate */
+    float i = 0;                      /**< @brief Quaternion component i */
+    float j = 0;                      /**< @brief Quaternion component j */
+    float k = 0;                      /**< @brief Quaternion component k */
+    float real = 0;                   /**< @brief Quaternion component, real */
+    float rotationVectorAccuracy = 0; /**< @brief Accuracy estimate [radians], 0 means no estimate */
 };
-NLOHMANN_DEFINE_TYPE_NON_INTRUSIVE(IMUReportRotationVectorWAcc, i, j, k, real, accuracy, sequence, accuracy, timestamp);
+NLOHMANN_DEFINE_TYPE_NON_INTRUSIVE(IMUReportRotationVectorWAcc, i, j, k, real, rotationVectorAccuracy, sequence, accuracy, timestamp);
 
 #if 0
 
