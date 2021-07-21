@@ -8,7 +8,7 @@
 
 namespace dai {
 
-constexpr static uint32_t PREBOOT_CONFIG_MAGIC1 = 0x70000000U;
+constexpr static uint32_t PREBOOT_CONFIG_MAGIC1 = 0x78010000U;
 constexpr static uint32_t PREBOOT_CONFIG_MAGIC2 = 0x21ea17e6U;
 
 struct PrebootConfig {
