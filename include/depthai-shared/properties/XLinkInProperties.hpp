@@ -7,7 +7,7 @@
 namespace dai {
 
 /**
- * Properties for XLinkIn which define stream name
+ * Specify properties for XLinkIn such as stream name, ...
  */
 struct XLinkInProperties {
     /**

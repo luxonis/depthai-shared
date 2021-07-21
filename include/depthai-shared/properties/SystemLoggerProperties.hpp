@@ -8,7 +8,7 @@
 namespace dai {
 
 /**
- * SystemLoggerProperties
+ * SystemLoggerProperties structure
  */
 struct SystemLoggerProperties {
     /**

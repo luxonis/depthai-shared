@@ -5,6 +5,7 @@
 
 namespace dai {
 
+/// CameraInfo structure
 struct CameraInfo {
     uint16_t width = 0, height = 0;
     uint8_t lensPosition = 0;

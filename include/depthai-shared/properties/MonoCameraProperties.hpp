@@ -9,7 +9,7 @@
 namespace dai {
 
 /**
- * Specify MonoCamera options such as camera ID, ...
+ * Specify properties for MonoCamera such as camera ID, ...
  */
 struct MonoCameraProperties {
     /**

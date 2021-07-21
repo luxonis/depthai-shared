@@ -8,6 +8,7 @@
 
 namespace dai {
 
+/// RawCameraControl structure
 struct RawCameraControl : public RawBuffer {
     enum class Command : uint8_t {
         START_STREAM = 1,
@@ -234,7 +235,7 @@ struct RawCameraControl : public RawBuffer {
         return !!(cmdMask & (1ull << (uint8_t)cmd));
     }
 
-    void serialize(std::vector<std::uint8_t>& metadata, DatatypeEnum& datatype) override {
+    void serialize(std::vector<std::uint8_t>& metadata, DatatypeEnum& datatype) const override {
         nlohmann::json j = *this;
         metadata = nlohmann::json::to_msgpack(j);
         datatype = DatatypeEnum::CameraControl;

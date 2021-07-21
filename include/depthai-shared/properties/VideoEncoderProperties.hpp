@@ -6,7 +6,7 @@
 namespace dai {
 
 /**
- * Specify VideoEncoder options such as profile, bitrate, ...
+ * Specify properties for VideoEncoder such as profile, bitrate, ...
  */
 struct VideoEncoderProperties {
     /**
