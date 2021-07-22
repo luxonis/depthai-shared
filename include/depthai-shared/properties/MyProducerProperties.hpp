@@ -19,7 +19,7 @@ struct MyProducerProperties {
     /**
      * On which processor the node will be placed
      */
-    ProcessorType processorPlacement = ProcessorType::LOS;
+    ProcessorType processorPlacement = ProcessorType::LEON_CSS;
 };
 
 NLOHMANN_DEFINE_TYPE_NON_INTRUSIVE(MyProducerProperties, message, processorPlacement);
