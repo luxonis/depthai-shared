@@ -5,6 +5,7 @@
 
 // project
 #include "depthai-shared/common/UsbSpeed.hpp"
+#include "depthai-shared/xlink/XLinkConstants.hpp"
 
 namespace dai {
 
@@ -15,8 +16,9 @@ struct PrebootConfig {
     uint16_t vid = 0x03e7, pid = 0xf63b;
     uint16_t flashBootedVid = 0x03e7, flashBootedPid = 0xf63d;
     UsbSpeed maxUsbSpeed = UsbSpeed::SUPER;
+    uint32_t watchdogTimeoutMs = device::XLINK_WATCHDOG_TIMEOUT.count();
 };
 
-NLOHMANN_DEFINE_TYPE_NON_INTRUSIVE(PrebootConfig, vid, pid, flashBootedVid, flashBootedPid, maxUsbSpeed);
+NLOHMANN_DEFINE_TYPE_NON_INTRUSIVE(PrebootConfig, vid, pid, flashBootedVid, flashBootedPid, maxUsbSpeed, watchdogTimeoutMs);
 
 }  // namespace dai
