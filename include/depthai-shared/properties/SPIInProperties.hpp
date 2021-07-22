@@ -1,15 +1,8 @@
-//  To parse this JSON data, first install
-//
-//      Boost     http://www.boost.org
-//      json.hpp  https://github.com/nlohmann/json
-//
-//  Then include this file, and then do
-//
-//     SPIInProperties.hpp data = nlohmann::json::parse(jsonString);
-
 #pragma once
 
 #include <nlohmann/json.hpp>
+
+#include "depthai-shared/xlink/XLinkConstants.hpp"
 
 namespace dai {
 
@@ -38,6 +31,6 @@ struct SPIInProperties {
     std::uint32_t numFrames = 4;
 };
 
-NLOHMANN_DEFINE_TYPE_NON_INTRUSIVE(SPIInProperties, streamName, busId);
+NLOHMANN_DEFINE_TYPE_NON_INTRUSIVE(SPIInProperties, streamName, busId, maxDataSize, numFrames);
 
 }  // namespace dai
