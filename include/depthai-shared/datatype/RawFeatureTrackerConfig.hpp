@@ -11,6 +11,8 @@ namespace dai {
 /// FeatureTracker configuration data structure
 struct FeatureTrackerConfigData {
     struct CornerDetector {
+        static constexpr const int AUTO = 0;
+
         enum class AlgorithmType : std::int32_t {
             /**
              * Harris corner detector.
@@ -21,6 +23,9 @@ struct FeatureTrackerConfigData {
              */
             SHI_THOMASI
         };
+        /**
+         * Corner detector algorithm type.
+         */
         AlgorithmType algorithmType = AlgorithmType::HARRIS;
 
         /**
@@ -43,11 +48,10 @@ struct FeatureTrackerConfigData {
          * Hard limit for the maximum number of features that can be detected.
          * 0 means auto, will be set to the maximum value based on memory constraints.
          */
-        std::int32_t maxNumFeatures = 0;
+        std::int32_t maxNumFeatures = AUTO;
 
         /**
-         * Threshold settings for corner detector.
-         * These are advanced settings, suitable for debugging/special cases.
+         * Threshold settings structure for corner detector.
          */
         struct Thresholds {
             static constexpr const float AUTO = 0;
@@ -89,6 +93,10 @@ struct FeatureTrackerConfigData {
             float increaseFactor = 1.1;
         };
 
+        /**
+         * Threshold settings.
+         * These are advanced settings, suitable for debugging/special cases.
+         */
         Thresholds thresholds;
     };
 
@@ -96,8 +104,6 @@ struct FeatureTrackerConfigData {
      * Used for feature reidentification between current and previous features.
      */
     struct MotionEstimator {
-        static constexpr const std::int32_t AUTO = 0;
-
         bool enable = true;
 
         enum class AlgorithmType : std::int32_t {
@@ -106,44 +112,61 @@ struct FeatureTrackerConfigData {
              */
             LUCAS_KANADE_OPTICAL_FLOW
         };
+        /**
+         * Motion estimator algorithm type.
+         */
         AlgorithmType algorithmType = AlgorithmType::LUCAS_KANADE_OPTICAL_FLOW;
 
         /**
-         * Number of pyramid levels, only for optical flow.
-         * AUTO means it's decided based on input resolution: 3 if image width <= 640, else 4.
+         * Optical flow configuration structure.
          */
-        std::int32_t pyramidLevels = AUTO;
+        struct OpticalFlow {
+            static constexpr const std::int32_t AUTO = 0;
+
+            /**
+             * Number of pyramid levels, only for optical flow.
+             * AUTO means it's decided based on input resolution: 3 if image width <= 640, else 4.
+             * Valid values are either 3/4 for VGA, 4 for 720p and above.
+             */
+            std::int32_t pyramidLevels = AUTO;
+
+            /**
+             * Image patch width used to track features.
+             * Must be an odd number, maximum 9.
+             * N means the algorithm will be able to track motion at most (N-1)/2 pixels in a direction per pyramid level.
+             * Increasing this number increases runtime
+             */
+            std::int32_t searchWindowWidth = 5;
+            /**
+             * Image patch height used to track features.
+             * Must be an odd number, maximum 9.
+             * N means the algorithm will be able to track motion at most (N-1)/2 pixels in a direction per pyramid level.
+             * Increasing this number increases runtime
+             */
+            std::int32_t searchWindowHeight = 5;
+
+            /**
+             * Feature tracking termination criteria.
+             * Optical flow will refine the feature position on each pyramid level until
+             * the displacement between two refinements is smaller than this value.
+             * Decreasing this number increases runtime.
+             */
+            float epsilon = 0.01;
+
+            /**
+             * Feature tracking termination criteria. Optical flow will refine the feature position maximum this many times
+             * on each pyramid level. If the Epsilon criteria described in the previous chapter is not met after this number
+             * of iterations, the algorithm will continue with the current calculated value.
+             * Increasing this number increases runtime.
+             */
+            std::int32_t maxIterations = 9;
+        };
 
         /**
-         * Image patch width used to track features.
-         * Must be an odd number, maximum 23.
-         * N means the algorithm will be able to track motion at most (N-1)/2 pixels in a direction per pyramid level.
-         * Increasing this number increases runtime
+         * Optical flow configuration.
+         * Takes effect only if MotionEstimator algorithm type set to LUCAS_KANADE_OPTICAL_FLOW.
          */
-        std::int32_t searchWindowWidth = 5;
-        /**
-         * Image patch height used to track features.
-         * Must be an odd number, maximum 23.
-         * N means the algorithm will be able to track motion at most (N-1)/2 pixels in a direction per pyramid level.
-         * Increasing this number increases runtime
-         */
-        std::int32_t searchWindowHeight = 5;
-
-        /**
-         * Feature tracking termination criteria.
-         * Optical flow will refine the feature position on each pyramid level until
-         * the displacement between two refinements is smaller than this value.
-         * Decreasing this number increases runtime.
-         */
-        float epsilon = 0.01;
-
-        /**
-         * Feature tracking termination criteria. Optical flow will refine the feature position maximum this many times
-         * on each pyramid level. If the Epsilon criteria described in the previous chapter is not met after this number
-         * of iterations, the algorithm will continue with the current calculated value.
-         * Increasing this number increases runtime.
-         */
-        std::int32_t maxIterations = 9;
+        OpticalFlow opticalFlow;
     };
 
     /**
@@ -153,7 +176,7 @@ struct FeatureTrackerConfigData {
         bool enable = true;
 
         /**
-         * Used to filter out detectoed feature points that are too close.
+         * Used to filter out detected feature points that are too close.
          * Unit of measurement is squared euclidian distance in pixels.
          */
         float minimumDistanceBetweenFeatures = 50;
@@ -197,7 +220,8 @@ struct FeatureTrackerConfigData {
 NLOHMANN_DEFINE_TYPE_NON_INTRUSIVE(FeatureTrackerConfigData::CornerDetector::Thresholds, initialValue, min, max, decreaseFactor, increaseFactor);
 NLOHMANN_DEFINE_TYPE_NON_INTRUSIVE(FeatureTrackerConfigData::CornerDetector, algorithmType, numImageCells, targetNumFeatures, maxNumFeatures, thresholds);
 NLOHMANN_DEFINE_TYPE_NON_INTRUSIVE(
-    FeatureTrackerConfigData::MotionEstimator, enable, algorithmType, pyramidLevels, searchWindowWidth, searchWindowHeight, epsilon, maxIterations);
+    FeatureTrackerConfigData::MotionEstimator::OpticalFlow, pyramidLevels, searchWindowWidth, searchWindowHeight, epsilon, maxIterations);
+NLOHMANN_DEFINE_TYPE_NON_INTRUSIVE(FeatureTrackerConfigData::MotionEstimator, enable, algorithmType, opticalFlow);
 NLOHMANN_DEFINE_TYPE_NON_INTRUSIVE(
     FeatureTrackerConfigData::FeatureMaintainer, enable, minimumDistanceBetweenFeatures, lostFeatureErrorThreshold, trackedFeatureThreshold);
 NLOHMANN_DEFINE_TYPE_NON_INTRUSIVE(FeatureTrackerConfigData, cornerDetector, motionEstimator, featureMaintainer);
