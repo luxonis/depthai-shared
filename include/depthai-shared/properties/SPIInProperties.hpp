@@ -18,7 +18,7 @@ struct SPIInProperties {
     /**
      * SPI bus to use
      */
-    int busId;
+    int busId = 0;
 
     /**
      * Maximum input data size
