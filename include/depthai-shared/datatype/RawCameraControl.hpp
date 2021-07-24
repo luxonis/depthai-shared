@@ -93,6 +93,9 @@ struct RawCameraControl : public RawBuffer {
         WB_COLOR_TEMP = 49,            /* [1] value
                                         */
         EXTERNAL_TRIGGER = 50,
+
+        AF_LENS_RANGE = 51,            /* [1] value
+                                       */
     };
 
     enum class AutoFocusMode : uint8_t {
@@ -206,6 +209,7 @@ struct RawCameraControl : public RawBuffer {
      * - lower values lead to out-of-focus (lens too close to the sensor array)
      */
     uint8_t lensPosition = 0;
+    uint8_t lensPosAutoInfinity, lensPosAutoMacro;
 
     ManualExposureParams expManual;
     RegionParams aeRegion, afRegion;
@@ -251,6 +255,8 @@ struct RawCameraControl : public RawBuffer {
                                    cmdMask,
                                    autoFocusMode,
                                    lensPosition,
+                                   lensPosAutoInfinity,
+                                   lensPosAutoMacro,
                                    expManual,
                                    aeRegion,
                                    afRegion,
