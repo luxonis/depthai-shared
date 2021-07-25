@@ -51,6 +51,17 @@ struct FeatureTrackerConfigData {
         std::int32_t maxNumFeatures = AUTO;
 
         /**
+         * Enable 3x3 sobel operator to smoothen the image whose gradient is be computed.
+         * If disabled a simple 1D row/column differentiator is used for gradient.
+         */
+        bool enableSobel = true;
+
+        /**
+         * Enable sorting detected features based on their score or not.
+         */
+        bool enableSorting = true;
+
+        /**
          * Threshold settings structure for corner detector.
          */
         struct Thresholds {
@@ -218,7 +229,8 @@ struct FeatureTrackerConfigData {
 };
 
 NLOHMANN_DEFINE_TYPE_NON_INTRUSIVE(FeatureTrackerConfigData::CornerDetector::Thresholds, initialValue, min, max, decreaseFactor, increaseFactor);
-NLOHMANN_DEFINE_TYPE_NON_INTRUSIVE(FeatureTrackerConfigData::CornerDetector, algorithmType, numImageCells, targetNumFeatures, maxNumFeatures, thresholds);
+NLOHMANN_DEFINE_TYPE_NON_INTRUSIVE(
+    FeatureTrackerConfigData::CornerDetector, algorithmType, numImageCells, targetNumFeatures, maxNumFeatures, thresholds, enableSobel, enableSorting);
 NLOHMANN_DEFINE_TYPE_NON_INTRUSIVE(
     FeatureTrackerConfigData::MotionEstimator::OpticalFlow, pyramidLevels, searchWindowWidth, searchWindowHeight, epsilon, maxIterations);
 NLOHMANN_DEFINE_TYPE_NON_INTRUSIVE(FeatureTrackerConfigData::MotionEstimator, enable, algorithmType, opticalFlow);
