@@ -11,18 +11,19 @@
 namespace dai {
 
 /**
- * TrackedFeatures structure
+ * TrackedFeature structure
  *
  */
-struct TrackedFeatures {
+struct TrackedFeature {
     /**
      *  x, y position of the detected feature
      */
     Point2f position;
     /**
-     *  Feature ID
+     *  Feature ID. Persistent between frames if optical flow is enabled.
      */
     uint32_t id;
+#if 0
     /**
      *  Feature age in frames
      */
@@ -36,12 +37,13 @@ struct TrackedFeatures {
      *  Feature tracking error
      */
     float trackingError;
+#endif
 };
-NLOHMANN_DEFINE_TYPE_NON_INTRUSIVE(TrackedFeatures, position, id, age, harrisScore, trackingError);
+NLOHMANN_DEFINE_TYPE_NON_INTRUSIVE(TrackedFeature, position, id);
 
 /// RawTrackedFeatures structure
 struct RawTrackedFeatures : public RawBuffer {
-    std::vector<TrackedFeatures> trackedFeatures;
+    std::vector<TrackedFeature> trackedFeatures;
 
     void serialize(std::vector<std::uint8_t>& metadata, DatatypeEnum& datatype) const override {
         nlohmann::json j = *this;
