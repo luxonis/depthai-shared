@@ -58,7 +58,8 @@ struct RawImgFrame : public RawBuffer {
     uint32_t category;     //
     uint32_t instanceNum;  // Which source created this frame (color, mono, ...)
     int sequenceNum;       // increments for each frame
-    Timestamp ts;          // generation timestamp
+    Timestamp ts;          // generation timestamp, synced to host time
+    Timestamp tsDevice;    // generation timestamp, direct device monotonic clock
 
     void serialize(std::vector<std::uint8_t>& metadata, DatatypeEnum& datatype) const override {
         nlohmann::json j = *this;
@@ -66,7 +67,7 @@ struct RawImgFrame : public RawBuffer {
         datatype = DatatypeEnum::ImgFrame;
     };
 
-    NLOHMANN_DEFINE_TYPE_INTRUSIVE(RawImgFrame, fb, category, instanceNum, sequenceNum, ts);
+    NLOHMANN_DEFINE_TYPE_INTRUSIVE(RawImgFrame, fb, category, instanceNum, sequenceNum, ts, tsDevice);
 };
 
 }  // namespace dai
