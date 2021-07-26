@@ -30,13 +30,13 @@ struct FeatureTrackerConfigData {
 
         /**
          * Ensures distributed feature detection across the image.
-         * Image is divided into numImageCells horizontal and vertical cells,
-         * each cell has a target feature count = targetNumFeatures / numImageCells.
+         * Image is divided into horizontal and vertical cells,
+         * each cell has a target feature count = targetNumFeatures / cellGridDimension.
          * Each cell has it's own feature threshold.
          * A value of 4 means that the image is divided into 4x4 cells of equal width/height.
          * Maximum 4, minimum 1.
          */
-        std::int32_t numImageCells = 4;
+        std::int32_t cellGridDimension = 4;
 
         /**
          * Target number of features to detect.
@@ -230,7 +230,7 @@ struct FeatureTrackerConfigData {
 
 NLOHMANN_DEFINE_TYPE_NON_INTRUSIVE(FeatureTrackerConfigData::CornerDetector::Thresholds, initialValue, min, max, decreaseFactor, increaseFactor);
 NLOHMANN_DEFINE_TYPE_NON_INTRUSIVE(
-    FeatureTrackerConfigData::CornerDetector, algorithmType, numImageCells, targetNumFeatures, maxNumFeatures, thresholds, enableSobel, enableSorting);
+    FeatureTrackerConfigData::CornerDetector, algorithmType, cellGridDimension, targetNumFeatures, maxNumFeatures, thresholds, enableSobel, enableSorting);
 NLOHMANN_DEFINE_TYPE_NON_INTRUSIVE(
     FeatureTrackerConfigData::MotionEstimator::OpticalFlow, pyramidLevels, searchWindowWidth, searchWindowHeight, epsilon, maxIterations);
 NLOHMANN_DEFINE_TYPE_NON_INTRUSIVE(FeatureTrackerConfigData::MotionEstimator, enable, algorithmType, opticalFlow);
