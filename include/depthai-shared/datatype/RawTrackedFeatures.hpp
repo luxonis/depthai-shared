@@ -48,7 +48,7 @@ struct RawTrackedFeatures : public RawBuffer {
     void serialize(std::vector<std::uint8_t>& metadata, DatatypeEnum& datatype) const override {
         nlohmann::json j = *this;
         metadata = nlohmann::json::to_msgpack(j);
-        datatype = DatatypeEnum::FeatureTrackerData;
+        datatype = DatatypeEnum::TrackedFeatures;
     };
 
     NLOHMANN_DEFINE_TYPE_INTRUSIVE(RawTrackedFeatures, trackedFeatures);
