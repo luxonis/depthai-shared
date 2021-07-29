@@ -20,7 +20,7 @@ struct TrackedFeature {
      */
     Point2f position;
     /**
-     *  Feature ID. Persistent between frames if optical flow is enabled.
+     *  Feature ID. Persistent between frames if motion estimation is enabled.
      */
     uint32_t id;
 #if 0

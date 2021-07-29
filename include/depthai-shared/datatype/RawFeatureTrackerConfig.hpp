@@ -10,10 +10,13 @@ namespace dai {
 
 /// FeatureTracker configuration data structure
 struct FeatureTrackerConfigData {
-    struct CornerDetector {
-        static constexpr const int AUTO = 0;
+    static constexpr const std::int32_t AUTO = 0;
 
-        enum class AlgorithmType : std::int32_t {
+    /**
+     * Corner detector configuration structure.
+     */
+    struct CornerDetector {
+        enum class Type : std::int32_t {
             /**
              * Harris corner detector.
              */
@@ -26,12 +29,12 @@ struct FeatureTrackerConfigData {
         /**
          * Corner detector algorithm type.
          */
-        AlgorithmType algorithmType = AlgorithmType::HARRIS;
+        Type type = Type::HARRIS;
 
         /**
          * Ensures distributed feature detection across the image.
          * Image is divided into horizontal and vertical cells,
-         * each cell has a target feature count = targetNumFeatures / cellGridDimension.
+         * each cell has a target feature count = numTargetFeatures / cellGridDimension.
          * Each cell has it's own feature threshold.
          * A value of 4 means that the image is divided into 4x4 cells of equal width/height.
          * Maximum 4, minimum 1.
@@ -42,13 +45,13 @@ struct FeatureTrackerConfigData {
          * Target number of features to detect.
          * Maximum number of features is determined at runtime based on algorithm type.
          */
-        std::int32_t targetNumFeatures = 320;
+        std::int32_t numTargetFeatures = 320;
 
         /**
          * Hard limit for the maximum number of features that can be detected.
          * 0 means auto, will be set to the maximum value based on memory constraints.
          */
-        std::int32_t maxNumFeatures = AUTO;
+        std::int32_t numMaxFeatures = AUTO;
 
         /**
          * Enable 3x3 sobel operator to smoothen the image whose gradient is be computed.
@@ -65,8 +68,6 @@ struct FeatureTrackerConfigData {
          * Threshold settings structure for corner detector.
          */
         struct Thresholds {
-            static constexpr const float AUTO = 0;
-
             /**
              * Minimum strength of a feature which will be detected.
              * 0 means automatic threshold update. Recommended so the tracker can adapt to different scenes/textures.
@@ -115,9 +116,12 @@ struct FeatureTrackerConfigData {
      * Used for feature reidentification between current and previous features.
      */
     struct MotionEstimator {
+        /**
+         * Enable motion estimation or not.
+         */
         bool enable = true;
 
-        enum class AlgorithmType : std::int32_t {
+        enum class Type : std::int32_t {
             /**
              * Using the pyramidal Lucas-Kanade optical flow method.
              */
@@ -130,14 +134,12 @@ struct FeatureTrackerConfigData {
         /**
          * Motion estimator algorithm type.
          */
-        AlgorithmType algorithmType = AlgorithmType::LUCAS_KANADE_OPTICAL_FLOW;
+        Type type = Type::LUCAS_KANADE_OPTICAL_FLOW;
 
         /**
          * Optical flow configuration structure.
          */
         struct OpticalFlow {
-            static constexpr const std::int32_t AUTO = 0;
-
             /**
              * Number of pyramid levels, only for optical flow.
              * AUTO means it's decided based on input resolution: 3 if image width <= 640, else 4.
@@ -185,13 +187,17 @@ struct FeatureTrackerConfigData {
     };
 
     /**
-     * Used for feature filtering.
+     * FeatureMaintainer configuration structure.
      */
     struct FeatureMaintainer {
+        /**
+         * Enable feature maintaining or not.
+         */
         bool enable = true;
 
         /**
          * Used to filter out detected feature points that are too close.
+         * Requires sorting enabled in detector.
          * Unit of measurement is squared euclidian distance in pixels.
          */
         float minimumDistanceBetweenFeatures = 50;
@@ -234,10 +240,10 @@ struct FeatureTrackerConfigData {
 
 NLOHMANN_DEFINE_TYPE_NON_INTRUSIVE(FeatureTrackerConfigData::CornerDetector::Thresholds, initialValue, min, max, decreaseFactor, increaseFactor);
 NLOHMANN_DEFINE_TYPE_NON_INTRUSIVE(
-    FeatureTrackerConfigData::CornerDetector, algorithmType, cellGridDimension, targetNumFeatures, maxNumFeatures, thresholds, enableSobel, enableSorting);
+    FeatureTrackerConfigData::CornerDetector, type, cellGridDimension, numTargetFeatures, numMaxFeatures, thresholds, enableSobel, enableSorting);
 NLOHMANN_DEFINE_TYPE_NON_INTRUSIVE(
     FeatureTrackerConfigData::MotionEstimator::OpticalFlow, pyramidLevels, searchWindowWidth, searchWindowHeight, epsilon, maxIterations);
-NLOHMANN_DEFINE_TYPE_NON_INTRUSIVE(FeatureTrackerConfigData::MotionEstimator, enable, algorithmType, opticalFlow);
+NLOHMANN_DEFINE_TYPE_NON_INTRUSIVE(FeatureTrackerConfigData::MotionEstimator, enable, type, opticalFlow);
 NLOHMANN_DEFINE_TYPE_NON_INTRUSIVE(
     FeatureTrackerConfigData::FeatureMaintainer, enable, minimumDistanceBetweenFeatures, lostFeatureErrorThreshold, trackedFeatureThreshold);
 NLOHMANN_DEFINE_TYPE_NON_INTRUSIVE(FeatureTrackerConfigData, cornerDetector, motionEstimator, featureMaintainer);
