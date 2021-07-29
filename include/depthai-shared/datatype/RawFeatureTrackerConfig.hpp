@@ -121,7 +121,11 @@ struct FeatureTrackerConfigData {
             /**
              * Using the pyramidal Lucas-Kanade optical flow method.
              */
-            LUCAS_KANADE_OPTICAL_FLOW
+            LUCAS_KANADE_OPTICAL_FLOW,
+            /**
+             * Using a dense motion estimation hardware block (Block matcher).
+             */
+            HW_MOTION_ESTIMATION
         };
         /**
          * Motion estimator algorithm type.
