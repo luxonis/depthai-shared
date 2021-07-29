@@ -8,8 +8,8 @@
 
 namespace dai {
 
-/// FeatureTracker configuration data structure
-struct FeatureTrackerConfigData {
+/// RawFeatureTrackerConfig configuration structure
+struct RawFeatureTrackerConfig : public RawBuffer {
     static constexpr const std::int32_t AUTO = 0;
 
     /**
@@ -103,6 +103,7 @@ struct FeatureTrackerConfigData {
              * by multiplying its value with this factor.
              */
             float increaseFactor = 1.1;
+            NLOHMANN_DEFINE_TYPE_INTRUSIVE(Thresholds, initialValue, min, max, decreaseFactor, increaseFactor);
         };
 
         /**
@@ -110,6 +111,8 @@ struct FeatureTrackerConfigData {
          * These are advanced settings, suitable for debugging/special cases.
          */
         Thresholds thresholds;
+
+        NLOHMANN_DEFINE_TYPE_INTRUSIVE(CornerDetector, type, cellGridDimension, numTargetFeatures, numMaxFeatures, thresholds, enableSobel, enableSorting);
     };
 
     /**
@@ -177,6 +180,8 @@ struct FeatureTrackerConfigData {
              * Increasing this number increases runtime.
              */
             std::int32_t maxIterations = 9;
+
+            NLOHMANN_DEFINE_TYPE_INTRUSIVE(OpticalFlow, pyramidLevels, searchWindowWidth, searchWindowHeight, epsilon, maxIterations);
         };
 
         /**
@@ -184,6 +189,8 @@ struct FeatureTrackerConfigData {
          * Takes effect only if MotionEstimator algorithm type set to LUCAS_KANADE_OPTICAL_FLOW.
          */
         OpticalFlow opticalFlow;
+
+        NLOHMANN_DEFINE_TYPE_INTRUSIVE(MotionEstimator, enable, type, opticalFlow);
     };
 
     /**
@@ -217,6 +224,8 @@ struct FeatureTrackerConfigData {
          * they are absolutely untrackable. This is why, this value is usually smaller than the detection threshold.
          */
         float trackedFeatureThreshold = 200000;
+
+        NLOHMANN_DEFINE_TYPE_INTRUSIVE(FeatureMaintainer, enable, minimumDistanceBetweenFeatures, lostFeatureErrorThreshold, trackedFeatureThreshold);
     };
 
     /**
@@ -236,21 +245,6 @@ struct FeatureTrackerConfigData {
      * Used for feature maintaining.
      */
     FeatureMaintainer featureMaintainer;
-};
-
-NLOHMANN_DEFINE_TYPE_NON_INTRUSIVE(FeatureTrackerConfigData::CornerDetector::Thresholds, initialValue, min, max, decreaseFactor, increaseFactor);
-NLOHMANN_DEFINE_TYPE_NON_INTRUSIVE(
-    FeatureTrackerConfigData::CornerDetector, type, cellGridDimension, numTargetFeatures, numMaxFeatures, thresholds, enableSobel, enableSorting);
-NLOHMANN_DEFINE_TYPE_NON_INTRUSIVE(
-    FeatureTrackerConfigData::MotionEstimator::OpticalFlow, pyramidLevels, searchWindowWidth, searchWindowHeight, epsilon, maxIterations);
-NLOHMANN_DEFINE_TYPE_NON_INTRUSIVE(FeatureTrackerConfigData::MotionEstimator, enable, type, opticalFlow);
-NLOHMANN_DEFINE_TYPE_NON_INTRUSIVE(
-    FeatureTrackerConfigData::FeatureMaintainer, enable, minimumDistanceBetweenFeatures, lostFeatureErrorThreshold, trackedFeatureThreshold);
-NLOHMANN_DEFINE_TYPE_NON_INTRUSIVE(FeatureTrackerConfigData, cornerDetector, motionEstimator, featureMaintainer);
-
-/// RawFeatureTrackerConfig configuration structure
-struct RawFeatureTrackerConfig : public RawBuffer {
-    FeatureTrackerConfigData config;
 
     void serialize(std::vector<std::uint8_t>& metadata, DatatypeEnum& datatype) const override {
         nlohmann::json j = *this;
@@ -258,7 +252,7 @@ struct RawFeatureTrackerConfig : public RawBuffer {
         datatype = DatatypeEnum::FeatureTrackerConfig;
     };
 
-    NLOHMANN_DEFINE_TYPE_INTRUSIVE(RawFeatureTrackerConfig, config);
+    NLOHMANN_DEFINE_TYPE_INTRUSIVE(RawFeatureTrackerConfig, cornerDetector, motionEstimator, featureMaintainer);
 };
 
 }  // namespace dai
