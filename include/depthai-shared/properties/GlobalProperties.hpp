@@ -37,9 +37,22 @@ struct GlobalProperties {
      * Uri which points to camera tuning blob
      */
     std::string cameraTuningBlobUri;
+
+    /**
+     * Maximum packet size to be sent by device on XLinkOut (the larger messages are split).
+     * Increase the size to improve performance, or set to 0 to disable splitting.
+     */
+    uint32_t xlinkMaxPacketSize = 64 * 1024;
 };
 
-NLOHMANN_DEFINE_TYPE_NON_INTRUSIVE(
-    GlobalProperties, leonCssFrequencyHz, leonMssFrequencyHz, pipelineName, pipelineVersion, cameraTuningBlobSize, cameraTuningBlobUri, calibData);
+NLOHMANN_DEFINE_TYPE_NON_INTRUSIVE(GlobalProperties,
+                                   leonCssFrequencyHz,
+                                   leonMssFrequencyHz,
+                                   pipelineName,
+                                   pipelineVersion,
+                                   cameraTuningBlobSize,
+                                   cameraTuningBlobUri,
+                                   calibData,
+                                   xlinkMaxPacketSize);
 
 }  // namespace dai
