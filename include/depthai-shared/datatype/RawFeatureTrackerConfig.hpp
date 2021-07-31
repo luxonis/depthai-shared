@@ -35,7 +35,7 @@ struct RawFeatureTrackerConfig : public RawBuffer {
          * Ensures distributed feature detection across the image.
          * Image is divided into horizontal and vertical cells,
          * each cell has a target feature count = numTargetFeatures / cellGridDimension.
-         * Each cell has it's own feature threshold.
+         * Each cell has its own feature threshold.
          * A value of 4 means that the image is divided into 4x4 cells of equal width/height.
          * Maximum 4, minimum 1.
          */
@@ -54,8 +54,8 @@ struct RawFeatureTrackerConfig : public RawBuffer {
         std::int32_t numMaxFeatures = AUTO;
 
         /**
-         * Enable 3x3 sobel operator to smoothen the image whose gradient is be computed.
-         * If disabled a simple 1D row/column differentiator is used for gradient.
+         * Enable 3x3 Sobel operator to smoothen the image whose gradient is to be computed.
+         * If disabled, a simple 1D row/column differentiator is used for gradient.
          */
         bool enableSobel = true;
 
@@ -71,7 +71,7 @@ struct RawFeatureTrackerConfig : public RawBuffer {
             /**
              * Minimum strength of a feature which will be detected.
              * 0 means automatic threshold update. Recommended so the tracker can adapt to different scenes/textures.
-             * Each chell has its own threshold.
+             * Each cell has its own threshold.
              * Empirical value.
              */
             float initialValue = AUTO;
@@ -79,7 +79,7 @@ struct RawFeatureTrackerConfig : public RawBuffer {
             /**
              * Minimum limit for threshold.
              * Applicable when automatic threshold update is enabled.
-             * 0 means auto, 6000000 for HARRIS, 1200 for SHI_THOMASI
+             * 0 means auto, 6000000 for HARRIS, 1200 for SHI_THOMASI.
              * Empirical value.
              */
             float min = AUTO;
@@ -99,7 +99,7 @@ struct RawFeatureTrackerConfig : public RawBuffer {
             float decreaseFactor = 0.9;
 
             /**
-             * When detected number of features doesn't exceed the maximum in a cell threshold is increased
+             * When detected number of features doesn't exceed the maximum in a cell, threshold is increased
              * by multiplying its value with this factor.
              */
             float increaseFactor = 1.1;
