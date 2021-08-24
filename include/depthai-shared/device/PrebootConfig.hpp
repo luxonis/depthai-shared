@@ -4,6 +4,7 @@
 #include <cstdint>
 
 // project
+#include "depthai-shared/common/optional.hpp"
 #include "depthai-shared/common/UsbSpeed.hpp"
 #include "depthai-shared/xlink/XLinkConstants.hpp"
 
