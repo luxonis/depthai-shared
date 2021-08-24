@@ -21,7 +21,7 @@ struct PrebootConfig {
     };
 
     USB usb;
-    uint32_t watchdogTimeoutMs = device::XLINK_WATCHDOG_TIMEOUT.count();
+    tl::optional<uint32_t> watchdogTimeoutMs = device::XLINK_WATCHDOG_TIMEOUT.count();
 };
 
 NLOHMANN_DEFINE_TYPE_NON_INTRUSIVE(PrebootConfig::USB, vid, pid, flashBootedVid, flashBootedPid, maxSpeed);
