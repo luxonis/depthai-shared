@@ -5,6 +5,7 @@
 
 // project
 #include "depthai-shared/common/UsbSpeed.hpp"
+#include "depthai-shared/common/optional.hpp"
 #include "depthai-shared/xlink/XLinkConstants.hpp"
 
 namespace dai {
@@ -21,7 +22,7 @@ struct PrebootConfig {
     };
 
     USB usb;
-    uint32_t watchdogTimeoutMs = device::XLINK_WATCHDOG_TIMEOUT.count();
+    tl::optional<uint32_t> watchdogTimeoutMs = device::XLINK_WATCHDOG_TIMEOUT.count();
 };
 
 NLOHMANN_DEFINE_TYPE_NON_INTRUSIVE(PrebootConfig::USB, vid, pid, flashBootedVid, flashBootedPid, maxSpeed);
