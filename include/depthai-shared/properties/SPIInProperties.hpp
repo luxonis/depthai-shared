@@ -7,13 +7,18 @@
 namespace dai {
 
 /**
- * Specify properties for XLinkIn such as stream name, ...
+ * Properties for SPIIn node
  */
-struct XLinkInProperties {
+struct SPIInProperties {
     /**
      * Name of stream
      */
     std::string streamName;
+
+    /**
+     * SPI bus to use
+     */
+    int busId = 0;
 
     /**
      * Maximum input data size
@@ -23,9 +28,9 @@ struct XLinkInProperties {
     /**
      * Number of frames in pool
      */
-    std::uint32_t numFrames = 8;
+    std::uint32_t numFrames = 4;
 };
 
-NLOHMANN_DEFINE_TYPE_NON_INTRUSIVE(XLinkInProperties, streamName, maxDataSize, numFrames);
+NLOHMANN_DEFINE_TYPE_NON_INTRUSIVE(SPIInProperties, streamName, busId, maxDataSize, numFrames);
 
 }  // namespace dai
