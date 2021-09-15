@@ -52,13 +52,6 @@ struct StereoDepthProperties {
     enum class DepthAlign : int32_t { RECTIFIED_RIGHT, RECTIFIED_LEFT, CENTER };
 
     /**
-     * Calibration data byte array
-     */
-    std::vector<std::uint8_t> calibration;
-
-    EepromData calibrationData;
-
-    /**
      * Set the disparity/depth alignment to the perspective of a rectified output, or center it
      */
     DepthAlign depthAlign = DepthAlign::RECTIFIED_RIGHT;
@@ -69,24 +62,12 @@ struct StereoDepthProperties {
     CameraBoardSocket depthAlignCamera = CameraBoardSocket::AUTO;
 
     bool enableRectification = true;
-    /**
-     * Computes and combines disparities in both L-R and R-L directions, and combine them.
-     * For better occlusion handling
-     */
-    bool enableLeftRightCheck = false;
-    /**
-     * Computes disparity with sub-pixel interpolation (5 fractional bits), suitable for long range
-     */
-    bool enableSubpixel = false;
+
     /**
      * Disparity range increased from 96 to 192, combined from full resolution and downscaled images.
      * Suitable for short range objects
      */
     bool enableExtendedDisparity = false;
-    /**
-     * Mirror rectified frames: true to have disparity/depth normal (non-mirrored)
-     */
-    bool rectifyMirrorFrame = true;
     /**
      * Fill color for missing data at frame edges: grayscale 0..255, or -1 to replicate pixels
      */
@@ -122,15 +103,10 @@ struct StereoDepthProperties {
 NLOHMANN_DEFINE_TYPE_NON_INTRUSIVE(StereoDepthProperties,
                                    initialConfig,
                                    inputConfigSync,
-                                   calibration,
-                                   calibrationData,
                                    depthAlign,
                                    depthAlignCamera,
                                    enableRectification,
-                                   enableLeftRightCheck,
-                                   enableSubpixel,
                                    enableExtendedDisparity,
-                                   rectifyMirrorFrame,
                                    rectifyEdgeFillColor,
                                    width,
                                    height,
