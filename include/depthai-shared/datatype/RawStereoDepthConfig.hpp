@@ -14,8 +14,8 @@ namespace dai {
  */
 enum class MedianFilter : int32_t { MEDIAN_OFF = 0, KERNEL_3x3 = 3, KERNEL_5x5 = 5, KERNEL_7x7 = 7 };
 
-/// StereoDepth configuration data structure
-struct StereoDepthConfigData {
+/// RawStereoDepthConfig configuration structure
+struct RawStereoDepthConfig : public RawBuffer {
     using MedianFilter = dai::MedianFilter;
 
     struct AlgorithmControl {
@@ -225,12 +225,6 @@ struct StereoDepthConfigData {
      * Cost aggregation settings.
      */
     CostAggregation costAggregation;
-};
-NLOHMANN_DEFINE_TYPE_NON_INTRUSIVE(StereoDepthConfigData, algorithmControl, postProcessing, censusTransform, costMatching, costAggregation);
-
-/// RawStereoDepthConfig configuration structure
-struct RawStereoDepthConfig : public RawBuffer {
-    StereoDepthConfigData config;
 
     void serialize(std::vector<std::uint8_t>& metadata, DatatypeEnum& datatype) const override {
         nlohmann::json j = *this;
@@ -238,7 +232,7 @@ struct RawStereoDepthConfig : public RawBuffer {
         datatype = DatatypeEnum::StereoDepthConfig;
     };
 
-    NLOHMANN_DEFINE_TYPE_INTRUSIVE(RawStereoDepthConfig, config);
+    NLOHMANN_DEFINE_TYPE_INTRUSIVE(RawStereoDepthConfig, algorithmControl, postProcessing, censusTransform, costMatching, costAggregation);
 };
 
 }  // namespace dai
