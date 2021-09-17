@@ -98,6 +98,15 @@ struct StereoDepthProperties {
      * instead of intrinsics + extrinsic matrices
      */
     RectificationMesh mesh;
+
+    /**
+     * Whether to enable switching stereo modes at runtime or not.
+     * E.g. standard to subpixel, standard+LR-check to subpixel + LR-check.
+     * Note: It will allocate resources for worst cases scenario,
+     * should be enabled only if dynamic mode switch is required.
+     * Default value: false.
+     */
+    bool enableRuntimeStereoModeSwitch = false;
 };
 
 NLOHMANN_DEFINE_TYPE_NON_INTRUSIVE(StereoDepthProperties,
@@ -113,6 +122,7 @@ NLOHMANN_DEFINE_TYPE_NON_INTRUSIVE(StereoDepthProperties,
                                    outWidth,
                                    outHeight,
                                    outKeepAspectRatio,
-                                   mesh);
+                                   mesh,
+                                   enableRuntimeStereoModeSwitch);
 
 }  // namespace dai
