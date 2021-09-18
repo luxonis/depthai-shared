@@ -1,5 +1,7 @@
 #pragma once
 
+#include <unordered_map>
+
 #include "RawBuffer.hpp"
 #include "depthai-shared/common/Timestamp.hpp"
 namespace dai {
@@ -41,6 +43,111 @@ struct RawImgFrame : public RawBuffer {
         GRAYF16,        // FP16 grayscale (normalized)
         NONE
     };
+
+    static constexpr int typeToBpp(Type type) {
+        switch(type) {
+            case Type::YUV422i:
+                return 1;
+                break;
+            case Type::YUV444p:
+                return 1;
+                break;
+            case Type::YUV420p:
+                return 1;
+                break;
+            case Type::YUV422p:
+                return 1;
+                break;
+            case Type::YUV400p:
+                return 1;
+                break;
+            case Type::RGBA8888:
+                return 1;
+                break;
+            case Type::RGB161616:
+                return 2;
+                break;
+            case Type::RGB888p:
+                return 1;
+                break;
+            case Type::BGR888p:
+                return 1;
+                break;
+            case Type::RGB888i:
+                return 1;
+                break;
+            case Type::BGR888i:
+                return 1;
+                break;
+            case Type::RGBF16F16F16p:
+                return 2;
+                break;
+            case Type::BGRF16F16F16p:
+                return 2;
+                break;
+            case Type::RGBF16F16F16i:
+                return 2;
+                break;
+            case Type::BGRF16F16F16i:
+                return 2;
+                break;
+            case Type::GRAY8:
+                return 1;
+                break;
+            case Type::GRAYF16:
+                return 2;
+                break;
+            case Type::LUT2:
+                return 1;
+                break;
+            case Type::LUT4:
+                return 1;
+                break;
+            case Type::LUT16:
+                return 1;
+                break;
+            case Type::RAW16:
+                return 2;
+                break;
+            case Type::RAW14:
+                return 2;
+                break;
+            case Type::RAW12:
+                return 2;
+                break;
+            case Type::RAW10:
+                return 2;
+                break;
+            case Type::RAW8:
+                return 1;
+                break;
+            case Type::PACK10:
+                return 2;
+                break;
+            case Type::PACK12:
+                return 2;
+                break;
+            case Type::YUV444i:
+                return 1;
+                break;
+            case Type::NV12:
+                return 1;
+                break;
+            case Type::NV21:
+                return 1;
+                break;
+            case Type::BITSTREAM:
+                return 1;
+                break;
+            case Type::HDR:
+                return 1;
+                break;
+            case Type::NONE:
+                return 0;
+                break;
+        }
+    }
+
     struct Specs {
         Type type;
         unsigned int width;     // width in pixels
