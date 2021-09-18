@@ -146,6 +146,7 @@ struct RawImgFrame : public RawBuffer {
                 return 0;
                 break;
         }
+        return 0;
     }
 
     struct Specs {
