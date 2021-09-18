@@ -17,11 +17,6 @@ struct FeatureTrackerProperties {
     RawFeatureTrackerConfig initialConfig;
 
     /**
-     * Whether to wait for config at 'inputConfig' IO
-     */
-    bool inputConfigSync = false;
-
-    /**
      * Number of shaves reserved for feature tracking.
      * Optical flow can use 1 or 2 shaves, while for corner detection only 1 is enough.
      * Hardware motion estimation doesn't require shaves.
@@ -39,6 +34,6 @@ struct FeatureTrackerProperties {
     std::int32_t numMemorySlices = 1;
 };
 
-NLOHMANN_DEFINE_TYPE_NON_INTRUSIVE(FeatureTrackerProperties, initialConfig, inputConfigSync, numShaves, numMemorySlices);
+NLOHMANN_DEFINE_TYPE_NON_INTRUSIVE(FeatureTrackerProperties, initialConfig, numShaves, numMemorySlices);
 
 }  // namespace dai

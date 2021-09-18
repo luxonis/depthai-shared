@@ -101,7 +101,7 @@ struct RawImageManipConfig : public RawBuffer {
     bool enableFormat = false;
 
     // Usable with runtime config only,
-    // when ImageManipProperties.inputConfigSync is set
+    // when ImageManipProperties.inputConfig.setWaitForMessage(true) is set
     bool reusePreviousImage = false;
     bool skipCurrentImage = false;
 

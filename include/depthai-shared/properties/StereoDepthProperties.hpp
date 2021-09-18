@@ -41,9 +41,6 @@ struct StereoDepthProperties {
     /// Initial stereo config
     RawStereoDepthConfig initialConfig;
 
-    /// Whether to wait for config at 'inputConfig' IO
-    bool inputConfigSync = false;
-
     using MedianFilter = dai::MedianFilter;
 
     /**
@@ -121,7 +118,6 @@ struct StereoDepthProperties {
 
 NLOHMANN_DEFINE_TYPE_NON_INTRUSIVE(StereoDepthProperties,
                                    initialConfig,
-                                   inputConfigSync,
                                    calibration,
                                    calibrationData,
                                    depthAlign,

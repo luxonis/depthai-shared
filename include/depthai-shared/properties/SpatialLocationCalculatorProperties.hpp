@@ -12,11 +12,8 @@ namespace dai {
  */
 struct SpatialLocationCalculatorProperties {
     RawSpatialLocationCalculatorConfig roiConfig;
-
-    /// Whether to wait for config at 'inputConfig' IO
-    bool inputConfigSync = false;
 };
 
-NLOHMANN_DEFINE_TYPE_NON_INTRUSIVE(SpatialLocationCalculatorProperties, roiConfig, inputConfigSync);
+NLOHMANN_DEFINE_TYPE_NON_INTRUSIVE(SpatialLocationCalculatorProperties, roiConfig);
 
 }  // namespace dai

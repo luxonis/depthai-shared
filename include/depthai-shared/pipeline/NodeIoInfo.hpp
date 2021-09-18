@@ -12,8 +12,13 @@ struct NodeIoInfo {
     Type type = Type::SReceiver;
     bool blocking = true;
     int queueSize = 8;
+
+    struct Options {
+        bool waitForMessage;
+    } options;
 };
 
-NLOHMANN_DEFINE_TYPE_NON_INTRUSIVE(NodeIoInfo, name, type, blocking, queueSize);
+NLOHMANN_DEFINE_TYPE_NON_INTRUSIVE(NodeIoInfo::Options, waitForMessage);
+NLOHMANN_DEFINE_TYPE_NON_INTRUSIVE(NodeIoInfo, name, type, blocking, queueSize, options);
 
 }  // namespace dai
