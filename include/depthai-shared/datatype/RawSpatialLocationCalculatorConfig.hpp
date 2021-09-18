@@ -22,12 +22,28 @@ struct SpatialLocationCalculatorConfigThresholds {
 };
 NLOHMANN_DEFINE_TYPE_NON_INTRUSIVE(SpatialLocationCalculatorConfigThresholds, lowerThreshold, upperThreshold);
 
+enum class SpatialLocationCalculatorAlgorithm : uint32_t { AVERAGE = 0, MIN, MAX };
+
 /// SpatialLocation configuration data structure
 struct SpatialLocationCalculatorConfigData {
+    /**
+     * Region of interest for spatial location calculation.
+     */
     Rect roi;
+    /**
+     * Upper and lower thresholds for depth values to take into consideration.
+     */
     SpatialLocationCalculatorConfigThresholds depthThresholds;
+    /**
+     * Calculation method used to obtain spatial locations.
+     * Average: the average of ROI is used for calculation.
+     * Min: the minimum value inside ROI is used for calculation.
+     * Max: the maximum value inside ROI is used for calculation.
+     * Default: average.
+     */
+    SpatialLocationCalculatorAlgorithm calculationAlgorithm = SpatialLocationCalculatorAlgorithm::AVERAGE;
 };
-NLOHMANN_DEFINE_TYPE_NON_INTRUSIVE(SpatialLocationCalculatorConfigData, roi, depthThresholds);
+NLOHMANN_DEFINE_TYPE_NON_INTRUSIVE(SpatialLocationCalculatorConfigData, roi, depthThresholds, calculationAlgorithm);
 
 /// RawSpatialLocation configuration structure
 struct RawSpatialLocationCalculatorConfig : public RawBuffer {
