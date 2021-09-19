@@ -107,6 +107,9 @@ struct StereoDepthProperties {
      * Default value: false.
      */
     bool enableRuntimeStereoModeSwitch = false;
+
+    /// Num frames in output pool
+    int numFramesPool = 3;
 };
 
 NLOHMANN_DEFINE_TYPE_NON_INTRUSIVE(StereoDepthProperties,
@@ -123,6 +126,7 @@ NLOHMANN_DEFINE_TYPE_NON_INTRUSIVE(StereoDepthProperties,
                                    outHeight,
                                    outKeepAspectRatio,
                                    mesh,
-                                   enableRuntimeStereoModeSwitch);
+                                   enableRuntimeStereoModeSwitch,
+                                   numFramesPool);
 
 }  // namespace dai
