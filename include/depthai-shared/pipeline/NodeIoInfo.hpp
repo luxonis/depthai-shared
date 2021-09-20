@@ -15,7 +15,7 @@ struct NodeIoInfo {
     int queueSize = 8;
 
     struct Options {
-        bool waitForMessage;
+        bool waitForMessage = false;
     } options;
 };
 
