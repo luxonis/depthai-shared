@@ -8,6 +8,7 @@ namespace dai {
 struct NodeIoInfo {
     enum class Type { MSender, SSender, MReceiver, SReceiver };
 
+    std::string group;
     std::string name;
     Type type = Type::SReceiver;
     bool blocking = true;
@@ -19,6 +20,6 @@ struct NodeIoInfo {
 };
 
 NLOHMANN_DEFINE_TYPE_NON_INTRUSIVE(NodeIoInfo::Options, waitForMessage);
-NLOHMANN_DEFINE_TYPE_NON_INTRUSIVE(NodeIoInfo, name, type, blocking, queueSize, options);
+NLOHMANN_DEFINE_TYPE_NON_INTRUSIVE(NodeIoInfo, group, name, type, blocking, queueSize, options);
 
 }  // namespace dai
