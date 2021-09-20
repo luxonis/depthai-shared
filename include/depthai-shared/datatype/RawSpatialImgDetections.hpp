@@ -7,7 +7,7 @@
 namespace dai {
 
 /**
- * Spatial image detection structure
+ * SpatialImgDetection structure
  *
  * Contains image detection results together with spatial location data.
  */
@@ -17,10 +17,11 @@ struct SpatialImgDetection : ImgDetection {
     NLOHMANN_DEFINE_TYPE_INTRUSIVE(SpatialImgDetection, label, confidence, xmin, ymin, xmax, ymax, spatialCoordinates);
 };
 
+/// RawSpatialImgDetections structure
 struct RawSpatialImgDetections : public RawBuffer {
     std::vector<SpatialImgDetection> detections;
 
-    void serialize(std::vector<std::uint8_t>& metadata, DatatypeEnum& datatype) override {
+    void serialize(std::vector<std::uint8_t>& metadata, DatatypeEnum& datatype) const override {
         nlohmann::json j = *this;
         metadata = nlohmann::json::to_msgpack(j);
         datatype = DatatypeEnum::SpatialImgDetections;

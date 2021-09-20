@@ -9,13 +9,13 @@
 namespace dai {
 
 /**
- * Specify MonoCamera options such as camera ID, ...
+ * Specify properties for MonoCamera such as camera ID, ...
  */
 struct MonoCameraProperties {
     /**
-     * Select the camera sensor resolution: 1280×720, 1280×800, 640×400
+     * Select the camera sensor resolution: 1280×720, 1280×800, 640×400, 640×480
      */
-    enum class SensorResolution : int32_t { THE_720_P, THE_800_P, THE_400_P };
+    enum class SensorResolution : int32_t { THE_720_P, THE_800_P, THE_400_P, THE_480_P };
 
     /*
      * Initial controls applied to MonoCamera node

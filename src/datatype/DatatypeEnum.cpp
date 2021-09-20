@@ -5,33 +5,27 @@
 #include <unordered_map>
 #include <vector>
 
-// DatatypeEnum hash specialization
-namespace std {
-
-template <>
-struct hash<dai::DatatypeEnum> {
-    std::size_t operator()(const dai::DatatypeEnum& s) const {
-        using Type = typename underlying_type<dai::DatatypeEnum>::type;
-        return std::hash<Type>{}(static_cast<Type>(s));
-    }
-};
-
-}  // namespace std
-
 namespace dai {
 
 const std::unordered_map<DatatypeEnum, std::vector<DatatypeEnum>> hierarchy = {
     {DatatypeEnum::Buffer,
-     {DatatypeEnum::ImgFrame,
-      DatatypeEnum::NNData,
-      DatatypeEnum::ImageManipConfig,
-      DatatypeEnum::CameraControl,
-      DatatypeEnum::ImgDetections,
-      DatatypeEnum::SpatialImgDetections,
-      DatatypeEnum::SystemInformation,
-      DatatypeEnum::SpatialLocationCalculatorConfig,
-      DatatypeEnum::SpatialLocationCalculatorData,
-      DatatypeEnum::Tracklets}},
+     {
+         DatatypeEnum::ImgFrame,
+         DatatypeEnum::NNData,
+         DatatypeEnum::ImageManipConfig,
+         DatatypeEnum::CameraControl,
+         DatatypeEnum::ImgDetections,
+         DatatypeEnum::SpatialImgDetections,
+         DatatypeEnum::SystemInformation,
+         DatatypeEnum::SpatialLocationCalculatorConfig,
+         DatatypeEnum::SpatialLocationCalculatorData,
+         DatatypeEnum::EdgeDetectorConfig,
+         DatatypeEnum::Tracklets,
+         DatatypeEnum::IMUData,
+         DatatypeEnum::StereoDepthConfig,
+         DatatypeEnum::FeatureTrackerConfig,
+         DatatypeEnum::TrackedFeatures,
+     }},
     {DatatypeEnum::ImgFrame, {}},
     {DatatypeEnum::NNData, {}},
     {DatatypeEnum::ImageManipConfig, {}},
@@ -41,7 +35,12 @@ const std::unordered_map<DatatypeEnum, std::vector<DatatypeEnum>> hierarchy = {
     {DatatypeEnum::SystemInformation, {}},
     {DatatypeEnum::SpatialLocationCalculatorConfig, {}},
     {DatatypeEnum::SpatialLocationCalculatorData, {}},
+    {DatatypeEnum::EdgeDetectorConfig, {}},
     {DatatypeEnum::Tracklets, {}},
+    {DatatypeEnum::IMUData, {}},
+    {DatatypeEnum::StereoDepthConfig, {}},
+    {DatatypeEnum::FeatureTrackerConfig, {}},
+    {DatatypeEnum::TrackedFeatures, {}},
 };
 
 bool isDatatypeSubclassOf(DatatypeEnum parent, DatatypeEnum children) {

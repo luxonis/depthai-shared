@@ -11,27 +11,29 @@
 namespace dai {
 
 /**
- * Spatial location configuration thresholds structure
+ * SpatialLocation configuration thresholds structure
  *
  * Contains configuration data for lower and upper threshold in millimeters for ROI.
  * Values outside of threshold range will be ignored when calculating spatial coordinates from depth map.
  */
 struct SpatialLocationCalculatorConfigThresholds {
     uint32_t lowerThreshold = 0;
-    uint32_t upperThreshold = 65000;
+    uint32_t upperThreshold = 65535;
 };
 NLOHMANN_DEFINE_TYPE_NON_INTRUSIVE(SpatialLocationCalculatorConfigThresholds, lowerThreshold, upperThreshold);
 
+/// SpatialLocation configuration data structure
 struct SpatialLocationCalculatorConfigData {
     Rect roi;
     SpatialLocationCalculatorConfigThresholds depthThresholds;
 };
 NLOHMANN_DEFINE_TYPE_NON_INTRUSIVE(SpatialLocationCalculatorConfigData, roi, depthThresholds);
 
+/// RawSpatialLocation configuration structure
 struct RawSpatialLocationCalculatorConfig : public RawBuffer {
     std::vector<SpatialLocationCalculatorConfigData> config;
 
-    void serialize(std::vector<std::uint8_t>& metadata, DatatypeEnum& datatype) override {
+    void serialize(std::vector<std::uint8_t>& metadata, DatatypeEnum& datatype) const override {
         nlohmann::json j = *this;
         metadata = nlohmann::json::to_msgpack(j);
         datatype = DatatypeEnum::SpatialLocationCalculatorConfig;

@@ -8,6 +8,11 @@
 
 namespace dai {
 
+/**
+ * Size2f structure
+ *
+ * width, height values define the size of the shape/frame
+ */
 struct Size2f {
     Size2f() {}
     Size2f(float width, float height) {

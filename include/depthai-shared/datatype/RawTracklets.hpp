@@ -18,8 +18,9 @@ struct Tracklet {
     enum class TrackingStatus : std::int32_t {
         NEW,     /**< The object is newly added. */
         TRACKED, /**< The object is being tracked. */
-        LOST /**< The object gets lost now. The object can be tracked again automatically(long term tracking) or by specifying detected object manually(short
-                term and zero term tracking). */
+        LOST,   /**< The object gets lost now. The object can be tracked again automatically(long term tracking) or by specifying detected object manually(short
+                  term and zero term tracking). */
+        REMOVED /**< The object is removed. */
     };
     /**
      * Tracked region of interest.
@@ -53,10 +54,11 @@ struct Tracklet {
     NLOHMANN_DEFINE_TYPE_INTRUSIVE(Tracklet, roi, id, label, age, status, srcImgDetection, spatialCoordinates);
 };
 
+/// RawTracklets structure
 struct RawTracklets : public RawBuffer {
     std::vector<Tracklet> tracklets;
 
-    void serialize(std::vector<std::uint8_t>& metadata, DatatypeEnum& datatype) override {
+    void serialize(std::vector<std::uint8_t>& metadata, DatatypeEnum& datatype) const override {
         nlohmann::json j = *this;
         metadata = nlohmann::json::to_msgpack(j);
         datatype = DatatypeEnum::Tracklets;
