@@ -23,7 +23,7 @@ struct SPIInProperties {
     /**
      * Maximum input data size
      */
-    std::uint32_t maxDataSize = dai::XLINK_USB_BUFFER_MAX_SIZE;
+    std::uint32_t maxDataSize = dai::device::XLINK_USB_BUFFER_MAX_SIZE;
 
     /**
      * Number of frames in pool
