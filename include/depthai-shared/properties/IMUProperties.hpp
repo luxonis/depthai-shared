@@ -8,7 +8,8 @@ namespace dai {
 /**
  * Available IMU sensors.
  * More details about each sensor can be found in the datasheet:
- * \link https://www.ceva-dsp.com/wp-content/uploads/2019/10/BNO080_085-Datasheet.pdf \endlink
+ *
+ * https://www.ceva-dsp.com/wp-content/uploads/2019/10/BNO080_085-Datasheet.pdf
  */
 enum class IMUSensor : std::int32_t {
     /**
