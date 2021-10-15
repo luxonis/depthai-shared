@@ -22,8 +22,7 @@ struct RawImgDetections : public RawBuffer {
     std::vector<ImgDetection> detections;
 
     void serialize(std::vector<std::uint8_t>& metadata, DatatypeEnum& datatype) const override {
-        nlohmann::json j = *this;
-        metadata = nlohmann::json::to_msgpack(j);
+        metadata = utility::serialize(*this);
         datatype = DatatypeEnum::ImgDetections;
     };
 

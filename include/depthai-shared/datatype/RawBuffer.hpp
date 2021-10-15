@@ -1,9 +1,9 @@
 #pragma once
 #include <cstdint>
-#include <nlohmann/json.hpp>
 #include <vector>
 
 #include "DatatypeEnum.hpp"
+#include "depthai-shared/utility/Serialization.hpp"
 
 namespace dai {
 

@@ -49,8 +49,7 @@ struct RawNNData : public RawBuffer {
     unsigned int batchSize;
 
     void serialize(std::vector<std::uint8_t>& metadata, DatatypeEnum& datatype) const override {
-        nlohmann::json j = *this;
-        metadata = nlohmann::json::to_msgpack(j);
+        metadata = utility::serialize(*this);
         datatype = DatatypeEnum::NNData;
     };
 
