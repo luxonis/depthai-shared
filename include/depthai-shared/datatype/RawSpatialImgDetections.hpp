@@ -3,6 +3,7 @@
 #include "RawBuffer.hpp"
 #include "RawImgDetections.hpp"
 #include "depthai-shared/common/Point3f.hpp"
+#include "depthai-shared/utility/Serialization.hpp"
 
 namespace dai {
 
@@ -14,7 +15,7 @@ namespace dai {
 struct SpatialImgDetection : ImgDetection {
     Point3f spatialCoordinates;
 
-    NLOHMANN_DEFINE_TYPE_INTRUSIVE(SpatialImgDetection, label, confidence, xmin, ymin, xmax, ymax, spatialCoordinates);
+    DEPTHAI_SERIALIZE(SpatialImgDetection, label, confidence, xmin, ymin, xmax, ymax, spatialCoordinates);
 };
 
 /// RawSpatialImgDetections structure
@@ -26,7 +27,7 @@ struct RawSpatialImgDetections : public RawBuffer {
         datatype = DatatypeEnum::SpatialImgDetections;
     };
 
-    NLOHMANN_DEFINE_TYPE_INTRUSIVE(RawSpatialImgDetections, detections);
+    DEPTHAI_SERIALIZE(RawSpatialImgDetections, detections);
 };
 
 }  // namespace dai

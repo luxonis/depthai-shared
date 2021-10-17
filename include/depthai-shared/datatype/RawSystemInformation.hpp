@@ -1,6 +1,5 @@
 #pragma once
 #include <cstdint>
-#include <nlohmann/json.hpp>
 #include <vector>
 
 #include "DatatypeEnum.hpp"
@@ -8,6 +7,7 @@
 #include "depthai-shared/common/ChipTemperature.hpp"
 #include "depthai-shared/common/CpuUsage.hpp"
 #include "depthai-shared/common/MemoryInfo.hpp"
+#include "depthai-shared/utility/Serialization.hpp"
 
 namespace dai {
 /**
@@ -36,7 +36,7 @@ struct RawSystemInformation : public RawBuffer {
         datatype = DatatypeEnum::SystemInformation;
     };
 
-    NLOHMANN_DEFINE_TYPE_INTRUSIVE(
+    DEPTHAI_SERIALIZE(
         RawSystemInformation, ddrMemoryUsage, cmxMemoryUsage, leonCssMemoryUsage, leonMssMemoryUsage, leonCssCpuUsage, leonMssCpuUsage, chipTemperature);
 };
 

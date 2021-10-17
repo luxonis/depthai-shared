@@ -1,15 +1,15 @@
 #pragma once
 
-#include <depthai-shared/common/optional.hpp>
-#include <depthai-shared/datatype/RawImageManipConfig.hpp>
-#include <nlohmann/json.hpp>
+#include "depthai-shared/common/optional.hpp"
+#include "depthai-shared/datatype/RawImageManipConfig.hpp"
+#include "depthai-shared/properties/Properties.hpp"
 
 namespace dai {
 
 /**
  * Specify properties for ImageManip
  */
-struct ImageManipProperties {
+struct ImageManipProperties : PropertiesSerializable<Properties, ImageManipProperties> {
     /// Initial configuration for ImageManip node
     RawImageManipConfig initialConfig;
 
@@ -23,6 +23,6 @@ struct ImageManipProperties {
     int numFramesPool = 4;
 };
 
-NLOHMANN_DEFINE_TYPE_NON_INTRUSIVE(ImageManipProperties, initialConfig, inputConfigSync, outputFrameSize, numFramesPool);
+DEPTHAI_SERIALIZE_EXT(ImageManipProperties, initialConfig, inputConfigSync, outputFrameSize, numFramesPool);
 
 }  // namespace dai

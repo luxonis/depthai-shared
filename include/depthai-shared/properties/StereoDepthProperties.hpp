@@ -1,18 +1,17 @@
 #pragma once
 
-#include <depthai-shared/common/EepromData.hpp>
-#include <depthai-shared/common/optional.hpp>
-#include <nlohmann/json.hpp>
-
 #include "depthai-shared/common/CameraBoardSocket.hpp"
+#include "depthai-shared/common/EepromData.hpp"
+#include "depthai-shared/common/optional.hpp"
 #include "depthai-shared/datatype/RawStereoDepthConfig.hpp"
+#include "depthai-shared/properties/Properties.hpp"
 
 namespace dai {
 
 /**
  * Specify properties for StereoDepth
  */
-struct StereoDepthProperties {
+struct StereoDepthProperties : PropertiesSerializable<Properties, StereoDepthProperties> {
     struct RectificationMesh {
         /**
          * Uri which points to the mesh array for 'left' input rectification
@@ -35,7 +34,7 @@ struct StereoDepthProperties {
          */
         uint16_t stepHeight = 16;
 
-        NLOHMANN_DEFINE_TYPE_INTRUSIVE(RectificationMesh, meshLeftUri, meshRightUri, meshSize, stepWidth, stepHeight);
+        DEPTHAI_SERIALIZE(RectificationMesh, meshLeftUri, meshRightUri, meshSize, stepWidth, stepHeight);
     };
 
     /// Initial stereo config
@@ -112,21 +111,21 @@ struct StereoDepthProperties {
     int numFramesPool = 3;
 };
 
-NLOHMANN_DEFINE_TYPE_NON_INTRUSIVE(StereoDepthProperties,
-                                   initialConfig,
-                                   inputConfigSync,
-                                   depthAlign,
-                                   depthAlignCamera,
-                                   enableRectification,
-                                   enableExtendedDisparity,
-                                   rectifyEdgeFillColor,
-                                   width,
-                                   height,
-                                   outWidth,
-                                   outHeight,
-                                   outKeepAspectRatio,
-                                   mesh,
-                                   enableRuntimeStereoModeSwitch,
-                                   numFramesPool);
+DEPTHAI_SERIALIZE_EXT(StereoDepthProperties,
+                      initialConfig,
+                      inputConfigSync,
+                      depthAlign,
+                      depthAlignCamera,
+                      enableRectification,
+                      enableExtendedDisparity,
+                      rectifyEdgeFillColor,
+                      width,
+                      height,
+                      outWidth,
+                      outHeight,
+                      outKeepAspectRatio,
+                      mesh,
+                      enableRuntimeStereoModeSwitch,
+                      numFramesPool);
 
 }  // namespace dai

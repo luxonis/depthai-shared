@@ -1,12 +1,12 @@
 #pragma once
 #include <cstdint>
-#include <nlohmann/json.hpp>
 #include <vector>
 
 #include "DatatypeEnum.hpp"
 #include "RawBuffer.hpp"
 #include "RawFeatureTrackerConfig.hpp"
 #include "depthai-shared/common/Point2f.hpp"
+#include "depthai-shared/utility/Serialization.hpp"
 
 namespace dai {
 
@@ -39,7 +39,7 @@ struct TrackedFeature {
     float trackingError;
 #endif
 };
-NLOHMANN_DEFINE_TYPE_NON_INTRUSIVE(TrackedFeature, position, id);
+DEPTHAI_SERIALIZE_EXT(TrackedFeature, position, id);
 
 /// RawTrackedFeatures structure
 struct RawTrackedFeatures : public RawBuffer {
@@ -50,7 +50,7 @@ struct RawTrackedFeatures : public RawBuffer {
         datatype = DatatypeEnum::TrackedFeatures;
     };
 
-    NLOHMANN_DEFINE_TYPE_INTRUSIVE(RawTrackedFeatures, trackedFeatures);
+    DEPTHAI_SERIALIZE(RawTrackedFeatures, trackedFeatures);
 };
 
 }  // namespace dai

@@ -1,6 +1,7 @@
 #pragma once
 
 #include "RawBuffer.hpp"
+#include "depthai-shared/utility/Serialization.hpp"
 
 namespace dai {
 
@@ -39,7 +40,7 @@ struct TensorInfo {
     std::string name;
     unsigned int offset;
 
-    NLOHMANN_DEFINE_TYPE_INTRUSIVE(TensorInfo, order, dataType, numDimensions, dims, strides, name, offset);
+    DEPTHAI_SERIALIZE(TensorInfo, order, dataType, numDimensions, dims, strides, name, offset);
 };
 
 /// RawNNData structure
@@ -53,7 +54,7 @@ struct RawNNData : public RawBuffer {
         datatype = DatatypeEnum::NNData;
     };
 
-    NLOHMANN_DEFINE_TYPE_INTRUSIVE(RawNNData, tensors, batchSize);
+    DEPTHAI_SERIALIZE(RawNNData, tensors, batchSize);
 };
 
 }  // namespace dai

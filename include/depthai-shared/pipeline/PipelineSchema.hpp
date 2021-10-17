@@ -9,11 +9,10 @@
 
 #pragma once
 
-#include <nlohmann/json.hpp>
-
 #include "NodeConnectionSchema.hpp"
 #include "NodeObjInfo.hpp"
 #include "depthai-shared/properties/GlobalProperties.hpp"
+#include "depthai-shared/utility/Serialization.hpp"
 
 namespace dai {
 
@@ -26,6 +25,6 @@ struct PipelineSchema {
     std::unordered_map<int64_t, NodeObjInfo> nodes;
 };
 
-NLOHMANN_DEFINE_TYPE_NON_INTRUSIVE(PipelineSchema, connections, globalProperties, nodes);
+DEPTHAI_SERIALIZE_EXT(PipelineSchema, connections, globalProperties, nodes);
 
 }  // namespace dai

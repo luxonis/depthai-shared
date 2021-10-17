@@ -4,6 +4,8 @@
 
 #include "RawBuffer.hpp"
 #include "depthai-shared/common/Timestamp.hpp"
+#include "depthai-shared/utility/Serialization.hpp"
+
 namespace dai {
 
 /// RawImgFrame structure
@@ -159,7 +161,7 @@ struct RawImgFrame : public RawBuffer {
         unsigned int p2Offset;  // Offset to second plane
         unsigned int p3Offset;  // Offset to third plane
 
-        NLOHMANN_DEFINE_TYPE_INTRUSIVE(Specs, type, width, height, stride, bytesPP, p1Offset, p2Offset, p3Offset);
+        DEPTHAI_SERIALIZE(Specs, type, width, height, stride, bytesPP, p1Offset, p2Offset, p3Offset);
     };
 
     Specs fb;
@@ -174,7 +176,7 @@ struct RawImgFrame : public RawBuffer {
         datatype = DatatypeEnum::ImgFrame;
     };
 
-    NLOHMANN_DEFINE_TYPE_INTRUSIVE(RawImgFrame, fb, category, instanceNum, sequenceNum, ts, tsDevice);
+    DEPTHAI_SERIALIZE(RawImgFrame, fb, category, instanceNum, sequenceNum, ts, tsDevice);
 };
 
 }  // namespace dai

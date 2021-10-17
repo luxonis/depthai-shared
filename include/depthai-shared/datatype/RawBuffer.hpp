@@ -16,8 +16,6 @@ struct RawBuffer {
         (void)metadata;
         datatype = DatatypeEnum::Buffer;
     };
-
-    // NLOHMANN_DEFINE_TYPE_INTRUSIVE(RawBuffer);
 };
 
 }  // namespace dai

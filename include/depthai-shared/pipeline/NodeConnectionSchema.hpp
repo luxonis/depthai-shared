@@ -1,6 +1,6 @@
 #pragma once
 
-#include <nlohmann/json.hpp>
+#include "depthai-shared/utility/Serialization.hpp"
 
 namespace dai {
 
@@ -14,6 +14,6 @@ struct NodeConnectionSchema {
     std::string node2Input;
 };
 
-NLOHMANN_DEFINE_TYPE_NON_INTRUSIVE(NodeConnectionSchema, node1Id, node1Output, node2Id, node2Input);
+DEPTHAI_SERIALIZE_EXT(NodeConnectionSchema, node1Id, node1Output, node2Id, node2Input);
 
 }  // namespace dai

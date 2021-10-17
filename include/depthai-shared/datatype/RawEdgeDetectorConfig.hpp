@@ -1,12 +1,12 @@
 #pragma once
 #include <cstdint>
-#include <nlohmann/json.hpp>
 #include <vector>
 
 #include "DatatypeEnum.hpp"
 #include "RawBuffer.hpp"
 #include "RawImgFrame.hpp"
 #include "depthai-shared/common/Rect.hpp"
+#include "depthai-shared/utility/Serialization.hpp"
 
 namespace dai {
 
@@ -25,7 +25,7 @@ struct EdgeDetectorConfigData {
      */
     std::vector<std::vector<int>> sobelFilterVerticalKernel;
 };
-NLOHMANN_DEFINE_TYPE_NON_INTRUSIVE(EdgeDetectorConfigData, sobelFilterHorizontalKernel, sobelFilterVerticalKernel);
+DEPTHAI_SERIALIZE_EXT(EdgeDetectorConfigData, sobelFilterHorizontalKernel, sobelFilterVerticalKernel);
 
 /// RawEdgeDetectorConfig configuration structure
 struct RawEdgeDetectorConfig : public RawBuffer {
@@ -36,7 +36,7 @@ struct RawEdgeDetectorConfig : public RawBuffer {
         datatype = DatatypeEnum::EdgeDetectorConfig;
     };
 
-    NLOHMANN_DEFINE_TYPE_INTRUSIVE(RawEdgeDetectorConfig, config);
+    DEPTHAI_SERIALIZE(RawEdgeDetectorConfig, config);
 };
 
 }  // namespace dai
