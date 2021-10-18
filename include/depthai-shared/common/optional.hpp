@@ -67,10 +67,11 @@ struct Encoding<tl::optional<T>> : EncodingIO<tl::optional<T>> {
 
     template <typename Writer>
     static constexpr Status<void> WritePayload(EncodingByte prefix, const Type& value, Writer* writer) {
-        if(value)
+        if(value) {
             return Encoding<T>::WritePayload(prefix, *value, writer);
-        else
+        } else {
             return {};
+        }
     }
 
     template <typename Reader>
