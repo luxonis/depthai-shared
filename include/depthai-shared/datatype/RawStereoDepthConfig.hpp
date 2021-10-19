@@ -1,11 +1,11 @@
 #pragma once
 #include <cstdint>
 #include <depthai-shared/common/optional.hpp>
-#include <nlohmann/json.hpp>
 #include <vector>
 
 #include "DatatypeEnum.hpp"
 #include "RawBuffer.hpp"
+#include "depthai-shared/utility/Serialization.hpp"
 
 namespace dai {
 
@@ -44,7 +44,7 @@ struct RawStereoDepthConfig : public RawBuffer {
          */
         std::int32_t subpixelFractionalBits = 3;
 
-        NLOHMANN_DEFINE_TYPE_INTRUSIVE(AlgorithmControl, enableLeftRightCheck, enableSubpixel, leftRightCheckThreshold, subpixelFractionalBits);
+        DEPTHAI_SERIALIZE(AlgorithmControl, enableLeftRightCheck, enableSubpixel, leftRightCheckThreshold, subpixelFractionalBits);
     };
 
     /**
@@ -64,7 +64,7 @@ struct RawStereoDepthConfig : public RawBuffer {
          */
         std::int16_t bilateralSigmaValue = 0;
 
-        NLOHMANN_DEFINE_TYPE_INTRUSIVE(PostProcessing, median, bilateralSigmaValue);
+        DEPTHAI_SERIALIZE(PostProcessing, median, bilateralSigmaValue);
     };
 
     /**
@@ -104,7 +104,7 @@ struct RawStereoDepthConfig : public RawBuffer {
          */
         uint32_t threshold = 0;
 
-        NLOHMANN_DEFINE_TYPE_INTRUSIVE(CensusTransform, kernelSize, kernelMask, enableMeanMode, threshold);
+        DEPTHAI_SERIALIZE(CensusTransform, kernelSize, kernelMask, enableMeanMode, threshold);
     };
 
     /**
@@ -158,7 +158,7 @@ struct RawStereoDepthConfig : public RawBuffer {
             uint8_t beta = 12;
             uint8_t threshold = 127;
 
-            NLOHMANN_DEFINE_TYPE_INTRUSIVE(LinearEquationParameters, alpha, beta, threshold);
+            DEPTHAI_SERIALIZE(LinearEquationParameters, alpha, beta, threshold);
         };
 
         /**
@@ -166,7 +166,7 @@ struct RawStereoDepthConfig : public RawBuffer {
          */
         LinearEquationParameters linearEquationParameters;
 
-        NLOHMANN_DEFINE_TYPE_INTRUSIVE(CostMatching, disparityWidth, enableCompanding, invalidDisparityValue, confidenceThreshold, linearEquationParameters);
+        DEPTHAI_SERIALIZE(CostMatching, disparityWidth, enableCompanding, invalidDisparityValue, confidenceThreshold, linearEquationParameters);
     };
 
     /**
@@ -218,7 +218,7 @@ struct RawStereoDepthConfig : public RawBuffer {
 
         tl::optional<std::array<uint16_t, 256>> verticalPenaltyCosts;
 
-        NLOHMANN_DEFINE_TYPE_INTRUSIVE(CostAggregation, divisionFactor, horizontalPenaltyCosts, verticalPenaltyCosts);
+        DEPTHAI_SERIALIZE(CostAggregation, divisionFactor, horizontalPenaltyCosts, verticalPenaltyCosts);
     };
 
     /**
@@ -227,12 +227,11 @@ struct RawStereoDepthConfig : public RawBuffer {
     CostAggregation costAggregation;
 
     void serialize(std::vector<std::uint8_t>& metadata, DatatypeEnum& datatype) const override {
-        nlohmann::json j = *this;
-        metadata = nlohmann::json::to_msgpack(j);
+        metadata = utility::serialize(*this);
         datatype = DatatypeEnum::StereoDepthConfig;
     };
 
-    NLOHMANN_DEFINE_TYPE_INTRUSIVE(RawStereoDepthConfig, algorithmControl, postProcessing, censusTransform, costMatching, costAggregation);
+    DEPTHAI_SERIALIZE(RawStereoDepthConfig, algorithmControl, postProcessing, censusTransform, costMatching, costAggregation);
 };
 
 }  // namespace dai

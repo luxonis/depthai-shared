@@ -1,6 +1,6 @@
 #pragma once
 
-#include <nlohmann/json.hpp>
+#include "depthai-shared/utility/Serialization.hpp"
 
 namespace dai {
 
@@ -16,6 +16,6 @@ struct NodeIoInfo {
     bool waitForMessage = false;
 };
 
-NLOHMANN_DEFINE_TYPE_NON_INTRUSIVE(NodeIoInfo, group, name, type, blocking, queueSize, waitForMessage);
+DEPTHAI_SERIALIZE_EXT(NodeIoInfo, group, name, type, blocking, queueSize, waitForMessage);
 
 }  // namespace dai

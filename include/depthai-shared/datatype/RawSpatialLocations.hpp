@@ -1,6 +1,5 @@
 #pragma once
 #include <cstdint>
-#include <nlohmann/json.hpp>
 #include <vector>
 
 #include "DatatypeEnum.hpp"
@@ -8,6 +7,7 @@
 #include "RawSpatialLocationCalculatorConfig.hpp"
 #include "depthai-shared/common/Point3f.hpp"
 #include "depthai-shared/common/Rect.hpp"
+#include "depthai-shared/utility/Serialization.hpp"
 
 namespace dai {
 
@@ -44,19 +44,18 @@ struct SpatialLocations {
      */
     Point3f spatialCoordinates;
 };
-NLOHMANN_DEFINE_TYPE_NON_INTRUSIVE(SpatialLocations, config, depthAverage, depthMin, depthMax, depthAveragePixelCount, spatialCoordinates);
+DEPTHAI_SERIALIZE_EXT(SpatialLocations, config, depthAverage, depthMin, depthMax, depthAveragePixelCount, spatialCoordinates);
 
 /// RawSpatialLocations structure
 struct RawSpatialLocations : public RawBuffer {
     std::vector<SpatialLocations> spatialLocations;
 
     void serialize(std::vector<std::uint8_t>& metadata, DatatypeEnum& datatype) const override {
-        nlohmann::json j = *this;
-        metadata = nlohmann::json::to_msgpack(j);
+        metadata = utility::serialize(*this);
         datatype = DatatypeEnum::SpatialLocationCalculatorData;
     };
 
-    NLOHMANN_DEFINE_TYPE_INTRUSIVE(RawSpatialLocations, spatialLocations);
+    DEPTHAI_SERIALIZE(RawSpatialLocations, spatialLocations);
 };
 
 }  // namespace dai

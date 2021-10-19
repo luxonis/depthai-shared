@@ -1,19 +1,20 @@
 #pragma once
 
-#include <depthai-shared/common/optional.hpp>
-#include <depthai-shared/datatype/RawSpatialLocationCalculatorConfig.hpp>
-#include <nlohmann/json.hpp>
 #include <vector>
+
+#include "depthai-shared/common/optional.hpp"
+#include "depthai-shared/datatype/RawSpatialLocationCalculatorConfig.hpp"
+#include "depthai-shared/properties/Properties.hpp"
 
 namespace dai {
 
 /**
  * Specify properties for SpatialLocationCalculator
  */
-struct SpatialLocationCalculatorProperties {
+struct SpatialLocationCalculatorProperties : PropertiesSerializable<Properties, SpatialLocationCalculatorProperties> {
     RawSpatialLocationCalculatorConfig roiConfig;
 };
 
-NLOHMANN_DEFINE_TYPE_NON_INTRUSIVE(SpatialLocationCalculatorProperties, roiConfig);
+DEPTHAI_SERIALIZE_EXT(SpatialLocationCalculatorProperties, roiConfig);
 
 }  // namespace dai

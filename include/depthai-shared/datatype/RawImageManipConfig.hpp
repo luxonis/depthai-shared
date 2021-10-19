@@ -1,6 +1,5 @@
 #pragma once
 #include <cstdint>
-#include <nlohmann/json.hpp>
 #include <vector>
 
 #include "DatatypeEnum.hpp"
@@ -11,6 +10,7 @@
 #include "depthai-shared/common/Point2f.hpp"
 #include "depthai-shared/common/RotatedRect.hpp"
 #include "depthai-shared/common/Size2f.hpp"
+#include "depthai-shared/utility/Serialization.hpp"
 
 namespace dai {
 
@@ -21,7 +21,7 @@ struct RawImageManipConfig : public RawBuffer {
         // Normalized range 0-1
         float xmin = 0.0f, ymin = 0.0f, xmax = 0.0f, ymax = 0.0f;
 
-        NLOHMANN_DEFINE_TYPE_INTRUSIVE(CropRect, xmin, ymin, xmax, ymax);
+        DEPTHAI_SERIALIZE(CropRect, xmin, ymin, xmax, ymax);
     };
 
     struct CropConfig {
@@ -37,7 +37,7 @@ struct RawImageManipConfig : public RawBuffer {
         // Range 0..1 by default. Set 'false' to specify in pixels
         bool normalizedCoords = true;
 
-        NLOHMANN_DEFINE_TYPE_INTRUSIVE(
+        DEPTHAI_SERIALIZE(
             CropConfig, cropRect, cropRotatedRect, enableCenterCropRectangle, cropRatio, widthHeightAspectRatio, enableRotatedRect, normalizedCoords);
     };
 
@@ -67,29 +67,29 @@ struct RawImageManipConfig : public RawBuffer {
          */
         bool keepAspectRatio = true;
 
-        NLOHMANN_DEFINE_TYPE_INTRUSIVE(ResizeConfig,
-                                       width,
-                                       height,
-                                       lockAspectRatioFill,
-                                       bgRed,
-                                       bgGreen,
-                                       bgBlue,
-                                       warpFourPoints,
-                                       normalizedCoords,
-                                       enableWarp4pt,
-                                       warpMatrix3x3,
-                                       enableWarpMatrix,
-                                       warpBorderReplicate,
-                                       rotationAngleDeg,
-                                       enableRotation,
-                                       keepAspectRatio);
+        DEPTHAI_SERIALIZE(ResizeConfig,
+                          width,
+                          height,
+                          lockAspectRatioFill,
+                          bgRed,
+                          bgGreen,
+                          bgBlue,
+                          warpFourPoints,
+                          normalizedCoords,
+                          enableWarp4pt,
+                          warpMatrix3x3,
+                          enableWarpMatrix,
+                          warpBorderReplicate,
+                          rotationAngleDeg,
+                          enableRotation,
+                          keepAspectRatio);
     };
 
     struct FormatConfig {
         RawImgFrame::Type type = RawImgFrame::Type::RGB888p;
         bool flipHorizontal = false;
 
-        NLOHMANN_DEFINE_TYPE_INTRUSIVE(FormatConfig, type, flipHorizontal);
+        DEPTHAI_SERIALIZE(FormatConfig, type, flipHorizontal);
     };
 
     CropConfig cropConfig;
@@ -106,12 +106,11 @@ struct RawImageManipConfig : public RawBuffer {
     bool skipCurrentImage = false;
 
     void serialize(std::vector<std::uint8_t>& metadata, DatatypeEnum& datatype) const override {
-        nlohmann::json j = *this;
-        metadata = nlohmann::json::to_msgpack(j);
+        metadata = utility::serialize(*this);
         datatype = DatatypeEnum::ImageManipConfig;
     };
 
-    NLOHMANN_DEFINE_TYPE_INTRUSIVE(
+    DEPTHAI_SERIALIZE(
         RawImageManipConfig, cropConfig, resizeConfig, formatConfig, enableCrop, enableResize, enableFormat, reusePreviousImage, skipCurrentImage);
 };
 
