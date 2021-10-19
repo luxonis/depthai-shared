@@ -132,7 +132,6 @@ DEPTHAI_SERIALIZE_EXT(ColorCameraProperties,
                       fps,
                       sensorCropX,
                       sensorCropY,
-                      inputConfigSync,
                       previewKeepAspectRatio,
                       ispScale);
 
