@@ -97,7 +97,7 @@ struct RawStereoDepthConfig : public RawBuffer {
         /**
          * If enabled, each pixel in the window is compared with the mean window value instead of the central pixel.
          */
-        bool enableMeanMode = false;
+        bool enableMeanMode = true;
 
         /**
          * Census transform comparation treshold value.
@@ -154,8 +154,8 @@ struct RawStereoDepthConfig : public RawBuffer {
          * The α and β parameters are subject to fine fine tuning by the user.
          */
         struct LinearEquationParameters {
-            uint8_t alpha = 8;
-            uint8_t beta = 12;
+            uint8_t alpha = 0;
+            uint8_t beta = 2;
             uint8_t threshold = 127;
 
             NLOHMANN_DEFINE_TYPE_INTRUSIVE(LinearEquationParameters, alpha, beta, threshold);
