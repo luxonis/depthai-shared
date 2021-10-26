@@ -19,7 +19,7 @@ struct VideoEncoderProperties {
      */
     enum class Profile : int { H264_BASELINE, H264_HIGH, H264_MAIN, H265_MAIN, MJPEG };
     /**
-     * Specifies prefered bitrate (kb) of compressed output bitstream
+     * Specifies prefered bitrate (in bytes) of compressed output bitstream
      */
     std::int32_t bitrate = 8000;
     /**
@@ -27,7 +27,7 @@ struct VideoEncoderProperties {
      */
     std::int32_t keyframeFrequency = 30;
     /**
-     * Specifies maximum bitrate (kb) of compressed output bitstream
+     * Specifies maximum bitrate (in bytes) of compressed output bitstream
      */
     std::int32_t maxBitrate = 8000;
     /**
@@ -35,10 +35,12 @@ struct VideoEncoderProperties {
      */
     std::int32_t numBFrames = 0;
     /**
-     * This options specifies how many frames are available in this nodes pool (can help if
-     * receiver node is slow at consuming
+     * This options specifies how many frames are available in this nodes pool.
+     * Helps when receiver is slow at consuming.
+     *
+     * Value "0" indicates automatic number of frames assignment
      */
-    std::uint32_t numFramesPool = 4;
+    std::uint32_t numFramesPool = 0;
     /**
      * Encoding profile, H264, H265 or MJPEG
      */
