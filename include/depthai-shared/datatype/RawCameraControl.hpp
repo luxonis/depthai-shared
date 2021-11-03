@@ -93,11 +93,8 @@ struct RawCameraControl : public RawBuffer {
         WB_COLOR_TEMP = 49,            /* [1] value
                                         */
         EXTERNAL_TRIGGER = 50,
-
-        AF_LENS_RANGE = 51,            /* [1] value
-                                        */
-        FRAME_SYNC = 52,               /* [1] value
-                                        */
+        AF_LENS_RANGE = 51,
+        FRAME_SYNC = 52,
     };
 
     enum class AutoFocusMode : uint8_t {
