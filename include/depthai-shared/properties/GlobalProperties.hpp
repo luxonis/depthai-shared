@@ -39,10 +39,11 @@ struct GlobalProperties {
     std::string cameraTuningBlobUri;
 
     /**
-     * Maximum packet size to be sent by device on XLinkOut (the larger messages are split).
-     * Increase the size to improve performance, or set to 0 to disable splitting.
+     * Chunk size for splitting device-sent XLink packets, in bytes. A larger value could
+     * increase performance, with 0 disabling chunking. A negative value won't modify the
+     * device defaults - configured per protocol, currently 64*1024 for both USB and Ethernet.
      */
-    uint32_t xlinkMaxPacketSize = 64 * 1024;
+    int32_t xlinkChunkSize = -1;
 };
 
 NLOHMANN_DEFINE_TYPE_NON_INTRUSIVE(GlobalProperties,
@@ -53,6 +54,6 @@ NLOHMANN_DEFINE_TYPE_NON_INTRUSIVE(GlobalProperties,
                                    cameraTuningBlobSize,
                                    cameraTuningBlobUri,
                                    calibData,
-                                   xlinkMaxPacketSize);
+                                   xlinkChunkSize);
 
 }  // namespace dai
