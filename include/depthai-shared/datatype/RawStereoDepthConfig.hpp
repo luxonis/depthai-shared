@@ -41,7 +41,7 @@ struct RawStereoDepthConfig : public RawBuffer {
          * Used only when left-right check mode is enabled.
          * Defines the maximum difference between the confidence of pixels from left-right and right-left confidence maps
          */
-        std::int32_t leftRightCheckThreshold = 4;
+        std::int32_t leftRightCheckThreshold = 10;
 
         /**
          * Number of fractional bits for subpixel mode.
@@ -173,7 +173,7 @@ struct RawStereoDepthConfig : public RawBuffer {
          * Disparities with confidence value under this threshold are accepted.
          * Higher confidence threshold means disparities with less confidence are accepted too.
          */
-        uint8_t confidenceThreshold = 230;
+        uint8_t confidenceThreshold = 245;
 
         /**
          * The linear equation applied for computing the cost is:
