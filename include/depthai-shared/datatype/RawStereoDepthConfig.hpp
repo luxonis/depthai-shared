@@ -23,7 +23,7 @@ struct RawStereoDepthConfig : public RawBuffer {
          * Computes and combines disparities in both L-R and R-L directions, and combine them.
          * For better occlusion handling
          */
-        bool enableLeftRightCheck = false;
+        bool enableLeftRightCheck = true;
 
         /**
          * Disparity range increased from 95 to 190, combined from full resolution and downscaled images.
