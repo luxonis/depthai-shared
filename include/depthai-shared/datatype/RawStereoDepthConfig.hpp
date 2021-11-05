@@ -24,6 +24,13 @@ struct RawStereoDepthConfig : public RawBuffer {
          * For better occlusion handling
          */
         bool enableLeftRightCheck = false;
+
+        /**
+         * Disparity range increased from 95 to 190, combined from full resolution and downscaled images.
+         * Suitable for short range objects
+         */
+        bool enableExtended = false;
+
         /**
          * Computes disparity with sub-pixel interpolation (5 fractional bits), suitable for long range
          */
@@ -44,7 +51,7 @@ struct RawStereoDepthConfig : public RawBuffer {
          */
         std::int32_t subpixelFractionalBits = 3;
 
-        NLOHMANN_DEFINE_TYPE_INTRUSIVE(AlgorithmControl, enableLeftRightCheck, enableSubpixel, leftRightCheckThreshold, subpixelFractionalBits);
+        NLOHMANN_DEFINE_TYPE_INTRUSIVE(AlgorithmControl, enableLeftRightCheck, enableExtended, enableSubpixel, leftRightCheckThreshold, subpixelFractionalBits);
     };
 
     /**
