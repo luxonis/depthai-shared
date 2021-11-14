@@ -10,6 +10,11 @@ namespace dai {
 struct UACProperties {
 
     /**
+     * Enable speaker over UAC
+     */
+    bool enableSpeaker = false;
+
+    /**
      * Front L/R by default
      */
     bool streamBackMic = false;
@@ -56,6 +61,7 @@ struct UACProperties {
 };
 
 NLOHMANN_DEFINE_TYPE_NON_INTRUSIVE(UACProperties,
+                                   enableSpeaker,
                                    streamBackMic,
                                    enableAgc,
                                    micGain,
