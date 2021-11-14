@@ -15,6 +15,11 @@ struct UACProperties {
     bool enableSpeaker = false;
 
     /**
+     * Configure speaker volume, 0..100
+     */
+    uint8_t speakerVolume = 70;
+
+    /**
      * Front L/R by default
      */
     bool streamBackMic = false;
@@ -62,6 +67,7 @@ struct UACProperties {
 
 NLOHMANN_DEFINE_TYPE_NON_INTRUSIVE(UACProperties,
                                    enableSpeaker,
+                                   speakerVolume,
                                    streamBackMic,
                                    enableAgc,
                                    micGain,
