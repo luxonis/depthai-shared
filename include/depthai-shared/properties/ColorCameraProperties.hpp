@@ -120,19 +120,6 @@ struct ColorCameraProperties {
      * Configure scaling for `isp` output.
      */
     IspScale ispScale;
-
-    // TODO: following two fields should be moved to Pipeline::globalProperties
-    // (when its implementation is fixed on device side),
-    // as it's not possible to specify per-camera tuning
-
-    /**
-     * Camera tuning binary blob size in bytes
-     */
-    tl::optional<std::uint32_t> cameraTuningBlobSize;
-    /**
-     * Uri which points to camera tuning binary blob
-     */
-    std::string cameraTuningBlobUri;
 };
 
 NLOHMANN_DEFINE_TYPE_NON_INTRUSIVE(ColorCameraProperties,
@@ -154,8 +141,6 @@ NLOHMANN_DEFINE_TYPE_NON_INTRUSIVE(ColorCameraProperties,
                                    sensorCropY,
                                    inputConfigSync,
                                    previewKeepAspectRatio,
-                                   ispScale,
-                                   cameraTuningBlobSize,
-                                   cameraTuningBlobUri);
+                                   ispScale);
 
 }  // namespace dai
