@@ -58,14 +58,6 @@ struct VideoEncoderProperties {
      */
     RateControlMode rateCtrlMode = RateControlMode::CBR;
     /**
-     * Input and compressed output frame width
-     */
-    std::int32_t width = 1920;
-    /**
-     * Input and compressed output frame height
-     */
-    std::int32_t height = 1080;
-    /**
      * Frame rate
      */
     float frameRate = 30.0f;
@@ -81,8 +73,6 @@ NLOHMANN_DEFINE_TYPE_NON_INTRUSIVE(VideoEncoderProperties,
                                    quality,
                                    lossless,
                                    rateCtrlMode,
-                                   width,
-                                   height,
                                    frameRate);
 
 }  // namespace dai
