@@ -15,21 +15,26 @@ struct VideoEncoderProperties {
     enum class RateControlMode : int { CBR, VBR };
 
     /**
-     * Encoding profile, H264, H265 or MJPEG
+     * Encoding profile, H264 (AVC), H265 (HEVC) or MJPEG
      */
     enum class Profile : int { H264_BASELINE, H264_HIGH, H264_MAIN, H265_MAIN, MJPEG };
     /**
-     * Specifies preferred bitrate (in bytes) of compressed output bitstream
+     * Specifies preferred bitrate (in bit/s) of compressed output bitstream in CBR mode
+     *
+     * "0" for automatic computation, based on input resolution and FPS:
+     * 720p30: 4Mbps, 1080p30: 8.5Mbps, 1440p30: 14Mbps, 2160p30: 20Mbps
      */
-    std::int32_t bitrate = 8000*1000;
+    std::int32_t bitrate = 0;
     /**
      * Every x number of frames a keyframe will be inserted
      */
     std::int32_t keyframeFrequency = 30;
     /**
-     * Specifies maximum bitrate (in bytes) of compressed output bitstream
+     * Specifies maximum bitrate (in bit/s) of compressed output bitstream in CBR mode
+     *
+     * "0" to follow `bitrate` setting
      */
-    std::int32_t maxBitrate = 8000*1000;
+    std::int32_t maxBitrate = 0;
     /**
      * Specifies number of B frames to be inserted
      */
