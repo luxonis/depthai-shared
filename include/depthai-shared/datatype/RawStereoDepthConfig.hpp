@@ -71,7 +71,31 @@ struct RawStereoDepthConfig : public RawBuffer {
          */
         std::int16_t bilateralSigmaValue = 0;
 
-        NLOHMANN_DEFINE_TYPE_INTRUSIVE(PostProcessing, median, bilateralSigmaValue);
+        struct TemporalFilter {
+            bool enable = false;
+
+            enum class PersistencyMode : int32_t {
+                PERSISTENCY_OFF = 0,
+                VALID_8_OUT_OF_8 = 1,
+                VALID_2_IN_LAST_3 = 2,
+                VALID_2_IN_LAST_4 = 3,
+                VALID_2_OUT_OF_8 = 4,
+                VALID_1_IN_LAST_2 = 5,
+                VALID_1_IN_LAST_5 = 6,
+                VALID_1_IN_LAST_8 = 7,
+                PERSISTENCY_INDEFINITELY = 8,
+            };
+
+            PersistencyMode persistencyMode = PersistencyMode::VALID_2_IN_LAST_4;
+
+            float alpha = 0.4f;
+            std::int32_t delta = 20;
+        };
+        NLOHMANN_DEFINE_TYPE_INTRUSIVE(TemporalFilter, enable, persistencyMode, alpha, delta);
+
+        TemporalFilter temporalFilter;
+
+        NLOHMANN_DEFINE_TYPE_INTRUSIVE(PostProcessing, median, bilateralSigmaValue, temporalFilter);
     };
 
     /**
