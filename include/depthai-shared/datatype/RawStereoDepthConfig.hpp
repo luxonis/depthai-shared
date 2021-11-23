@@ -95,7 +95,15 @@ struct RawStereoDepthConfig : public RawBuffer {
 
         TemporalFilter temporalFilter;
 
-        NLOHMANN_DEFINE_TYPE_INTRUSIVE(PostProcessing, median, bilateralSigmaValue, temporalFilter);
+        struct ThresholdFilter {
+            std::int32_t minRange = 0;
+            std::int32_t maxRange = 65535;
+        };
+        NLOHMANN_DEFINE_TYPE_INTRUSIVE(ThresholdFilter, minRange, maxRange);
+
+        ThresholdFilter thresholdFilter;
+
+        NLOHMANN_DEFINE_TYPE_INTRUSIVE(PostProcessing, median, bilateralSigmaValue, temporalFilter, thresholdFilter);
     };
 
     /**
