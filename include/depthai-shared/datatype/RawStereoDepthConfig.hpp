@@ -71,6 +71,28 @@ struct RawStereoDepthConfig : public RawBuffer {
          */
         std::int16_t bilateralSigmaValue = 0;
 
+        struct SpatialFilter {
+            bool enable = false;
+
+            enum class HoleFillingRadius : int32_t {
+                HOLE_FILLING_OFF = 0,
+                RADIUS_2 = 2,
+                RADIUS_4 = 4,
+                RADIUS_8 = 8,
+                RADIUS_16 = 16,
+                RADIUS_UNLIMITED = 255,
+            };
+
+            HoleFillingRadius holeFillingRadius = HoleFillingRadius::RADIUS_2;
+
+            float alpha = 0.5f;
+            std::int32_t delta = 20;
+            std::int32_t numIterations = 2;
+        };
+        NLOHMANN_DEFINE_TYPE_INTRUSIVE(SpatialFilter, enable, holeFillingRadius, alpha, delta, numIterations);
+
+        SpatialFilter spatialFilter;
+
         struct TemporalFilter {
             bool enable = false;
 
@@ -111,7 +133,7 @@ struct RawStereoDepthConfig : public RawBuffer {
 
         SpeckleFilter speckleFilter;
 
-        NLOHMANN_DEFINE_TYPE_INTRUSIVE(PostProcessing, median, bilateralSigmaValue, temporalFilter, thresholdFilter, speckleFilter);
+        NLOHMANN_DEFINE_TYPE_INTRUSIVE(PostProcessing, median, bilateralSigmaValue, spatialFilter, temporalFilter, thresholdFilter, speckleFilter);
     };
 
     /**
