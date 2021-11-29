@@ -74,20 +74,13 @@ struct RawStereoDepthConfig : public RawBuffer {
         struct SpatialFilter {
             bool enable = false;
 
-            enum class HoleFillingRadius : int32_t {
-                HOLE_FILLING_OFF = 0,
-                RADIUS_2 = 2,
-                RADIUS_4 = 4,
-                RADIUS_8 = 8,
-                RADIUS_16 = 16,
-                RADIUS_UNLIMITED = 255,
-            };
-
-            HoleFillingRadius holeFillingRadius = HoleFillingRadius::RADIUS_2;
+            std::uint8_t holeFillingRadius = 2;
 
             float alpha = 0.5f;
+
             std::int32_t delta = 20;
-            std::int32_t numIterations = 2;
+
+            std::int32_t numIterations = 1;
         };
         NLOHMANN_DEFINE_TYPE_INTRUSIVE(SpatialFilter, enable, holeFillingRadius, alpha, delta, numIterations);
 
