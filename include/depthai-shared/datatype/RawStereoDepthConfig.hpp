@@ -120,7 +120,7 @@ struct RawStereoDepthConfig : public RawBuffer {
 
         struct SpeckleFilter {
             bool enable = false;
-            std::int8_t speckleRange = 100;
+            std::uint32_t speckleRange = 100;
         };
         NLOHMANN_DEFINE_TYPE_INTRUSIVE(SpeckleFilter, enable, speckleRange);
 
