@@ -105,6 +105,13 @@ struct StereoDepthProperties {
 
     /// Num frames in output pool
     int numFramesPool = 3;
+
+    /**
+     * Number of shaves reserved for stereo depth.
+     * Post processing can use multiple shaves to increase performance.
+     * Minimum 1.
+     */
+    std::int32_t numShaves = 1;
 };
 
 NLOHMANN_DEFINE_TYPE_NON_INTRUSIVE(StereoDepthProperties,
@@ -121,6 +128,7 @@ NLOHMANN_DEFINE_TYPE_NON_INTRUSIVE(StereoDepthProperties,
                                    outKeepAspectRatio,
                                    mesh,
                                    enableRuntimeStereoModeSwitch,
-                                   numFramesPool);
+                                   numFramesPool,
+                                   numShaves);
 
 }  // namespace dai
