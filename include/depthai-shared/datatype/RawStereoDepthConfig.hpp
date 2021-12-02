@@ -126,7 +126,15 @@ struct RawStereoDepthConfig : public RawBuffer {
 
         SpeckleFilter speckleFilter;
 
-        NLOHMANN_DEFINE_TYPE_INTRUSIVE(PostProcessing, median, bilateralSigmaValue, spatialFilter, temporalFilter, thresholdFilter, speckleFilter);
+        struct DecimationFilter {
+            std::uint32_t decimationFactor = 1;
+        };
+        NLOHMANN_DEFINE_TYPE_INTRUSIVE(DecimationFilter, decimationFactor);
+
+        DecimationFilter decimationFilter;
+
+        NLOHMANN_DEFINE_TYPE_INTRUSIVE(
+            PostProcessing, median, bilateralSigmaValue, spatialFilter, temporalFilter, thresholdFilter, speckleFilter, decimationFilter);
     };
 
     /**
