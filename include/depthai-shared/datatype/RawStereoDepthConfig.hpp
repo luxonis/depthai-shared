@@ -128,8 +128,14 @@ struct RawStereoDepthConfig : public RawBuffer {
 
         struct DecimationFilter {
             std::uint32_t decimationFactor = 1;
+            enum class DecimationMode : int32_t {
+                PIXEL_SKIPPING = 0,
+                NON_ZERO_MEDIAN = 1,
+                NON_ZERO_MEAN = 2,
+            };
+            DecimationMode decimationMode = DecimationMode::PIXEL_SKIPPING;
         };
-        NLOHMANN_DEFINE_TYPE_INTRUSIVE(DecimationFilter, decimationFactor);
+        NLOHMANN_DEFINE_TYPE_INTRUSIVE(DecimationFilter, decimationFactor, decimationMode);
 
         DecimationFilter decimationFilter;
 
