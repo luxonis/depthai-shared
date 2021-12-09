@@ -121,7 +121,8 @@ struct RawStereoDepthConfig : public RawBuffer {
          */
         SpatialFilter spatialFilter;
 
-        /** Temporal filtering with optional persistence.
+        /**
+         * Temporal filtering with optional persistence.
          * More details about the filter can be found here:
          * https://dev.intelrealsense.com/docs/depth-post-processing#:~:text=Temporal%20filtering%20%26%20persistence
          */
@@ -137,41 +138,14 @@ struct RawStereoDepthConfig : public RawBuffer {
              * Persistency algorithm type.
              */
             enum class PersistencyMode : int32_t {
-                /**
-                 * The Persistency filter is not activated and no hole filling occurs.
-                 */
                 PERSISTENCY_OFF = 0,
-                /**
-                 * Persistency activated if the pixel was valid in 8 out of the last 8 frames.
-                 */
                 VALID_8_OUT_OF_8 = 1,
-                /**
-                 * Activated if the pixel was valid in two out of the last 3 frames.
-                 */
                 VALID_2_IN_LAST_3 = 2,
-                /**
-                 * Activated if the pixel was valid in two out of the last 4 frames.
-                 */
                 VALID_2_IN_LAST_4 = 3,
-                /**
-                 * Activated if the pixel was valid in two out of the last 8 frames.
-                 */
                 VALID_2_OUT_OF_8 = 4,
-                /**
-                 * Activated if the pixel was valid in one of the last two frames.
-                 */
                 VALID_1_IN_LAST_2 = 5,
-                /**
-                 * Activated if the pixel was valid in one out of the last 5 frames.
-                 */
                 VALID_1_IN_LAST_5 = 6,
-                /**
-                 * Activated if the pixel was valid in one out of the last 8 frames.
-                 */
                 VALID_1_IN_LAST_8 = 7,
-                /**
-                 * Persistency will be imposed regardless of the stored history (most aggressive filtering).
-                 */
                 PERSISTENCY_INDEFINITELY = 8,
             };
 
@@ -198,33 +172,39 @@ struct RawStereoDepthConfig : public RawBuffer {
         };
         NLOHMANN_DEFINE_TYPE_INTRUSIVE(TemporalFilter, enable, persistencyMode, alpha, delta);
 
-        /** Temporal filtering with optional persistence.
+        /**
+         * Temporal filtering with optional persistence.
          * More details about the filter can be found here:
          * https://dev.intelrealsense.com/docs/depth-post-processing#:~:text=Temporal%20filtering%20%26%20persistence
          */
         TemporalFilter temporalFilter;
 
-        /** Threshold filtering.
+        /**
+         * Threshold filtering.
          * Filters out distances outside of a given interval.
          */
         struct ThresholdFilter {
-            /** Minimum range in millimeters.
+            /**
+             * Minimum range in millimeters.
              * Depth values under this value are invalidated.
              */
             std::int32_t minRange = 0;
-            /** Minimum range in millimeters.
+            /**
+             * Minimum range in millimeters.
              * Depth values over this value are invalidated.
              */
             std::int32_t maxRange = 65535;
         };
         NLOHMANN_DEFINE_TYPE_INTRUSIVE(ThresholdFilter, minRange, maxRange);
 
-        /** Threshold filtering.
+        /**
+         * Threshold filtering.
          * Filters out distances outside of a given interval.
          */
         ThresholdFilter thresholdFilter;
 
-        /** Speckle filtering.
+        /**
+         * Speckle filtering.
          * Removes speckle noise.
          */
         struct SpeckleFilter {
@@ -239,41 +219,40 @@ struct RawStereoDepthConfig : public RawBuffer {
         };
         NLOHMANN_DEFINE_TYPE_INTRUSIVE(SpeckleFilter, enable, speckleRange);
 
-        /** Speckle filtering.
+        /**
+         * Speckle filtering.
          * Removes speckle noise.
          */
         SpeckleFilter speckleFilter;
 
-        /** Decimation filter.
+        /**
+         * Decimation filter.
          * Reduces the depth scene complexity. The filter runs on kernel sizes [2x2] to [8x8] pixels.
          */
         struct DecimationFilter {
-            /** Decimation factor.
+            /**
+             * Decimation factor.
              * Valid values are 1,2,3,4.
              * Disparity/depth map x/y resolution will be decimated with this value.
              */
             std::uint32_t decimationFactor = 1;
-            /** Decimation algorithm type.
+            /**
+             * Decimation algorithm type.
              */
             enum class DecimationMode : int32_t {
-                /** PIXEL_SKIPPING takes every n-th pixel in x and y directions, where n=decimationFactor.
-                 * The simplest and fastest.
-                 */
                 PIXEL_SKIPPING = 0,
-                /** NON_ZERO_MEDIAN takes the median value from a nxn region, ignoring invalid depth values, where n=decimationFactor.
-                 * Has high runtime cost, suitable for larger decimation factors.
-                 */
                 NON_ZERO_MEDIAN = 1,
-                /** NON_ZERO_MEDIAN takes the mean value from a nxn region, ignoring invalid depth values, where n=decimationFactor.
-                 * Has high runtime cost, suitable for larger decimation factors.
-                 */
                 NON_ZERO_MEAN = 2,
             };
+            /**
+             * Decimation algorithm type.
+             */
             DecimationMode decimationMode = DecimationMode::PIXEL_SKIPPING;
         };
         NLOHMANN_DEFINE_TYPE_INTRUSIVE(DecimationFilter, decimationFactor, decimationMode);
 
-        /** Decimation filter.
+        /**
+         * Decimation filter.
          * Reduces disparity/depth map x/y complexity, reducing runtime complexity for other filters.
          */
         DecimationFilter decimationFilter;
