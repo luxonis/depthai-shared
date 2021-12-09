@@ -59,6 +59,9 @@ struct RawStereoDepthConfig : public RawBuffer {
      */
     AlgorithmControl algorithmControl;
 
+    /**
+     * Post-processing filters, all the filters are applied in disparity domain.
+     */
     struct PostProcessing {
         /**
          * Set kernel size for disparity/depth median filtering, or disable
@@ -66,77 +69,214 @@ struct RawStereoDepthConfig : public RawBuffer {
         MedianFilter median = MedianFilter::KERNEL_5x5;
 
         /**
-         * Sigma value for bilateral filter. 0 means disabled
+         * Sigma value for bilateral filter. 0 means disabled.
          * A larger value of the parameter means that farther colors within the pixel neighborhood will be mixed together.
          */
         std::int16_t bilateralSigmaValue = 0;
 
+        /**
+         * 1D edge-preserving spatial filter using high-order domain transform.
+         * More details about the filter can be found here: https://dev.intelrealsense.com/docs/depth-post-processing#:~:text=Edge%2Dpreserving%20filtering
+         */
         struct SpatialFilter {
+            static constexpr const std::int32_t defaultDeltaValue = 3;
+
+            /**
+             * Whether to enable or disable the filter.
+             */
             bool enable = false;
 
+            /**
+             * An in-place heuristic symmetric hole-filling mode applied horizontally during the filter passes.
+             * Intended to rectify minor artefacts with minimal performance impact.
+             * Search radius for hole filling.
+             */
             std::uint8_t holeFillingRadius = 2;
 
+            /**
+             * The Alpha factor in an exponential moving average with Alpha=1 - no filter. Alpha = 0 - infinite filter.
+             * Determines the amount of smoothing.
+             */
             float alpha = 0.5f;
 
-            std::int32_t delta = 20;
+            /**
+             * Step-size boundary. Establishes the threshold used to preserve "edges".
+             * If the disparity value between neighboring pixels exceed the disparity threshold set by this delta parameter,
+             * then filtering will be temporarily disabled.
+             * Default value 0 means auto: 3 disparity integer levels.
+             * In case of subpixel mode it's 3*number of subpixel levels.
+             */
+            std::int32_t delta = 0;
 
+            /**
+             * Nubmer of iterations over the image in both horizontal and vertical direction.
+             */
             std::int32_t numIterations = 1;
         };
         NLOHMANN_DEFINE_TYPE_INTRUSIVE(SpatialFilter, enable, holeFillingRadius, alpha, delta, numIterations);
 
+        /**
+         * Edge-preserving filtering: This type of filter will smooth the depth noise while attempting to preserve edges.
+         * More details about the filter can be found here: https://dev.intelrealsense.com/docs/depth-post-processing#:~:text=Edge%2Dpreserving%20filtering
+         */
         SpatialFilter spatialFilter;
 
+        /** Temporal filtering with optional persistence.
+         * More details about the filter can be found here:
+         * https://dev.intelrealsense.com/docs/depth-post-processing#:~:text=Temporal%20filtering%20%26%20persistence
+         */
         struct TemporalFilter {
+            static constexpr const std::int32_t defaultDeltaValue = 3;
+
+            /**
+             * Whether to enable or disable the filter.
+             */
             bool enable = false;
 
+            /**
+             * Persistency algorithm type.
+             */
             enum class PersistencyMode : int32_t {
+                /**
+                 * The Persistency filter is not activated and no hole filling occurs..
+                 */
                 PERSISTENCY_OFF = 0,
+                /**
+                 * Persistency activated if the pixel was valid in 8 out of the last 8 frames.
+                 */
                 VALID_8_OUT_OF_8 = 1,
+                /**
+                 * Activated if the pixel was valid in two out of the last 3 frames.
+                 */
                 VALID_2_IN_LAST_3 = 2,
+                /**
+                 * Activated if the pixel was valid in two out of the last 4 frames.
+                 */
                 VALID_2_IN_LAST_4 = 3,
+                /**
+                 * Activated if the pixel was valid in two out of the last 8 frames.
+                 */
                 VALID_2_OUT_OF_8 = 4,
+                /**
+                 * Activated if the pixel was valid in one of the last two frames.
+                 */
                 VALID_1_IN_LAST_2 = 5,
+                /**
+                 * Activated if the pixel was valid in one out of the last 5 frames.
+                 */
                 VALID_1_IN_LAST_5 = 6,
+                /**
+                 * Activated if the pixel was valid in one out of the last 8 frames.
+                 */
                 VALID_1_IN_LAST_8 = 7,
+                /**
+                 * Persistency will be imposed regardless of the stored history (most aggressive filtering).
+                 */
                 PERSISTENCY_INDEFINITELY = 8,
             };
 
+            /**
+             * Persistency mode.
+             * If the current disparity/depth value is invalid, it will be replaced by an older value, based on persistency mode.
+             */
             PersistencyMode persistencyMode = PersistencyMode::VALID_2_IN_LAST_4;
 
+            /**
+             * The Alpha factor in an exponential moving average with Alpha=1 - no filter. Alpha = 0 - infinite filter.
+             * Determines the extent of the temporal history that should be averaged.
+             */
             float alpha = 0.4f;
-            std::int32_t delta = 20;
+
+            /**
+             * Step-size boundary. Establishes the threshold used to preserve surfaces (edges).
+             * If the disparity value between neighboring pixels exceed the disparity threshold set by this delta parameter,
+             * then filtering will be temporarily disabled.
+             * Default value 0 means auto: 3 disparity integer levels.
+             * In case of subpixel mode it's 3*number of subpixel levels.
+             */
+            std::int32_t delta = 0;
         };
         NLOHMANN_DEFINE_TYPE_INTRUSIVE(TemporalFilter, enable, persistencyMode, alpha, delta);
 
+        /** Temporal filtering with optional persistence.
+         * More details about the filter can be found here:
+         * https://dev.intelrealsense.com/docs/depth-post-processing#:~:text=Temporal%20filtering%20%26%20persistence
+         */
         TemporalFilter temporalFilter;
 
+        /** Threshold filtering.
+         * Filters out distances outside of a given interval.
+         */
         struct ThresholdFilter {
+            /** Minimum range in millimeters.
+             * Depth values under this value are invalidated.
+             */
             std::int32_t minRange = 0;
+            /** Minimum range in millimeters.
+             * Depth values over this value are invalidated.
+             */
             std::int32_t maxRange = 65535;
         };
         NLOHMANN_DEFINE_TYPE_INTRUSIVE(ThresholdFilter, minRange, maxRange);
 
+        /** Threshold filtering.
+         * Filters out distances outside of a given interval.
+         */
         ThresholdFilter thresholdFilter;
 
+        /** Speckle filtering.
+         * Removes speckle noise.
+         */
         struct SpeckleFilter {
+            /**
+             * Whether to enable or disable the filter.
+             */
             bool enable = false;
-            std::uint32_t speckleRange = 100;
+            /**
+             * Search range.
+             */
+            std::uint32_t speckleRange = 50;
         };
         NLOHMANN_DEFINE_TYPE_INTRUSIVE(SpeckleFilter, enable, speckleRange);
 
+        /** Speckle filtering.
+         * Removes speckle noise.
+         */
         SpeckleFilter speckleFilter;
 
+        /** Decimation filter.
+         * reduces the depth scene complexity. The filter runs on kernel sizes [2x2] to [8x8] pixels.
+         */
         struct DecimationFilter {
+            /** Decimation factor.
+             * Valid values are 1,2,3,4.
+             * Disparity/depth map x/y resolution will be decimated with this value.
+             */
             std::uint32_t decimationFactor = 1;
+            /** Decimation mode.
+             *
+             */
             enum class DecimationMode : int32_t {
+                /** PIXEL_SKIPPING takes every n-th pixel in x and y directions, where n=decimationFactor.
+                 * The simplest and fastest.
+                 */
                 PIXEL_SKIPPING = 0,
+                /** NON_ZERO_MEDIAN takes the median value from a nxn region, ignoring invalid depth values, where n=decimationFactor.
+                 * Has high runtime cost, suitable for larger decimation factors.
+                 */
                 NON_ZERO_MEDIAN = 1,
+                /** NON_ZERO_MEDIAN takes the mean value from a nxn region, ignoring invalid depth values, where n=decimationFactor.
+                 * Has high runtime cost, suitable for larger decimation factors.
+                 */
                 NON_ZERO_MEAN = 2,
             };
             DecimationMode decimationMode = DecimationMode::PIXEL_SKIPPING;
         };
         NLOHMANN_DEFINE_TYPE_INTRUSIVE(DecimationFilter, decimationFactor, decimationMode);
 
+        /** Decimation filter.
+         * Reduces disparity/depth map x/y complexity, reducing runtime complexity for other filters.
+         */
         DecimationFilter decimationFilter;
 
         NLOHMANN_DEFINE_TYPE_INTRUSIVE(
