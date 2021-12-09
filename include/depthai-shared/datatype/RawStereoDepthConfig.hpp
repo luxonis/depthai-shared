@@ -138,7 +138,7 @@ struct RawStereoDepthConfig : public RawBuffer {
              */
             enum class PersistencyMode : int32_t {
                 /**
-                 * The Persistency filter is not activated and no hole filling occurs..
+                 * The Persistency filter is not activated and no hole filling occurs.
                  */
                 PERSISTENCY_OFF = 0,
                 /**
@@ -233,7 +233,7 @@ struct RawStereoDepthConfig : public RawBuffer {
              */
             bool enable = false;
             /**
-             * Search range.
+             * Speckle search range.
              */
             std::uint32_t speckleRange = 50;
         };
@@ -245,7 +245,7 @@ struct RawStereoDepthConfig : public RawBuffer {
         SpeckleFilter speckleFilter;
 
         /** Decimation filter.
-         * reduces the depth scene complexity. The filter runs on kernel sizes [2x2] to [8x8] pixels.
+         * Reduces the depth scene complexity. The filter runs on kernel sizes [2x2] to [8x8] pixels.
          */
         struct DecimationFilter {
             /** Decimation factor.
@@ -253,8 +253,7 @@ struct RawStereoDepthConfig : public RawBuffer {
              * Disparity/depth map x/y resolution will be decimated with this value.
              */
             std::uint32_t decimationFactor = 1;
-            /** Decimation mode.
-             *
+            /** Decimation algorithm type.
              */
             enum class DecimationMode : int32_t {
                 /** PIXEL_SKIPPING takes every n-th pixel in x and y directions, where n=decimationFactor.
