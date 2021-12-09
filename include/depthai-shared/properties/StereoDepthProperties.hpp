@@ -107,11 +107,17 @@ struct StereoDepthProperties {
     int numFramesPool = 3;
 
     /**
-     * Number of shaves reserved for stereo depth.
+     * Number of shaves reserved for stereo depth post processing.
      * Post processing can use multiple shaves to increase performance.
-     * Minimum 1.
+     * 0 means auto.
      */
-    std::int32_t numShaves = 1;
+    std::int32_t numPostProcessingShaves = 0;
+
+    /**
+     * Number of memory slices reserved for stereo depth post processing.
+     * 0 means auto, memory will be allocated based on initial stereo settings and number of shaves.
+     */
+    std::int32_t numPostProcessingMemorySlices = 0;
 };
 
 NLOHMANN_DEFINE_TYPE_NON_INTRUSIVE(StereoDepthProperties,
@@ -129,6 +135,7 @@ NLOHMANN_DEFINE_TYPE_NON_INTRUSIVE(StereoDepthProperties,
                                    mesh,
                                    enableRuntimeStereoModeSwitch,
                                    numFramesPool,
-                                   numShaves);
+                                   numPostProcessingShaves,
+                                   numPostProcessingMemorySlices);
 
 }  // namespace dai
