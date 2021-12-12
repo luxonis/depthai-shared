@@ -46,15 +46,8 @@ struct StereoDepthProperties {
 
     using MedianFilter = dai::MedianFilter;
 
-    /**
-     * Align the disparity/depth to the perspective of a rectified output, or center it
-     */
-    enum class DepthAlign : int32_t { RECTIFIED_RIGHT, RECTIFIED_LEFT, CENTER };
+    using DepthAlign = dai::RawStereoDepthConfig::AlgorithmControl::DepthAlign;
 
-    /**
-     * Set the disparity/depth alignment to the perspective of a rectified output, or center it
-     */
-    DepthAlign depthAlign = DepthAlign::RECTIFIED_RIGHT;
     /**
      * Which camera to align disparity/depth to.
      * When configured (not AUTO), takes precedence over 'depthAlign'
@@ -123,7 +116,6 @@ struct StereoDepthProperties {
 NLOHMANN_DEFINE_TYPE_NON_INTRUSIVE(StereoDepthProperties,
                                    initialConfig,
                                    inputConfigSync,
-                                   depthAlign,
                                    depthAlignCamera,
                                    enableRectification,
                                    rectifyEdgeFillColor,

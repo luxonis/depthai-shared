@@ -20,6 +20,16 @@ struct RawStereoDepthConfig : public RawBuffer {
 
     struct AlgorithmControl {
         /**
+         * Align the disparity/depth to the perspective of a rectified output, or center it
+         */
+        enum class DepthAlign : int32_t { RECTIFIED_RIGHT, RECTIFIED_LEFT, CENTER };
+
+        /**
+         * Set the disparity/depth alignment to the perspective of a rectified output, or center it
+         */
+        DepthAlign depthAlign = DepthAlign::RECTIFIED_RIGHT;
+
+        /**
          * Computes and combines disparities in both L-R and R-L directions, and combine them.
          * For better occlusion handling
          */
@@ -51,7 +61,8 @@ struct RawStereoDepthConfig : public RawBuffer {
          */
         std::int32_t subpixelFractionalBits = 3;
 
-        NLOHMANN_DEFINE_TYPE_INTRUSIVE(AlgorithmControl, enableLeftRightCheck, enableExtended, enableSubpixel, leftRightCheckThreshold, subpixelFractionalBits);
+        NLOHMANN_DEFINE_TYPE_INTRUSIVE(
+            AlgorithmControl, depthAlign, enableLeftRightCheck, enableExtended, enableSubpixel, leftRightCheckThreshold, subpixelFractionalBits);
     };
 
     /**
