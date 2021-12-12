@@ -13,6 +13,8 @@ namespace dai {
  * Specify properties for StereoDepth
  */
 struct StereoDepthProperties {
+    static constexpr const std::int32_t AUTO = -1;
+
     struct RectificationMesh {
         /**
          * Uri which points to the mesh array for 'left' input rectification
@@ -102,15 +104,21 @@ struct StereoDepthProperties {
     /**
      * Number of shaves reserved for stereo depth post processing.
      * Post processing can use multiple shaves to increase performance.
-     * 0 means auto.
+     * -1 means auto, resources will be allocated based on enabled filters.
+     * 0 means that it will reuse the shave assigned for main stereo algorithm.
+     * For optimal performance it's recommended to allocate more than 0,
+     * so post processing will run in parallel with main stereo algorithm.
      */
-    std::int32_t numPostProcessingShaves = 0;
+    std::int32_t numPostProcessingShaves = AUTO;
 
     /**
      * Number of memory slices reserved for stereo depth post processing.
-     * 0 means auto, memory will be allocated based on initial stereo settings and number of shaves.
+     * -1 means auto, memory will be allocated based on initial stereo settings and number of shaves.
+     * 0 means that it will reuse the memory slices assigned for main stereo algorithm.
+     * For optimal performance it's recommended to allocate more than 0,
+     * so post processing will run in parallel with main stereo algorithm.
      */
-    std::int32_t numPostProcessingMemorySlices = 0;
+    std::int32_t numPostProcessingMemorySlices = AUTO;
 };
 
 NLOHMANN_DEFINE_TYPE_NON_INTRUSIVE(StereoDepthProperties,
