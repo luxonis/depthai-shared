@@ -87,7 +87,6 @@ struct RawStereoDepthConfig : public RawBuffer {
 
         /**
          * 1D edge-preserving spatial filter using high-order domain transform.
-         * More details about the filter can be found here: https://dev.intelrealsense.com/docs/depth-post-processing#:~:text=Edge%2Dpreserving%20filtering
          */
         struct SpatialFilter {
             static constexpr const std::int32_t DEFAULT_DELTA_VALUE = 3;
@@ -128,14 +127,12 @@ struct RawStereoDepthConfig : public RawBuffer {
 
         /**
          * Edge-preserving filtering: This type of filter will smooth the depth noise while attempting to preserve edges.
-         * More details about the filter can be found here: https://dev.intelrealsense.com/docs/depth-post-processing#:~:text=Edge%2Dpreserving%20filtering
          */
         SpatialFilter spatialFilter;
 
         /**
          * Temporal filtering with optional persistence.
          * More details about the filter can be found here:
-         * https://dev.intelrealsense.com/docs/depth-post-processing#:~:text=Temporal%20filtering%20%26%20persistence
          */
         struct TemporalFilter {
             static constexpr const std::int32_t DEFAULT_DELTA_VALUE = 3;
@@ -186,7 +183,6 @@ struct RawStereoDepthConfig : public RawBuffer {
         /**
          * Temporal filtering with optional persistence.
          * More details about the filter can be found here:
-         * https://dev.intelrealsense.com/docs/depth-post-processing#:~:text=Temporal%20filtering%20%26%20persistence
          */
         TemporalFilter temporalFilter;
 
