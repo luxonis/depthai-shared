@@ -79,7 +79,7 @@ struct RawStereoDepthConfig : public RawBuffer {
          * More details about the filter can be found here: https://dev.intelrealsense.com/docs/depth-post-processing#:~:text=Edge%2Dpreserving%20filtering
          */
         struct SpatialFilter {
-            static constexpr const std::int32_t defaultDeltaValue = 3;
+            static constexpr const std::int32_t DEFAULT_DELTA_VALUE = 3;
 
             /**
              * Whether to enable or disable the filter.
@@ -127,7 +127,7 @@ struct RawStereoDepthConfig : public RawBuffer {
          * https://dev.intelrealsense.com/docs/depth-post-processing#:~:text=Temporal%20filtering%20%26%20persistence
          */
         struct TemporalFilter {
-            static constexpr const std::int32_t defaultDeltaValue = 3;
+            static constexpr const std::int32_t DEFAULT_DELTA_VALUE = 3;
 
             /**
              * Whether to enable or disable the filter.
