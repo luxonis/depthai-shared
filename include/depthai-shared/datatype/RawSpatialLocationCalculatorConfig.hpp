@@ -35,8 +35,8 @@ struct SpatialLocationCalculatorConfigData {
      */
     SpatialLocationCalculatorConfigThresholds depthThresholds;
     /**
-     * Calculation method used to obtain spatial locations.
-     * Average: the average of ROI is used for calculation.
+     * Calculation method used to obtain spatial locations
+     * Average - the average of ROI is used for calculation.
      * Min: the minimum value inside ROI is used for calculation.
      * Max: the maximum value inside ROI is used for calculation.
      * Default: average.
