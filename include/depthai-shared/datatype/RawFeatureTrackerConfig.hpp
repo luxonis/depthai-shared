@@ -96,13 +96,13 @@ struct RawFeatureTrackerConfig : public RawBuffer {
              * When detected number of features exceeds the maximum in a cell threshold is lowered
              * by multiplying its value with this factor.
              */
-            float decreaseFactor = 0.9;
+            float decreaseFactor = 0.9f;
 
             /**
              * When detected number of features doesn't exceed the maximum in a cell, threshold is increased
              * by multiplying its value with this factor.
              */
-            float increaseFactor = 1.1;
+            float increaseFactor = 1.1f;
             DEPTHAI_SERIALIZE(Thresholds, initialValue, min, max, decreaseFactor, increaseFactor);
         };
 
@@ -171,7 +171,7 @@ struct RawFeatureTrackerConfig : public RawBuffer {
              * the displacement between two refinements is smaller than this value.
              * Decreasing this number increases runtime.
              */
-            float epsilon = 0.01;
+            float epsilon = 0.01f;
 
             /**
              * Feature tracking termination criteria. Optical flow will refine the feature position maximum this many times

@@ -23,7 +23,8 @@ struct PrebootConfig {
     };
 
     USB usb;
-    tl::optional<uint32_t> watchdogTimeoutMs = device::XLINK_WATCHDOG_TIMEOUT.count();
+    tl::optional<uint32_t> watchdogTimeoutMs =
+        static_cast<uint32_t>(std::chrono::duration_cast<std::chrono::milliseconds>(device::XLINK_WATCHDOG_TIMEOUT).count());
 };
 
 DEPTHAI_SERIALIZE_EXT(PrebootConfig::USB, vid, pid, flashBootedVid, flashBootedPid, maxSpeed);

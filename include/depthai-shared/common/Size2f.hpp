@@ -13,7 +13,7 @@ namespace dai {
  * width, height values define the size of the shape/frame
  */
 struct Size2f {
-    Size2f() {}
+    Size2f() = default;
     Size2f(float width, float height) {
         this->width = width;
         this->height = height;

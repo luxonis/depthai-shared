@@ -60,11 +60,6 @@ struct StereoDepthProperties : PropertiesSerializable<Properties, StereoDepthPro
     bool enableRectification = true;
 
     /**
-     * Disparity range increased from 96 to 192, combined from full resolution and downscaled images.
-     * Suitable for short range objects
-     */
-    bool enableExtendedDisparity = false;
-    /**
      * Fill color for missing data at frame edges: grayscale 0..255, or -1 to replicate pixels
      */
     std::int32_t rectifyEdgeFillColor = -1;
@@ -113,7 +108,6 @@ DEPTHAI_SERIALIZE_EXT(StereoDepthProperties,
                       depthAlign,
                       depthAlignCamera,
                       enableRectification,
-                      enableExtendedDisparity,
                       rectifyEdgeFillColor,
                       width,
                       height,
