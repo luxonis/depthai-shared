@@ -59,7 +59,7 @@ struct StereoDepthProperties {
     bool enableRectification = true;
 
     /**
-     * Fill color for missing data at frame edges: grayscale 0..255, or -1 to replicate pixels
+     * Fill color for missing data at frame edges - grayscale 0..255, or -1 to replicate pixels
      */
     std::int32_t rectifyEdgeFillColor = -1;
     /**
