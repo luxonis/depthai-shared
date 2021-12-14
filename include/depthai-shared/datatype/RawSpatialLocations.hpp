@@ -40,7 +40,7 @@ struct SpatialLocations {
      */
     std::uint32_t depthAveragePixelCount;
     /**
-     *  Spatial coordinates: x,y,z; x,y are the relative positions of the center of ROI to the center of depth map
+     *  Spatial coordinates - x,y,z; x,y are the relative positions of the center of ROI to the center of depth map
      */
     Point3f spatialCoordinates;
 };

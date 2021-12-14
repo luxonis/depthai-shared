@@ -54,10 +54,13 @@ struct RawStereoDepthConfig : public RawBuffer {
         std::int32_t leftRightCheckThreshold = 10;
 
         /**
-         * Number of fractional bits for subpixel mode.
-         * Valid values: 3,4,5.
-         * Defines the number of fractional disparities: 2^x.
-         * Median filter postprocessing is supported only for 3 fractional bits.
+         * Number of fractional bits for subpixel mode
+         *
+         * Valid values: 3,4,5
+         *
+         * Defines the number of fractional disparities: 2^x
+         *
+         * Median filter postprocessing is supported only for 3 fractional bits
          */
         std::int32_t subpixelFractionalBits = 3;
 
@@ -66,7 +69,7 @@ struct RawStereoDepthConfig : public RawBuffer {
     };
 
     /**
-     * Controls the flow of stereo algorithm: left-right check, subpixel etc.
+     * Controls the flow of stereo algorithm - left-right check, subpixel etc.
      */
     AlgorithmControl algorithmControl;
 
@@ -303,7 +306,7 @@ struct RawStereoDepthConfig : public RawBuffer {
         KernelSize kernelSize = KernelSize::AUTO;
 
         /**
-         * Census transform mask, default: auto, mask is set based on resolution and kernel size.
+         * Census transform mask, default - auto, mask is set based on resolution and kernel size.
          * Disabled for 400p input resolution.
          * Enabled for 720p.
          * 0XA82415 for 5x5 census transform kernel.
