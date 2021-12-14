@@ -23,7 +23,14 @@ struct RawStereoDepthConfig : public RawBuffer {
          * Computes and combines disparities in both L-R and R-L directions, and combine them.
          * For better occlusion handling
          */
-        bool enableLeftRightCheck = false;
+        bool enableLeftRightCheck = true;
+
+        /**
+         * Disparity range increased from 95 to 190, combined from full resolution and downscaled images.
+         * Suitable for short range objects
+         */
+        bool enableExtended = false;
+
         /**
          * Computes disparity with sub-pixel interpolation (5 fractional bits), suitable for long range
          */
@@ -34,21 +41,24 @@ struct RawStereoDepthConfig : public RawBuffer {
          * Used only when left-right check mode is enabled.
          * Defines the maximum difference between the confidence of pixels from left-right and right-left confidence maps
          */
-        std::int32_t leftRightCheckThreshold = 4;
+        std::int32_t leftRightCheckThreshold = 10;
 
         /**
-         * Number of fractional bits for subpixel mode.
-         * Valid values: 3,4,5.
-         * Defines the number of fractional disparities: 2^x.
-         * Median filter postprocessing is supported only for 3 fractional bits.
+         * Number of fractional bits for subpixel mode
+         *
+         * Valid values: 3,4,5
+         *
+         * Defines the number of fractional disparities: 2^x
+         *
+         * Median filter postprocessing is supported only for 3 fractional bits
          */
         std::int32_t subpixelFractionalBits = 3;
 
-        DEPTHAI_SERIALIZE(AlgorithmControl, enableLeftRightCheck, enableSubpixel, leftRightCheckThreshold, subpixelFractionalBits);
+        DEPTHAI_SERIALIZE(AlgorithmControl, enableLeftRightCheck, enableExtended, enableSubpixel, leftRightCheckThreshold, subpixelFractionalBits);
     };
 
     /**
-     * Controls the flow of stereo algorithm: left-right check, subpixel etc.
+     * Controls the flow of stereo algorithm - left-right check, subpixel etc.
      */
     AlgorithmControl algorithmControl;
 
@@ -72,6 +82,24 @@ struct RawStereoDepthConfig : public RawBuffer {
      */
     PostProcessing postProcessing;
 
+    /**
+     * The basic cost function used by the Stereo Accelerator for matching the left and right images is the Census
+     * Transform. It works on a block of pixels and computes a bit vector which represents the structure of the
+     * image in that block.
+     * There are two types of Census Transform based on how the middle pixel is used:
+     * Classic Approach and Modified Census. The comparisons that are made between pixels can be or not thresholded.
+     * In some cases a mask can be applied to filter out only specific bits from the entire bit stream.
+     * All these approaches are:
+     * Classic Approach: Uses middle pixel to compare against all its neighbors over a defined window. Each
+     * comparison results in a new bit, that is 0 if central pixel is smaller, or 1 if is it bigger than its neighbor.
+     * Modified Census Transform: same as classic Census Transform, but instead of comparing central pixel
+     * with its neighbors, the window mean will be compared with each pixel over the window.
+     * Thresholding Census Transform: same as classic Census Transform, but it is not enough that a
+     * neighbor pixel to be bigger than the central pixel, it must be significant bigger (based on a threshold).
+     * Census Transform with Mask: same as classic Census Transform, but in this case not all of the pixel from
+     * the support window are part of the binary descriptor. We use a ma sk “M” to define which pixels are part
+     * of the binary descriptor (1), and which pixels should be skipped (0).
+     */
     struct CensusTransform {
         /**
          * Census transform kernel size possible values.
@@ -84,7 +112,7 @@ struct RawStereoDepthConfig : public RawBuffer {
         KernelSize kernelSize = KernelSize::AUTO;
 
         /**
-         * Census transform mask, default: auto, mask is set based on resolution and kernel size.
+         * Census transform mask, default - auto, mask is set based on resolution and kernel size.
          * Disabled for 400p input resolution.
          * Enabled for 720p.
          * 0XA82415 for 5x5 census transform kernel.
@@ -97,7 +125,7 @@ struct RawStereoDepthConfig : public RawBuffer {
         /**
          * If enabled, each pixel in the window is compared with the mean window value instead of the central pixel.
          */
-        bool enableMeanMode = false;
+        bool enableMeanMode = true;
 
         /**
          * Census transform comparation treshold value.
@@ -112,6 +140,11 @@ struct RawStereoDepthConfig : public RawBuffer {
      */
     CensusTransform censusTransform;
 
+    /**
+     * The matching cost is way of measuring the similarity of image locations in stereo correspondence
+     * algorithm. Based on the configuration parameters and based on the descriptor type, a linear equation
+     * is applied to computing the cost for each candidate disparity at each pixel.
+     */
     struct CostMatching {
         /**
          * Disparity search range: 64 or 96 pixels are supported by the HW.
@@ -143,7 +176,7 @@ struct RawStereoDepthConfig : public RawBuffer {
          * Disparities with confidence value under this threshold are accepted.
          * Higher confidence threshold means disparities with less confidence are accepted too.
          */
-        uint8_t confidenceThreshold = 230;
+        uint8_t confidenceThreshold = 245;
 
         /**
          * The linear equation applied for computing the cost is:
@@ -154,8 +187,8 @@ struct RawStereoDepthConfig : public RawBuffer {
          * The α and β parameters are subject to fine fine tuning by the user.
          */
         struct LinearEquationParameters {
-            uint8_t alpha = 8;
-            uint8_t beta = 12;
+            uint8_t alpha = 0;
+            uint8_t beta = 2;
             uint8_t threshold = 127;
 
             DEPTHAI_SERIALIZE(LinearEquationParameters, alpha, beta, threshold);
@@ -174,51 +207,41 @@ struct RawStereoDepthConfig : public RawBuffer {
      */
     CostMatching costMatching;
 
+    /**
+     * Cost Aggregation is based on Semi Global Block Matching (SGBM). This algorithm uses a semi global
+     * technique to aggregate the cost map. Ultimately the idea is to build inertia into the stereo algorithm. If
+     * a pixel has very little texture information, then odds are the correct disparity for this pixel is close to
+     * that of the previous pixel considered. This means that we get improved results in areas with low
+     * texture.
+     */
     struct CostAggregation {
-        static constexpr const std::array<uint16_t, 256> defaultHorizontalPenaltyCosts = {
-            0xfffa, 0xfffa, 0xfa7d, 0xa653, 0x7d3e, 0x6432, 0x5329, 0x4723, 0x3e1f, 0x371b, 0x3219, 0x2d16, 0x2914, 0x2613, 0x2311, 0x2110, 0x1f0f, 0x1d0e,
-            0x1b0d, 0x1a0d, 0x190c, 0x170b, 0x160b, 0x150a, 0x140a, 0x140a, 0x1309, 0x1209, 0x1108, 0x1108, 0x1008, 0x1008, 0x0f07, 0x0f07, 0x0e07, 0x0e07,
-            0x0d06, 0x0d06, 0x0d06, 0x0c06, 0x0c06, 0x0c06, 0x0b05, 0x0b05, 0x0b05, 0x0b05, 0x0a05, 0x0a05, 0x0a05, 0x0a05, 0x0a05, 0x0904, 0x0904, 0x0904,
-            0x0904, 0x0904, 0x0804, 0x0804, 0x0804, 0x0804, 0x0804, 0x0804, 0x0804, 0x0703, 0x0703, 0x0703, 0x0703, 0x0703, 0x0703, 0x0703, 0x0703, 0x0703,
-            0x0603, 0x0603, 0x0603, 0x0603, 0x0603, 0x0603, 0x0603, 0x0603, 0x0603, 0x0603, 0x0603, 0x0603, 0x0502, 0x0502, 0x0502, 0x0502, 0x0502, 0x0502,
-            0x0502, 0x0502, 0x0502, 0x0502, 0x0502, 0x0502, 0x0502, 0x0502, 0x0502, 0x0502, 0x0502, 0x0402, 0x0402, 0x0402, 0x0402, 0x0402, 0x0402, 0x0402,
-            0x0402, 0x0402, 0x0402, 0x0402, 0x0402, 0x0402, 0x0402, 0x0402, 0x0402, 0x0402, 0x0402, 0x0402, 0x0402, 0x0402, 0x0402, 0x0402, 0x0402, 0x0402,
-            0x0301, 0x0301, 0x0301, 0x0301, 0x0301, 0x0301, 0x0301, 0x0301, 0x0301, 0x0301, 0x0301, 0x0301, 0x0301, 0x0301, 0x0301, 0x0301, 0x0301, 0x0301,
-            0x0301, 0x0301, 0x0301, 0x0301, 0x0301, 0x0301, 0x0301, 0x0301, 0x0301, 0x0301, 0x0301, 0x0301, 0x0301, 0x0301, 0x0301, 0x0301, 0x0301, 0x0301,
-            0x0301, 0x0301, 0x0301, 0x0301, 0x0301, 0x0201, 0x0201, 0x0201, 0x0201, 0x0201, 0x0201, 0x0201, 0x0201, 0x0201, 0x0201, 0x0201, 0x0201, 0x0201,
-            0x0201, 0x0201, 0x0201, 0x0201, 0x0201, 0x0201, 0x0201, 0x0201, 0x0201, 0x0201, 0x0201, 0x0201, 0x0201, 0x0201, 0x0201, 0x0201, 0x0201, 0x0201,
-            0x0201, 0x0201, 0x0201, 0x0201, 0x0201, 0x0201, 0x0201, 0x0201, 0x0201, 0x0201, 0x0201, 0x0201, 0x0201, 0x0201, 0x0201, 0x0201, 0x0201, 0x0201,
-            0x0201, 0x0201, 0x0201, 0x0201, 0x0201, 0x0201, 0x0201, 0x0201, 0x0201, 0x0201, 0x0201, 0x0201, 0x0201, 0x0201, 0x0201, 0x0201, 0x0201, 0x0201,
-            0x0201, 0x0201, 0x0201, 0x0201, 0x0201, 0x0201, 0x0201, 0x0201, 0x0201, 0x0201, 0x0201, 0x0201, 0x0201, 0x0201, 0x0201, 0x0201, 0x0201, 0x0100,
-            0x0100, 0x0100, 0x0100, 0x0100,
-        };
+        static constexpr const int defaultPenaltyP1 = 250;
+        static constexpr const int defaultPenaltyP2 = 500;
 
-        static constexpr const std::array<uint16_t, 256> defaultVerticalPenaltyCosts = {
-            0xfffa, 0xfffa, 0xfa7d, 0xa653, 0x7d3e, 0x6432, 0x5329, 0x4723, 0x3e1f, 0x371b, 0x3219, 0x2d16, 0x2914, 0x2613, 0x2311, 0x2110, 0x1f0f, 0x1d0e,
-            0x1b0d, 0x1a0d, 0x190c, 0x170b, 0x160b, 0x150a, 0x140a, 0x140a, 0x1309, 0x1209, 0x1108, 0x1108, 0x1008, 0x1008, 0x0f07, 0x0f07, 0x0e07, 0x0e07,
-            0x0d06, 0x0d06, 0x0d06, 0x0c06, 0x0c06, 0x0c06, 0x0b05, 0x0b05, 0x0b05, 0x0b05, 0x0a05, 0x0a05, 0x0a05, 0x0a05, 0x0a05, 0x0904, 0x0904, 0x0904,
-            0x0904, 0x0904, 0x0804, 0x0804, 0x0804, 0x0804, 0x0804, 0x0804, 0x0804, 0x0703, 0x0703, 0x0703, 0x0703, 0x0703, 0x0703, 0x0703, 0x0703, 0x0703,
-            0x0603, 0x0603, 0x0603, 0x0603, 0x0603, 0x0603, 0x0603, 0x0603, 0x0603, 0x0603, 0x0603, 0x0603, 0x0502, 0x0502, 0x0502, 0x0502, 0x0502, 0x0502,
-            0x0502, 0x0502, 0x0502, 0x0502, 0x0502, 0x0502, 0x0502, 0x0502, 0x0502, 0x0502, 0x0502, 0x0402, 0x0402, 0x0402, 0x0402, 0x0402, 0x0402, 0x0402,
-            0x0402, 0x0402, 0x0402, 0x0402, 0x0402, 0x0402, 0x0402, 0x0402, 0x0402, 0x0402, 0x0402, 0x0402, 0x0402, 0x0402, 0x0402, 0x0402, 0x0402, 0x0402,
-            0x0301, 0x0301, 0x0301, 0x0301, 0x0301, 0x0301, 0x0301, 0x0301, 0x0301, 0x0301, 0x0301, 0x0301, 0x0301, 0x0301, 0x0301, 0x0301, 0x0301, 0x0301,
-            0x0301, 0x0301, 0x0301, 0x0301, 0x0301, 0x0301, 0x0301, 0x0301, 0x0301, 0x0301, 0x0301, 0x0301, 0x0301, 0x0301, 0x0301, 0x0301, 0x0301, 0x0301,
-            0x0301, 0x0301, 0x0301, 0x0301, 0x0301, 0x0201, 0x0201, 0x0201, 0x0201, 0x0201, 0x0201, 0x0201, 0x0201, 0x0201, 0x0201, 0x0201, 0x0201, 0x0201,
-            0x0201, 0x0201, 0x0201, 0x0201, 0x0201, 0x0201, 0x0201, 0x0201, 0x0201, 0x0201, 0x0201, 0x0201, 0x0201, 0x0201, 0x0201, 0x0201, 0x0201, 0x0201,
-            0x0201, 0x0201, 0x0201, 0x0201, 0x0201, 0x0201, 0x0201, 0x0201, 0x0201, 0x0201, 0x0201, 0x0201, 0x0201, 0x0201, 0x0201, 0x0201, 0x0201, 0x0201,
-            0x0201, 0x0201, 0x0201, 0x0201, 0x0201, 0x0201, 0x0201, 0x0201, 0x0201, 0x0201, 0x0201, 0x0201, 0x0201, 0x0201, 0x0201, 0x0201, 0x0201, 0x0201,
-            0x0201, 0x0201, 0x0201, 0x0201, 0x0201, 0x0201, 0x0201, 0x0201, 0x0201, 0x0201, 0x0201, 0x0201, 0x0201, 0x0201, 0x0201, 0x0201, 0x0201, 0x0100,
-            0x0100, 0x0100, 0x0100, 0x0100,
-        };
-
-        // TBD
+        /**
+         * Cost calculation linear equation parameters.
+         */
         uint8_t divisionFactor = 1;
 
-        tl::optional<std::array<uint16_t, 256>> horizontalPenaltyCosts;
+        /**
+         * Horizontal P1 penalty cost parameter.
+         */
+        uint16_t horizontalPenaltyCostP1 = defaultPenaltyP1;
+        /**
+         * Horizontal P2 penalty cost parameter.
+         */
+        uint16_t horizontalPenaltyCostP2 = defaultPenaltyP2;
 
-        tl::optional<std::array<uint16_t, 256>> verticalPenaltyCosts;
+        /**
+         * Vertical P1 penalty cost parameter.
+         */
+        uint16_t verticalPenaltyCostP1 = defaultPenaltyP1;
+        /**
+         * Vertical P2 penalty cost parameter.
+         */
+        uint16_t verticalPenaltyCostP2 = defaultPenaltyP2;
 
-        DEPTHAI_SERIALIZE(CostAggregation, divisionFactor, horizontalPenaltyCosts, verticalPenaltyCosts);
+        DEPTHAI_SERIALIZE(CostAggregation, divisionFactor, horizontalPenaltyCostP1, horizontalPenaltyCostP2, verticalPenaltyCostP1, verticalPenaltyCostP2);
     };
 
     /**

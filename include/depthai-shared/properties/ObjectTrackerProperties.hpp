@@ -10,10 +10,14 @@
 namespace dai {
 
 enum class TrackerType : std::int32_t {
+    /// Kernelized Correlation Filter tracking
+    SHORT_TERM_KCF = 1,
+    /// Short term tracking without using image data
+    SHORT_TERM_IMAGELESS = 3,
     /// Ability to track the objects without accessing image data.
     ZERO_TERM_IMAGELESS = 5,
     /// Tracking using image data too.
-    ZERO_TERM_COLOR_HISTOGRAM
+    ZERO_TERM_COLOR_HISTOGRAM = 6
 };
 
 enum class TrackerIdAssigmentPolicy : std::int32_t {
