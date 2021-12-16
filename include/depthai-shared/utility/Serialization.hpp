@@ -13,6 +13,13 @@
 
 #include <nlohmann/json.hpp>
 
+// To not require exceptions for embedded usecases.
+#if __has_feature(cxx_exceptions) || defined(__cpp_exceptions) || \
+    (defined(_MSC_VER) && defined(_CPPUNWIND)) || \
+    defined(__EXCEPTIONS)
+#define DEPTHAI_EXCEPTIONS
+#endif
+
 namespace dai {
 namespace utility {
 
@@ -89,34 +96,49 @@ class VectorWriter {
 };
 
 // libnop serialization
+// If exceptions are available it throws in error cases
+// Otherwise return value can be checked
 template <typename T>
-inline void serialize(const T& obj, std::vector<std::uint8_t>& data) {
+inline bool serialize(const T& obj, std::vector<std::uint8_t>& data) {
     nop::Serializer<VectorWriter> serializer{std::move(data)};
     auto status = serializer.Write(obj);
     if(!status) {
+#ifdef DEPTHAI_EXCEPTIONS
         throw std::runtime_error(status.GetErrorMessage());
+#else
+        return false;
+#endif
     }
     data = std::move(serializer.writer().take());
+    return true;
 }
 template <typename T>
 inline std::vector<std::uint8_t> serialize(const T& obj) {
     std::vector<std::uint8_t> data;
-    serialize(obj, data);
-    return data;
+    if(serialize(obj, data)) {
+        return data;
+    } else {
+        return {};
+    }
 }
 
 // libnop deserialization
 template <typename T>
-inline void deserialize(const std::uint8_t* data, std::size_t size, T& obj) {
+inline bool deserialize(const std::uint8_t* data, std::size_t size, T& obj) {
     nop::Deserializer<nop::BufferReader> deserializer{data, size};
     auto status = deserializer.Read(&obj);
     if(!status) {
+#ifdef DEPTHAI_EXCEPTIONS
         throw std::runtime_error(status.GetErrorMessage());
+#else
+        return false;
+#endif
     }
+    return true;
 }
 template <typename T>
-inline void deserialize(const std::vector<std::uint8_t>& data, T& obj) {
-    deserialize(data.data(), data.size(), obj);
+inline bool deserialize(const std::vector<std::uint8_t>& data, T& obj) {
+    return deserialize(data.data(), data.size(), obj);
 }
 
 }  // namespace utility
