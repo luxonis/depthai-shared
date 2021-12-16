@@ -12,6 +12,8 @@ namespace dai {
  * Specify properties for StereoDepth
  */
 struct StereoDepthProperties : PropertiesSerializable<Properties, StereoDepthProperties> {
+    static constexpr const std::int32_t AUTO = -1;
+
     struct RectificationMesh {
         /**
          * Uri which points to the mesh array for 'left' input rectification
@@ -42,15 +44,8 @@ struct StereoDepthProperties : PropertiesSerializable<Properties, StereoDepthPro
 
     using MedianFilter = dai::MedianFilter;
 
-    /**
-     * Align the disparity/depth to the perspective of a rectified output, or center it
-     */
-    enum class DepthAlign : int32_t { RECTIFIED_RIGHT, RECTIFIED_LEFT, CENTER };
+    using DepthAlign = dai::RawStereoDepthConfig::AlgorithmControl::DepthAlign;
 
-    /**
-     * Set the disparity/depth alignment to the perspective of a rectified output, or center it
-     */
-    DepthAlign depthAlign = DepthAlign::RECTIFIED_RIGHT;
     /**
      * Which camera to align disparity/depth to.
      * When configured (not AUTO), takes precedence over 'depthAlign'
@@ -60,7 +55,7 @@ struct StereoDepthProperties : PropertiesSerializable<Properties, StereoDepthPro
     bool enableRectification = true;
 
     /**
-     * Fill color for missing data at frame edges: grayscale 0..255, or -1 to replicate pixels
+     * Fill color for missing data at frame edges - grayscale 0..255, or -1 to replicate pixels
      */
     std::int32_t rectifyEdgeFillColor = -1;
     /**
@@ -101,21 +96,41 @@ struct StereoDepthProperties : PropertiesSerializable<Properties, StereoDepthPro
 
     /// Num frames in output pool
     int numFramesPool = 3;
+
+    /**
+     * Number of shaves reserved for stereo depth post processing.
+     * Post processing can use multiple shaves to increase performance.
+     * -1 means auto, resources will be allocated based on enabled filters.
+     * 0 means that it will reuse the shave assigned for main stereo algorithm.
+     * For optimal performance it's recommended to allocate more than 0,
+     * so post processing will run in parallel with main stereo algorithm.
+     */
+    std::int32_t numPostProcessingShaves = AUTO;
+
+    /**
+     * Number of memory slices reserved for stereo depth post processing.
+     * -1 means auto, memory will be allocated based on initial stereo settings and number of shaves.
+     * 0 means that it will reuse the memory slices assigned for main stereo algorithm.
+     * For optimal performance it's recommended to allocate more than 0,
+     * so post processing will run in parallel with main stereo algorithm.
+     */
+    std::int32_t numPostProcessingMemorySlices = AUTO;
 };
 
 DEPTHAI_SERIALIZE_EXT(StereoDepthProperties,
-                      initialConfig,
-                      depthAlign,
-                      depthAlignCamera,
-                      enableRectification,
-                      rectifyEdgeFillColor,
-                      width,
-                      height,
-                      outWidth,
-                      outHeight,
-                      outKeepAspectRatio,
-                      mesh,
-                      enableRuntimeStereoModeSwitch,
-                      numFramesPool);
+                                   initialConfig,
+                                   depthAlignCamera,
+                                   enableRectification,
+                                   rectifyEdgeFillColor,
+                                   width,
+                                   height,
+                                   outWidth,
+                                   outHeight,
+                                   outKeepAspectRatio,
+                                   mesh,
+                                   enableRuntimeStereoModeSwitch,
+                                   numFramesPool,
+                                   numPostProcessingShaves,
+                                   numPostProcessingMemorySlices);
 
 }  // namespace dai
