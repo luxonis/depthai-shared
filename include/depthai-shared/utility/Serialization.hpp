@@ -14,6 +14,9 @@
 #include <nlohmann/json.hpp>
 
 // To not require exceptions for embedded usecases.
+#ifndef __has_feature         // Optional of course.
+  #define __has_feature(x) 0  // Compatibility with non-clang compilers.
+#endif
 #if __has_feature(cxx_exceptions) || defined(__cpp_exceptions) || (defined(_MSC_VER) && defined(_CPPUNWIND)) || defined(__EXCEPTIONS)
     #define DEPTHAI_EXCEPTIONS
 #endif
