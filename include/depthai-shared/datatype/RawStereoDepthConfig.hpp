@@ -64,8 +64,7 @@ struct RawStereoDepthConfig : public RawBuffer {
          */
         std::int32_t subpixelFractionalBits = 3;
 
-        DEPTHAI_SERIALIZE(
-            AlgorithmControl, depthAlign, enableLeftRightCheck, enableExtended, enableSubpixel, leftRightCheckThreshold, subpixelFractionalBits);
+        DEPTHAI_SERIALIZE(AlgorithmControl, depthAlign, enableLeftRightCheck, enableExtended, enableSubpixel, leftRightCheckThreshold, subpixelFractionalBits);
     };
 
     /**
@@ -272,8 +271,7 @@ struct RawStereoDepthConfig : public RawBuffer {
          */
         DecimationFilter decimationFilter;
 
-        DEPTHAI_SERIALIZE(
-            PostProcessing, median, bilateralSigmaValue, spatialFilter, temporalFilter, thresholdFilter, speckleFilter, decimationFilter);
+        DEPTHAI_SERIALIZE(PostProcessing, median, bilateralSigmaValue, spatialFilter, temporalFilter, thresholdFilter, speckleFilter, decimationFilter);
     };
 
     /**

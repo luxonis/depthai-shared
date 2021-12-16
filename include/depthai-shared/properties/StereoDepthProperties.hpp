@@ -118,19 +118,19 @@ struct StereoDepthProperties : PropertiesSerializable<Properties, StereoDepthPro
 };
 
 DEPTHAI_SERIALIZE_EXT(StereoDepthProperties,
-                                   initialConfig,
-                                   depthAlignCamera,
-                                   enableRectification,
-                                   rectifyEdgeFillColor,
-                                   width,
-                                   height,
-                                   outWidth,
-                                   outHeight,
-                                   outKeepAspectRatio,
-                                   mesh,
-                                   enableRuntimeStereoModeSwitch,
-                                   numFramesPool,
-                                   numPostProcessingShaves,
-                                   numPostProcessingMemorySlices);
+                      initialConfig,
+                      depthAlignCamera,
+                      enableRectification,
+                      rectifyEdgeFillColor,
+                      width,
+                      height,
+                      outWidth,
+                      outHeight,
+                      outKeepAspectRatio,
+                      mesh,
+                      enableRuntimeStereoModeSwitch,
+                      numFramesPool,
+                      numPostProcessingShaves,
+                      numPostProcessingMemorySlices);
 
 }  // namespace dai
