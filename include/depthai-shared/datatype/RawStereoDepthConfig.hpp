@@ -1,11 +1,11 @@
 #pragma once
 #include <cstdint>
 #include <depthai-shared/common/optional.hpp>
-#include <nlohmann/json.hpp>
 #include <vector>
 
 #include "DatatypeEnum.hpp"
 #include "RawBuffer.hpp"
+#include "depthai-shared/utility/Serialization.hpp"
 
 namespace dai {
 
@@ -64,8 +64,7 @@ struct RawStereoDepthConfig : public RawBuffer {
          */
         std::int32_t subpixelFractionalBits = 3;
 
-        NLOHMANN_DEFINE_TYPE_INTRUSIVE(
-            AlgorithmControl, depthAlign, enableLeftRightCheck, enableExtended, enableSubpixel, leftRightCheckThreshold, subpixelFractionalBits);
+        DEPTHAI_SERIALIZE(AlgorithmControl, depthAlign, enableLeftRightCheck, enableExtended, enableSubpixel, leftRightCheckThreshold, subpixelFractionalBits);
     };
 
     /**
@@ -125,8 +124,9 @@ struct RawStereoDepthConfig : public RawBuffer {
              * Nubmer of iterations over the image in both horizontal and vertical direction.
              */
             std::int32_t numIterations = 1;
+
+            DEPTHAI_SERIALIZE(SpatialFilter, enable, holeFillingRadius, alpha, delta, numIterations);
         };
-        NLOHMANN_DEFINE_TYPE_INTRUSIVE(SpatialFilter, enable, holeFillingRadius, alpha, delta, numIterations);
 
         /**
          * Edge-preserving filtering: This type of filter will smooth the depth noise while attempting to preserve edges.
@@ -180,8 +180,9 @@ struct RawStereoDepthConfig : public RawBuffer {
              * In case of subpixel mode it's 3*number of subpixel levels.
              */
             std::int32_t delta = 0;
+
+            DEPTHAI_SERIALIZE(TemporalFilter, enable, persistencyMode, alpha, delta);
         };
-        NLOHMANN_DEFINE_TYPE_INTRUSIVE(TemporalFilter, enable, persistencyMode, alpha, delta);
 
         /**
          * Temporal filtering with optional persistence.
@@ -204,8 +205,9 @@ struct RawStereoDepthConfig : public RawBuffer {
              * Depth values over this value are invalidated.
              */
             std::int32_t maxRange = 65535;
+
+            DEPTHAI_SERIALIZE(ThresholdFilter, minRange, maxRange);
         };
-        NLOHMANN_DEFINE_TYPE_INTRUSIVE(ThresholdFilter, minRange, maxRange);
 
         /**
          * Threshold filtering.
@@ -226,8 +228,9 @@ struct RawStereoDepthConfig : public RawBuffer {
              * Speckle search range.
              */
             std::uint32_t speckleRange = 50;
+
+            DEPTHAI_SERIALIZE(SpeckleFilter, enable, speckleRange);
         };
-        NLOHMANN_DEFINE_TYPE_INTRUSIVE(SpeckleFilter, enable, speckleRange);
 
         /**
          * Speckle filtering.
@@ -258,8 +261,9 @@ struct RawStereoDepthConfig : public RawBuffer {
              * Decimation algorithm type.
              */
             DecimationMode decimationMode = DecimationMode::PIXEL_SKIPPING;
+
+            DEPTHAI_SERIALIZE(DecimationFilter, decimationFactor, decimationMode);
         };
-        NLOHMANN_DEFINE_TYPE_INTRUSIVE(DecimationFilter, decimationFactor, decimationMode);
 
         /**
          * Decimation filter.
@@ -267,8 +271,7 @@ struct RawStereoDepthConfig : public RawBuffer {
          */
         DecimationFilter decimationFilter;
 
-        NLOHMANN_DEFINE_TYPE_INTRUSIVE(
-            PostProcessing, median, bilateralSigmaValue, spatialFilter, temporalFilter, thresholdFilter, speckleFilter, decimationFilter);
+        DEPTHAI_SERIALIZE(PostProcessing, median, bilateralSigmaValue, spatialFilter, temporalFilter, thresholdFilter, speckleFilter, decimationFilter);
     };
 
     /**
@@ -326,7 +329,7 @@ struct RawStereoDepthConfig : public RawBuffer {
          */
         uint32_t threshold = 0;
 
-        NLOHMANN_DEFINE_TYPE_INTRUSIVE(CensusTransform, kernelSize, kernelMask, enableMeanMode, threshold);
+        DEPTHAI_SERIALIZE(CensusTransform, kernelSize, kernelMask, enableMeanMode, threshold);
     };
 
     /**
@@ -385,7 +388,7 @@ struct RawStereoDepthConfig : public RawBuffer {
             uint8_t beta = 2;
             uint8_t threshold = 127;
 
-            NLOHMANN_DEFINE_TYPE_INTRUSIVE(LinearEquationParameters, alpha, beta, threshold);
+            DEPTHAI_SERIALIZE(LinearEquationParameters, alpha, beta, threshold);
         };
 
         /**
@@ -393,7 +396,7 @@ struct RawStereoDepthConfig : public RawBuffer {
          */
         LinearEquationParameters linearEquationParameters;
 
-        NLOHMANN_DEFINE_TYPE_INTRUSIVE(CostMatching, disparityWidth, enableCompanding, invalidDisparityValue, confidenceThreshold, linearEquationParameters);
+        DEPTHAI_SERIALIZE(CostMatching, disparityWidth, enableCompanding, invalidDisparityValue, confidenceThreshold, linearEquationParameters);
     };
 
     /**
@@ -435,8 +438,7 @@ struct RawStereoDepthConfig : public RawBuffer {
          */
         uint16_t verticalPenaltyCostP2 = defaultPenaltyP2;
 
-        NLOHMANN_DEFINE_TYPE_INTRUSIVE(
-            CostAggregation, divisionFactor, horizontalPenaltyCostP1, horizontalPenaltyCostP2, verticalPenaltyCostP1, verticalPenaltyCostP2);
+        DEPTHAI_SERIALIZE(CostAggregation, divisionFactor, horizontalPenaltyCostP1, horizontalPenaltyCostP2, verticalPenaltyCostP1, verticalPenaltyCostP2);
     };
 
     /**
@@ -445,12 +447,11 @@ struct RawStereoDepthConfig : public RawBuffer {
     CostAggregation costAggregation;
 
     void serialize(std::vector<std::uint8_t>& metadata, DatatypeEnum& datatype) const override {
-        nlohmann::json j = *this;
-        metadata = nlohmann::json::to_msgpack(j);
+        metadata = utility::serialize(*this);
         datatype = DatatypeEnum::StereoDepthConfig;
     };
 
-    NLOHMANN_DEFINE_TYPE_INTRUSIVE(RawStereoDepthConfig, algorithmControl, postProcessing, censusTransform, costMatching, costAggregation);
+    DEPTHAI_SERIALIZE(RawStereoDepthConfig, algorithmControl, postProcessing, censusTransform, costMatching, costAggregation);
 };
 
 }  // namespace dai

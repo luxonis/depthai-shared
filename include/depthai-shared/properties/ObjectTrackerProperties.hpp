@@ -3,12 +3,9 @@
 // std
 #include <vector>
 
-// libraries
-#include <nlohmann/json.hpp>
-
 // project
-
 #include "depthai-shared/common/optional.hpp"
+#include "depthai-shared/properties/Properties.hpp"
 
 namespace dai {
 
@@ -33,7 +30,7 @@ enum class TrackerIdAssigmentPolicy : std::int32_t {
 /**
  * Specify properties for ObjectTracker
  */
-struct ObjectTrackerProperties {
+struct ObjectTrackerProperties : PropertiesSerializable<Properties, ObjectTrackerProperties> {
     float trackerThreshold = 0.0;
     std::int32_t maxObjectsToTrack = 60;
     std::vector<std::uint32_t> detectionLabelsToTrack;
@@ -41,6 +38,6 @@ struct ObjectTrackerProperties {
     TrackerIdAssigmentPolicy trackerIdAssigmentPolicy = TrackerIdAssigmentPolicy::UNIQUE_ID;
 };
 
-NLOHMANN_DEFINE_TYPE_NON_INTRUSIVE(ObjectTrackerProperties, trackerThreshold, maxObjectsToTrack, detectionLabelsToTrack, trackerType, trackerIdAssigmentPolicy)
+DEPTHAI_SERIALIZE_EXT(ObjectTrackerProperties, trackerThreshold, maxObjectsToTrack, detectionLabelsToTrack, trackerType, trackerIdAssigmentPolicy);
 
 }  // namespace dai

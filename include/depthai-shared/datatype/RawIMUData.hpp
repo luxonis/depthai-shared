@@ -3,6 +3,7 @@
 #include "RawBuffer.hpp"
 #include "depthai-shared/common/Point3f.hpp"
 #include "depthai-shared/common/Timestamp.hpp"
+#include "depthai-shared/utility/Serialization.hpp"
 
 namespace dai {
 
@@ -25,7 +26,7 @@ struct IMUReport {
 
     Timestamp timestamp = {};
 };
-NLOHMANN_DEFINE_TYPE_NON_INTRUSIVE(IMUReport, sequence, accuracy, timestamp);
+DEPTHAI_SERIALIZE_EXT(IMUReport, sequence, accuracy, timestamp);
 
 /**
  * @brief Accelerometer
@@ -37,7 +38,7 @@ struct IMUReportAccelerometer : IMUReport {
     float y = 0;
     float z = 0;
 };
-NLOHMANN_DEFINE_TYPE_NON_INTRUSIVE(IMUReportAccelerometer, x, y, z, sequence, accuracy, timestamp);
+DEPTHAI_SERIALIZE_EXT(IMUReportAccelerometer, x, y, z, sequence, accuracy, timestamp);
 
 /**
  * @brief Gyroscope
@@ -49,7 +50,7 @@ struct IMUReportGyroscope : IMUReport {
     float y = 0;
     float z = 0;
 };
-NLOHMANN_DEFINE_TYPE_NON_INTRUSIVE(IMUReportGyroscope, x, y, z, sequence, accuracy, timestamp);
+DEPTHAI_SERIALIZE_EXT(IMUReportGyroscope, x, y, z, sequence, accuracy, timestamp);
 
 /**
  * @brief Magnetic field
@@ -61,7 +62,7 @@ struct IMUReportMagneticField : IMUReport {
     float y = 0;
     float z = 0;
 };
-NLOHMANN_DEFINE_TYPE_NON_INTRUSIVE(IMUReportMagneticField, x, y, z, sequence, accuracy, timestamp);
+DEPTHAI_SERIALIZE_EXT(IMUReportMagneticField, x, y, z, sequence, accuracy, timestamp);
 
 /**
  * @brief Rotation Vector with Accuracy
@@ -75,7 +76,7 @@ struct IMUReportRotationVectorWAcc : IMUReport {
     float real = 0;                   /**< @brief Quaternion component, real */
     float rotationVectorAccuracy = 0; /**< @brief Accuracy estimate [radians], 0 means no estimate */
 };
-NLOHMANN_DEFINE_TYPE_NON_INTRUSIVE(IMUReportRotationVectorWAcc, i, j, k, real, rotationVectorAccuracy, sequence, accuracy, timestamp);
+DEPTHAI_SERIALIZE_EXT(IMUReportRotationVectorWAcc, i, j, k, real, rotationVectorAccuracy, sequence, accuracy, timestamp);
 
 #if 0
 
@@ -93,7 +94,8 @@ struct IMUReportGyroscopeUncalibrated : IMUReport {
     float biasY = 0; /**< @brief [rad/s] */
     float biasZ = 0; /**< @brief [rad/s] */
 };
-NLOHMANN_DEFINE_TYPE_NON_INTRUSIVE(IMUReportGyroscopeUncalibrated, x, y, z, biasX, biasY, biasZ, sequence, accuracy, timestamp);
+DEPTHAI_SERIALIZE_EXT(IMUReportGyroscopeUncalibrated, x, y, z, biasX, biasY, biasZ, sequence, accuracy, timestamp);
+
 
 
 /**
@@ -110,7 +112,8 @@ struct IMUReportMagneticFieldUncalibrated : IMUReport {
     float biasY = 0; /**< @brief [uTesla] */
     float biasZ = 0; /**< @brief [uTesla] */
 };
-NLOHMANN_DEFINE_TYPE_NON_INTRUSIVE(IMUReportMagneticFieldUncalibrated, x, y, z, biasX, biasY, biasZ, sequence, accuracy, timestamp);
+DEPTHAI_SERIALIZE_EXT(IMUReportMagneticFieldUncalibrated, x, y, z, biasX, biasY, biasZ, sequence, accuracy, timestamp);
+
 
 
 /**
@@ -124,7 +127,8 @@ struct IMUReportRotationVector : IMUReport {
     float k = 0;    /**< @brief Quaternion component k */
     float real = 0; /**< @brief Quaternion component real */
 };
-NLOHMANN_DEFINE_TYPE_NON_INTRUSIVE(IMUReportRotationVector, i, j, k, real, sequence, accuracy, timestamp);
+DEPTHAI_SERIALIZE_EXT(IMUReportRotationVector, i, j, k, real, sequence, accuracy, timestamp);
+
 
 /**
  * @brief Gyro integrated rotation vector
@@ -140,7 +144,8 @@ struct IMUReportGyroIntegratedRV : IMUReport {
     float angVelY = 0; /**< @brief Angular velocity about y [rad/s] */
     float angVelZ = 0; /**< @brief Angular velocity about z [rad/s] */
 };
-NLOHMANN_DEFINE_TYPE_NON_INTRUSIVE(IMUReportGyroIntegratedRV, i, j, k, real, angVelX, angVelY, angVelZ, sequence, accuracy, timestamp);
+DEPTHAI_SERIALIZE_EXT(IMUReportGyroIntegratedRV, i, j, k, real, angVelX, angVelY, angVelZ, sequence, accuracy, timestamp);
+
 #endif
 
 /**
@@ -175,18 +180,17 @@ struct IMUPacket {
 #endif
 };
 
-NLOHMANN_DEFINE_TYPE_NON_INTRUSIVE(IMUPacket, acceleroMeter, gyroscope, magneticField, rotationVector);
+DEPTHAI_SERIALIZE_EXT(IMUPacket, acceleroMeter, gyroscope, magneticField, rotationVector);
 
 struct RawIMUData : public RawBuffer {
     std::vector<IMUPacket> packets;
 
     void serialize(std::vector<std::uint8_t>& metadata, DatatypeEnum& datatype) const override {
-        nlohmann::json j = *this;
-        metadata = nlohmann::json::to_msgpack(j);
+        metadata = utility::serialize(*this);
         datatype = DatatypeEnum::IMUData;
     };
 
-    NLOHMANN_DEFINE_TYPE_INTRUSIVE(RawIMUData, packets);
+    DEPTHAI_SERIALIZE(RawIMUData, packets);
 };
 
 }  // namespace dai
