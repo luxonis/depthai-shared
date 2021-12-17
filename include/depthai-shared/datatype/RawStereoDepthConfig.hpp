@@ -325,7 +325,7 @@ struct RawStereoDepthConfig : public RawBuffer {
         bool enableMeanMode = true;
 
         /**
-         * Census transform comparation treshold value.
+         * Census transform comparison threshold value.
          */
         uint32_t threshold = 0;
 
@@ -381,7 +381,7 @@ struct RawStereoDepthConfig : public RawBuffer {
          * CLAMP(COMB_COST >> 5, threshold).
          * Where AD is the Absolute Difference between 2 pixels values.
          * CTC is the Census Transform Cost between 2 pixels, based on Hamming distance (xor).
-         * The α and β parameters are subject to fine fine tuning by the user.
+         * The α and β parameters are subject to fine tuning by the user.
          */
         struct LinearEquationParameters {
             uint8_t alpha = 0;
