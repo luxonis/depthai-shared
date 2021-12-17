@@ -1,7 +1,5 @@
 #pragma once
 
-#include <nlohmann/json.hpp>
-
 namespace dai {
 /**
  * Camera sensor image orientation / pixel readout.
