@@ -13,13 +13,13 @@ namespace dai {
 /// EdgeDetectorConfigData configuration data structure
 struct EdgeDetectorConfigData {
     /**
-     * Used for horizontal gradiant computation in 3x3 Sobel filter
+     * Used for horizontal gradient computation in 3x3 Sobel filter
      * Format: 3x3 matrix, 2nd column must be 0
      * Default: +1 0 -1; +2 0 -2; +1 0 -1
      */
     std::vector<std::vector<int>> sobelFilterHorizontalKernel;
     /**
-     * Used for vertical gradiant computation in 3x3 Sobel filter
+     * Used for vertical gradient computation in 3x3 Sobel filter
      * Format: 3x3 matrix, 2nd row must be 0
      * Default: +1 +2 +1; 0 0 0; -1 -2 -1
      */

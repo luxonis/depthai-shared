@@ -205,7 +205,7 @@ struct RawFeatureTrackerConfig : public RawBuffer {
         /**
          * Used to filter out detected feature points that are too close.
          * Requires sorting enabled in detector.
-         * Unit of measurement is squared euclidian distance in pixels.
+         * Unit of measurement is squared euclidean distance in pixels.
          */
         float minimumDistanceBetweenFeatures = 50;
 
@@ -236,7 +236,7 @@ struct RawFeatureTrackerConfig : public RawBuffer {
 
     /**
      * Motion estimator configuration.
-     * Used for feature reidentification between current and previos features.
+     * Used for feature reidentification between current and previous features.
      */
     MotionEstimator motionEstimator;
 
