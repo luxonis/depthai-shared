@@ -14,9 +14,9 @@ namespace dai {
  */
 struct SpatialImgDetection : ImgDetection {
     Point3f spatialCoordinates;
-
-    DEPTHAI_SERIALIZE(SpatialImgDetection, label, confidence, xmin, ymin, xmax, ymax, spatialCoordinates);
 };
+
+DEPTHAI_SERIALIZE_EXT(SpatialImgDetection, label, confidence, xmin, ymin, xmax, ymax, spatialCoordinates);
 
 /// RawSpatialImgDetections structure
 struct RawSpatialImgDetections : public RawBuffer {
