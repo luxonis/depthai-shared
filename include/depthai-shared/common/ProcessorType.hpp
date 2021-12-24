@@ -1,6 +1,6 @@
 #pragma once
 
-#include <nlohmann/json.hpp>
+#include "depthai-shared/utility/Serialization.hpp"
 
 namespace dai {
 
