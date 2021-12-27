@@ -33,7 +33,7 @@ DEPTHAI_SERIALIZE_EXT(IMUReport, sequence, accuracy, timestamp);
  *
  * Units are [m/s^2]
  */
-struct IMUReportAccelerometer : IMUReport {
+struct IMUReportAccelerometer : public IMUReport {
     float x = 0;
     float y = 0;
     float z = 0;
@@ -45,7 +45,7 @@ DEPTHAI_SERIALIZE_EXT(IMUReportAccelerometer, x, y, z, sequence, accuracy, times
  *
  * Units are [rad/s]
  */
-struct IMUReportGyroscope : IMUReport {
+struct IMUReportGyroscope : public IMUReport {
     float x = 0;
     float y = 0;
     float z = 0;
@@ -57,7 +57,7 @@ DEPTHAI_SERIALIZE_EXT(IMUReportGyroscope, x, y, z, sequence, accuracy, timestamp
  *
  * Units are [uTesla]
  */
-struct IMUReportMagneticField : IMUReport {
+struct IMUReportMagneticField : public IMUReport {
     float x = 0;
     float y = 0;
     float z = 0;
@@ -69,7 +69,7 @@ DEPTHAI_SERIALIZE_EXT(IMUReportMagneticField, x, y, z, sequence, accuracy, times
  *
  * Contains quaternion components: i,j,k,real
  */
-struct IMUReportRotationVectorWAcc : IMUReport {
+struct IMUReportRotationVectorWAcc : public IMUReport {
     float i = 0;                      /**< @brief Quaternion component i */
     float j = 0;                      /**< @brief Quaternion component j */
     float k = 0;                      /**< @brief Quaternion component k */
@@ -85,7 +85,7 @@ DEPTHAI_SERIALIZE_EXT(IMUReportRotationVectorWAcc, i, j, k, real, rotationVector
  *
  * See the SH-2 Reference Manual for more detail.
  */
-struct IMUReportGyroscopeUncalibrated : IMUReport {
+struct IMUReportGyroscopeUncalibrated : public IMUReport {
     /* Units are rad/s */
     float x = 0;     /**< @brief [rad/s] */
     float y = 0;     /**< @brief [rad/s] */
@@ -103,7 +103,7 @@ DEPTHAI_SERIALIZE_EXT(IMUReportGyroscopeUncalibrated, x, y, z, biasX, biasY, bia
  *
  * See the SH-2 Reference Manual for more detail.
  */
-struct IMUReportMagneticFieldUncalibrated : IMUReport {
+struct IMUReportMagneticFieldUncalibrated : public IMUReport {
     /* Units are uTesla */
     float x = 0;     /**< @brief [uTesla] */
     float y = 0;     /**< @brief [uTesla] */
@@ -121,7 +121,7 @@ DEPTHAI_SERIALIZE_EXT(IMUReportMagneticFieldUncalibrated, x, y, z, biasX, biasY,
  *
  * See the SH-2 Reference Manual for more detail.
  */
-struct IMUReportRotationVector : IMUReport {
+struct IMUReportRotationVector : public IMUReport {
     float i = 0;    /**< @brief Quaternion component i */
     float j = 0;    /**< @brief Quaternion component j */
     float k = 0;    /**< @brief Quaternion component k */
@@ -135,7 +135,7 @@ DEPTHAI_SERIALIZE_EXT(IMUReportRotationVector, i, j, k, real, sequence, accuracy
  *
  * See SH-2 Reference Manual for details.
  */
-struct IMUReportGyroIntegratedRV : IMUReport {
+struct IMUReportGyroIntegratedRV : public IMUReport {
     float i = 0;       /**< @brief Quaternion component i */
     float j = 0;       /**< @brief Quaternion component j */
     float k = 0;       /**< @brief Quaternion component k */

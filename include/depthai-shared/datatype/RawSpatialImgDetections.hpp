@@ -16,6 +16,8 @@ struct SpatialImgDetection : public ImgDetection {
     Point3f spatialCoordinates;
 };
 
+DEPTHAI_SERIALIZE_EXT(SpatialImgDetection, label, confidence, xmin, ymin, xmax, ymax, spatialCoordinates);
+
 /// RawSpatialImgDetections structure
 struct RawSpatialImgDetections : public RawBuffer {
     std::vector<SpatialImgDetection> detections;
@@ -29,5 +31,3 @@ struct RawSpatialImgDetections : public RawBuffer {
 };
 
 }  // namespace dai
-
-DEPTHAI_SERIALIZE_EXT(dai::SpatialImgDetection, label, confidence, xmin, ymin, xmax, ymax, spatialCoordinates);
