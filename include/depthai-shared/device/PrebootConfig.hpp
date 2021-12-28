@@ -24,9 +24,10 @@ struct PrebootConfig {
 
     USB usb;
     tl::optional<uint32_t> watchdogTimeoutMs;
+    tl::optional<uint32_t> watchdogInitialDelayMs;
 };
 
 DEPTHAI_SERIALIZE_EXT(PrebootConfig::USB, vid, pid, flashBootedVid, flashBootedPid, maxSpeed);
-DEPTHAI_SERIALIZE_EXT(PrebootConfig, usb, watchdogTimeoutMs);
+DEPTHAI_SERIALIZE_EXT(PrebootConfig, usb, watchdogTimeoutMs, watchdogInitialDelayMs);
 
 }  // namespace dai
