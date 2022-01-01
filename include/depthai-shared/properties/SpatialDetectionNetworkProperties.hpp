@@ -20,6 +20,7 @@ namespace dai {
 struct SpatialDetectionNetworkProperties : DetectionNetworkProperties {
     float detectedBBScaleFactor = 1.0;
     SpatialLocationCalculatorConfigThresholds depthThresholds;
+    SpatialLocationCalculatorAlgorithm calculationAlgorithm = SpatialLocationCalculatorAlgorithm::AVERAGE;
 };
 
 NLOHMANN_DEFINE_TYPE_NON_INTRUSIVE(SpatialDetectionNetworkProperties,
@@ -36,6 +37,7 @@ NLOHMANN_DEFINE_TYPE_NON_INTRUSIVE(SpatialDetectionNetworkProperties,
                                    anchorMasks,
                                    iouThreshold,
                                    detectedBBScaleFactor,
-                                   depthThresholds)
+                                   depthThresholds,
+                                   calculationAlgorithm)
 
 }  // namespace dai
