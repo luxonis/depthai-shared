@@ -7,11 +7,11 @@
 namespace dai {
 
 /**
- * CameraProperties structure
+ * CameraFeatures structure
  *
  * Characterizes detected cameras on board
  */
-struct CameraProperties {
+struct CameraFeatures {
     /**
      * Board socket where the camera was detected
      */
@@ -40,7 +40,7 @@ struct CameraProperties {
      */
     bool hasAutofocus;
 
-    NLOHMANN_DEFINE_TYPE_INTRUSIVE(CameraProperties, socket, sensorName, width, height, orientation, supportedTypes, hasAutofocus);
+    NLOHMANN_DEFINE_TYPE_INTRUSIVE(CameraFeatures, socket, sensorName, width, height, orientation, supportedTypes, hasAutofocus);
 };
 
 }  // namespace dai
