@@ -94,6 +94,8 @@ struct RawCameraControl : public RawBuffer {
                                         */
         AF_LENS_RANGE = 51,            /* [1] value
                                        */
+        AF_LENS_LIMIT = 52,            /* [1] value
+                                       */
     };
 
     enum class AutoFocusMode : uint8_t {
@@ -208,6 +210,7 @@ struct RawCameraControl : public RawBuffer {
      */
     uint8_t lensPosition = 0;
     uint8_t lensPosAutoInfinity, lensPosAutoMacro;
+    uint8_t lensPosLimitMin = 0, lensPosLimitMax = 255;
 
     ManualExposureParams expManual;
     RegionParams aeRegion, afRegion;
@@ -253,6 +256,8 @@ struct RawCameraControl : public RawBuffer {
                                    lensPosition,
                                    lensPosAutoInfinity,
                                    lensPosAutoMacro,
+                                   lensPosLimitMin,
+                                   lensPosLimitMax,
                                    expManual,
                                    aeRegion,
                                    afRegion,
