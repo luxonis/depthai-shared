@@ -7,9 +7,9 @@
 // project
 #include "depthai-shared/common/UsbSpeed.hpp"
 #include "depthai-shared/common/optional.hpp"
+#include "depthai-shared/device/BoardConfig.hpp"
 #include "depthai-shared/utility/Serialization.hpp"
 #include "depthai-shared/xlink/XLinkConstants.hpp"
-#include "depthai-shared/device/BoardConfig.hpp"
 
 namespace dai {
 
@@ -36,8 +36,7 @@ struct BoardConfig {
         bool output = false;
         bool level = false;
         std::int8_t pull = 0;
-        std::int8_t voltage = 0;
-        /// Drive strenght in mA
+        /// Drive strength in mA
         std::int8_t drive = 0;
         bool schmitt = false, slewFast = false;
     };
@@ -53,11 +52,10 @@ struct BoardConfig {
     };
     /// UART instance map
     std::unordered_map<std::int8_t, UART> uart;
-
 };
 
 DEPTHAI_SERIALIZE_EXT(BoardConfig::USB, vid, pid, flashBootedVid, flashBootedPid, maxSpeed);
-DEPTHAI_SERIALIZE_EXT(BoardConfig::GPIO, mode, output, level, pull, voltage, drive, schmitt, slewFast);
+DEPTHAI_SERIALIZE_EXT(BoardConfig::GPIO, mode, output, level, pull, drive, schmitt, slewFast);
 DEPTHAI_SERIALIZE_EXT(BoardConfig::UART, tmp);
 DEPTHAI_SERIALIZE_EXT(BoardConfig, usb, watchdogTimeoutMs, watchdogInitialDelayMs, gpio, uart);
 
