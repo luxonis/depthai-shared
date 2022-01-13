@@ -1,15 +1,15 @@
 #pragma once
 
-#include <depthai-shared/common/ProcessorType.hpp>
-#include <depthai-shared/common/optional.hpp>
-#include <nlohmann/json.hpp>
+#include "depthai-shared/common/ProcessorType.hpp"
+#include "depthai-shared/common/optional.hpp"
+#include "depthai-shared/properties/Properties.hpp"
 
 namespace dai {
 
 /**
  * Specify ScriptProperties options such as script uri, script name, ...
  */
-struct ScriptProperties {
+struct ScriptProperties : PropertiesSerializable<Properties, ScriptProperties> {
     /**
      * Uri which points to actual script
      */
@@ -26,6 +26,6 @@ struct ScriptProperties {
     ProcessorType processor = ProcessorType::LEON_MSS;
 };
 
-NLOHMANN_DEFINE_TYPE_NON_INTRUSIVE(ScriptProperties, scriptUri, scriptName, processor);
+DEPTHAI_SERIALIZE_EXT(ScriptProperties, scriptUri, scriptName, processor);
 
 }  // namespace dai

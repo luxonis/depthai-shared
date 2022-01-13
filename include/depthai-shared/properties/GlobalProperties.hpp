@@ -1,16 +1,15 @@
 #pragma once
 
-#include <depthai-shared/common/optional.hpp>
-#include <nlohmann/json.hpp>
-
 #include "depthai-shared/common/EepromData.hpp"
+#include "depthai-shared/common/optional.hpp"
+#include "depthai-shared/properties/Properties.hpp"
 
 namespace dai {
 
 /**
  * Specify properties which apply for whole pipeline
  */
-struct GlobalProperties {
+struct GlobalProperties : PropertiesSerializable<Properties, GlobalProperties> {
     /**
      * Set frequency of Leon OS - Increasing can improve performance, at the cost of higher power
      * draw
@@ -37,9 +36,23 @@ struct GlobalProperties {
      * Uri which points to camera tuning blob
      */
     std::string cameraTuningBlobUri;
+
+    /**
+     * Chunk size for splitting device-sent XLink packets, in bytes. A larger value could
+     * increase performance, with 0 disabling chunking. A negative value won't modify the
+     * device defaults - configured per protocol, currently 64*1024 for both USB and Ethernet.
+     */
+    int32_t xlinkChunkSize = -1;
 };
 
-NLOHMANN_DEFINE_TYPE_NON_INTRUSIVE(
-    GlobalProperties, leonCssFrequencyHz, leonMssFrequencyHz, pipelineName, pipelineVersion, cameraTuningBlobSize, cameraTuningBlobUri, calibData);
+DEPTHAI_SERIALIZE_EXT(GlobalProperties,
+                      leonCssFrequencyHz,
+                      leonMssFrequencyHz,
+                      pipelineName,
+                      pipelineVersion,
+                      cameraTuningBlobSize,
+                      cameraTuningBlobUri,
+                      calibData,
+                      xlinkChunkSize);
 
 }  // namespace dai

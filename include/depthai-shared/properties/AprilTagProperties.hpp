@@ -1,8 +1,7 @@
 #pragma once
 
-#include <depthai-shared/common/optional.hpp>
 #include <depthai-shared/datatype/RawAprilTagConfig.hpp>
-#include <nlohmann/json.hpp>
+#include "depthai-shared/properties/Properties.hpp"
 #include <vector>
 
 namespace dai {
@@ -10,13 +9,13 @@ namespace dai {
 /**
  * Specify properties for AprilTag
  */
-struct AprilTagProperties {
+struct AprilTagProperties : PropertiesSerializable<Properties, AprilTagProperties> {
     RawAprilTagConfig initialConfig;
 
     /// Whether to wait for config at 'inputConfig' IO
     bool inputConfigSync = false;
 };
 
-NLOHMANN_DEFINE_TYPE_NON_INTRUSIVE(AprilTagProperties, initialConfig, inputConfigSync);
+DEPTHAI_SERIALIZE_EXT(AprilTagProperties, initialConfig, inputConfigSync);
 
 }  // namespace dai

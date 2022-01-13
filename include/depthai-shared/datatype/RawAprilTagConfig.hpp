@@ -1,6 +1,6 @@
 #pragma once
 #include <cstdint>
-#include <nlohmann/json.hpp>
+#include "depthai-shared/utility/Serialization.hpp"
 #include <vector>
 
 #include "DatatypeEnum.hpp"
@@ -14,7 +14,7 @@ struct AprilTagType {
 
     Type t = Type::TAG_36H11;
 };
-NLOHMANN_DEFINE_TYPE_NON_INTRUSIVE(AprilTagType, t);
+DEPTHAI_SERIALIZE_EXT(AprilTagType, t);
 
 /// RawAprilTags configuration structure
 struct RawAprilTagConfig : public RawBuffer {
@@ -26,7 +26,7 @@ struct RawAprilTagConfig : public RawBuffer {
         datatype = DatatypeEnum::AprilTagConfig;
     };
 
-    NLOHMANN_DEFINE_TYPE_INTRUSIVE(RawAprilTagConfig, config);
+    DEPTHAI_SERIALIZE(RawAprilTagConfig, config);
 };
 
 }  // namespace dai

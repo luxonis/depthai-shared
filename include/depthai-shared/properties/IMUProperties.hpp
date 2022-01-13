@@ -1,14 +1,15 @@
 #pragma once
 
-#include <depthai-shared/datatype/RawIMUData.hpp>
-#include <nlohmann/json.hpp>
+#include "depthai-shared/datatype/RawIMUData.hpp"
+#include "depthai-shared/properties/Properties.hpp"
 
 namespace dai {
 
 /**
  * Available IMU sensors.
  * More details about each sensor can be found in the datasheet:
- * \link https://www.ceva-dsp.com/wp-content/uploads/2019/10/BNO080_085-Datasheet.pdf \endlink
+ *
+ * https://www.ceva-dsp.com/wp-content/uploads/2019/10/BNO080_085-Datasheet.pdf
  */
 enum class IMUSensor : std::int32_t {
     /**
@@ -161,9 +162,9 @@ struct IMUSensorConfig {
 
     IMUSensor sensorId;
 };
-NLOHMANN_DEFINE_TYPE_NON_INTRUSIVE(IMUSensorConfig, sensitivityEnabled, sensitivityRelative, changeSensitivity, reportRate, sensorId);
+DEPTHAI_SERIALIZE_EXT(IMUSensorConfig, sensitivityEnabled, sensitivityRelative, changeSensitivity, reportRate, sensorId);
 
-struct IMUProperties {
+struct IMUProperties : PropertiesSerializable<Properties, IMUProperties> {
     /* Enabled IMU sensors */
     std::vector<IMUSensorConfig> imuSensors;
     /* Above this packet threshold data will be sent to host, if queue is not blocked */
@@ -172,6 +173,6 @@ struct IMUProperties {
     std::int32_t maxBatchReports = 5;
 };
 
-NLOHMANN_DEFINE_TYPE_NON_INTRUSIVE(IMUProperties, imuSensors, batchReportThreshold, maxBatchReports);
+DEPTHAI_SERIALIZE_EXT(IMUProperties, imuSensors, batchReportThreshold, maxBatchReports);
 
 }  // namespace dai
