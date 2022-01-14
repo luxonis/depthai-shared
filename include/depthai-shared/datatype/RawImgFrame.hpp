@@ -161,12 +161,22 @@ struct RawImgFrame : public RawBuffer {
 
         NLOHMANN_DEFINE_TYPE_INTRUSIVE(Specs, type, width, height, stride, bytesPP, p1Offset, p2Offset, p3Offset);
     };
+    struct WhiteBalance {
+        float gainR;
+        float gainGr;
+        float gainGb;
+        float gainB;
+
+        NLOHMANN_DEFINE_TYPE_INTRUSIVE(WhiteBalance, gainR, gainGr, gainGb, gainB);
+    };
+
     struct CameraSettings {
+        WhiteBalance whiteBalanceGains;
         int32_t exposureTimeUs;
         int32_t sensitivityIso;
         int32_t lensPosition;
 
-        NLOHMANN_DEFINE_TYPE_INTRUSIVE(CameraSettings, exposureTimeUs, sensitivityIso, lensPosition);
+        NLOHMANN_DEFINE_TYPE_INTRUSIVE(CameraSettings, whiteBalanceGains, exposureTimeUs, sensitivityIso, lensPosition);
     };
 
     Specs fb;
@@ -183,7 +193,7 @@ struct RawImgFrame : public RawBuffer {
         datatype = DatatypeEnum::ImgFrame;
     };
 
-    NLOHMANN_DEFINE_TYPE_INTRUSIVE(RawImgFrame, fb, category, instanceNum, sequenceNum, ts, tsDevice);
+    NLOHMANN_DEFINE_TYPE_INTRUSIVE(RawImgFrame, fb, cam, category, instanceNum, sequenceNum, ts, tsDevice);
 };
 
 }  // namespace dai
