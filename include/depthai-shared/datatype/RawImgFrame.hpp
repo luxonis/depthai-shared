@@ -4,6 +4,8 @@
 
 #include "RawBuffer.hpp"
 #include "depthai-shared/common/Timestamp.hpp"
+#include "depthai-shared/utility/Serialization.hpp"
+
 namespace dai {
 
 /// RawImgFrame structure
@@ -159,14 +161,14 @@ struct RawImgFrame : public RawBuffer {
         unsigned int p2Offset;  // Offset to second plane
         unsigned int p3Offset;  // Offset to third plane
 
-        NLOHMANN_DEFINE_TYPE_INTRUSIVE(Specs, type, width, height, stride, bytesPP, p1Offset, p2Offset, p3Offset);
+        DEPTHAI_SERIALIZE(Specs, type, width, height, stride, bytesPP, p1Offset, p2Offset, p3Offset);
     };
     struct CameraSettings {
         int32_t exposureTimeUs;
         int32_t sensitivityIso;
         int32_t lensPosition;
 
-        NLOHMANN_DEFINE_TYPE_INTRUSIVE(CameraSettings, exposureTimeUs, sensitivityIso, lensPosition);
+        DEPTHAI_SERIALIZE(CameraSettings, exposureTimeUs, sensitivityIso, lensPosition);
     };
 
     Specs fb;
@@ -178,12 +180,11 @@ struct RawImgFrame : public RawBuffer {
     Timestamp tsDevice;    // generation timestamp, direct device monotonic clock
 
     void serialize(std::vector<std::uint8_t>& metadata, DatatypeEnum& datatype) const override {
-        nlohmann::json j = *this;
-        metadata = nlohmann::json::to_msgpack(j);
+        metadata = utility::serialize(*this);
         datatype = DatatypeEnum::ImgFrame;
     };
 
-    NLOHMANN_DEFINE_TYPE_INTRUSIVE(RawImgFrame, fb, cam, category, instanceNum, sequenceNum, ts, tsDevice);
+    DEPTHAI_SERIALIZE(RawImgFrame, fb, cam, category, instanceNum, sequenceNum, ts, tsDevice);
 };
 
 }  // namespace dai

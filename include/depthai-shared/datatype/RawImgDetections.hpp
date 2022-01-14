@@ -2,6 +2,7 @@
 
 #include "RawBuffer.hpp"
 #include "depthai-shared/common/Point3f.hpp"
+#include "depthai-shared/utility/Serialization.hpp"
 
 namespace dai {
 
@@ -13,21 +14,20 @@ struct ImgDetection {
     float ymin;
     float xmax;
     float ymax;
-
-    NLOHMANN_DEFINE_TYPE_INTRUSIVE(ImgDetection, label, confidence, xmin, ymin, xmax, ymax);
 };
+
+DEPTHAI_SERIALIZE_EXT(ImgDetection, label, confidence, xmin, ymin, xmax, ymax);
 
 /// RawImgDetections structure
 struct RawImgDetections : public RawBuffer {
     std::vector<ImgDetection> detections;
 
     void serialize(std::vector<std::uint8_t>& metadata, DatatypeEnum& datatype) const override {
-        nlohmann::json j = *this;
-        metadata = nlohmann::json::to_msgpack(j);
+        metadata = utility::serialize(*this);
         datatype = DatatypeEnum::ImgDetections;
     };
 
-    NLOHMANN_DEFINE_TYPE_INTRUSIVE(RawImgDetections, detections);
+    DEPTHAI_SERIALIZE(RawImgDetections, detections);
 };
 
 }  // namespace dai

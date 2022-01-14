@@ -1,10 +1,10 @@
 #pragma once
 #include <cstdint>
-#include <nlohmann/json.hpp>
 #include <vector>
 
 #include "DatatypeEnum.hpp"
 #include "RawBuffer.hpp"
+#include "depthai-shared/utility/Serialization.hpp"
 
 namespace dai {
 
@@ -188,7 +188,7 @@ struct RawCameraControl : public RawBuffer {
         uint32_t sensitivityIso;
         uint32_t frameDurationUs;
 
-        NLOHMANN_DEFINE_TYPE_INTRUSIVE(ManualExposureParams, exposureTimeUs, sensitivityIso, frameDurationUs);
+        DEPTHAI_SERIALIZE(ManualExposureParams, exposureTimeUs, sensitivityIso, frameDurationUs);
     };
 
     // AE_REGION / AF_REGION
@@ -200,7 +200,7 @@ struct RawCameraControl : public RawBuffer {
         // Set to 1 for now. TODO
         uint32_t priority;
 
-        NLOHMANN_DEFINE_TYPE_INTRUSIVE(RegionParams, x, y, width, height, priority);
+        DEPTHAI_SERIALIZE(RegionParams, x, y, width, height, priority);
     };
 
     uint64_t cmdMask = 0;
@@ -253,37 +253,36 @@ struct RawCameraControl : public RawBuffer {
     }
 
     void serialize(std::vector<std::uint8_t>& metadata, DatatypeEnum& datatype) const override {
-        nlohmann::json j = *this;
-        metadata = nlohmann::json::to_msgpack(j);
+        metadata = utility::serialize(*this);
         datatype = DatatypeEnum::CameraControl;
     };
 
-    NLOHMANN_DEFINE_TYPE_INTRUSIVE(RawCameraControl,
-                                   cmdMask,
-                                   autoFocusMode,
-                                   lensPosition,
-                                   lensPosAutoInfinity,
-                                   lensPosAutoMacro,
-                                   expManual,
-                                   aeRegion,
-                                   afRegion,
-                                   awbMode,
-                                   sceneMode,
-                                   antiBandingMode,
-                                   aeLockMode,
-                                   awbLockMode,
-                                   effectMode,
-                                   frameSyncMode,
-                                   expCompensation,
-                                   brightness,
-                                   contrast,
-                                   saturation,
-                                   sharpness,
-                                   lumaDenoise,
-                                   chromaDenoise,
-                                   wbColorTemp,
-                                   lowPowerNumFramesBurst,
-                                   lowPowerNumFramesDiscard);
+    DEPTHAI_SERIALIZE(RawCameraControl,
+                      cmdMask,
+                      autoFocusMode,
+                      lensPosition,
+                      lensPosAutoInfinity,
+                      lensPosAutoMacro,
+                      expManual,
+                      aeRegion,
+                      afRegion,
+                      awbMode,
+                      sceneMode,
+                      antiBandingMode,
+                      aeLockMode,
+                      awbLockMode,
+                      effectMode,
+                      frameSyncMode,
+                      expCompensation,
+                      brightness,
+                      contrast,
+                      saturation,
+                      sharpness,
+                      lumaDenoise,
+                      chromaDenoise,
+                      wbColorTemp,
+                      lowPowerNumFramesBurst,
+                      lowPowerNumFramesDiscard);
 };
 
 }  // namespace dai

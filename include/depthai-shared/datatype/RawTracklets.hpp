@@ -6,6 +6,7 @@
 #include "depthai-shared/common/Point3f.hpp"
 #include "depthai-shared/common/Rect.hpp"
 #include "depthai-shared/datatype/RawImgDetections.hpp"
+#include "depthai-shared/utility/Serialization.hpp"
 
 namespace dai {
 
@@ -51,7 +52,7 @@ struct Tracklet {
      * Spatial coordinates of tracklet.
      */
     Point3f spatialCoordinates;
-    NLOHMANN_DEFINE_TYPE_INTRUSIVE(Tracklet, roi, id, label, age, status, srcImgDetection, spatialCoordinates);
+    DEPTHAI_SERIALIZE(Tracklet, roi, id, label, age, status, srcImgDetection, spatialCoordinates);
 };
 
 /// RawTracklets structure
@@ -59,12 +60,11 @@ struct RawTracklets : public RawBuffer {
     std::vector<Tracklet> tracklets;
 
     void serialize(std::vector<std::uint8_t>& metadata, DatatypeEnum& datatype) const override {
-        nlohmann::json j = *this;
-        metadata = nlohmann::json::to_msgpack(j);
+        metadata = utility::serialize(*this);
         datatype = DatatypeEnum::Tracklets;
     };
 
-    NLOHMANN_DEFINE_TYPE_INTRUSIVE(RawTracklets, tracklets);
+    DEPTHAI_SERIALIZE(RawTracklets, tracklets);
 };
 
 }  // namespace dai
