@@ -23,7 +23,7 @@ struct TrackedFeature {
      *  Feature ID. Persistent between frames if motion estimation is enabled.
      */
     uint32_t id;
-#if 0
+
     /**
      *  Feature age in frames
      */
@@ -37,7 +37,7 @@ struct TrackedFeature {
      *  Feature tracking error
      */
     float trackingError;
-#endif
+
 };
 DEPTHAI_SERIALIZE_EXT(TrackedFeature, position, id);
 
