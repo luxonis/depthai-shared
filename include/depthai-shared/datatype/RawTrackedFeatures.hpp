@@ -39,7 +39,7 @@ struct TrackedFeature {
     float trackingError;
 
 };
-DEPTHAI_SERIALIZE_EXT(TrackedFeature, position, id);
+DEPTHAI_SERIALIZE_EXT(TrackedFeature, position, id, age, harrisScore, trackingError);
 
 /// RawTrackedFeatures structure
 struct RawTrackedFeatures : public RawBuffer {
