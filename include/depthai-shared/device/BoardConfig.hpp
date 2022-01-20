@@ -32,13 +32,23 @@ struct BoardConfig {
 
     // GPIO config
     struct GPIO {
-        std::int8_t mode = 7;
-        bool output = false;
-        bool level = false;
-        std::int8_t pull = 0;
-        /// Drive strength in mA
+        enum Mode : std::int8_t { ALT_MODE_0 = 0, ALT_MODE_1, ALT_MODE_2, ALT_MODE_3, ALT_MODE_4, ALT_MODE_5, ALT_MODE_6, DIRECT };
+        Mode mode = Mode::DIRECT;
+        enum Direction : std::int8_t { INPUT = 0, OUTPUT = 1 };
+        Direction direction = Direction::INPUT;
+        enum Level : std::int8_t { LOW = 0, HIGH = 1 };
+        Level level = Level::LOW;
+        enum Pull : std::int8_t { NO_PULL = 0, PULL_UP = 1, PULL_DOWN = 2, BUS_KEEPER = 3 };
+        Pull pull = Pull::NO_PULL;
+        /// Drive strength in mA (2, 4, 8 and 12mA)
         std::int8_t drive = 0;
         bool schmitt = false, slewFast = false;
+        GPIO() = default;
+        GPIO(Direction direction) : direction(direction) {}
+        GPIO(Direction direction, Level level) : direction(direction), level(level) {}
+        GPIO(Direction direction, Level level, Pull pull) : direction(direction), level(level), pull(pull) {}
+        GPIO(Direction direction, Mode mode) : mode(mode), direction(direction) {}
+        GPIO(Direction direction, Mode mode, Pull pull) : mode(mode), direction(direction), pull(pull) {}
     };
     std::unordered_map<std::int8_t, GPIO> gpio;
 
@@ -55,7 +65,7 @@ struct BoardConfig {
 };
 
 DEPTHAI_SERIALIZE_EXT(BoardConfig::USB, vid, pid, flashBootedVid, flashBootedPid, maxSpeed);
-DEPTHAI_SERIALIZE_EXT(BoardConfig::GPIO, mode, output, level, pull, drive, schmitt, slewFast);
+DEPTHAI_SERIALIZE_EXT(BoardConfig::GPIO, mode, direction, level, pull, drive, schmitt, slewFast);
 DEPTHAI_SERIALIZE_EXT(BoardConfig::UART, tmp);
 DEPTHAI_SERIALIZE_EXT(BoardConfig, usb, watchdogTimeoutMs, watchdogInitialDelayMs, gpio, uart);
 
