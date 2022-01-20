@@ -41,7 +41,8 @@ struct BoardConfig {
         enum Pull : std::int8_t { NO_PULL = 0, PULL_UP = 1, PULL_DOWN = 2, BUS_KEEPER = 3 };
         Pull pull = Pull::NO_PULL;
         /// Drive strength in mA (2, 4, 8 and 12mA)
-        std::int8_t drive = 0;
+        enum Drive : std::int8_t { MA_2 = 2, MA_4 = 4, MA_8 = 8, MA_12 = 12 };
+        Drive drive = MA_2;
         bool schmitt = false, slewFast = false;
         GPIO() = default;
         GPIO(Direction direction) : direction(direction) {}
