@@ -115,6 +115,13 @@ struct StereoDepthProperties : PropertiesSerializable<Properties, StereoDepthPro
      * so post processing will run in parallel with main stereo algorithm.
      */
     std::int32_t numPostProcessingMemorySlices = AUTO;
+
+    /**
+     * Whether to use focal length from calibration intrinsics or calculate based on calibration FOV.
+     * Default behaviour is AUTO, for fisheye lenses focal length is taken from calibration intrinsics,
+     * otherwise calculated from FOV and image resolution: focalLength = calib.width / (2.f * tan(calib.fov / 2 / 180.f * pi));
+     */
+    tl::optional<bool> focalLengthFromCalibration;
 };
 
 DEPTHAI_SERIALIZE_EXT(StereoDepthProperties,
@@ -131,6 +138,7 @@ DEPTHAI_SERIALIZE_EXT(StereoDepthProperties,
                       enableRuntimeStereoModeSwitch,
                       numFramesPool,
                       numPostProcessingShaves,
-                      numPostProcessingMemorySlices);
+                      numPostProcessingMemorySlices,
+                      focalLengthFromCalibration);
 
 }  // namespace dai
