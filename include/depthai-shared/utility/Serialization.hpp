@@ -47,6 +47,7 @@ namespace utility {
 //     deserialize(data.data(), data.size(), obj);
 // }
 
+// NOLINTBEGIN
 class VectorWriter {
    public:
     template <typename... Args>
@@ -95,6 +96,7 @@ class VectorWriter {
 
     std::vector<std::uint8_t> vector;
 };
+// NOLINTEND
 
 // libnop serialization
 // If exceptions are available it throws in error cases
