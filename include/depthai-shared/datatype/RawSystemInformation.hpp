@@ -2,11 +2,11 @@
 #include <cstdint>
 #include <vector>
 
-#include "DatatypeEnum.hpp"
-#include "RawBuffer.hpp"
 #include "depthai-shared/common/ChipTemperature.hpp"
 #include "depthai-shared/common/CpuUsage.hpp"
 #include "depthai-shared/common/MemoryInfo.hpp"
+#include "depthai-shared/datatype/DatatypeEnum.hpp"
+#include "depthai-shared/datatype/RawBuffer.hpp"
 #include "depthai-shared/utility/Serialization.hpp"
 
 namespace dai {

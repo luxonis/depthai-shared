@@ -2,10 +2,10 @@
 #include <cstdint>
 #include <vector>
 
-#include "DatatypeEnum.hpp"
-#include "RawBuffer.hpp"
 #include "RawImgFrame.hpp"
 #include "depthai-shared/common/Rect.hpp"
+#include "depthai-shared/datatype/DatatypeEnum.hpp"
+#include "depthai-shared/datatype/RawBuffer.hpp"
 #include "depthai-shared/utility/Serialization.hpp"
 
 namespace dai {

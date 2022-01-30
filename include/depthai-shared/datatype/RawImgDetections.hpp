@@ -1,7 +1,7 @@
 #pragma once
 
-#include "RawBuffer.hpp"
 #include "depthai-shared/common/Point3f.hpp"
+#include "depthai-shared/datatype/RawBuffer.hpp"
 #include "depthai-shared/utility/Serialization.hpp"
 
 namespace dai {

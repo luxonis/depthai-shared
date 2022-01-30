@@ -2,9 +2,9 @@
 
 #include <iostream>
 
-#include "RawBuffer.hpp"
 #include "depthai-shared/common/Point3f.hpp"
 #include "depthai-shared/common/Rect.hpp"
+#include "depthai-shared/datatype/RawBuffer.hpp"
 #include "depthai-shared/datatype/RawImgDetections.hpp"
 #include "depthai-shared/utility/Serialization.hpp"
 
