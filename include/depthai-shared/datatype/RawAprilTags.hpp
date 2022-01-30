@@ -39,11 +39,8 @@ struct AprilTags {
     // The corners of the tag in image pixel coordinates. These always
     // wrap counter-clock wise around the tag.
     dai::Rect points;
-
-    // Configuration
-    AprilTagType config;
 };
-DEPTHAI_SERIALIZE_EXT(AprilTags, id, hamming, decisionMargin, center, points, config);
+DEPTHAI_SERIALIZE_EXT(AprilTags, id, hamming, decisionMargin, center, points);
 
 /// RawAprilTags structure
 struct RawAprilTags : public RawBuffer {
