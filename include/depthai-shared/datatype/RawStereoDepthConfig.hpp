@@ -201,7 +201,7 @@ struct RawStereoDepthConfig : public RawBuffer {
              */
             std::int32_t minRange = 0;
             /**
-             * Minimum range in millimeters.
+             * Maximum range in millimeters.
              * Depth values over this value are invalidated.
              */
             std::int32_t maxRange = 65535;
