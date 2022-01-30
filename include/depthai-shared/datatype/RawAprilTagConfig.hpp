@@ -1,10 +1,10 @@
 #pragma once
 #include <cstdint>
-#include "depthai-shared/utility/Serialization.hpp"
 #include <vector>
 
 #include "DatatypeEnum.hpp"
 #include "RawBuffer.hpp"
+#include "depthai-shared/utility/Serialization.hpp"
 
 namespace dai {
 
@@ -21,8 +21,7 @@ struct RawAprilTagConfig : public RawBuffer {
     AprilTagType config;
 
     void serialize(std::vector<std::uint8_t>& metadata, DatatypeEnum& datatype) const override {
-        nlohmann::json j = *this;
-        metadata = nlohmann::json::to_msgpack(j);
+        metadata = utility::serialize(*this);
         datatype = DatatypeEnum::AprilTagConfig;
     };
 

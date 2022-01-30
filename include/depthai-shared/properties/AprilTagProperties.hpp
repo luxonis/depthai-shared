@@ -1,8 +1,9 @@
 #pragma once
 
 #include <depthai-shared/datatype/RawAprilTagConfig.hpp>
-#include "depthai-shared/properties/Properties.hpp"
 #include <vector>
+
+#include "depthai-shared/properties/Properties.hpp"
 
 namespace dai {
 
