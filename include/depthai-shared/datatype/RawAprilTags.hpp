@@ -28,7 +28,7 @@ struct AprilTags {
     int hamming = 0;
 
     /**
-     * A measure of the quality of the binary decoding process: the
+     * A measure of the quality of the binary decoding process; the
      * average difference between the intensity of a data bit versus
      * the decision threshold. Higher numbers roughly indicate better
      * decodes. This is a reasonable measure of detection accuracy
