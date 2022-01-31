@@ -17,7 +17,7 @@ enum class DatatypeEnum : std::int32_t {
     SpatialLocationCalculatorData,
     EdgeDetectorConfig,
     AprilTagConfig,
-    AprilTagData,
+    AprilTags,
     Tracklets,
     IMUData,
     StereoDepthConfig,

@@ -11,9 +11,9 @@
 namespace dai {
 
 /**
- * AprilTags structure.
+ * AprilTag structure.
  */
-struct AprilTags {
+struct AprilTag {
     /**
      * The decoded ID of the tag
      */
@@ -58,15 +58,15 @@ struct AprilTags {
      */
     Point2f bottomLeft;
 };
-DEPTHAI_SERIALIZE_EXT(AprilTags, id, hamming, decisionMargin, topLeft, topRight, bottomRight, bottomLeft);
+DEPTHAI_SERIALIZE_EXT(AprilTag, id, hamming, decisionMargin, topLeft, topRight, bottomRight, bottomLeft);
 
 /// RawAprilTags structure
 struct RawAprilTags : public RawBuffer {
-    std::vector<AprilTags> aprilTags;
+    std::vector<AprilTag> aprilTags;
 
     void serialize(std::vector<std::uint8_t>& metadata, DatatypeEnum& datatype) const override {
         metadata = utility::serialize(*this);
-        datatype = DatatypeEnum::AprilTagData;
+        datatype = DatatypeEnum::AprilTags;
     };
 
     DEPTHAI_SERIALIZE(RawAprilTags, aprilTags);
