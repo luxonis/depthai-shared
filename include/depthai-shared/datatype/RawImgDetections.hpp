@@ -8,12 +8,12 @@ namespace dai {
 
 /// ImgDetection structure
 struct ImgDetection {
-    uint32_t label;
-    float confidence;
-    float xmin;
-    float ymin;
-    float xmax;
-    float ymax;
+    uint32_t label = 0;
+    float confidence = 0.f;
+    float xmin = 0.f;
+    float ymin = 0.f;
+    float xmax = 0.f;
+    float ymax = 0.f;
 };
 
 DEPTHAI_SERIALIZE_EXT(ImgDetection, label, confidence, xmin, ymin, xmax, ymax);

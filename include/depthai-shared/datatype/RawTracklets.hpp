@@ -30,19 +30,19 @@ struct Tracklet {
     /**
      * Tracklet's ID.
      */
-    std::int32_t id;
+    std::int32_t id = 0;
     /**
      * Tracklet's label ID.
      */
-    std::int32_t label;
+    std::int32_t label = 0;
     /**
      * Number of frames it is being tracked for.
      */
-    std::int32_t age;
+    std::int32_t age = 0;
     /**
      * Status of tracklet.
      */
-    TrackingStatus status;
+    TrackingStatus status = TrackingStatus::LOST;
 
     /**
      * Image detection that is tracked.

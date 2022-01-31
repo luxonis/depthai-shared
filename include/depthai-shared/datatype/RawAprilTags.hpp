@@ -3,7 +3,6 @@
 #include <vector>
 
 #include "depthai-shared/common/Point2f.hpp"
-#include "depthai-shared/common/Rect.hpp"
 #include "depthai-shared/datatype/DatatypeEnum.hpp"
 #include "depthai-shared/datatype/RawAprilTagConfig.hpp"
 #include "depthai-shared/datatype/RawBuffer.hpp"
@@ -15,32 +14,51 @@ namespace dai {
  * AprilTags structure.
  */
 struct AprilTags {
-    // The decoded ID of the tag
-    int id;
+    /**
+     * The decoded ID of the tag
+     */
+    int id = 0;
 
-    // How many error bits were corrected? Note: accepting large numbers of
-    // corrected errors leads to greatly increased false positive rates.
-    // NOTE: As of this implementation, the detector cannot detect tags with
-    // a hamming distance greater than 2.
-    int hamming;
+    /**
+     * How many error bits were corrected? Note: accepting large numbers of
+     * corrected errors leads to greatly increased false positive rates.
+     * As of this implementation, the detector cannot detect tags with
+     * a hamming distance greater than 2.
+     */
+    int hamming = 0;
 
-    // A measure of the quality of the binary decoding process: the
-    // average difference between the intensity of a data bit versus
-    // the decision threshold. Higher numbers roughly indicate better
-    // decodes. This is a reasonable measure of detection accuracy
-    // only for very small tags-- not effective for larger tags (where
-    // we could have sampled anywhere within a bit cell and still
-    // gotten a good detection.)
-    float decisionMargin;
+    /**
+     * A measure of the quality of the binary decoding process: the
+     * average difference between the intensity of a data bit versus
+     * the decision threshold. Higher numbers roughly indicate better
+     * decodes. This is a reasonable measure of detection accuracy
+     * only for very small tags-- not effective for larger tags (where
+     * we could have sampled anywhere within a bit cell and still
+     * gotten a good detection.
+     */
+    float decisionMargin = 0.f;
 
-    // The center of the detection in image pixel coordinates.
-    Point2f center;
+    /**
+     * The detected top left coordinates.
+     */
+    Point2f topLeft;
 
-    // The corners of the tag in image pixel coordinates. These always
-    // wrap counter-clock wise around the tag.
-    dai::Rect points;
+    /**
+     * The detected top right coordinates.
+     */
+    Point2f topRight;
+
+    /**
+     * The detected bottom right coordinates.
+     */
+    Point2f bottomRight;
+
+    /**
+     * The detected bottom left coordinates.
+     */
+    Point2f bottomLeft;
 };
-DEPTHAI_SERIALIZE_EXT(AprilTags, id, hamming, decisionMargin, center, points);
+DEPTHAI_SERIALIZE_EXT(AprilTags, id, hamming, decisionMargin, topLeft, topRight, bottomRight, bottomLeft);
 
 /// RawAprilTags structure
 struct RawAprilTags : public RawBuffer {

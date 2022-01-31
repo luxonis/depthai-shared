@@ -15,7 +15,7 @@ struct RotatedRect {
     Point2f center;
     Size2f size;
     /// degrees, increasing clockwise
-    float angle;
+    float angle = 0.f;
 };
 
 DEPTHAI_SERIALIZE_EXT(RotatedRect, center, size, angle);

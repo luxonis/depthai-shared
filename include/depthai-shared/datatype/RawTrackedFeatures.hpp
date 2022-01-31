@@ -22,7 +22,7 @@ struct TrackedFeature {
     /**
      *  Feature ID. Persistent between frames if motion estimation is enabled.
      */
-    uint32_t id;
+    uint32_t id = 0;
 #if 0
     /**
      *  Feature age in frames

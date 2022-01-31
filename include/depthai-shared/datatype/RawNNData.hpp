@@ -32,13 +32,13 @@ struct TensorInfo {
         I8 = 4,    // Signed byte
     };
 
-    StorageOrder order;
-    DataType dataType;
-    unsigned int numDimensions;
+    StorageOrder order = StorageOrder::NCHW;
+    DataType dataType = DataType::FP16;
+    unsigned int numDimensions = 0;
     std::vector<unsigned> dims;
     std::vector<unsigned> strides;
     std::string name;
-    unsigned int offset;
+    unsigned int offset = 0;
 
     DEPTHAI_SERIALIZE(TensorInfo, order, dataType, numDimensions, dims, strides, name, offset);
 };

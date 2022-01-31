@@ -160,7 +160,7 @@ struct IMUSensorConfig {
      */
     uint32_t reportRate = 100;
 
-    IMUSensor sensorId;
+    IMUSensor sensorId = IMUSensor::ACCELEROMETER;
 };
 DEPTHAI_SERIALIZE_EXT(IMUSensorConfig, sensitivityEnabled, sensitivityRelative, changeSensitivity, reportRate, sensorId);
 
