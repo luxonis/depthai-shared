@@ -7,7 +7,6 @@
 // project
 #include "depthai-shared/common/UsbSpeed.hpp"
 #include "depthai-shared/common/optional.hpp"
-#include "depthai-shared/device/BoardConfig.hpp"
 #include "depthai-shared/utility/Serialization.hpp"
 #include "depthai-shared/xlink/XLinkConstants.hpp"
 
