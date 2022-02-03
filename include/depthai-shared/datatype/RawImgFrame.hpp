@@ -2,8 +2,8 @@
 
 #include <unordered_map>
 
-#include "RawBuffer.hpp"
 #include "depthai-shared/common/Timestamp.hpp"
+#include "depthai-shared/datatype/RawBuffer.hpp"
 #include "depthai-shared/utility/Serialization.hpp"
 
 namespace dai {
@@ -30,8 +30,8 @@ struct RawImgFrame : public RawBuffer {
         RAW12,      // 12bit value in 16bit storage
         RAW10,      // 10bit value in 16bit storage
         RAW8,
-        PACK10,  // 10bit packed format
-        PACK12,  // 12bit packed format
+        PACK10,  // SIPP 10bit packed format
+        PACK12,  // SIPP 12bit packed format
         YUV444i,
         NV12,
         NV21,

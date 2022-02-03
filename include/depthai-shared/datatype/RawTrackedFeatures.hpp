@@ -2,10 +2,10 @@
 #include <cstdint>
 #include <vector>
 
-#include "DatatypeEnum.hpp"
-#include "RawBuffer.hpp"
 #include "RawFeatureTrackerConfig.hpp"
 #include "depthai-shared/common/Point2f.hpp"
+#include "depthai-shared/datatype/DatatypeEnum.hpp"
+#include "depthai-shared/datatype/RawBuffer.hpp"
 #include "depthai-shared/utility/Serialization.hpp"
 
 namespace dai {
@@ -22,7 +22,7 @@ struct TrackedFeature {
     /**
      *  Feature ID. Persistent between frames if motion estimation is enabled.
      */
-    uint32_t id;
+    uint32_t id = 0;
 #if 0
     /**
      *  Feature age in frames
