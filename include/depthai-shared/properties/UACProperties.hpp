@@ -1,13 +1,13 @@
 #pragma once
 
-#include <nlohmann/json.hpp>
+#include "depthai-shared/properties/Properties.hpp"
 
 namespace dai {
 
 /**
  * Properties for UAC node
  */
-struct UACProperties {
+struct UACProperties : PropertiesSerializable<Properties, UACProperties> {
 
     /**
      * Front L/R by default
@@ -55,15 +55,15 @@ struct UACProperties {
     uint8_t xlinkSampleSizeBytes = 3;
 };
 
-NLOHMANN_DEFINE_TYPE_NON_INTRUSIVE(UACProperties,
-                                   streamBackMic,
-                                   enableAgc,
-                                   micGain,
-                                   sampleRateHz,
-                                   i2sReadSizeSamples,
-                                   xlinkSendSizeSamples,
-                                   xlinkSendInterleaved,
-                                   xLinkApplyMicGain,
-                                   xlinkSampleSizeBytes);
+DEPTHAI_SERIALIZE_EXT(UACProperties,
+                      streamBackMic,
+                      enableAgc,
+                      micGain,
+                      sampleRateHz,
+                      i2sReadSizeSamples,
+                      xlinkSendSizeSamples,
+                      xlinkSendInterleaved,
+                      xLinkApplyMicGain,
+                      xlinkSampleSizeBytes);
 
 }  // namespace dai

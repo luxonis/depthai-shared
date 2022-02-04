@@ -1,13 +1,13 @@
 #pragma once
 
-#include <nlohmann/json.hpp>
+#include "depthai-shared/properties/Properties.hpp"
 
 namespace dai {
 
 /**
  * Properties for UVC node
  */
-struct UVCProperties {
+struct UVCProperties : PropertiesSerializable<Properties, UVCProperties> {
     /// <gpio_number, value> list for GPIOs to set at init
     std::unordered_map<int, int> gpioInit;
 
@@ -18,6 +18,6 @@ struct UVCProperties {
     std::unordered_map<int, int> gpioStreamOff;
 };
 
-NLOHMANN_DEFINE_TYPE_NON_INTRUSIVE(UVCProperties, gpioInit, gpioStreamOn, gpioStreamOff);
+DEPTHAI_SERIALIZE_EXT(UVCProperties, gpioInit, gpioStreamOn, gpioStreamOff);
 
 }  // namespace dai
