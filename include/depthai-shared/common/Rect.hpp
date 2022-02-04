@@ -5,7 +5,7 @@
 
 #include "depthai-shared/common/Point2f.hpp"
 #include "depthai-shared/common/Size2f.hpp"
-#include "nlohmann/json.hpp"
+#include "depthai-shared/utility/Serialization.hpp"
 
 namespace dai {
 
@@ -17,7 +17,7 @@ namespace dai {
  */
 struct Rect {
     // default constructor
-    Rect() : x(0), y(0), width(0), height(0) {}
+    Rect() = default;
     Rect(float x, float y, float width, float height) {
         this->x = x;
         this->y = y;
@@ -124,11 +124,11 @@ struct Rect {
         return Rect(_x, _y, _width, _height);
     }
 
-    float x;       // x coordinate of the top-left corner
-    float y;       // y coordinate of the top-left corner
-    float width;   // width of the rectangle
-    float height;  // height of the rectangle
+    float x = 0.0f;       // x coordinate of the top-left corner
+    float y = 0.0f;       // y coordinate of the top-left corner
+    float width = 0.0f;   // width of the rectangle
+    float height = 0.0f;  // height of the rectangle
 };
-NLOHMANN_DEFINE_TYPE_NON_INTRUSIVE(Rect, x, y, width, height);
+DEPTHAI_SERIALIZE_EXT(Rect, x, y, width, height);
 
 }  // namespace dai
