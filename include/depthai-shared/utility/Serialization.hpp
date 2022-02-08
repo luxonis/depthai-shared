@@ -163,11 +163,20 @@ inline bool deserialize(const std::vector<std::uint8_t>& data, T& obj) {
 
 }  // namespace dai
 
+/* Deferred macro expansion */
+#ifndef DEFFERED_EXPAND
+#define DEFFERED_EXPAND(x) x
+#ifdef _MSC_VER
+// This is for suppressing false positive warnings when compiling
+// without /Zc:preprocessor
+#pragma warning( disable : 4003)
+#endif
+#endif
 // Macros
 #define DEPTHAI_SERIALIZE_EXT(...)                  \
-    NLOHMANN_DEFINE_TYPE_NON_INTRUSIVE(__VA_ARGS__) \
-    NOP_EXTERNAL_STRUCTURE(__VA_ARGS__)
+    DEFFERED_EXPAND(NLOHMANN_DEFINE_TYPE_NON_INTRUSIVE(__VA_ARGS__)) \
+    DEFFERED_EXPAND(NOP_EXTERNAL_STRUCTURE(__VA_ARGS__))
 
 #define DEPTHAI_SERIALIZE(...)                  \
-    NLOHMANN_DEFINE_TYPE_INTRUSIVE(__VA_ARGS__) \
-    NOP_STRUCTURE(__VA_ARGS__)
+    DEFFERED_EXPAND(NLOHMANN_DEFINE_TYPE_INTRUSIVE(__VA_ARGS__)) \
+    DEFFERED_EXPAND(NOP_STRUCTURE(__VA_ARGS__))
