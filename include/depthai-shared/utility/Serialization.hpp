@@ -157,6 +157,11 @@ inline bool deserialize(const std::vector<std::uint8_t>& data, T& obj) {
 /* Deferred macro expansion */
 #ifndef DEFFERED_EXPAND
 #define DEFFERED_EXPAND(x) x
+#ifdef _MSC_VER
+// This is for suppressing false positive warnings when compiling
+// without /Zc:preprocessor
+#pragma warning( disable : 4003)
+#endif
 #endif
 // Macros
 #define DEPTHAI_SERIALIZE_EXT(...)                  \
