@@ -1,19 +1,19 @@
 #pragma once
 
-#include "RawBuffer.hpp"
 #include "depthai-shared/common/Point3f.hpp"
+#include "depthai-shared/datatype/RawBuffer.hpp"
 #include "depthai-shared/utility/Serialization.hpp"
 
 namespace dai {
 
 /// ImgDetection structure
 struct ImgDetection {
-    uint32_t label;
-    float confidence;
-    float xmin;
-    float ymin;
-    float xmax;
-    float ymax;
+    uint32_t label = 0;
+    float confidence = 0.f;
+    float xmin = 0.f;
+    float ymin = 0.f;
+    float xmax = 0.f;
+    float ymax = 0.f;
 };
 
 DEPTHAI_SERIALIZE_EXT(ImgDetection, label, confidence, xmin, ymin, xmax, ymax);

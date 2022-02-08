@@ -13,6 +13,13 @@
 
 #include <nlohmann/json.hpp>
 
+// Check version of nlohmann json
+#if(defined(NLOHMANN_JSON_VERSION_MAJOR) && defined(NLOHMANN_JSON_VERSION_MINOR))
+    #if((NLOHMANN_JSON_VERSION_MAJOR < 3) || ((NLOHMANN_JSON_VERSION_MAJOR == 3) && (NLOHMANN_JSON_VERSION_MINOR < 9)))
+static_assert(0, "DepthAI requires nlohmann library version 3.9.0 or higher");
+    #endif
+#endif
+
 // To not require exceptions for embedded usecases.
 #ifndef __has_feature           // Optional of course.
     #define __has_feature(x) 0  // Compatibility with non-clang compilers.
@@ -47,6 +54,7 @@ namespace utility {
 //     deserialize(data.data(), data.size(), obj);
 // }
 
+// NOLINTBEGIN
 class VectorWriter {
    public:
     template <typename... Args>
@@ -95,6 +103,7 @@ class VectorWriter {
 
     std::vector<std::uint8_t> vector;
 };
+// NOLINTEND
 
 // libnop serialization
 // If exceptions are available it throws in error cases
