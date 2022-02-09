@@ -165,6 +165,7 @@ inline bool deserialize(const std::vector<std::uint8_t>& data, T& obj) {
 
 #define DEPTHAI_DEFERRED_EXPAND(x) x
 #if !defined(_MSVC_TRADITIONAL) || _MSVC_TRADITIONAL
+
     // Logic using the traditional preprocessor
     // This is for suppressing false positive warnings when compiling
     // without /Zc:preprocessor
