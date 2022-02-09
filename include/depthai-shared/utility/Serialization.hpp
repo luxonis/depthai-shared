@@ -165,17 +165,17 @@ inline bool deserialize(const std::vector<std::uint8_t>& data, T& obj) {
 
 #define DEPTHAI_DEFERRED_EXPAND(x) x
 #if !defined(_MSVC_TRADITIONAL) || _MSVC_TRADITIONAL
-// Logic using the traditional preprocessor
-// This is for suppressing false positive warnings when compiling
-// without /Zc:preprocessor
-#pragma warning( disable : 4003)
+    // Logic using the traditional preprocessor
+    // This is for suppressing false positive warnings when compiling
+    // without /Zc:preprocessor
+    #pragma warning(disable : 4003)
 #endif
 
 // Macros
-#define DEPTHAI_SERIALIZE_EXT(...)                  \
+#define DEPTHAI_SERIALIZE_EXT(...)                                           \
     DEPTHAI_DEFERRED_EXPAND(NLOHMANN_DEFINE_TYPE_NON_INTRUSIVE(__VA_ARGS__)) \
     DEPTHAI_DEFERRED_EXPAND(NOP_EXTERNAL_STRUCTURE(__VA_ARGS__))
 
-#define DEPTHAI_SERIALIZE(...)                  \
+#define DEPTHAI_SERIALIZE(...)                                           \
     DEPTHAI_DEFERRED_EXPAND(NLOHMANN_DEFINE_TYPE_INTRUSIVE(__VA_ARGS__)) \
     DEPTHAI_DEFERRED_EXPAND(NOP_STRUCTURE(__VA_ARGS__))
