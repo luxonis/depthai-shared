@@ -54,15 +54,15 @@ struct Encoding<tl::optional<T>> : EncodingIO<tl::optional<T>> {
     using Type = tl::optional<T>;
 
     static constexpr EncodingByte Prefix(const Type& value) {
-        return value ? Encoding<T>::Prefix(*value) : EncodingByte::Nil;
+        return value ? Encoding<T>::Prefix(*value) : EncodingByte::Empty;
     }
 
     static constexpr std::size_t Size(const Type& value) {
-        return value ? Encoding<T>::Size(*value) : BaseEncodingSize(EncodingByte::Nil);
+        return value ? Encoding<T>::Size(*value) : BaseEncodingSize(EncodingByte::Empty);
     }
 
     static constexpr bool Match(EncodingByte prefix) {
-        return prefix == EncodingByte::Nil || Encoding<T>::Match(prefix);
+        return prefix == EncodingByte::Empty || Encoding<T>::Match(prefix);
     }
 
     template <typename Writer>
@@ -76,7 +76,7 @@ struct Encoding<tl::optional<T>> : EncodingIO<tl::optional<T>> {
 
     template <typename Reader>
     static constexpr Status<void> ReadPayload(EncodingByte prefix, Type* value, Reader* reader) {
-        if(prefix == EncodingByte::Nil) {
+        if(prefix == EncodingByte::Empty) {
             value->reset();
         } else {
             T temp;
