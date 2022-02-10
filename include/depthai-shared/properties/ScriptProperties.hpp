@@ -23,7 +23,7 @@ struct ScriptProperties : PropertiesSerializable<Properties, ScriptProperties> {
     /**
      * Which processor should execute the script
      */
-    ProcessorType processor = ProcessorType::LEON_MSS;
+    ProcessorType processor = ProcessorType::LEON_CSS;
 };
 
 DEPTHAI_SERIALIZE_EXT(ScriptProperties, scriptUri, scriptName, processor);
