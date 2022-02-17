@@ -19,27 +19,28 @@ struct TrackedFeature {
      *  x, y position of the detected feature
      */
     Point2f position;
+
     /**
      *  Feature ID. Persistent between frames if motion estimation is enabled.
      */
     uint32_t id = 0;
-#if 0
+
     /**
      *  Feature age in frames
      */
-    uint32_t age;
+    uint32_t age = 0;
+
     /**
      *  Feature harris score
      */
-    float harrisScore;
+    float harrisScore = 0.f;
 
     /**
      *  Feature tracking error
      */
-    float trackingError;
-#endif
+    float trackingError = 0.f;
 };
-DEPTHAI_SERIALIZE_EXT(TrackedFeature, position, id);
+DEPTHAI_SERIALIZE_EXT(TrackedFeature, position, id, age, harrisScore, trackingError);
 
 /// RawTrackedFeatures structure
 struct RawTrackedFeatures : public RawBuffer {
