@@ -3,6 +3,7 @@
 #include "depthai-shared/common/CameraBoardSocket.hpp"
 #include "depthai-shared/common/CameraImageOrientation.hpp"
 #include "depthai-shared/common/CameraSensorType.hpp"
+#include "depthai-shared/utility/Serialization.hpp"
 
 namespace dai {
 
@@ -40,7 +41,7 @@ struct CameraFeatures {
      */
     bool hasAutofocus;
 
-    NLOHMANN_DEFINE_TYPE_INTRUSIVE(CameraFeatures, socket, sensorName, width, height, orientation, supportedTypes, hasAutofocus);
+    DEPTHAI_SERIALIZE(CameraFeatures, socket, sensorName, width, height, orientation, supportedTypes, hasAutofocus);
 };
 
 }  // namespace dai
