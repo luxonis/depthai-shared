@@ -62,11 +62,14 @@ struct BoardConfig {
     };
     /// UART instance map
     std::unordered_map<std::int8_t, UART> uart;
+
+    /// Set whether to enable UVC USB descriptor. TODO expose more configuration
+    tl::optional<bool> uvcEnable;
 };
 
 DEPTHAI_SERIALIZE_EXT(BoardConfig::USB, vid, pid, flashBootedVid, flashBootedPid, maxSpeed);
 DEPTHAI_SERIALIZE_EXT(BoardConfig::GPIO, mode, direction, level, pull, drive, schmitt, slewFast);
 DEPTHAI_SERIALIZE_EXT(BoardConfig::UART, tmp);
-DEPTHAI_SERIALIZE_EXT(BoardConfig, usb, watchdogTimeoutMs, watchdogInitialDelayMs, gpio, uart);
+DEPTHAI_SERIALIZE_EXT(BoardConfig, usb, watchdogTimeoutMs, watchdogInitialDelayMs, gpio, uart, uvcEnable);
 
 }  // namespace dai
