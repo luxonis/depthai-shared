@@ -1,6 +1,7 @@
 #pragma once
 
 #include "depthai-shared/properties/Properties.hpp"
+#include "depthai-shared/datatype/RawAudioInConfig.hpp"
 
 namespace dai {
 
@@ -8,6 +9,8 @@ namespace dai {
  * Properties for UAC node
  */
 struct UACProperties : PropertiesSerializable<Properties, UACProperties> {
+    /// Initial AudioIn config
+    RawAudioInConfig initialConfig;
 
     /**
      * Front L/R by default
@@ -18,11 +21,6 @@ struct UACProperties : PropertiesSerializable<Properties, UACProperties> {
      * Experimental, control the gain automatically (digital AGC)
      */
     bool enableAgc = false;
-
-    /**
-     * Configurable fixed mic gain (x times)
-     */
-    float micGain = 1.0;
 
     /**
      * Audio sample rate
@@ -56,9 +54,9 @@ struct UACProperties : PropertiesSerializable<Properties, UACProperties> {
 };
 
 DEPTHAI_SERIALIZE_EXT(UACProperties,
+                      initialConfig,
                       streamBackMic,
                       enableAgc,
-                      micGain,
                       sampleRateHz,
                       i2sReadSizeSamples,
                       xlinkSendSizeSamples,
