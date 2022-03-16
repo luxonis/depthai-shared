@@ -1,6 +1,6 @@
 #pragma once
 
-#include "depthai-shared/utility/Serialization.hpp"
+#include <cstdint>
 
 namespace dai {
 

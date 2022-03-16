@@ -2,9 +2,9 @@
 #include <cstdint>
 #include <vector>
 
-#include "DatatypeEnum.hpp"
-#include "RawBuffer.hpp"
 #include "RawImgFrame.hpp"
+#include "depthai-shared/datatype/DatatypeEnum.hpp"
+#include "depthai-shared/datatype/RawBuffer.hpp"
 
 // shared
 #include "depthai-shared/common/Point2f.hpp"

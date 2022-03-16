@@ -1,5 +1,5 @@
 #pragma once
-
+#include <cstdint>
 namespace dai {
 /**
  * Which Camera socket to use.

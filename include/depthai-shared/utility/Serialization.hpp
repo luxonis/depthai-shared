@@ -13,6 +13,13 @@
 
 #include <nlohmann/json.hpp>
 
+// Check version of nlohmann json
+#if(defined(NLOHMANN_JSON_VERSION_MAJOR) && defined(NLOHMANN_JSON_VERSION_MINOR))
+    #if((NLOHMANN_JSON_VERSION_MAJOR < 3) || ((NLOHMANN_JSON_VERSION_MAJOR == 3) && (NLOHMANN_JSON_VERSION_MINOR < 9)))
+static_assert(0, "DepthAI requires nlohmann library version 3.9.0 or higher");
+    #endif
+#endif
+
 // To not require exceptions for embedded usecases.
 #ifndef __has_feature           // Optional of course.
     #define __has_feature(x) 0  // Compatibility with non-clang compilers.
@@ -47,6 +54,7 @@ namespace utility {
 //     deserialize(data.data(), data.size(), obj);
 // }
 
+// NOLINTBEGIN
 class VectorWriter {
    public:
     template <typename... Args>
@@ -95,6 +103,7 @@ class VectorWriter {
 
     std::vector<std::uint8_t> vector;
 };
+// NOLINTEND
 
 // libnop serialization
 // If exceptions are available it throws in error cases
@@ -154,11 +163,20 @@ inline bool deserialize(const std::vector<std::uint8_t>& data, T& obj) {
 
 }  // namespace dai
 
-// Macros
-#define DEPTHAI_SERIALIZE_EXT(...)                  \
-    NLOHMANN_DEFINE_TYPE_NON_INTRUSIVE(__VA_ARGS__) \
-    NOP_EXTERNAL_STRUCTURE(__VA_ARGS__)
+#define DEPTHAI_DEFERRED_EXPAND(x) x
+#if defined(_MSC_VER) && (!defined(_MSVC_TRADITIONAL) || _MSVC_TRADITIONAL)
 
-#define DEPTHAI_SERIALIZE(...)                  \
-    NLOHMANN_DEFINE_TYPE_INTRUSIVE(__VA_ARGS__) \
-    NOP_STRUCTURE(__VA_ARGS__)
+    // Logic using the traditional preprocessor
+    // This is for suppressing false positive warnings when compiling
+    // without /Zc:preprocessor
+    #pragma warning(disable : 4003)
+#endif
+
+// Macros
+#define DEPTHAI_SERIALIZE_EXT(...)                                           \
+    DEPTHAI_DEFERRED_EXPAND(NLOHMANN_DEFINE_TYPE_NON_INTRUSIVE(__VA_ARGS__)) \
+    DEPTHAI_DEFERRED_EXPAND(NOP_EXTERNAL_STRUCTURE(__VA_ARGS__))
+
+#define DEPTHAI_SERIALIZE(...)                                           \
+    DEPTHAI_DEFERRED_EXPAND(NLOHMANN_DEFINE_TYPE_INTRUSIVE(__VA_ARGS__)) \
+    DEPTHAI_DEFERRED_EXPAND(NOP_STRUCTURE(__VA_ARGS__))

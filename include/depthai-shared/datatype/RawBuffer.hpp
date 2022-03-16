@@ -2,7 +2,7 @@
 #include <cstdint>
 #include <vector>
 
-#include "DatatypeEnum.hpp"
+#include "depthai-shared/datatype/DatatypeEnum.hpp"
 #include "depthai-shared/utility/Serialization.hpp"
 
 namespace dai {

@@ -3,8 +3,8 @@
 #include <depthai-shared/common/optional.hpp>
 #include <vector>
 
-#include "DatatypeEnum.hpp"
-#include "RawBuffer.hpp"
+#include "depthai-shared/datatype/DatatypeEnum.hpp"
+#include "depthai-shared/datatype/RawBuffer.hpp"
 #include "depthai-shared/utility/Serialization.hpp"
 
 namespace dai {
@@ -201,7 +201,7 @@ struct RawStereoDepthConfig : public RawBuffer {
              */
             std::int32_t minRange = 0;
             /**
-             * Minimum range in millimeters.
+             * Maximum range in millimeters.
              * Depth values over this value are invalidated.
              */
             std::int32_t maxRange = 65535;

@@ -2,11 +2,11 @@
 #include <cstdint>
 #include <vector>
 
-#include "DatatypeEnum.hpp"
-#include "RawBuffer.hpp"
 #include "RawSpatialLocationCalculatorConfig.hpp"
 #include "depthai-shared/common/Point3f.hpp"
 #include "depthai-shared/common/Rect.hpp"
+#include "depthai-shared/datatype/DatatypeEnum.hpp"
+#include "depthai-shared/datatype/RawBuffer.hpp"
 #include "depthai-shared/utility/Serialization.hpp"
 
 namespace dai {
@@ -26,19 +26,19 @@ struct SpatialLocations {
     /**
      *  Average of depth values inside the ROI between the specified thresholds in config
      */
-    float depthAverage;
+    float depthAverage = 0.f;
     /**
      *  Minimum of depth values inside the ROI between the specified thresholds in config
      */
-    std::uint16_t depthMin;
+    std::uint16_t depthMin = 0;
     /**
      *  Maximum of depth values inside the ROI between the specified thresholds in config
      */
-    std::uint16_t depthMax;
+    std::uint16_t depthMax = 0;
     /**
      *  Number of depth values used to calculate depthAverage based on config
      */
-    std::uint32_t depthAveragePixelCount;
+    std::uint32_t depthAveragePixelCount = 0;
     /**
      *  Spatial coordinates - x,y,z; x,y are the relative positions of the center of ROI to the center of depth map
      */
