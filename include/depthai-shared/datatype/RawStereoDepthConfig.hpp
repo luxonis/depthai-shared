@@ -160,7 +160,6 @@ struct RawStereoDepthConfig : public RawBuffer {
 
         /**
          * Temporal filtering with optional persistence.
-         * More details about the filter can be found here:
          */
         struct TemporalFilter {
             static constexpr const std::int32_t DEFAULT_DELTA_VALUE = 3;
@@ -211,7 +210,6 @@ struct RawStereoDepthConfig : public RawBuffer {
 
         /**
          * Temporal filtering with optional persistence.
-         * More details about the filter can be found here:
          */
         TemporalFilter temporalFilter;
 
