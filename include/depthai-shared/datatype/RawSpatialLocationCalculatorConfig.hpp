@@ -13,7 +13,7 @@ namespace dai {
 /**
  * SpatialLocation configuration thresholds structure
  *
- * Contains configuration data for lower and upper threshold in millimeters for ROI.
+ * Contains configuration data for lower and upper threshold in depth units (millimetre by default) for ROI.
  * Values outside of threshold range will be ignored when calculating spatial coordinates from depth map.
  */
 struct SpatialLocationCalculatorConfigThresholds {
