@@ -25,9 +25,26 @@ struct RawStereoDepthConfig : public RawBuffer {
         enum class DepthAlign : int32_t { RECTIFIED_RIGHT, RECTIFIED_LEFT, CENTER };
 
         /**
+         * Measurement unit for depth data
+         */
+        enum class DepthUnit : int32_t { METRE, CENTIMETRE, MILLIMETRE, INCH, FOOT, CUSTOM };
+
+        /**
          * Set the disparity/depth alignment to the perspective of a rectified output, or center it
          */
         DepthAlign depthAlign = DepthAlign::RECTIFIED_RIGHT;
+
+        /**
+         * Measurement unit for depth data.
+         * Depth data is integer value, multiple of depth unit.
+         */
+        DepthUnit depthUnit = DepthUnit::MILLIMETRE;
+
+        /**
+         * Custom depth unit multiplier, if custom depth unit is enabled, relative to 1 metre.
+         * A multiplier of 1000 effectively means depth unit in millimetre.
+         */
+        float customDepthUnitMultiplier = 1000.f;
 
         /**
          * Computes and combines disparities in both L-R and R-L directions, and combine them.
@@ -64,7 +81,15 @@ struct RawStereoDepthConfig : public RawBuffer {
          */
         std::int32_t subpixelFractionalBits = 3;
 
-        DEPTHAI_SERIALIZE(AlgorithmControl, depthAlign, enableLeftRightCheck, enableExtended, enableSubpixel, leftRightCheckThreshold, subpixelFractionalBits);
+        DEPTHAI_SERIALIZE(AlgorithmControl,
+                          depthAlign,
+                          depthUnit,
+                          customDepthUnitMultiplier,
+                          enableLeftRightCheck,
+                          enableExtended,
+                          enableSubpixel,
+                          leftRightCheckThreshold,
+                          subpixelFractionalBits);
     };
 
     /**
@@ -196,12 +221,12 @@ struct RawStereoDepthConfig : public RawBuffer {
          */
         struct ThresholdFilter {
             /**
-             * Minimum range in millimeters.
+             * Minimum range in depth units.
              * Depth values under this value are invalidated.
              */
             std::int32_t minRange = 0;
             /**
-             * Maximum range in millimeters.
+             * Maximum range in depth units.
              * Depth values over this value are invalidated.
              */
             std::int32_t maxRange = 65535;
