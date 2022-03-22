@@ -27,7 +27,7 @@ struct RawStereoDepthConfig : public RawBuffer {
         /**
          * Measurement unit for depth data
          */
-        enum class DepthUnit : int32_t { METRE, CENTIMETRE, MILLIMETRE, INCH, FOOT, CUSTOM };
+        enum class DepthUnit : int32_t { METER, CENTIMETER, MILLIMETER, INCH, FOOT, CUSTOM };
 
         /**
          * Set the disparity/depth alignment to the perspective of a rectified output, or center it
@@ -38,11 +38,11 @@ struct RawStereoDepthConfig : public RawBuffer {
          * Measurement unit for depth data.
          * Depth data is integer value, multiple of depth unit.
          */
-        DepthUnit depthUnit = DepthUnit::MILLIMETRE;
+        DepthUnit depthUnit = DepthUnit::MILLIMETER;
 
         /**
-         * Custom depth unit multiplier, if custom depth unit is enabled, relative to 1 metre.
-         * A multiplier of 1000 effectively means depth unit in millimetre.
+         * Custom depth unit multiplier, if custom depth unit is enabled, relative to 1 meter.
+         * A multiplier of 1000 effectively means depth unit in millimeter.
          */
         float customDepthUnitMultiplier = 1000.f;
 
