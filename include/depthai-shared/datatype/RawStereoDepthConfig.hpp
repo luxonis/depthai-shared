@@ -81,6 +81,12 @@ struct RawStereoDepthConfig : public RawBuffer {
          */
         std::int32_t subpixelFractionalBits = 3;
 
+        /**
+         * Shift input frame by a number of pixels to increase minimum depth.
+         * For example shifting by 48 will increase search range from (0,95] to [48,143]
+         */
+        std::int32_t pixelShift = 0;
+
         DEPTHAI_SERIALIZE(AlgorithmControl,
                           depthAlign,
                           depthUnit,
@@ -89,7 +95,8 @@ struct RawStereoDepthConfig : public RawBuffer {
                           enableExtended,
                           enableSubpixel,
                           leftRightCheckThreshold,
-                          subpixelFractionalBits);
+                          subpixelFractionalBits,
+                          pixelShift);
     };
 
     /**
