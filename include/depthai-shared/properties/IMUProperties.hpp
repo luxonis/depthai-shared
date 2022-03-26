@@ -1,8 +1,8 @@
 #pragma once
 
+#include "depthai-shared/common/optional.hpp"
 #include "depthai-shared/datatype/RawIMUData.hpp"
 #include "depthai-shared/properties/Properties.hpp"
-
 namespace dai {
 
 /**
@@ -171,10 +171,12 @@ struct IMUProperties : PropertiesSerializable<Properties, IMUProperties> {
     std::int32_t batchReportThreshold = 1;
     /* Maximum number of IMU packets in a batch. Maximum 5. */
     std::int32_t maxBatchReports = 5;
-    /* Whether to do firmware update or not, if newer firmware is available. */
-    bool doFirmwareUpdate = false;
+    /* By default the behavior is automatic, it will perform firmware update if needed.
+     * Optionally the behavior can be enforced.
+     */
+    tl::optional<bool> enableFirmwareUpdate;
 };
 
-DEPTHAI_SERIALIZE_EXT(IMUProperties, imuSensors, batchReportThreshold, maxBatchReports, doFirmwareUpdate);
+DEPTHAI_SERIALIZE_EXT(IMUProperties, imuSensors, batchReportThreshold, maxBatchReports, enableFirmwareUpdate);
 
 }  // namespace dai
