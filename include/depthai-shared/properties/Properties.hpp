@@ -6,7 +6,7 @@ namespace dai {
 
 /// Base Properties structure
 struct Properties {
-    virtual void serialize(std::vector<std::uint8_t>& data, utility::SerializationType type) const = 0;
+    virtual void serialize(std::vector<std::uint8_t>& data, SerializationType type) const = 0;
     virtual std::unique_ptr<Properties> clone() const = 0;
     virtual ~Properties() = default;
 };
@@ -14,7 +14,7 @@ struct Properties {
 /// Serializable properties
 template <typename Base, typename Derived>
 struct PropertiesSerializable : Base {
-    virtual void serialize(std::vector<std::uint8_t>& data, utility::SerializationType type = utility::SerializationType::LIBNOP) const override {
+    virtual void serialize(std::vector<std::uint8_t>& data, SerializationType type = SerializationType::LIBNOP) const override {
         utility::serialize(static_cast<const Derived&>(*this), data, type);
     }
 

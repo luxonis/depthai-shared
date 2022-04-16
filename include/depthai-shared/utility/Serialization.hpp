@@ -29,7 +29,6 @@ static_assert(0, "DepthAI requires nlohmann library version 3.9.0 or higher");
 #endif
 
 namespace dai {
-namespace utility {
 
 enum class SerializationType {
     LIBNOP,
@@ -37,6 +36,9 @@ enum class SerializationType {
     JSON_MSGPACK,
 };
 constexpr auto static DEFAULT_SERIALIZATION_TYPE = SerializationType::LIBNOP;
+
+namespace utility {
+
 
 // JSON-msgpack serialization
 template<SerializationType TYPE, typename T, std::enable_if_t<TYPE == SerializationType::JSON_MSGPACK, bool> = true>
