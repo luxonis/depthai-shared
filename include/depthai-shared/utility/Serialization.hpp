@@ -39,34 +39,32 @@ constexpr auto static DEFAULT_SERIALIZATION_TYPE = SerializationType::LIBNOP;
 
 namespace utility {
 
-
 // JSON-msgpack serialization
-template<SerializationType TYPE, typename T, std::enable_if_t<TYPE == SerializationType::JSON_MSGPACK, bool> = true>
-inline bool serialize(const T& obj, std::vector<std::uint8_t>& data){
+template <SerializationType TYPE, typename T, std::enable_if_t<TYPE == SerializationType::JSON_MSGPACK, bool> = true>
+inline bool serialize(const T& obj, std::vector<std::uint8_t>& data) {
     nlohmann::json j = obj;
     data = nlohmann::json::to_msgpack(j);
     return true;
 }
-template<SerializationType TYPE, typename T, std::enable_if_t<TYPE == SerializationType::JSON_MSGPACK, bool> = true>
-inline bool deserialize(const std::uint8_t* data, std::size_t size, T& obj){
+template <SerializationType TYPE, typename T, std::enable_if_t<TYPE == SerializationType::JSON_MSGPACK, bool> = true>
+inline bool deserialize(const std::uint8_t* data, std::size_t size, T& obj) {
     nlohmann::from_json(nlohmann::json::from_msgpack(data, data + size), obj);
     return true;
 }
 
 // JSON serialization
-template<SerializationType TYPE, typename T, std::enable_if_t<TYPE == SerializationType::JSON, bool> = true>
-inline bool serialize(const T& obj, std::vector<std::uint8_t>& data){
+template <SerializationType TYPE, typename T, std::enable_if_t<TYPE == SerializationType::JSON, bool> = true>
+inline bool serialize(const T& obj, std::vector<std::uint8_t>& data) {
     nlohmann::json j = obj;
     auto json = j.dump();
     data = std::vector<std::uint8_t>(reinterpret_cast<const std::uint8_t*>(json.data()), reinterpret_cast<const std::uint8_t*>(json.data()) + json.size());
     return true;
 }
-template<SerializationType TYPE, typename T, std::enable_if_t<TYPE == SerializationType::JSON, bool> = true>
-inline bool deserialize(const std::uint8_t* data, std::size_t size, T& obj){
+template <SerializationType TYPE, typename T, std::enable_if_t<TYPE == SerializationType::JSON, bool> = true>
+inline bool deserialize(const std::uint8_t* data, std::size_t size, T& obj) {
     nlohmann::from_json(nlohmann::json::parse(data, data + size), obj);
     return true;
 }
-
 
 // NOLINTBEGIN
 class VectorWriter {
@@ -122,7 +120,7 @@ class VectorWriter {
 // libnop serialization
 // If exceptions are available it throws in error cases
 // Otherwise return value can be checked
-template<SerializationType TYPE, typename T, std::enable_if_t<TYPE == SerializationType::LIBNOP, bool> = true>
+template <SerializationType TYPE, typename T, std::enable_if_t<TYPE == SerializationType::LIBNOP, bool> = true>
 inline bool serialize(const T& obj, std::vector<std::uint8_t>& data) {
     nop::Serializer<VectorWriter> serializer{std::move(data)};
     auto status = serializer.Write(obj);
@@ -136,7 +134,7 @@ inline bool serialize(const T& obj, std::vector<std::uint8_t>& data) {
     data = std::move(serializer.writer().take());
     return true;
 }
-template<SerializationType TYPE, typename T, std::enable_if_t<TYPE == SerializationType::LIBNOP, bool> = true>
+template <SerializationType TYPE, typename T, std::enable_if_t<TYPE == SerializationType::LIBNOP, bool> = true>
 inline bool deserialize(const std::uint8_t* data, std::size_t size, T& obj) {
     nop::Deserializer<nop::BufferReader> deserializer{data, size};
     auto status = deserializer.Read(&obj);
@@ -153,11 +151,15 @@ inline bool deserialize(const std::uint8_t* data, std::size_t size, T& obj) {
 // Serialization using enum
 template <typename T>
 inline bool serialize(const T& obj, std::vector<std::uint8_t>& data, SerializationType type) {
-    switch(type){
-        case SerializationType::LIBNOP: return serialize<SerializationType::LIBNOP>(obj, data);
-        case SerializationType::JSON: return serialize<SerializationType::JSON>(obj, data);
-        case SerializationType::JSON_MSGPACK: return serialize<SerializationType::JSON_MSGPACK>(obj, data);
-        default: throw std::invalid_argument("Unknown serialization type");
+    switch(type) {
+        case SerializationType::LIBNOP:
+            return serialize<SerializationType::LIBNOP>(obj, data);
+        case SerializationType::JSON:
+            return serialize<SerializationType::JSON>(obj, data);
+        case SerializationType::JSON_MSGPACK:
+            return serialize<SerializationType::JSON_MSGPACK>(obj, data);
+        default:
+            throw std::invalid_argument("Unknown serialization type");
     };
 }
 template <typename T>
@@ -172,18 +174,21 @@ inline std::vector<std::uint8_t> serialize(const T& obj, SerializationType type)
 
 template <typename T>
 inline bool deserialize(const std::uint8_t* data, std::size_t size, T& obj, SerializationType type) {
-    switch(type){
-        case SerializationType::LIBNOP: return deserialize<SerializationType::LIBNOP>(data, size, obj);
-        case SerializationType::JSON: return deserialize<SerializationType::JSON>(data, size, obj);
-        case SerializationType::JSON_MSGPACK: return deserialize<SerializationType::JSON_MSGPACK>(data, size, obj);
-        default: throw std::invalid_argument("Unknown serialization type");
+    switch(type) {
+        case SerializationType::LIBNOP:
+            return deserialize<SerializationType::LIBNOP>(data, size, obj);
+        case SerializationType::JSON:
+            return deserialize<SerializationType::JSON>(data, size, obj);
+        case SerializationType::JSON_MSGPACK:
+            return deserialize<SerializationType::JSON_MSGPACK>(data, size, obj);
+        default:
+            throw std::invalid_argument("Unknown serialization type");
     };
 }
 template <typename T>
 inline bool deserialize(const std::vector<std::uint8_t>& data, T& obj, SerializationType type) {
     return deserialize(data.data(), data.size(), obj, type);
 }
-
 
 // Serialization using templates
 template <SerializationType TYPE, typename T>
@@ -217,7 +222,6 @@ template <typename T>
 inline bool deserialize(const std::vector<std::uint8_t>& data, T& obj) {
     return deserialize<DEFAULT_SERIALIZATION_TYPE>(data, obj);
 }
-
 
 }  // namespace utility
 
