@@ -25,6 +25,18 @@ struct BoardConfig {
 
     USB usb;
 
+    /// Network configuration
+    struct Network {
+        /// Network MTU, 0 is auto (usually 1500 for Ethernet)
+        uint16_t mtu = 0;
+    };
+
+    Network network;
+
+    /// Optional list of FreeBSD sysctl parameters to be set (system, network, etc.).
+    /// For example: "net.inet.udp.maxdgram=65535"
+    std::vector<std::string> sysctl;
+
     // Watchdog config
     tl::optional<uint32_t> watchdogTimeoutMs;
     tl::optional<uint32_t> watchdogInitialDelayMs;
@@ -68,8 +80,9 @@ struct BoardConfig {
 };
 
 DEPTHAI_SERIALIZE_EXT(BoardConfig::USB, vid, pid, flashBootedVid, flashBootedPid, maxSpeed);
+DEPTHAI_SERIALIZE_EXT(BoardConfig::Network, mtu);
 DEPTHAI_SERIALIZE_EXT(BoardConfig::GPIO, mode, direction, level, pull, drive, schmitt, slewFast);
 DEPTHAI_SERIALIZE_EXT(BoardConfig::UART, tmp);
-DEPTHAI_SERIALIZE_EXT(BoardConfig, usb, watchdogTimeoutMs, watchdogInitialDelayMs, gpio, uart, uvcEnable);
+DEPTHAI_SERIALIZE_EXT(BoardConfig, usb, network, sysctl, watchdogTimeoutMs, watchdogInitialDelayMs, gpio, uart, uvcEnable);
 
 }  // namespace dai
