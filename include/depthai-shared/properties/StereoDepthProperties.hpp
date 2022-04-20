@@ -129,9 +129,9 @@ struct StereoDepthProperties : PropertiesSerializable<Properties, StereoDepthPro
 
     /**
      * Use homography for stereo rectification instead of sparse mesh generated on device.
-     * Default value: false.
+     * Default value: true.
      */
-    bool useHomographyRectification = false;
+    bool useHomographyRectification = true;
 };
 
 DEPTHAI_SERIALIZE_EXT(StereoDepthProperties,
