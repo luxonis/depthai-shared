@@ -237,14 +237,39 @@ inline bool deserialize(const std::vector<std::uint8_t>& data, T& obj) {
 
 #define DEPTHAI_DEFERRED_EXPAND(x) x
 #if defined(_MSC_VER) && (!defined(_MSVC_TRADITIONAL) || _MSVC_TRADITIONAL)
-
-    // Logic using the traditional preprocessor
+   // Logic using the traditional preprocessor
     // This is for suppressing false positive warnings when compiling
     // without /Zc:preprocessor
     #pragma warning(disable : 4003)
 #endif
 
+#define DEPTHAI_NLOHMANN_JSON_OPTIONAL_TO(v1) nlohmann::to_json(nlohmann_json_j[#v1], nlohmann_json_t.v1);
+#define DEPTHAI_NLOHMANN_JSON_OPTIONAL_FROM(v1) \
+    if(nlohmann_json_j.contains(#v1)) nlohmann_json_j[#v1].get_to(nlohmann_json_t.v1);
+#define DEPTHAI_NLOHMANN_DEFINE_TYPE_OPTIONAL_NON_INTRUSIVE(Type, ...)                              \
+    inline void to_json(nlohmann::json& nlohmann_json_j, const Type& nlohmann_json_t) {             \
+        NLOHMANN_JSON_EXPAND(NLOHMANN_JSON_PASTE(DEPTHAI_NLOHMANN_JSON_OPTIONAL_TO, __VA_ARGS__))   \
+    }                                                                                               \
+    inline void from_json(const nlohmann::json& nlohmann_json_j, Type& nlohmann_json_t) {           \
+        NLOHMANN_JSON_EXPAND(NLOHMANN_JSON_PASTE(DEPTHAI_NLOHMANN_JSON_OPTIONAL_FROM, __VA_ARGS__)) \
+    }
+#define DEPTHAI_NLOHMANN_DEFINE_TYPE_OPTIONAL_INTRUSIVE(Type, ...)                                  \
+    friend void to_json(nlohmann::json& nlohmann_json_j, const Type& nlohmann_json_t) {             \
+        NLOHMANN_JSON_EXPAND(NLOHMANN_JSON_PASTE(DEPTHAI_NLOHMANN_JSON_OPTIONAL_TO, __VA_ARGS__))   \
+    }                                                                                               \
+    friend void from_json(const nlohmann::json& nlohmann_json_j, Type& nlohmann_json_t) {           \
+        NLOHMANN_JSON_EXPAND(NLOHMANN_JSON_PASTE(DEPTHAI_NLOHMANN_JSON_OPTIONAL_FROM, __VA_ARGS__)) \
+    }
+
 // Macros
+#define DEPTHAI_SERIALIZE_OPTIONAL_EXT(...)                                                   \
+    DEPTHAI_DEFERRED_EXPAND(DEPTHAI_NLOHMANN_DEFINE_TYPE_OPTIONAL_NON_INTRUSIVE(__VA_ARGS__)) \
+    DEPTHAI_DEFERRED_EXPAND(NOP_EXTERNAL_STRUCTURE(__VA_ARGS__))
+
+#define DEPTHAI_SERIALIZE_OPTIONAL(...)                                                   \
+    DEPTHAI_DEFERRED_EXPAND(DEPTHAI_NLOHMANN_DEFINE_TYPE_OPTIONAL_INTRUSIVE(__VA_ARGS__)) \
+    DEPTHAI_DEFERRED_EXPAND(NOP_EXTERNAL_STRUCTURE(__VA_ARGS__))
+
 #define DEPTHAI_SERIALIZE_EXT(...)                                           \
     DEPTHAI_DEFERRED_EXPAND(NLOHMANN_DEFINE_TYPE_NON_INTRUSIVE(__VA_ARGS__)) \
     DEPTHAI_DEFERRED_EXPAND(NOP_EXTERNAL_STRUCTURE(__VA_ARGS__))
