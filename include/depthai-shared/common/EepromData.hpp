@@ -24,7 +24,7 @@ struct EepromData {
     StereoRectification stereoRectificationData;
     Extrinsics imuExtrinsics;
     std::vector<uint8_t> miscellaneousData;
-    DEPTHAI_SERIALIZE(EepromData, version, boardName, boardRev, boardId, hardwareId, customBoard, batchName, batchTime, cameraData, stereoRectificationData, imuExtrinsics, miscellaneousData);
+    DEPTHAI_SERIALIZE(EepromData, version, boardName, boardRev, boardId, hardwareId, productName, customBoard, batchName, batchTime, cameraData, stereoRectificationData, imuExtrinsics, miscellaneousData);
 };
 
 }  // namespace dai
