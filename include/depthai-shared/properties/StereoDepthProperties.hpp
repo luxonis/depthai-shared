@@ -52,6 +52,10 @@ struct StereoDepthProperties : PropertiesSerializable<Properties, StereoDepthPro
      */
     CameraBoardSocket depthAlignCamera = CameraBoardSocket::AUTO;
 
+    /**
+     * Enable stereo rectification/dewarp or not.
+     * Useful to disable when replaying pre-recorded rectified frames.
+     */
     bool enableRectification = true;
 
     /**
@@ -122,6 +126,12 @@ struct StereoDepthProperties : PropertiesSerializable<Properties, StereoDepthPro
      * otherwise calculated from FOV and image resolution: focalLength = calib.width / (2.f * tan(calib.fov / 2 / 180.f * pi));
      */
     tl::optional<bool> focalLengthFromCalibration;
+
+    /**
+     * Use homography for stereo rectification instead of sparse mesh generated on device.
+     * Default value: true.
+     */
+    bool useHomographyRectification = true;
 };
 
 DEPTHAI_SERIALIZE_EXT(StereoDepthProperties,
@@ -139,6 +149,7 @@ DEPTHAI_SERIALIZE_EXT(StereoDepthProperties,
                       numFramesPool,
                       numPostProcessingShaves,
                       numPostProcessingMemorySlices,
-                      focalLengthFromCalibration);
+                      focalLengthFromCalibration,
+                      useHomographyRectification);
 
 }  // namespace dai
