@@ -18,6 +18,7 @@ constexpr static uint32_t BOARD_CONFIG_MAGIC2 = 0x21ea17e6U;
 struct BoardConfig {
     // USB related config
     struct USB {
+        USB(){};
         uint16_t vid = 0x03e7, pid = 0xf63b;
         uint16_t flashBootedVid = 0x03e7, flashBootedPid = 0xf63d;
         UsbSpeed maxSpeed = UsbSpeed::SUPER;
