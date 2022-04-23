@@ -20,6 +20,7 @@ struct EepromData {
     uint32_t version = 7;
     std::string productName, boardCustom, boardName, boardRev, boardConf, hardwareConf, batchName;
     uint64_t batchTime{0};
+    uint32_t boardBlOptions{0};
     std::unordered_map<CameraBoardSocket, CameraInfo> cameraData;
     StereoRectification stereoRectificationData;
     Extrinsics imuExtrinsics;
@@ -36,6 +37,7 @@ DEPTHAI_SERIALIZE_OPTIONAL_EXT(EepromData,
                                productName,
                                batchName,
                                batchTime,
+                               boardBlOptions,
                                cameraData,
                                stereoRectificationData,
                                imuExtrinsics,
