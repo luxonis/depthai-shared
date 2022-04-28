@@ -1,13 +1,16 @@
 #pragma once
 
-#include <nlohmann/json.hpp>
+#include "depthai-shared/properties/Properties.hpp"
+#include "depthai-shared/datatype/RawAudioInConfig.hpp"
 
 namespace dai {
 
 /**
  * Properties for UAC node
  */
-struct UACProperties {
+struct UACProperties : PropertiesSerializable<Properties, UACProperties> {
+    /// Initial AudioIn config
+    RawAudioInConfig initialConfig;
 
     /**
      * Enable speaker over UAC
@@ -28,11 +31,6 @@ struct UACProperties {
      * Experimental, control the gain automatically (digital AGC)
      */
     bool enableAgc = false;
-
-    /**
-     * Configurable fixed mic gain (x times)
-     */
-    float micGain = 1.0;
 
     /**
      * Audio sample rate
@@ -65,17 +63,17 @@ struct UACProperties {
     uint8_t xlinkSampleSizeBytes = 3;
 };
 
-NLOHMANN_DEFINE_TYPE_NON_INTRUSIVE(UACProperties,
-                                   enableSpeaker,
-                                   speakerVolume,
-                                   streamBackMic,
-                                   enableAgc,
-                                   micGain,
-                                   sampleRateHz,
-                                   i2sReadSizeSamples,
-                                   xlinkSendSizeSamples,
-                                   xlinkSendInterleaved,
-                                   xLinkApplyMicGain,
-                                   xlinkSampleSizeBytes);
+DEPTHAI_SERIALIZE_EXT(UACProperties,
+                      enableSpeaker,
+                      speakerVolume,
+                      initialConfig,
+                      streamBackMic,
+                      enableAgc,
+                      sampleRateHz,
+                      i2sReadSizeSamples,
+                      xlinkSendSizeSamples,
+                      xlinkSendInterleaved,
+                      xLinkApplyMicGain,
+                      xlinkSampleSizeBytes);
 
 }  // namespace dai

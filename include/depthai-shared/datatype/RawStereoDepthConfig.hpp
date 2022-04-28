@@ -1,11 +1,11 @@
 #pragma once
 #include <cstdint>
 #include <depthai-shared/common/optional.hpp>
-#include <nlohmann/json.hpp>
 #include <vector>
 
-#include "DatatypeEnum.hpp"
-#include "RawBuffer.hpp"
+#include "depthai-shared/datatype/DatatypeEnum.hpp"
+#include "depthai-shared/datatype/RawBuffer.hpp"
+#include "depthai-shared/utility/Serialization.hpp"
 
 namespace dai {
 
@@ -20,10 +20,20 @@ struct RawStereoDepthConfig : public RawBuffer {
 
     struct AlgorithmControl {
         /**
+         * Align the disparity/depth to the perspective of a rectified output, or center it
+         */
+        enum class DepthAlign : int32_t { RECTIFIED_RIGHT, RECTIFIED_LEFT, CENTER };
+
+        /**
+         * Set the disparity/depth alignment to the perspective of a rectified output, or center it
+         */
+        DepthAlign depthAlign = DepthAlign::RECTIFIED_RIGHT;
+
+        /**
          * Computes and combines disparities in both L-R and R-L directions, and combine them.
          * For better occlusion handling
          */
-        bool enableLeftRightCheck = false;
+        bool enableLeftRightCheck = true;
 
         /**
          * Disparity range increased from 95 to 190, combined from full resolution and downscaled images.
@@ -41,24 +51,30 @@ struct RawStereoDepthConfig : public RawBuffer {
          * Used only when left-right check mode is enabled.
          * Defines the maximum difference between the confidence of pixels from left-right and right-left confidence maps
          */
-        std::int32_t leftRightCheckThreshold = 4;
+        std::int32_t leftRightCheckThreshold = 10;
 
         /**
-         * Number of fractional bits for subpixel mode.
-         * Valid values: 3,4,5.
-         * Defines the number of fractional disparities: 2^x.
-         * Median filter postprocessing is supported only for 3 fractional bits.
+         * Number of fractional bits for subpixel mode
+         *
+         * Valid values: 3,4,5
+         *
+         * Defines the number of fractional disparities: 2^x
+         *
+         * Median filter postprocessing is supported only for 3 fractional bits
          */
         std::int32_t subpixelFractionalBits = 3;
 
-        NLOHMANN_DEFINE_TYPE_INTRUSIVE(AlgorithmControl, enableLeftRightCheck, enableExtended, enableSubpixel, leftRightCheckThreshold, subpixelFractionalBits);
+        DEPTHAI_SERIALIZE(AlgorithmControl, depthAlign, enableLeftRightCheck, enableExtended, enableSubpixel, leftRightCheckThreshold, subpixelFractionalBits);
     };
 
     /**
-     * Controls the flow of stereo algorithm: left-right check, subpixel etc.
+     * Controls the flow of stereo algorithm - left-right check, subpixel etc.
      */
     AlgorithmControl algorithmControl;
 
+    /**
+     * Post-processing filters, all the filters are applied in disparity domain.
+     */
     struct PostProcessing {
         /**
          * Set kernel size for disparity/depth median filtering, or disable
@@ -66,12 +82,196 @@ struct RawStereoDepthConfig : public RawBuffer {
         MedianFilter median = MedianFilter::KERNEL_5x5;
 
         /**
-         * Sigma value for bilateral filter. 0 means disabled
+         * Sigma value for bilateral filter. 0 means disabled.
          * A larger value of the parameter means that farther colors within the pixel neighborhood will be mixed together.
          */
         std::int16_t bilateralSigmaValue = 0;
 
-        NLOHMANN_DEFINE_TYPE_INTRUSIVE(PostProcessing, median, bilateralSigmaValue);
+        /**
+         * 1D edge-preserving spatial filter using high-order domain transform.
+         */
+        struct SpatialFilter {
+            static constexpr const std::int32_t DEFAULT_DELTA_VALUE = 3;
+
+            /**
+             * Whether to enable or disable the filter.
+             */
+            bool enable = false;
+
+            /**
+             * An in-place heuristic symmetric hole-filling mode applied horizontally during the filter passes.
+             * Intended to rectify minor artefacts with minimal performance impact.
+             * Search radius for hole filling.
+             */
+            std::uint8_t holeFillingRadius = 2;
+
+            /**
+             * The Alpha factor in an exponential moving average with Alpha=1 - no filter. Alpha = 0 - infinite filter.
+             * Determines the amount of smoothing.
+             */
+            float alpha = 0.5f;
+
+            /**
+             * Step-size boundary. Establishes the threshold used to preserve "edges".
+             * If the disparity value between neighboring pixels exceed the disparity threshold set by this delta parameter,
+             * then filtering will be temporarily disabled.
+             * Default value 0 means auto: 3 disparity integer levels.
+             * In case of subpixel mode it's 3*number of subpixel levels.
+             */
+            std::int32_t delta = 0;
+
+            /**
+             * Nubmer of iterations over the image in both horizontal and vertical direction.
+             */
+            std::int32_t numIterations = 1;
+
+            DEPTHAI_SERIALIZE(SpatialFilter, enable, holeFillingRadius, alpha, delta, numIterations);
+        };
+
+        /**
+         * Edge-preserving filtering: This type of filter will smooth the depth noise while attempting to preserve edges.
+         */
+        SpatialFilter spatialFilter;
+
+        /**
+         * Temporal filtering with optional persistence.
+         * More details about the filter can be found here:
+         */
+        struct TemporalFilter {
+            static constexpr const std::int32_t DEFAULT_DELTA_VALUE = 3;
+
+            /**
+             * Whether to enable or disable the filter.
+             */
+            bool enable = false;
+
+            /**
+             * Persistency algorithm type.
+             */
+            enum class PersistencyMode : int32_t {
+                PERSISTENCY_OFF = 0,
+                VALID_8_OUT_OF_8 = 1,
+                VALID_2_IN_LAST_3 = 2,
+                VALID_2_IN_LAST_4 = 3,
+                VALID_2_OUT_OF_8 = 4,
+                VALID_1_IN_LAST_2 = 5,
+                VALID_1_IN_LAST_5 = 6,
+                VALID_1_IN_LAST_8 = 7,
+                PERSISTENCY_INDEFINITELY = 8,
+            };
+
+            /**
+             * Persistency mode.
+             * If the current disparity/depth value is invalid, it will be replaced by an older value, based on persistency mode.
+             */
+            PersistencyMode persistencyMode = PersistencyMode::VALID_2_IN_LAST_4;
+
+            /**
+             * The Alpha factor in an exponential moving average with Alpha=1 - no filter. Alpha = 0 - infinite filter.
+             * Determines the extent of the temporal history that should be averaged.
+             */
+            float alpha = 0.4f;
+
+            /**
+             * Step-size boundary. Establishes the threshold used to preserve surfaces (edges).
+             * If the disparity value between neighboring pixels exceed the disparity threshold set by this delta parameter,
+             * then filtering will be temporarily disabled.
+             * Default value 0 means auto: 3 disparity integer levels.
+             * In case of subpixel mode it's 3*number of subpixel levels.
+             */
+            std::int32_t delta = 0;
+
+            DEPTHAI_SERIALIZE(TemporalFilter, enable, persistencyMode, alpha, delta);
+        };
+
+        /**
+         * Temporal filtering with optional persistence.
+         * More details about the filter can be found here:
+         */
+        TemporalFilter temporalFilter;
+
+        /**
+         * Threshold filtering.
+         * Filters out distances outside of a given interval.
+         */
+        struct ThresholdFilter {
+            /**
+             * Minimum range in millimeters.
+             * Depth values under this value are invalidated.
+             */
+            std::int32_t minRange = 0;
+            /**
+             * Maximum range in millimeters.
+             * Depth values over this value are invalidated.
+             */
+            std::int32_t maxRange = 65535;
+
+            DEPTHAI_SERIALIZE(ThresholdFilter, minRange, maxRange);
+        };
+
+        /**
+         * Threshold filtering.
+         * Filters out distances outside of a given interval.
+         */
+        ThresholdFilter thresholdFilter;
+
+        /**
+         * Speckle filtering.
+         * Removes speckle noise.
+         */
+        struct SpeckleFilter {
+            /**
+             * Whether to enable or disable the filter.
+             */
+            bool enable = false;
+            /**
+             * Speckle search range.
+             */
+            std::uint32_t speckleRange = 50;
+
+            DEPTHAI_SERIALIZE(SpeckleFilter, enable, speckleRange);
+        };
+
+        /**
+         * Speckle filtering.
+         * Removes speckle noise.
+         */
+        SpeckleFilter speckleFilter;
+
+        /**
+         * Decimation filter.
+         * Reduces the depth scene complexity. The filter runs on kernel sizes [2x2] to [8x8] pixels.
+         */
+        struct DecimationFilter {
+            /**
+             * Decimation factor.
+             * Valid values are 1,2,3,4.
+             * Disparity/depth map x/y resolution will be decimated with this value.
+             */
+            std::uint32_t decimationFactor = 1;
+            /**
+             * Decimation algorithm type.
+             */
+            enum class DecimationMode : int32_t {
+                PIXEL_SKIPPING = 0,
+                NON_ZERO_MEDIAN = 1,
+                NON_ZERO_MEAN = 2,
+            };
+            /**
+             * Decimation algorithm type.
+             */
+            DecimationMode decimationMode = DecimationMode::PIXEL_SKIPPING;
+
+            DEPTHAI_SERIALIZE(DecimationFilter, decimationFactor, decimationMode);
+        };
+
+        /**
+         * Decimation filter.
+         * Reduces disparity/depth map x/y complexity, reducing runtime complexity for other filters.
+         */
+        DecimationFilter decimationFilter;
+
+        DEPTHAI_SERIALIZE(PostProcessing, median, bilateralSigmaValue, spatialFilter, temporalFilter, thresholdFilter, speckleFilter, decimationFilter);
     };
 
     /**
@@ -79,6 +279,24 @@ struct RawStereoDepthConfig : public RawBuffer {
      */
     PostProcessing postProcessing;
 
+    /**
+     * The basic cost function used by the Stereo Accelerator for matching the left and right images is the Census
+     * Transform. It works on a block of pixels and computes a bit vector which represents the structure of the
+     * image in that block.
+     * There are two types of Census Transform based on how the middle pixel is used:
+     * Classic Approach and Modified Census. The comparisons that are made between pixels can be or not thresholded.
+     * In some cases a mask can be applied to filter out only specific bits from the entire bit stream.
+     * All these approaches are:
+     * Classic Approach: Uses middle pixel to compare against all its neighbors over a defined window. Each
+     * comparison results in a new bit, that is 0 if central pixel is smaller, or 1 if is it bigger than its neighbor.
+     * Modified Census Transform: same as classic Census Transform, but instead of comparing central pixel
+     * with its neighbors, the window mean will be compared with each pixel over the window.
+     * Thresholding Census Transform: same as classic Census Transform, but it is not enough that a
+     * neighbor pixel to be bigger than the central pixel, it must be significant bigger (based on a threshold).
+     * Census Transform with Mask: same as classic Census Transform, but in this case not all of the pixel from
+     * the support window are part of the binary descriptor. We use a ma sk “M” to define which pixels are part
+     * of the binary descriptor (1), and which pixels should be skipped (0).
+     */
     struct CensusTransform {
         /**
          * Census transform kernel size possible values.
@@ -91,7 +309,7 @@ struct RawStereoDepthConfig : public RawBuffer {
         KernelSize kernelSize = KernelSize::AUTO;
 
         /**
-         * Census transform mask, default: auto, mask is set based on resolution and kernel size.
+         * Census transform mask, default - auto, mask is set based on resolution and kernel size.
          * Disabled for 400p input resolution.
          * Enabled for 720p.
          * 0XA82415 for 5x5 census transform kernel.
@@ -104,14 +322,14 @@ struct RawStereoDepthConfig : public RawBuffer {
         /**
          * If enabled, each pixel in the window is compared with the mean window value instead of the central pixel.
          */
-        bool enableMeanMode = false;
+        bool enableMeanMode = true;
 
         /**
-         * Census transform comparation treshold value.
+         * Census transform comparison threshold value.
          */
         uint32_t threshold = 0;
 
-        NLOHMANN_DEFINE_TYPE_INTRUSIVE(CensusTransform, kernelSize, kernelMask, enableMeanMode, threshold);
+        DEPTHAI_SERIALIZE(CensusTransform, kernelSize, kernelMask, enableMeanMode, threshold);
     };
 
     /**
@@ -119,6 +337,11 @@ struct RawStereoDepthConfig : public RawBuffer {
      */
     CensusTransform censusTransform;
 
+    /**
+     * The matching cost is way of measuring the similarity of image locations in stereo correspondence
+     * algorithm. Based on the configuration parameters and based on the descriptor type, a linear equation
+     * is applied to computing the cost for each candidate disparity at each pixel.
+     */
     struct CostMatching {
         /**
          * Disparity search range: 64 or 96 pixels are supported by the HW.
@@ -150,7 +373,7 @@ struct RawStereoDepthConfig : public RawBuffer {
          * Disparities with confidence value under this threshold are accepted.
          * Higher confidence threshold means disparities with less confidence are accepted too.
          */
-        uint8_t confidenceThreshold = 230;
+        uint8_t confidenceThreshold = 245;
 
         /**
          * The linear equation applied for computing the cost is:
@@ -158,14 +381,14 @@ struct RawStereoDepthConfig : public RawBuffer {
          * CLAMP(COMB_COST >> 5, threshold).
          * Where AD is the Absolute Difference between 2 pixels values.
          * CTC is the Census Transform Cost between 2 pixels, based on Hamming distance (xor).
-         * The α and β parameters are subject to fine fine tuning by the user.
+         * The α and β parameters are subject to fine tuning by the user.
          */
         struct LinearEquationParameters {
-            uint8_t alpha = 8;
-            uint8_t beta = 12;
+            uint8_t alpha = 0;
+            uint8_t beta = 2;
             uint8_t threshold = 127;
 
-            NLOHMANN_DEFINE_TYPE_INTRUSIVE(LinearEquationParameters, alpha, beta, threshold);
+            DEPTHAI_SERIALIZE(LinearEquationParameters, alpha, beta, threshold);
         };
 
         /**
@@ -173,7 +396,7 @@ struct RawStereoDepthConfig : public RawBuffer {
          */
         LinearEquationParameters linearEquationParameters;
 
-        NLOHMANN_DEFINE_TYPE_INTRUSIVE(CostMatching, disparityWidth, enableCompanding, invalidDisparityValue, confidenceThreshold, linearEquationParameters);
+        DEPTHAI_SERIALIZE(CostMatching, disparityWidth, enableCompanding, invalidDisparityValue, confidenceThreshold, linearEquationParameters);
     };
 
     /**
@@ -181,51 +404,41 @@ struct RawStereoDepthConfig : public RawBuffer {
      */
     CostMatching costMatching;
 
+    /**
+     * Cost Aggregation is based on Semi Global Block Matching (SGBM). This algorithm uses a semi global
+     * technique to aggregate the cost map. Ultimately the idea is to build inertia into the stereo algorithm. If
+     * a pixel has very little texture information, then odds are the correct disparity for this pixel is close to
+     * that of the previous pixel considered. This means that we get improved results in areas with low
+     * texture.
+     */
     struct CostAggregation {
-        static constexpr const std::array<uint16_t, 256> defaultHorizontalPenaltyCosts = {
-            0xfffa, 0xfffa, 0xfa7d, 0xa653, 0x7d3e, 0x6432, 0x5329, 0x4723, 0x3e1f, 0x371b, 0x3219, 0x2d16, 0x2914, 0x2613, 0x2311, 0x2110, 0x1f0f, 0x1d0e,
-            0x1b0d, 0x1a0d, 0x190c, 0x170b, 0x160b, 0x150a, 0x140a, 0x140a, 0x1309, 0x1209, 0x1108, 0x1108, 0x1008, 0x1008, 0x0f07, 0x0f07, 0x0e07, 0x0e07,
-            0x0d06, 0x0d06, 0x0d06, 0x0c06, 0x0c06, 0x0c06, 0x0b05, 0x0b05, 0x0b05, 0x0b05, 0x0a05, 0x0a05, 0x0a05, 0x0a05, 0x0a05, 0x0904, 0x0904, 0x0904,
-            0x0904, 0x0904, 0x0804, 0x0804, 0x0804, 0x0804, 0x0804, 0x0804, 0x0804, 0x0703, 0x0703, 0x0703, 0x0703, 0x0703, 0x0703, 0x0703, 0x0703, 0x0703,
-            0x0603, 0x0603, 0x0603, 0x0603, 0x0603, 0x0603, 0x0603, 0x0603, 0x0603, 0x0603, 0x0603, 0x0603, 0x0502, 0x0502, 0x0502, 0x0502, 0x0502, 0x0502,
-            0x0502, 0x0502, 0x0502, 0x0502, 0x0502, 0x0502, 0x0502, 0x0502, 0x0502, 0x0502, 0x0502, 0x0402, 0x0402, 0x0402, 0x0402, 0x0402, 0x0402, 0x0402,
-            0x0402, 0x0402, 0x0402, 0x0402, 0x0402, 0x0402, 0x0402, 0x0402, 0x0402, 0x0402, 0x0402, 0x0402, 0x0402, 0x0402, 0x0402, 0x0402, 0x0402, 0x0402,
-            0x0301, 0x0301, 0x0301, 0x0301, 0x0301, 0x0301, 0x0301, 0x0301, 0x0301, 0x0301, 0x0301, 0x0301, 0x0301, 0x0301, 0x0301, 0x0301, 0x0301, 0x0301,
-            0x0301, 0x0301, 0x0301, 0x0301, 0x0301, 0x0301, 0x0301, 0x0301, 0x0301, 0x0301, 0x0301, 0x0301, 0x0301, 0x0301, 0x0301, 0x0301, 0x0301, 0x0301,
-            0x0301, 0x0301, 0x0301, 0x0301, 0x0301, 0x0201, 0x0201, 0x0201, 0x0201, 0x0201, 0x0201, 0x0201, 0x0201, 0x0201, 0x0201, 0x0201, 0x0201, 0x0201,
-            0x0201, 0x0201, 0x0201, 0x0201, 0x0201, 0x0201, 0x0201, 0x0201, 0x0201, 0x0201, 0x0201, 0x0201, 0x0201, 0x0201, 0x0201, 0x0201, 0x0201, 0x0201,
-            0x0201, 0x0201, 0x0201, 0x0201, 0x0201, 0x0201, 0x0201, 0x0201, 0x0201, 0x0201, 0x0201, 0x0201, 0x0201, 0x0201, 0x0201, 0x0201, 0x0201, 0x0201,
-            0x0201, 0x0201, 0x0201, 0x0201, 0x0201, 0x0201, 0x0201, 0x0201, 0x0201, 0x0201, 0x0201, 0x0201, 0x0201, 0x0201, 0x0201, 0x0201, 0x0201, 0x0201,
-            0x0201, 0x0201, 0x0201, 0x0201, 0x0201, 0x0201, 0x0201, 0x0201, 0x0201, 0x0201, 0x0201, 0x0201, 0x0201, 0x0201, 0x0201, 0x0201, 0x0201, 0x0100,
-            0x0100, 0x0100, 0x0100, 0x0100,
-        };
+        static constexpr const int defaultPenaltyP1 = 250;
+        static constexpr const int defaultPenaltyP2 = 500;
 
-        static constexpr const std::array<uint16_t, 256> defaultVerticalPenaltyCosts = {
-            0xfffa, 0xfffa, 0xfa7d, 0xa653, 0x7d3e, 0x6432, 0x5329, 0x4723, 0x3e1f, 0x371b, 0x3219, 0x2d16, 0x2914, 0x2613, 0x2311, 0x2110, 0x1f0f, 0x1d0e,
-            0x1b0d, 0x1a0d, 0x190c, 0x170b, 0x160b, 0x150a, 0x140a, 0x140a, 0x1309, 0x1209, 0x1108, 0x1108, 0x1008, 0x1008, 0x0f07, 0x0f07, 0x0e07, 0x0e07,
-            0x0d06, 0x0d06, 0x0d06, 0x0c06, 0x0c06, 0x0c06, 0x0b05, 0x0b05, 0x0b05, 0x0b05, 0x0a05, 0x0a05, 0x0a05, 0x0a05, 0x0a05, 0x0904, 0x0904, 0x0904,
-            0x0904, 0x0904, 0x0804, 0x0804, 0x0804, 0x0804, 0x0804, 0x0804, 0x0804, 0x0703, 0x0703, 0x0703, 0x0703, 0x0703, 0x0703, 0x0703, 0x0703, 0x0703,
-            0x0603, 0x0603, 0x0603, 0x0603, 0x0603, 0x0603, 0x0603, 0x0603, 0x0603, 0x0603, 0x0603, 0x0603, 0x0502, 0x0502, 0x0502, 0x0502, 0x0502, 0x0502,
-            0x0502, 0x0502, 0x0502, 0x0502, 0x0502, 0x0502, 0x0502, 0x0502, 0x0502, 0x0502, 0x0502, 0x0402, 0x0402, 0x0402, 0x0402, 0x0402, 0x0402, 0x0402,
-            0x0402, 0x0402, 0x0402, 0x0402, 0x0402, 0x0402, 0x0402, 0x0402, 0x0402, 0x0402, 0x0402, 0x0402, 0x0402, 0x0402, 0x0402, 0x0402, 0x0402, 0x0402,
-            0x0301, 0x0301, 0x0301, 0x0301, 0x0301, 0x0301, 0x0301, 0x0301, 0x0301, 0x0301, 0x0301, 0x0301, 0x0301, 0x0301, 0x0301, 0x0301, 0x0301, 0x0301,
-            0x0301, 0x0301, 0x0301, 0x0301, 0x0301, 0x0301, 0x0301, 0x0301, 0x0301, 0x0301, 0x0301, 0x0301, 0x0301, 0x0301, 0x0301, 0x0301, 0x0301, 0x0301,
-            0x0301, 0x0301, 0x0301, 0x0301, 0x0301, 0x0201, 0x0201, 0x0201, 0x0201, 0x0201, 0x0201, 0x0201, 0x0201, 0x0201, 0x0201, 0x0201, 0x0201, 0x0201,
-            0x0201, 0x0201, 0x0201, 0x0201, 0x0201, 0x0201, 0x0201, 0x0201, 0x0201, 0x0201, 0x0201, 0x0201, 0x0201, 0x0201, 0x0201, 0x0201, 0x0201, 0x0201,
-            0x0201, 0x0201, 0x0201, 0x0201, 0x0201, 0x0201, 0x0201, 0x0201, 0x0201, 0x0201, 0x0201, 0x0201, 0x0201, 0x0201, 0x0201, 0x0201, 0x0201, 0x0201,
-            0x0201, 0x0201, 0x0201, 0x0201, 0x0201, 0x0201, 0x0201, 0x0201, 0x0201, 0x0201, 0x0201, 0x0201, 0x0201, 0x0201, 0x0201, 0x0201, 0x0201, 0x0201,
-            0x0201, 0x0201, 0x0201, 0x0201, 0x0201, 0x0201, 0x0201, 0x0201, 0x0201, 0x0201, 0x0201, 0x0201, 0x0201, 0x0201, 0x0201, 0x0201, 0x0201, 0x0100,
-            0x0100, 0x0100, 0x0100, 0x0100,
-        };
-
-        // TBD
+        /**
+         * Cost calculation linear equation parameters.
+         */
         uint8_t divisionFactor = 1;
 
-        tl::optional<std::array<uint16_t, 256>> horizontalPenaltyCosts;
+        /**
+         * Horizontal P1 penalty cost parameter.
+         */
+        uint16_t horizontalPenaltyCostP1 = defaultPenaltyP1;
+        /**
+         * Horizontal P2 penalty cost parameter.
+         */
+        uint16_t horizontalPenaltyCostP2 = defaultPenaltyP2;
 
-        tl::optional<std::array<uint16_t, 256>> verticalPenaltyCosts;
+        /**
+         * Vertical P1 penalty cost parameter.
+         */
+        uint16_t verticalPenaltyCostP1 = defaultPenaltyP1;
+        /**
+         * Vertical P2 penalty cost parameter.
+         */
+        uint16_t verticalPenaltyCostP2 = defaultPenaltyP2;
 
-        NLOHMANN_DEFINE_TYPE_INTRUSIVE(CostAggregation, divisionFactor, horizontalPenaltyCosts, verticalPenaltyCosts);
+        DEPTHAI_SERIALIZE(CostAggregation, divisionFactor, horizontalPenaltyCostP1, horizontalPenaltyCostP2, verticalPenaltyCostP1, verticalPenaltyCostP2);
     };
 
     /**
@@ -234,12 +447,11 @@ struct RawStereoDepthConfig : public RawBuffer {
     CostAggregation costAggregation;
 
     void serialize(std::vector<std::uint8_t>& metadata, DatatypeEnum& datatype) const override {
-        nlohmann::json j = *this;
-        metadata = nlohmann::json::to_msgpack(j);
+        metadata = utility::serialize(*this);
         datatype = DatatypeEnum::StereoDepthConfig;
     };
 
-    NLOHMANN_DEFINE_TYPE_INTRUSIVE(RawStereoDepthConfig, algorithmControl, postProcessing, censusTransform, costMatching, costAggregation);
+    DEPTHAI_SERIALIZE(RawStereoDepthConfig, algorithmControl, postProcessing, censusTransform, costMatching, costAggregation);
 };
 
 }  // namespace dai
