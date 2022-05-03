@@ -62,11 +62,17 @@ struct BoardConfig {
     };
     /// UART instance map
     std::unordered_map<std::int8_t, UART> uart;
+
+    // PCIe config
+    tl::optional<bool> pcieInternalClock;
+
+    // USB3 phy config
+    tl::optional<bool> usb3PhyInternalClock;
 };
 
 DEPTHAI_SERIALIZE_EXT(BoardConfig::USB, vid, pid, flashBootedVid, flashBootedPid, maxSpeed);
 DEPTHAI_SERIALIZE_EXT(BoardConfig::GPIO, mode, direction, level, pull, drive, schmitt, slewFast);
 DEPTHAI_SERIALIZE_EXT(BoardConfig::UART, tmp);
-DEPTHAI_SERIALIZE_EXT(BoardConfig, usb, watchdogTimeoutMs, watchdogInitialDelayMs, gpio, uart);
+DEPTHAI_SERIALIZE_EXT(BoardConfig, usb, watchdogTimeoutMs, watchdogInitialDelayMs, gpio, uart, pcieInternalClock, usb3PhyInternalClock);
 
 }  // namespace dai
