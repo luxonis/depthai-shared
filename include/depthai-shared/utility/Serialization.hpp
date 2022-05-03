@@ -11,14 +11,8 @@
 #include <nop/utility/buffer_reader.h>
 #include <nop/utility/stream_writer.h>
 
-#include <nlohmann/json.hpp>
-
-// Check version of nlohmann json
-#if(defined(NLOHMANN_JSON_VERSION_MAJOR) && defined(NLOHMANN_JSON_VERSION_MINOR))
-    #if((NLOHMANN_JSON_VERSION_MAJOR < 3) || ((NLOHMANN_JSON_VERSION_MAJOR == 3) && (NLOHMANN_JSON_VERSION_MINOR < 9)))
-static_assert(0, "DepthAI requires nlohmann library version 3.9.0 or higher");
-    #endif
-#endif
+// project
+#include "NlohmannJsonCompat.hpp"
 
 // To not require exceptions for embedded usecases.
 #ifndef __has_feature           // Optional of course.
@@ -271,9 +265,9 @@ inline bool deserialize(const std::vector<std::uint8_t>& data, T& obj) {
     DEPTHAI_DEFERRED_EXPAND(NOP_EXTERNAL_STRUCTURE(__VA_ARGS__))
 
 #define DEPTHAI_SERIALIZE_EXT(...)                                           \
-    DEPTHAI_DEFERRED_EXPAND(NLOHMANN_DEFINE_TYPE_NON_INTRUSIVE(__VA_ARGS__)) \
+    DEPTHAI_DEFERRED_EXPAND(DEPTHAI_NLOHMANN_DEFINE_TYPE_NON_INTRUSIVE(__VA_ARGS__)) \
     DEPTHAI_DEFERRED_EXPAND(NOP_EXTERNAL_STRUCTURE(__VA_ARGS__))
 
 #define DEPTHAI_SERIALIZE(...)                                           \
-    DEPTHAI_DEFERRED_EXPAND(NLOHMANN_DEFINE_TYPE_INTRUSIVE(__VA_ARGS__)) \
+    DEPTHAI_DEFERRED_EXPAND(DEPTHAI_NLOHMANN_DEFINE_TYPE_INTRUSIVE(__VA_ARGS__)) \
     DEPTHAI_DEFERRED_EXPAND(NOP_STRUCTURE(__VA_ARGS__))
