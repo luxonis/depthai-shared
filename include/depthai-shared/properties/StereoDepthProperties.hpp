@@ -122,16 +122,16 @@ struct StereoDepthProperties : PropertiesSerializable<Properties, StereoDepthPro
 
     /**
      * Whether to use focal length from calibration intrinsics or calculate based on calibration FOV.
-     * Default behaviour is AUTO, for fisheye lenses focal length is taken from calibration intrinsics,
-     * otherwise calculated from FOV and image resolution: focalLength = calib.width / (2.f * tan(calib.fov / 2 / 180.f * pi));
+     * Default value is true.
+     * If set to false it's calculated from FOV and image resolution: focalLength = calib.width / (2.f * tan(calib.fov / 2 / 180.f * pi));
      */
-    tl::optional<bool> focalLengthFromCalibration;
+    bool focalLengthFromCalibration = true;
 
     /**
      * Use homography for stereo rectification instead of sparse mesh generated on device.
-     * Default value: true.
+     * Default behaviour is AUTO, for lenses with FOV over 90 degrees sparse mesh is used, otherwise 3x3 homography
      */
-    bool useHomographyRectification = true;
+    tl::optional<bool> useHomographyRectification;
 };
 
 DEPTHAI_SERIALIZE_EXT(StereoDepthProperties,
