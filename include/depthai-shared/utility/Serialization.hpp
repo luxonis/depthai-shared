@@ -264,10 +264,10 @@ inline bool deserialize(const std::vector<std::uint8_t>& data, T& obj) {
     DEPTHAI_DEFERRED_EXPAND(DEPTHAI_NLOHMANN_DEFINE_TYPE_OPTIONAL_INTRUSIVE(__VA_ARGS__)) \
     DEPTHAI_DEFERRED_EXPAND(NOP_EXTERNAL_STRUCTURE(__VA_ARGS__))
 
-#define DEPTHAI_SERIALIZE_EXT(...)                                           \
+#define DEPTHAI_SERIALIZE_EXT(...)                                                   \
     DEPTHAI_DEFERRED_EXPAND(DEPTHAI_NLOHMANN_DEFINE_TYPE_NON_INTRUSIVE(__VA_ARGS__)) \
     DEPTHAI_DEFERRED_EXPAND(NOP_EXTERNAL_STRUCTURE(__VA_ARGS__))
 
-#define DEPTHAI_SERIALIZE(...)                                           \
+#define DEPTHAI_SERIALIZE(...)                                                   \
     DEPTHAI_DEFERRED_EXPAND(DEPTHAI_NLOHMANN_DEFINE_TYPE_INTRUSIVE(__VA_ARGS__)) \
     DEPTHAI_DEFERRED_EXPAND(NOP_STRUCTURE(__VA_ARGS__))

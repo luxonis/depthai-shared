@@ -128,8 +128,14 @@ struct StereoDepthProperties : PropertiesSerializable<Properties, StereoDepthPro
     bool focalLengthFromCalibration = true;
 
     /**
-     * Use homography for stereo rectification instead of sparse mesh generated on device.
-     * Default behaviour is AUTO, for lenses with FOV over 90 degrees sparse mesh is used, otherwise 3x3 homography
+     * Use 3x3 homography matrix for stereo rectification instead of sparse mesh generated on device.
+     * Default behaviour is AUTO, for lenses with FOV over 90 degrees sparse mesh is used, otherwise 3x3 homography.
+     * If custom mesh data is provided through loadMeshData or loadMeshFiles this option is ignored.
+     * true: 3x3 homography matrix generated from calibration data is used for stereo rectification, can't correct lens
+     * distortion.
+     * false: sparse mesh is generated on-device from calibration data with mesh step specified with setMeshStep (Default: (16, 16)), can correct lens
+     * distortion. Implementation for generating the mesh is same as opencv's initUndistortRectifyMap function. Only the first 8 distortion coefficients are
+     * used from calibration data.
      */
     tl::optional<bool> useHomographyRectification;
 };
