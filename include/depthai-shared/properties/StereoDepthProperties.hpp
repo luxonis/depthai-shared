@@ -129,7 +129,7 @@ struct StereoDepthProperties : PropertiesSerializable<Properties, StereoDepthPro
 
     /**
      * Use 3x3 homography matrix for stereo rectification instead of sparse mesh generated on device.
-     * Default behaviour is AUTO, for lenses with FOV over 90 degrees sparse mesh is used, otherwise 3x3 homography.
+     * Default behaviour is AUTO, for lenses with FOV over 85 degrees sparse mesh is used, otherwise 3x3 homography.
      * If custom mesh data is provided through loadMeshData or loadMeshFiles this option is ignored.
      * true: 3x3 homography matrix generated from calibration data is used for stereo rectification, can't correct lens
      * distortion.
