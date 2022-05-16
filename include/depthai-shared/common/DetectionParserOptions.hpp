@@ -1,7 +1,7 @@
 #pragma once
 
-#include "depthai-shared/utility/Serialization.hpp"
 #include "depthai-shared/common/DetectionNetworkType.hpp"
+#include "depthai-shared/utility/Serialization.hpp"
 
 namespace dai {
 

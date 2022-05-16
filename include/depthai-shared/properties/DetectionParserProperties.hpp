@@ -2,11 +2,11 @@
 
 #include <vector>
 
+#include "depthai-shared/common/DetectionParserOptions.hpp"
+#include "depthai-shared/common/TensorInfo.hpp"
 #include "depthai-shared/common/optional.hpp"
 #include "depthai-shared/datatype/RawEdgeDetectorConfig.hpp"
 #include "depthai-shared/properties/Properties.hpp"
-#include "depthai-shared/common/TensorInfo.hpp"
-#include "depthai-shared/common/DetectionParserOptions.hpp"
 
 namespace dai {
 
