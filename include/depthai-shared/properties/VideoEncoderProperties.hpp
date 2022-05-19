@@ -48,6 +48,11 @@ struct VideoEncoderProperties : PropertiesSerializable<Properties, VideoEncoderP
      */
     std::uint32_t numFramesPool = 0;
     /**
+     * Specifies max output frame size in pool.
+     * Value "0" indicates auto
+     */
+    std::int32_t outputFrameSize = 0;
+    /**
      * Encoding profile, H264, H265 or MJPEG
      */
     Profile profile = Profile::H264_BASELINE;
