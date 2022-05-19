@@ -61,6 +61,18 @@ struct UACProperties : PropertiesSerializable<Properties, UACProperties> {
      * Native MIC data is 24-bit. Optionally change to 16-bit or 32-bit
      */
     uint8_t xlinkSampleSizeBytes = 3;
+
+    /**
+     * Specifies which mics should be streamed on XLink (interleaved).
+     * Default: 0b111111
+     */
+    uint32_t xlinkMicMask = (1<<6) - 1;
+
+    /**
+     * This options specifies how many frames are available in this node's pool.
+     * Helps when receiver is slow at consuming. Default: 10
+     */
+    uint32_t numFramesPool = 10;
 };
 
 DEPTHAI_SERIALIZE_EXT(UACProperties,
@@ -74,6 +86,8 @@ DEPTHAI_SERIALIZE_EXT(UACProperties,
                       xlinkSendSizeSamples,
                       xlinkSendInterleaved,
                       xLinkApplyMicGain,
-                      xlinkSampleSizeBytes);
+                      xlinkSampleSizeBytes,
+                      xlinkMicMask,
+                      numFramesPool);
 
 }  // namespace dai
