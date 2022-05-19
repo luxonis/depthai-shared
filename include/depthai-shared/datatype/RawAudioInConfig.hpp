@@ -2,7 +2,6 @@
 #include <cstdint>
 #include <vector>
 
-
 #include "depthai-shared/datatype/DatatypeEnum.hpp"
 #include "depthai-shared/datatype/RawBuffer.hpp"
 #include "depthai-shared/utility/Serialization.hpp"

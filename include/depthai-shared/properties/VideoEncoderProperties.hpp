@@ -74,7 +74,17 @@ struct VideoEncoderProperties : PropertiesSerializable<Properties, VideoEncoderP
     float frameRate = 30.0f;
 };
 
-DEPTHAI_SERIALIZE_EXT(
-    VideoEncoderProperties, bitrate, keyframeFrequency, maxBitrate, numBFrames, numFramesPool, profile, quality, lossless, rateCtrlMode, frameRate);
+DEPTHAI_SERIALIZE_EXT(VideoEncoderProperties,
+                      bitrate,
+                      keyframeFrequency,
+                      maxBitrate,
+                      numBFrames,
+                      numFramesPool,
+                      outputFrameSize,
+                      profile,
+                      quality,
+                      lossless,
+                      rateCtrlMode,
+                      frameRate);
 
 }  // namespace dai
