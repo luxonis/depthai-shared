@@ -16,7 +16,8 @@ struct NodeConnectionSchema {
     std::string node2Input;
 
     bool operator==(const NodeConnectionSchema& rhs) const {
-        return node1Id == rhs.node1Id && node1OutputGroup == rhs.node1OutputGroup && node1Output == rhs.node1Output && node2Id == rhs.node2Id && node2InputGroup == rhs.node2InputGroup && node2Input == rhs.node2Input;
+        return node1Id == rhs.node1Id && node1OutputGroup == rhs.node1OutputGroup && node1Output == rhs.node1Output && node2Id == rhs.node2Id
+               && node2InputGroup == rhs.node2InputGroup && node2Input == rhs.node2Input;
     }
 };
 
