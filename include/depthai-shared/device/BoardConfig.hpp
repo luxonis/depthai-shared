@@ -85,6 +85,9 @@ struct BoardConfig {
 
     // USB3 phy config
     tl::optional<bool> usb3PhyInternalClock;
+
+    // MIPI 4Lane RGB config
+    tl::optional<bool> mipi4LaneRgb;
 };
 
 DEPTHAI_SERIALIZE_EXT(BoardConfig::USB, vid, pid, flashBootedVid, flashBootedPid, maxSpeed);
