@@ -87,6 +87,9 @@ struct BoardConfig {
     // USB3 phy config
     tl::optional<bool> usb3PhyInternalClock;
 
+    // MIPI 4Lane RGB config
+    tl::optional<bool> mipi4LaneRgb;
+
     // eMMC config
     tl::optional<bool> emmc;
 
