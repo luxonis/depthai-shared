@@ -27,14 +27,19 @@ struct BoardConfig {
 
     /// Network configuration
     struct Network {
-        /// Network MTU, 0 is auto (usually 1500 for Ethernet)
+        /// Network MTU, 0 is auto (usually 1500 for Ethernet) or forwarded
+        /// from bootloader (not yet implemented there).
+        /// Note: not advised to increase past 1500 for now
         uint16_t mtu = 0;
+        /// Sets the `TCP_NODELAY` option for XLink TCP sockets (disable Nagle's algorithm),
+        /// reducing latency at the expense of a small hit for max throughput. Default is `true`
+        bool xlinkTcpNoDelay = true;
     };
 
     Network network;
 
     /// Optional list of FreeBSD sysctl parameters to be set (system, network, etc.).
-    /// For example: "net.inet.udp.maxdgram=65535"
+    /// For example: "net.inet.tcp.delayed_ack=0" (this one is also set by default)
     std::vector<std::string> sysctl;
 
     // Watchdog config
@@ -75,14 +80,20 @@ struct BoardConfig {
     /// UART instance map
     std::unordered_map<std::int8_t, UART> uart;
 
+    // PCIe config
+    tl::optional<bool> pcieInternalClock;
+
+    // USB3 phy config
+    tl::optional<bool> usb3PhyInternalClock;
+
     /// Set whether to enable UVC USB descriptor. TODO expose more configuration
     tl::optional<bool> uvcEnable;
 };
 
 DEPTHAI_SERIALIZE_EXT(BoardConfig::USB, vid, pid, flashBootedVid, flashBootedPid, maxSpeed);
-DEPTHAI_SERIALIZE_EXT(BoardConfig::Network, mtu);
+DEPTHAI_SERIALIZE_EXT(BoardConfig::Network, mtu, xlinkTcpNoDelay);
 DEPTHAI_SERIALIZE_EXT(BoardConfig::GPIO, mode, direction, level, pull, drive, schmitt, slewFast);
 DEPTHAI_SERIALIZE_EXT(BoardConfig::UART, tmp);
-DEPTHAI_SERIALIZE_EXT(BoardConfig, usb, network, sysctl, watchdogTimeoutMs, watchdogInitialDelayMs, gpio, uart, uvcEnable);
+DEPTHAI_SERIALIZE_EXT(BoardConfig, usb, network, sysctl, watchdogTimeoutMs, watchdogInitialDelayMs, gpio, uart, pcieInternalClock, usb3PhyInternalClock, uvcEnable);
 
 }  // namespace dai

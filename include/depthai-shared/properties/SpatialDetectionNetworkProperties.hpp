@@ -23,18 +23,12 @@ struct SpatialDetectionNetworkProperties : PropertiesSerializable<DetectionNetwo
 };
 
 DEPTHAI_SERIALIZE_EXT(SpatialDetectionNetworkProperties,
-                      nnFamily,
                       blobSize,
                       blobUri,
                       numFrames,
                       numThreads,
                       numNCEPerThread,
-                      confidenceThreshold,
-                      classes,
-                      coordinates,
-                      anchors,
-                      anchorMasks,
-                      iouThreshold,
+                      parser,
                       detectedBBScaleFactor,
                       depthThresholds,
                       calculationAlgorithm);
