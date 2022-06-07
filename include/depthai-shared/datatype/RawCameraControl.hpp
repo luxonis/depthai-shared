@@ -95,6 +95,8 @@ struct RawCameraControl : public RawBuffer {
         EXTERNAL_TRIGGER = 50,
         AF_LENS_RANGE = 51,
         FRAME_SYNC = 52,
+        STROBE_CONFIG = 53,
+        STROBE_TIMINGS = 54,
     };
 
     enum class AutoFocusMode : uint8_t {
@@ -203,6 +205,28 @@ struct RawCameraControl : public RawBuffer {
         DEPTHAI_SERIALIZE(RegionParams, x, y, width, height, priority);
     };
 
+    struct StrobeTimings {
+        /// Start offset in microseconds, relative to exposure window
+        int32_t exposureBeginOffsetUs;
+        /// End offset in microseconds, relative to exposure window
+        int32_t exposureEndOffsetUs;
+        /// Fixed duration in microseconds. If set (non-zero), overrides `exposureEndOffsetUs`
+        uint32_t durationUs;
+
+        DEPTHAI_SERIALIZE(StrobeTimings, exposureBeginOffsetUs, exposureEndOffsetUs, durationUs);
+    };
+
+    struct StrobeConfig {
+        /// Enable strobe output
+        uint8_t enable;
+        /// 1 for normal polarity (high-active), 0 otherwise
+        uint8_t activeLevel;
+        /// GPIO number to drive, or -1 if sensor driven
+        int8_t gpioNumber;
+
+        DEPTHAI_SERIALIZE(StrobeConfig, enable, activeLevel, gpioNumber);
+    };
+
     uint64_t cmdMask = 0;
 
     AutoFocusMode autoFocusMode = AutoFocusMode::CONTINUOUS_VIDEO;
@@ -224,6 +248,8 @@ struct RawCameraControl : public RawBuffer {
     AntiBandingMode antiBandingMode;
     EffectMode effectMode;
     FrameSyncMode frameSyncMode;
+    StrobeConfig strobeConfig;
+    StrobeTimings strobeTimings;
     bool aeLockMode;
     bool awbLockMode;
     int8_t expCompensation;  //  -9 ..  9
@@ -273,6 +299,8 @@ struct RawCameraControl : public RawBuffer {
                       awbLockMode,
                       effectMode,
                       frameSyncMode,
+                      strobeConfig,
+                      strobeTimings,
                       expCompensation,
                       brightness,
                       contrast,
