@@ -15,8 +15,19 @@ struct AudioInConfigData {
      * Configurable fixed mic gain (x times)
      */
     float micGain = 1.0;
+
+    /**
+     * Don't send packets on node's outputs if set
+     */
+    bool disableOutput = false;
+
+    /**
+     * Pass through input data to output directly
+     * (relevant if the node is doing processing)
+     */
+    bool passThrough = false;
 };
-DEPTHAI_SERIALIZE_EXT(AudioInConfigData, micGain);
+DEPTHAI_SERIALIZE_EXT(AudioInConfigData, micGain, disableOutput, passThrough);
 
 /// RawAudioInConfig configuration structure
 struct RawAudioInConfig : public RawBuffer {
