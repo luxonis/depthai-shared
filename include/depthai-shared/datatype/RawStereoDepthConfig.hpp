@@ -439,6 +439,11 @@ struct RawStereoDepthConfig : public RawBuffer {
         static constexpr const int defaultPenaltyP2 = 500;
 
         /**
+         * Enable SGBM 3 way cost aggregation
+         */
+        bool enable = true;
+
+        /**
          * Cost calculation linear equation parameters.
          */
         uint8_t divisionFactor = 1;
@@ -461,7 +466,7 @@ struct RawStereoDepthConfig : public RawBuffer {
          */
         uint16_t verticalPenaltyCostP2 = defaultPenaltyP2;
 
-        DEPTHAI_SERIALIZE(CostAggregation, divisionFactor, horizontalPenaltyCostP1, horizontalPenaltyCostP2, verticalPenaltyCostP1, verticalPenaltyCostP2);
+        DEPTHAI_SERIALIZE(CostAggregation, enable, divisionFactor, horizontalPenaltyCostP1, horizontalPenaltyCostP2, verticalPenaltyCostP1, verticalPenaltyCostP2);
     };
 
     /**
