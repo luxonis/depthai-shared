@@ -101,6 +101,9 @@ struct BoardConfig {
 
     // log verbosity
     tl::optional<LogLevel> logVerbosity;
+
+    // tmp
+    tl::optional<bool> imx214Only;
 };
 
 DEPTHAI_SERIALIZE_EXT(BoardConfig::USB, vid, pid, flashBootedVid, flashBootedPid, maxSpeed);
@@ -120,6 +123,7 @@ DEPTHAI_SERIALIZE_EXT(BoardConfig,
                       emmc,
                       logPath,
                       logSizeMax,
-                      logVerbosity);
+                      logVerbosity,
+                      imx214Only);
 
 }  // namespace dai
