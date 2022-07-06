@@ -83,9 +83,13 @@ struct RawStereoDepthConfig : public RawBuffer {
 
         /**
          * Shift input frame by a number of pixels to increase minimum depth.
-         * For example shifting by 48 will increase search range from (0,95] to [48,143]
+         * For example shifting by 48 will change effective disparity search range from (0,95] to [48,143].
+         * An alternative approach to reducing the minZ.
+         * We normally only recommend doing this when it is known that there will be no objects
+         * farther away than MaxZ, such as having a depth camera mounted above a table
+         * pointing down at the table surface.
          */
-        std::int32_t pixelShift = 0;
+        std::int32_t disparityShift = 0;
 
         DEPTHAI_SERIALIZE(AlgorithmControl,
                           depthAlign,
@@ -96,7 +100,7 @@ struct RawStereoDepthConfig : public RawBuffer {
                           enableSubpixel,
                           leftRightCheckThreshold,
                           subpixelFractionalBits,
-                          pixelShift);
+                          disparityShift);
     };
 
     /**
