@@ -25,7 +25,7 @@ struct ColorCameraProperties : PropertiesSerializable<Properties, ColorCameraPro
     /**
      * Select the camera sensor resolution
      */
-    enum class SensorResolution : int32_t { THE_1080_P, THE_4_K, THE_12_MP, THE_13_MP };
+    enum class SensorResolution : int32_t { THE_1080_P, THE_4_K, THE_12_MP, THE_13_MP, THE_720_P, THE_800_P };
 
     /**
      * For 24 bit color these can be either RGB or BGR
