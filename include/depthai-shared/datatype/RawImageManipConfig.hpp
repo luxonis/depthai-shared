@@ -86,10 +86,11 @@ struct RawImageManipConfig : public RawBuffer {
     };
 
     struct FormatConfig {
-        RawImgFrame::Type type = RawImgFrame::Type::RGB888p;
+        RawImgFrame::Type type = RawImgFrame::Type::NONE;
         bool flipHorizontal = false;
+        bool flipVertical = false;
 
-        DEPTHAI_SERIALIZE(FormatConfig, type, flipHorizontal);
+        DEPTHAI_SERIALIZE(FormatConfig, type, flipHorizontal, flipVertical);
     };
 
     CropConfig cropConfig;
