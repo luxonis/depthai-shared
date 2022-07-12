@@ -1,14 +1,15 @@
 #pragma once
 
 #include <depthai-shared/common/optional.hpp>
-#include <nlohmann/json.hpp>
+
+#include "depthai-shared/properties/Properties.hpp"
 
 namespace dai {
 
 /**
  * Specify properties for VideoEncoder such as profile, bitrate, ...
  */
-struct VideoEncoderProperties {
+struct VideoEncoderProperties : PropertiesSerializable<Properties, VideoEncoderProperties> {
     /**
      * Rate control mode specifies if constant or variable bitrate should be used (H264 / H265)
      */
@@ -47,6 +48,11 @@ struct VideoEncoderProperties {
      */
     std::uint32_t numFramesPool = 0;
     /**
+     * Specifies max output frame size in pool.
+     * Value "0" indicates auto
+     */
+    std::int32_t outputFrameSize = 0;
+    /**
      * Encoding profile, H264, H265 or MJPEG
      */
     Profile profile = Profile::H264_BASELINE;
@@ -68,7 +74,17 @@ struct VideoEncoderProperties {
     float frameRate = 30.0f;
 };
 
-NLOHMANN_DEFINE_TYPE_NON_INTRUSIVE(
-    VideoEncoderProperties, bitrate, keyframeFrequency, maxBitrate, numBFrames, numFramesPool, profile, quality, lossless, rateCtrlMode, frameRate);
+DEPTHAI_SERIALIZE_EXT(VideoEncoderProperties,
+                      bitrate,
+                      keyframeFrequency,
+                      maxBitrate,
+                      numBFrames,
+                      numFramesPool,
+                      outputFrameSize,
+                      profile,
+                      quality,
+                      lossless,
+                      rateCtrlMode,
+                      frameRate);
 
 }  // namespace dai
