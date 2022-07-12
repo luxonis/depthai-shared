@@ -113,6 +113,15 @@ struct ColorCameraProperties : PropertiesSerializable<Properties, ColorCameraPro
      * Configure scaling for `isp` output.
      */
     IspScale ispScale;
+
+    /**
+     * Pool sizes
+     */
+    int numFramesPoolRaw = 3;
+    int numFramesPoolIsp = 3;
+    int numFramesPoolVideo = 4;
+    int numFramesPoolPreview = 4;
+    int numFramesPoolStill = 4;
 };
 
 DEPTHAI_SERIALIZE_EXT(ColorCameraProperties,
@@ -133,6 +142,11 @@ DEPTHAI_SERIALIZE_EXT(ColorCameraProperties,
                       sensorCropX,
                       sensorCropY,
                       previewKeepAspectRatio,
-                      ispScale);
+                      ispScale,
+                      numFramesPoolRaw,
+                      numFramesPoolIsp,
+                      numFramesPoolVideo,
+                      numFramesPoolPreview,
+                      numFramesPoolStill);
 
 }  // namespace dai
