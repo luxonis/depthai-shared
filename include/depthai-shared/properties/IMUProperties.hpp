@@ -3,6 +3,7 @@
 #include "depthai-shared/common/optional.hpp"
 #include "depthai-shared/datatype/RawIMUData.hpp"
 #include "depthai-shared/properties/Properties.hpp"
+
 namespace dai {
 
 /**

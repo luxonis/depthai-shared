@@ -7,6 +7,7 @@
 // project
 #include "depthai-shared/common/UsbSpeed.hpp"
 #include "depthai-shared/common/optional.hpp"
+#include "depthai-shared/log/LogLevel.hpp"
 #include "depthai-shared/utility/Serialization.hpp"
 #include "depthai-shared/xlink/XLinkConstants.hpp"
 
@@ -85,12 +86,40 @@ struct BoardConfig {
 
     // USB3 phy config
     tl::optional<bool> usb3PhyInternalClock;
+
+    // MIPI 4Lane RGB config
+    tl::optional<bool> mipi4LaneRgb;
+
+    // eMMC config
+    tl::optional<bool> emmc;
+
+    // log path
+    tl::optional<std::string> logPath;
+
+    // Max log size
+    tl::optional<size_t> logSizeMax;
+
+    // log verbosity
+    tl::optional<LogLevel> logVerbosity;
 };
 
 DEPTHAI_SERIALIZE_EXT(BoardConfig::USB, vid, pid, flashBootedVid, flashBootedPid, maxSpeed);
 DEPTHAI_SERIALIZE_EXT(BoardConfig::Network, mtu, xlinkTcpNoDelay);
 DEPTHAI_SERIALIZE_EXT(BoardConfig::GPIO, mode, direction, level, pull, drive, schmitt, slewFast);
 DEPTHAI_SERIALIZE_EXT(BoardConfig::UART, tmp);
-DEPTHAI_SERIALIZE_EXT(BoardConfig, usb, network, sysctl, watchdogTimeoutMs, watchdogInitialDelayMs, gpio, uart, pcieInternalClock, usb3PhyInternalClock);
+DEPTHAI_SERIALIZE_EXT(BoardConfig,
+                      usb,
+                      network,
+                      sysctl,
+                      watchdogTimeoutMs,
+                      watchdogInitialDelayMs,
+                      gpio,
+                      uart,
+                      pcieInternalClock,
+                      usb3PhyInternalClock,
+                      emmc,
+                      logPath,
+                      logSizeMax,
+                      logVerbosity);
 
 }  // namespace dai
