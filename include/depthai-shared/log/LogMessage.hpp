@@ -12,7 +12,7 @@ namespace dai {
 
 struct LogMessage {
     std::string nodeIdName;
-    LogLevel level{LogLevel::TRACE};
+    LogLevel level;
     Timestamp time;
     size_t colorRangeStart{0};
     size_t colorRangeEnd{0};

@@ -52,10 +52,6 @@ struct StereoDepthProperties : PropertiesSerializable<Properties, StereoDepthPro
      */
     CameraBoardSocket depthAlignCamera = CameraBoardSocket::AUTO;
 
-    /**
-     * Enable stereo rectification/dewarp or not.
-     * Useful to disable when replaying pre-recorded rectified frames.
-     */
     bool enableRectification = true;
 
     /**
@@ -122,22 +118,10 @@ struct StereoDepthProperties : PropertiesSerializable<Properties, StereoDepthPro
 
     /**
      * Whether to use focal length from calibration intrinsics or calculate based on calibration FOV.
-     * Default value is true.
-     * If set to false it's calculated from FOV and image resolution: focalLength = calib.width / (2.f * tan(calib.fov / 2 / 180.f * pi));
+     * Default behaviour is AUTO, for fisheye lenses focal length is taken from calibration intrinsics,
+     * otherwise calculated from FOV and image resolution: focalLength = calib.width / (2.f * tan(calib.fov / 2 / 180.f * pi));
      */
-    bool focalLengthFromCalibration = true;
-
-    /**
-     * Use 3x3 homography matrix for stereo rectification instead of sparse mesh generated on device.
-     * Default behaviour is AUTO, for lenses with FOV over 85 degrees sparse mesh is used, otherwise 3x3 homography.
-     * If custom mesh data is provided through loadMeshData or loadMeshFiles this option is ignored.
-     * true: 3x3 homography matrix generated from calibration data is used for stereo rectification, can't correct lens
-     * distortion.
-     * false: sparse mesh is generated on-device from calibration data with mesh step specified with setMeshStep (Default: (16, 16)), can correct lens
-     * distortion. Implementation for generating the mesh is same as opencv's initUndistortRectifyMap function. Only the first 8 distortion coefficients are
-     * used from calibration data.
-     */
-    tl::optional<bool> useHomographyRectification;
+    tl::optional<bool> focalLengthFromCalibration;
 };
 
 DEPTHAI_SERIALIZE_EXT(StereoDepthProperties,
@@ -155,7 +139,6 @@ DEPTHAI_SERIALIZE_EXT(StereoDepthProperties,
                       numFramesPool,
                       numPostProcessingShaves,
                       numPostProcessingMemorySlices,
-                      focalLengthFromCalibration,
-                      useHomographyRectification);
+                      focalLengthFromCalibration);
 
 }  // namespace dai

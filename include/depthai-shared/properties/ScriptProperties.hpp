@@ -13,7 +13,7 @@ struct ScriptProperties : PropertiesSerializable<Properties, ScriptProperties> {
     /**
      * Uri which points to actual script
      */
-    std::string scriptUri;
+    std::string scriptUri = "";
 
     /**
      * Name of script

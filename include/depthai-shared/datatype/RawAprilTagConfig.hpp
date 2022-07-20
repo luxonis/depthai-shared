@@ -14,7 +14,7 @@ struct RawAprilTagConfig : public RawBuffer {
     /**
      * Supported AprilTag families.
      */
-    enum class Family : std::int32_t { TAG_36H11 = 0, TAG_36H10, TAG_25H9, TAG_16H5, TAG_CIR21H7, TAG_STAND41H12 };
+    enum class Family : std::int32_t { TAG_36H11 = 0, TAG_36H10, TAG_25H9, TAG_16H5, TAG_CIR21H7, TAG_CIR49H12, TAG_CUST48H12, TAG_STAND41H12, TAG_STAND52H13 };
 
     /**
      * AprilTag family.
