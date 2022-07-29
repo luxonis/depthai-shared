@@ -416,6 +416,8 @@ struct RawCameraControl : public RawBuffer {
     AutoWhiteBalanceMode awbMode;
     SceneMode sceneMode;
     AntiBandingMode antiBandingMode;
+    CaptureIntent captureIntent;
+    ControlMode controlMode;
     EffectMode effectMode;
     FrameSyncMode frameSyncMode;
     StrobeConfig strobeConfig;
@@ -467,6 +469,8 @@ struct RawCameraControl : public RawBuffer {
                       antiBandingMode,
                       aeLockMode,
                       awbLockMode,
+                      captureIntent,
+                      controlMode,
                       effectMode,
                       frameSyncMode,
                       strobeConfig,
