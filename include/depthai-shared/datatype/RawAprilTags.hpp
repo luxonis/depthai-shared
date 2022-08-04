@@ -3,6 +3,7 @@
 #include <vector>
 
 #include "depthai-shared/common/Point2f.hpp"
+#include "depthai-shared/common/Timestamp.hpp"
 #include "depthai-shared/datatype/DatatypeEnum.hpp"
 #include "depthai-shared/datatype/RawAprilTagConfig.hpp"
 #include "depthai-shared/datatype/RawBuffer.hpp"
