@@ -134,27 +134,33 @@ struct RawCameraControl : public RawBuffer {
          */
         AUTO,
         /**
-         * The camera device's auto-white balance routine is disabled; the camera device uses incandescent light as the assumed scene illumination for white balance.
+         * The camera device's auto-white balance routine is disabled; the camera device uses incandescent light as the assumed scene illumination for white
+         * balance.
          */
         INCANDESCENT,
         /**
-         * The camera device's auto-white balance routine is disabled; the camera device uses fluorescent light as the assumed scene illumination for white balance.
+         * The camera device's auto-white balance routine is disabled; the camera device uses fluorescent light as the assumed scene illumination for white
+         * balance.
          */
         FLUORESCENT,
         /**
-         * The camera device's auto-white balance routine is disabled; the camera device uses warm fluorescent light as the assumed scene illumination for white balance.
+         * The camera device's auto-white balance routine is disabled; the camera device uses warm fluorescent light as the assumed scene illumination for white
+         * balance.
          */
         WARM_FLUORESCENT,
         /**
-         * The camera device's auto-white balance routine is disabled; the camera device uses daylight light as the assumed scene illumination for white balance.
+         * The camera device's auto-white balance routine is disabled; the camera device uses daylight light as the assumed scene illumination for white
+         * balance.
          */
         DAYLIGHT,
         /**
-         * The camera device's auto-white balance routine is disabled; the camera device uses cloudy daylight light as the assumed scene illumination for white balance.
+         * The camera device's auto-white balance routine is disabled; the camera device uses cloudy daylight light as the assumed scene illumination for white
+         * balance.
          */
         CLOUDY_DAYLIGHT,
         /**
-         * The camera device's auto-white balance routine is disabled; the camera device uses twilight light as the assumed scene illumination for white balance.
+         * The camera device's auto-white balance routine is disabled; the camera device uses twilight light as the assumed scene illumination for white
+         * balance.
          */
         TWILIGHT,
         /**
@@ -248,7 +254,8 @@ struct RawCameraControl : public RawBuffer {
          */
         MAINS_60_HZ,
         /**
-         * The camera device will automatically adapt its antibanding routine to the current illumination condition. This is the default mode if AUTO is available on given camera device.
+         * The camera device will automatically adapt its antibanding routine to the current illumination condition. This is the default mode if AUTO is
+         * available on given camera device.
          */
         AUTO,
     };
@@ -273,7 +280,7 @@ struct RawCameraControl : public RawBuffer {
         /**
          * This request is for a video snapshot (still image while recording video) use case.
          * The camera device should take the highest-quality image possible (given the other settings)
-         * without disrupting the frame rate of video recording. 
+         * without disrupting the frame rate of video recording.
          */
         VIDEO_SNAPSHOT,
         /**
