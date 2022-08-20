@@ -13,6 +13,7 @@ enum class DatatypeEnum : std::int32_t {
     ImgDetections,
     SpatialImgDetections,
     SystemInformation,
+    SystemInformationS3,
     SpatialLocationCalculatorConfig,
     SpatialLocationCalculatorData,
     EdgeDetectorConfig,
