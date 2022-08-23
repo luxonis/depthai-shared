@@ -12,8 +12,8 @@ struct NeuralNetworkProperties : PropertiesSerializable<Properties, NeuralNetwor
     /**
      * Specify where the node should source the model
      */
-    enum class ModelSource {BLOB, XML};
-    ModelSource modelSource = ModelSource::BLOB; // Default to blob source
+    enum class ModelSource { BLOB, XML };
+    ModelSource modelSource = ModelSource::BLOB;  // Default to blob source
     /**
      * Blob binary size in bytes
      */
