@@ -110,6 +110,22 @@ struct ColorCameraProperties : PropertiesSerializable<Properties, ColorCameraPro
     bool previewKeepAspectRatio = true;
 
     /**
+     * Stream only metadata (e.g PDAF data) on `raw` output.
+     * Otherwise metadata is appended at the end of the raw image
+     */
+    bool rawStreamMetadataOnly = false;
+
+    /**
+     * Set PDAF mode to 8x6 windows when true. Otherwise using 16x12 windows
+     */
+    bool rawPdafWindows8x6 = false;
+
+    /**
+     * PDAF offset X, Y, window width and height. pdWinW = 0 -> auto
+     */
+    uint16_t pdOffX = 0, pdOffY = 0, pdWinW = 0, pdWinH = 0;
+
+    /**
      * Configure scaling for `isp` output.
      */
     IspScale ispScale;
@@ -133,6 +149,12 @@ DEPTHAI_SERIALIZE_EXT(ColorCameraProperties,
                       sensorCropX,
                       sensorCropY,
                       previewKeepAspectRatio,
+                      rawStreamMetadataOnly,
+                      rawPdafWindows8x6,
+                      pdOffX,
+                      pdOffY,
+                      pdWinW,
+                      pdWinH,
                       ispScale);
 
 }  // namespace dai
