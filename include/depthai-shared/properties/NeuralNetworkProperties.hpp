@@ -10,6 +10,11 @@ namespace dai {
  */
 struct NeuralNetworkProperties : PropertiesSerializable<Properties, NeuralNetworkProperties> {
     /**
+     * Specify where the node should source the model
+     */
+    enum class ModelSource { BLOB, XML };
+    ModelSource modelSource = ModelSource::BLOB;  // Default to blob source
+    /**
      * Blob binary size in bytes
      */
     tl::optional<std::uint32_t> blobSize;
@@ -17,6 +22,14 @@ struct NeuralNetworkProperties : PropertiesSerializable<Properties, NeuralNetwor
      * Uri which points to blob
      */
     std::string blobUri;
+    /**
+     * Uri which points to the xml model description
+     */
+    std::string xmlUri;
+    /**
+     * Uri which points to the bin model description
+     */
+    std::string binUri;
     /**
      * Number of available output tensors in pool
      */
@@ -31,6 +44,6 @@ struct NeuralNetworkProperties : PropertiesSerializable<Properties, NeuralNetwor
     std::uint32_t numNCEPerThread = 0;
 };
 
-DEPTHAI_SERIALIZE_EXT(NeuralNetworkProperties, blobSize, blobUri, numFrames, numThreads, numNCEPerThread);
+DEPTHAI_SERIALIZE_EXT(NeuralNetworkProperties, modelSource, blobSize, blobUri, xmlUri, binUri, numFrames, numThreads, numNCEPerThread);
 
 }  // namespace dai
