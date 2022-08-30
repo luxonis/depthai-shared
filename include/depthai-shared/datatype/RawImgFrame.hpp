@@ -43,6 +43,7 @@ struct RawImgFrame : public RawBuffer {
         BGRF16F16F16i,  // Interleaved FP16 BGR data
         GRAY8,          // 8 bit grayscale (1 plane)
         GRAYF16,        // FP16 grayscale (normalized)
+        RAW32,        // 32 bits raw
         NONE
     };
 
@@ -143,6 +144,9 @@ struct RawImgFrame : public RawBuffer {
                 break;
             case Type::HDR:
                 return 1;
+                break;
+            case Type::RAW32:
+                return 4;
                 break;
             case Type::NONE:
                 return 0;
