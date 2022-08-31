@@ -95,81 +95,251 @@ struct RawCameraControl : public RawBuffer {
     };
 
     enum class AutoFocusMode : uint8_t {
-        /// Autofocus disabled. Suitable for manual focus
+        /**
+         * Autofocus disabled. Suitable for manual focus
+         */
         OFF = 0,
-        /// Runs autofocus once at startup, and at subsequent trigger commands
+        /**
+         * Basic automatic focus mode. In this mode, the lens does not move unless the autofocus trigger action is called.
+         */
         AUTO,
-        /// TODO
+        /**
+         * Close-up focusing mode - this mode is optimized for focusing on objects very close to the camera.
+         */
         MACRO,
-        /// Runs autofocus when the scene is detected as out-of-focus
+        /**
+         * In this mode, the AF algorithm modifies the lens position continually to attempt to provide a constantly-in-focus image stream.
+         * The focusing behavior should be suitable for good quality video recording; typically this means slower focus movement and no overshoots.
+         */
         CONTINUOUS_VIDEO,
+        /**
+         * In this mode, the AF algorithm modifies the lens position continually to attempt to provide a constantly-in-focus image stream.
+         * The focusing behavior should be suitable for still image capture; typically this means focusing as fast as possible
+         */
         CONTINUOUS_PICTURE,
+        /**
+         * Extended depth of field (digital focus) mode. The camera device will produce images with an extended depth of field automatically.
+         * AF triggers are ignored.
+         */
         EDOF,
     };
 
     enum class AutoWhiteBalanceMode : uint8_t {
+        /**
+         * The camera device's auto-white balance routine is disabled.
+         */
         OFF = 0,
+        /**
+         * The camera device's auto-white balance routine is active.
+         */
         AUTO,
+        /**
+         * The camera device's auto-white balance routine is disabled; the camera device uses incandescent light as the assumed scene illumination for white
+         * balance.
+         */
         INCANDESCENT,
+        /**
+         * The camera device's auto-white balance routine is disabled; the camera device uses fluorescent light as the assumed scene illumination for white
+         * balance.
+         */
         FLUORESCENT,
+        /**
+         * The camera device's auto-white balance routine is disabled; the camera device uses warm fluorescent light as the assumed scene illumination for white
+         * balance.
+         */
         WARM_FLUORESCENT,
+        /**
+         * The camera device's auto-white balance routine is disabled; the camera device uses daylight light as the assumed scene illumination for white
+         * balance.
+         */
         DAYLIGHT,
+        /**
+         * The camera device's auto-white balance routine is disabled; the camera device uses cloudy daylight light as the assumed scene illumination for white
+         * balance.
+         */
         CLOUDY_DAYLIGHT,
+        /**
+         * The camera device's auto-white balance routine is disabled; the camera device uses twilight light as the assumed scene illumination for white
+         * balance.
+         */
         TWILIGHT,
+        /**
+         * The camera device's auto-white balance routine is disabled; the camera device uses shade light as the assumed scene illumination for white balance.
+         */
         SHADE,
     };
 
     enum class SceneMode : uint8_t {
+        /**
+         * Indicates that no scene modes are set for a given capture request.
+         */
         UNSUPPORTED = 0,
+        /**
+         * If face detection support exists, use face detection data for auto-focus, auto-white balance, and auto-exposure routines.
+         */
         FACE_PRIORITY,
+        /**
+         * Optimized for photos of quickly moving objects. Similar to SPORTS scene mode.
+         */
         ACTION,
+        /**
+         * Optimized for still photos of people.
+         */
         PORTRAIT,
+        /**
+         * Optimized for photos of distant macroscopic objects.
+         */
         LANDSCAPE,
+        /**
+         * Optimized for low-light settings.
+         */
         NIGHT,
+        /**
+         * Optimized for still photos of people in low-light settings.
+         */
         NIGHT_PORTRAIT,
+        /**
+         * Optimized for dim, indoor settings where flash must remain off.
+         */
         THEATRE,
+        /**
+         * Optimized for bright, outdoor beach settings.
+         */
         BEACH,
+        /**
+         * Optimized for bright, outdoor settings containing snow.
+         */
         SNOW,
+        /**
+         * Optimized for scenes of the setting sun.
+         */
         SUNSET,
+        /**
+         * Optimized to avoid blurry photos due to small amounts of device motion (for example: due to hand shake).
+         */
         STEADYPHOTO,
+        /**
+         * Optimized for nighttime photos of fireworks.
+         */
         FIREWORKS,
+        /**
+         * Optimized for photos of quickly moving people.
+         */
         SPORTS,
+        /**
+         * Optimized for dim, indoor settings with multiple moving people.
+         */
         PARTY,
+        /**
+         * Optimized for dim settings where the main light source is a candle.
+         */
         CANDLELIGHT,
+        /**
+         * Optimized for accurately capturing a photo of barcode for use by camera applications that wish to read the barcode value.
+         */
         BARCODE,
     };
 
     enum class AntiBandingMode : uint8_t {
+        /**
+         * The camera device will not adjust exposure duration to avoid banding problems.
+         */
         OFF = 0,
+        /**
+         * The camera device will adjust exposure duration to avoid banding problems with 50Hz illumination sources.
+         */
         MAINS_50_HZ,
+        /**
+         * The camera device will adjust exposure duration to avoid banding problems with 60Hz illumination sources.
+         */
         MAINS_60_HZ,
+        /**
+         * The camera device will automatically adapt its antibanding routine to the current illumination condition. This is the default mode if AUTO is
+         * available on given camera device.
+         */
         AUTO,
     };
 
     enum class CaptureIntent : uint8_t {
+        /**
+         * The goal of this request doesn't fall into the other categories. The camera device will default to preview-like behavior.
+         */
         CUSTOM = 0,
+        /**
+         * This request is for a preview-like use case.
+         */
         PREVIEW,
+        /**
+         * This request is for a still capture-type use case.
+         */
         STILL_CAPTURE,
+        /**
+         * This request is for a video recording use case.
+         */
         VIDEO_RECORD,
+        /**
+         * This request is for a video snapshot (still image while recording video) use case.
+         * The camera device should take the highest-quality image possible (given the other settings)
+         * without disrupting the frame rate of video recording.
+         */
         VIDEO_SNAPSHOT,
+        /**
+         * This request is for a ZSL usecase; the application will stream full-resolution images and reprocess one or several later for a final capture.
+         */
         ZERO_SHUTTER_LAG,
     };
 
     enum class ControlMode : uint8_t {
+        /**
+         * Full application control of pipeline. All control by the device's metering and focusing (3A) routines is disabled.
+         */
         OFF = 0,
+        /**
+         * Use settings for each individual 3A routine. Manual control of capture parameters is disabled.
+         */
         AUTO,
+        /**
+         * Use a specific scene mode. Enabling this disables Auto-Exposure, AWB and AF controls;
+         */
         USE_SCENE_MODE,
     };
 
     enum class EffectMode : uint8_t {
+        /**
+         *  No color effect will be applied.
+         */
         OFF = 0,
+        /**
+         * A "monocolor" effect where the image is mapped into a single color. This will typically be grayscale.
+         */
         MONO,
+        /**
+         * A "photo-negative" effect where the image's colors are inverted.
+         */
         NEGATIVE,
+        /**
+         * A "solarisation" effect (Sabattier effect) where the image is wholly or partially reversed in tone.
+         */
         SOLARIZE,
+        /**
+         * A "sepia" effect where the image is mapped into warm gray, red, and brown tones.
+         */
         SEPIA,
+        /**
+         * A "posterization" effect where the image uses discrete regions of tone rather than a continuous gradient of tones.
+         */
         POSTERIZE,
+        /**
+         * A "whiteboard" effect where the image is typically displayed as regions of white, with black or grey details.
+         */
         WHITEBOARD,
+        /**
+         * A "blackboard" effect where the image is typically displayed as regions of black, with white or grey details.
+         */
         BLACKBOARD,
+        /**
+         * An "aqua" effect where a blue hue is added to the image.
+         */
         AQUA,
     };
 

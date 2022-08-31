@@ -25,7 +25,7 @@ struct ColorCameraProperties : PropertiesSerializable<Properties, ColorCameraPro
     /**
      * Select the camera sensor resolution
      */
-    enum class SensorResolution : int32_t { THE_1080_P, THE_4_K, THE_12_MP, THE_13_MP };
+    enum class SensorResolution : int32_t { THE_1080_P, THE_4_K, THE_12_MP, THE_13_MP, THE_720_P, THE_800_P };
 
     /**
      * For 24 bit color these can be either RGB or BGR
@@ -113,6 +113,15 @@ struct ColorCameraProperties : PropertiesSerializable<Properties, ColorCameraPro
      * Configure scaling for `isp` output.
      */
     IspScale ispScale;
+
+    /**
+     * Pool sizes
+     */
+    int numFramesPoolRaw = 3;
+    int numFramesPoolIsp = 3;
+    int numFramesPoolVideo = 4;
+    int numFramesPoolPreview = 4;
+    int numFramesPoolStill = 4;
 };
 
 DEPTHAI_SERIALIZE_EXT(ColorCameraProperties,
@@ -133,6 +142,11 @@ DEPTHAI_SERIALIZE_EXT(ColorCameraProperties,
                       sensorCropX,
                       sensorCropY,
                       previewKeepAspectRatio,
-                      ispScale);
+                      ispScale,
+                      numFramesPoolRaw,
+                      numFramesPoolIsp,
+                      numFramesPoolVideo,
+                      numFramesPoolPreview,
+                      numFramesPoolStill);
 
 }  // namespace dai
