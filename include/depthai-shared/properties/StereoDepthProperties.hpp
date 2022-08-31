@@ -138,6 +138,10 @@ struct StereoDepthProperties : PropertiesSerializable<Properties, StereoDepthPro
      * used from calibration data.
      */
     tl::optional<bool> useHomographyRectification;
+
+    //temporary
+    bool verticalStereo = false;
+
 };
 
 DEPTHAI_SERIALIZE_EXT(StereoDepthProperties,
@@ -156,6 +160,7 @@ DEPTHAI_SERIALIZE_EXT(StereoDepthProperties,
                       numPostProcessingShaves,
                       numPostProcessingMemorySlices,
                       focalLengthFromCalibration,
-                      useHomographyRectification);
+                      useHomographyRectification,
+                      verticalStereo);
 
 }  // namespace dai
