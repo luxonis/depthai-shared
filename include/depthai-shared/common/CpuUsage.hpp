@@ -13,11 +13,11 @@ struct CpuUsage {
     /**
      *  Average CPU usage, expressed with a normalized value (0-1)
      */
-    float average;
+    float average = 0.f;
     /**
      *  Time span in which the average was calculated in milliseconds
      */
-    int32_t msTime;
+    int32_t msTime = 0;
 };
 
 DEPTHAI_SERIALIZE_EXT(CpuUsage, average, msTime);
