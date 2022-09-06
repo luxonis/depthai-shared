@@ -43,7 +43,7 @@ struct RawImgFrame : public RawBuffer {
         BGRF16F16F16i,  // Interleaved FP16 BGR data
         GRAY8,          // 8 bit grayscale (1 plane)
         GRAYF16,        // FP16 grayscale (normalized)
-        RAW32,        // 32 bits raw
+        RAW32,          // 32 bits raw
         NONE
     };
 

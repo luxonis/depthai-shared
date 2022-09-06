@@ -139,9 +139,12 @@ struct StereoDepthProperties : PropertiesSerializable<Properties, StereoDepthPro
      */
     tl::optional<bool> useHomographyRectification;
 
-    //temporary
+    /**
+     * Whether to perform vertical stereo matching or not.
+     * Default value is false.
+     * If set to true rectification process includes 90 degree clock wise rotation to perform vertical matching.
+     */
     bool verticalStereo = false;
-
 };
 
 DEPTHAI_SERIALIZE_EXT(StereoDepthProperties,
