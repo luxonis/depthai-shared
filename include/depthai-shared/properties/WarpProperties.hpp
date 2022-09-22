@@ -32,12 +32,6 @@ struct WarpProperties : PropertiesSerializable<Properties, WarpProperties> {
     std::string meshUri = "";
 };
 
-DEPTHAI_SERIALIZE_EXT(WarpProperties, outputWidth,
-                      outputHeight,
-                      outputFrameSize,
-                      numFramesPool,
-                      meshWidth,
-                      meshHeight,
-                      meshUri);
+DEPTHAI_SERIALIZE_EXT(WarpProperties, outputWidth, outputHeight, outputFrameSize, numFramesPool, meshWidth, meshHeight, meshUri);
 
 }  // namespace dai
