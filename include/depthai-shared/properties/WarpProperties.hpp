@@ -30,8 +30,14 @@ struct WarpProperties : PropertiesSerializable<Properties, WarpProperties> {
     int meshHeight = 0;
     /// Custom warp mesh uri. Set to empty string to disable.
     std::string meshUri = "";
+
+    /// Warp HW IDs to use, if empty, use auto/default
+    std::vector<int> warpHwIds;
+
+    enum class Interpolation { BILINEAR = 0, BICUBIC = 1, BYPASS = 2 };
+    Interpolation interpolation;
 };
 
-DEPTHAI_SERIALIZE_EXT(WarpProperties, outputWidth, outputHeight, outputFrameSize, numFramesPool, meshWidth, meshHeight, meshUri);
+DEPTHAI_SERIALIZE_EXT(WarpProperties, outputWidth, outputHeight, outputFrameSize, numFramesPool, meshWidth, meshHeight, meshUri, warpHwIds, interpolation);
 
 }  // namespace dai
