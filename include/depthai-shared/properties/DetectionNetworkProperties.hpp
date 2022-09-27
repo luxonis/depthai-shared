@@ -3,12 +3,9 @@
 // std
 #include <vector>
 
-// libraries
-#include <nlohmann/json.hpp>
-
 // project
 #include "NeuralNetworkProperties.hpp"
-#include "depthai-shared/common/DetectionNetworkType.hpp"
+#include "depthai-shared/common/DetectionParserOptions.hpp"
 #include "depthai-shared/common/optional.hpp"
 
 namespace dai {
@@ -16,31 +13,10 @@ namespace dai {
 /**
  *  Specify properties for DetectionNetwork
  */
-struct DetectionNetworkProperties : NeuralNetworkProperties {
-    /// Generic Neural Network properties
-    DetectionNetworkType nnFamily;
-    float confidenceThreshold;
-
-    /// YOLO specific network properties
-    int classes;
-    int coordinates;
-    std::vector<float> anchors;
-    std::map<std::string, std::vector<int>> anchorMasks;
-    float iouThreshold;
+struct DetectionNetworkProperties : PropertiesSerializable<NeuralNetworkProperties, DetectionNetworkProperties> {
+    DetectionParserOptions parser;
 };
 
-NLOHMANN_DEFINE_TYPE_NON_INTRUSIVE(DetectionNetworkProperties,
-                                   nnFamily,
-                                   blobSize,
-                                   blobUri,
-                                   numFrames,
-                                   numThreads,
-                                   numNCEPerThread,
-                                   confidenceThreshold,
-                                   classes,
-                                   coordinates,
-                                   anchors,
-                                   anchorMasks,
-                                   iouThreshold)
+DEPTHAI_SERIALIZE_EXT(DetectionNetworkProperties, blobSize, blobUri, numFrames, numThreads, numNCEPerThread, parser);
 
 }  // namespace dai

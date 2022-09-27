@@ -1,13 +1,14 @@
 #pragma once
 #include <cstdint>
-#include <nlohmann/json.hpp>
 #include <vector>
 
-#include "DatatypeEnum.hpp"
-#include "RawBuffer.hpp"
 #include "RawSpatialLocationCalculatorConfig.hpp"
 #include "depthai-shared/common/Point3f.hpp"
 #include "depthai-shared/common/Rect.hpp"
+#include "depthai-shared/common/Timestamp.hpp"
+#include "depthai-shared/datatype/DatatypeEnum.hpp"
+#include "depthai-shared/datatype/RawBuffer.hpp"
+#include "depthai-shared/utility/Serialization.hpp"
 
 namespace dai {
 
@@ -16,7 +17,7 @@ namespace dai {
  *
  * Contains configuration data, average depth for the calculated ROI on depth map.
  * Together with spatial coordinates: x,y,z relative to the center of depth map.
- * Units are in millimeters.
+ * Units are in depth units (millimeter by default).
  */
 struct SpatialLocations {
     /**
@@ -26,37 +27,41 @@ struct SpatialLocations {
     /**
      *  Average of depth values inside the ROI between the specified thresholds in config
      */
-    float depthAverage;
+    float depthAverage = 0.f;
     /**
      *  Minimum of depth values inside the ROI between the specified thresholds in config
      */
-    std::uint16_t depthMin;
+    std::uint16_t depthMin = 0;
     /**
      *  Maximum of depth values inside the ROI between the specified thresholds in config
      */
-    std::uint16_t depthMax;
+    std::uint16_t depthMax = 0;
     /**
      *  Number of depth values used to calculate depthAverage based on config
      */
-    std::uint32_t depthAveragePixelCount;
+    std::uint32_t depthAveragePixelCount = 0;
     /**
-     *  Spatial coordinates: x,y,z; x,y are the relative positions of the center of ROI to the center of depth map
+     *  Spatial coordinates - x,y,z; x,y are the relative positions of the center of ROI to the center of depth map
      */
     Point3f spatialCoordinates;
 };
-NLOHMANN_DEFINE_TYPE_NON_INTRUSIVE(SpatialLocations, config, depthAverage, depthMin, depthMax, depthAveragePixelCount, spatialCoordinates);
+DEPTHAI_SERIALIZE_EXT(SpatialLocations, config, depthAverage, depthMin, depthMax, depthAveragePixelCount, spatialCoordinates);
 
 /// RawSpatialLocations structure
 struct RawSpatialLocations : public RawBuffer {
     std::vector<SpatialLocations> spatialLocations;
 
+    // Related to input ImgFrame, depth frame
+    int64_t sequenceNum = 0;  // increments for each frame
+    Timestamp ts = {};        // generation timestamp, synced to host time
+    Timestamp tsDevice = {};  // generation timestamp, direct device monotonic clock
+
     void serialize(std::vector<std::uint8_t>& metadata, DatatypeEnum& datatype) const override {
-        nlohmann::json j = *this;
-        metadata = nlohmann::json::to_msgpack(j);
+        metadata = utility::serialize(*this);
         datatype = DatatypeEnum::SpatialLocationCalculatorData;
     };
 
-    NLOHMANN_DEFINE_TYPE_INTRUSIVE(RawSpatialLocations, spatialLocations);
+    DEPTHAI_SERIALIZE(RawSpatialLocations, spatialLocations, sequenceNum, ts, tsDevice);
 };
 
 }  // namespace dai
