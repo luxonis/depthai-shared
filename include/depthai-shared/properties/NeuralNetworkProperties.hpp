@@ -42,8 +42,16 @@ struct NeuralNetworkProperties : PropertiesSerializable<Properties, NeuralNetwor
      * Number of NCE (Neural Compute Engine) per inference thread. 0 = auto
      */
     std::uint32_t numNCEPerThread = 0;
+    /**
+     * Number of Shaves per inference thread. 0 = auto
+     */
+    std::uint32_t numShavesPerThread = 0;
+    /**
+     * Specify which backend is used. "" = auto
+     */
+    std::string backend;
 };
 
-DEPTHAI_SERIALIZE_EXT(NeuralNetworkProperties, modelSource, blobSize, blobUri, xmlUri, binUri, numFrames, numThreads, numNCEPerThread);
+DEPTHAI_SERIALIZE_EXT(NeuralNetworkProperties, modelSource, blobSize, blobUri, xmlUri, binUri, numFrames, numThreads, numNCEPerThread, numShavesPerThread, backend);
 
 }  // namespace dai
