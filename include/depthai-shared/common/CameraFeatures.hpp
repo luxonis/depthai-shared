@@ -8,11 +8,11 @@
 namespace dai {
 
 /**
- * CameraProperties structure
+ * CameraFeatures structure
  *
  * Characterizes detected cameras on board
  */
-struct CameraProperties {
+struct CameraFeatures {
     /**
      * Board socket where the camera was detected
      */
@@ -41,7 +41,7 @@ struct CameraProperties {
      */
     bool hasAutofocus;
 
-    DEPTHAI_SERIALIZE(CameraProperties, socket, sensorName, width, height, orientation, supportedTypes, hasAutofocus);
+    DEPTHAI_SERIALIZE(CameraFeatures, socket, sensorName, width, height, orientation, supportedTypes, hasAutofocus);
 };
 
 }  // namespace dai
