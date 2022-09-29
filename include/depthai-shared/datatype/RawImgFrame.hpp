@@ -170,6 +170,7 @@ struct RawImgFrame : public RawBuffer {
     };
 
     Specs fb = {};
+    Specs sourceFb = {};
     uint32_t category = 0;     //
     uint32_t instanceNum = 0;  // Which source created this frame (color, mono, ...)
     int64_t sequenceNum = 0;   // increments for each frame
