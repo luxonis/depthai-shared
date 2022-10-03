@@ -172,7 +172,6 @@ struct RawImgFrame : public RawBuffer {
         DEPTHAI_SERIALIZE(CameraSettings, exposureTimeUs, sensitivityIso, lensPosition, wbColorTemp);
     };
 
-
     Specs fb = {};
     CameraSettings cam;
     uint32_t category = 0;     //
