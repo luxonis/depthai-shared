@@ -24,7 +24,7 @@ struct CameraFeatures {
     /**
      * Maximum sensor resolution
      */
-    uint16_t width, height;
+    std::int32_t width, height;
     /**
      * Default camera orientation, board dependent
      */

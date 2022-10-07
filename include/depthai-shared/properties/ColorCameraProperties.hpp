@@ -27,16 +27,16 @@ struct ColorCameraProperties : PropertiesSerializable<Properties, ColorCameraPro
      */
     enum class SensorResolution : int32_t {
         THE_1080_P,
-        THE_1200_P,
         THE_4_K,
-        THE_5_MP,
         THE_12_MP,
-        THE_12P0_MP,
         THE_13_MP,
-        THE_5312X6000,
-        THE_48_MP,
         THE_720_P,
-        THE_800_P
+        THE_800_P,
+        THE_1200_P,
+        THE_5_MP,
+        THE_12P0_MP,
+        THE_5312X6000,
+        THE_48_MP
     };
 
     /**
