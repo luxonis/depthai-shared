@@ -47,7 +47,6 @@ struct MonoCameraProperties : PropertiesSerializable<Properties, MonoCameraPrope
      * Frame pool size for the `raw` output
      */
     int numFramesPoolRaw = 3;
-
 };
 
 DEPTHAI_SERIALIZE_EXT(MonoCameraProperties, initialControl, boardSocket, imageOrientation, resolution, fps, numFramesPool, numFramesPoolRaw);
