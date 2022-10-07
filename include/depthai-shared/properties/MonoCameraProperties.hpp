@@ -39,8 +39,16 @@ struct MonoCameraProperties : PropertiesSerializable<Properties, MonoCameraPrope
      * Camera sensor FPS
      */
     float fps = 30.0;
+    /**
+     * Frame pool size for the main output, ISP processed
+     */
+    int numFramesPool = 3;
+    /**
+     * Frame pool size for the `raw` output
+     */
+    int numFramesPoolRaw = 3;
 };
 
-DEPTHAI_SERIALIZE_EXT(MonoCameraProperties, initialControl, boardSocket, imageOrientation, resolution, fps);
+DEPTHAI_SERIALIZE_EXT(MonoCameraProperties, initialControl, boardSocket, imageOrientation, resolution, fps, numFramesPool, numFramesPoolRaw);
 
 }  // namespace dai
