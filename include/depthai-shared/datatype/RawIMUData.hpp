@@ -29,6 +29,21 @@ struct IMUReport {
 
     /** Generation timestamp, direct device monotonic clock */
     Timestamp tsDevice = {};
+
+    /**
+     * Retrieves timestamp related to dai::Clock::now()
+     */
+    std::chrono::time_point<std::chrono::steady_clock, std::chrono::steady_clock::duration> getTimestamp() const {
+        return timestamp.get();
+    }
+
+    /**
+     * Retrieves timestamp directly captured from device's monotonic clock,
+     * not synchronized to host time. Used mostly for debugging
+     */
+    std::chrono::time_point<std::chrono::steady_clock, std::chrono::steady_clock::duration> getTimestampDevice() const {
+        return tsDevice.get();
+    }
 };
 DEPTHAI_SERIALIZE_EXT(IMUReport, sequence, accuracy, timestamp, tsDevice);
 
