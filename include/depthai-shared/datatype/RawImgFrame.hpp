@@ -163,8 +163,17 @@ struct RawImgFrame : public RawBuffer {
 
         DEPTHAI_SERIALIZE(Specs, type, width, height, stride, bytesPP, p1Offset, p2Offset, p3Offset);
     };
+    struct CameraSettings {
+        int32_t exposureTimeUs;
+        int32_t sensitivityIso;
+        int32_t lensPosition;
+        int32_t wbColorTemp;
+
+        DEPTHAI_SERIALIZE(CameraSettings, exposureTimeUs, sensitivityIso, lensPosition, wbColorTemp);
+    };
 
     Specs fb = {};
+    CameraSettings cam;
     uint32_t category = 0;     //
     uint32_t instanceNum = 0;  // Which source created this frame (color, mono, ...)
     int64_t sequenceNum = 0;   // increments for each frame
@@ -176,7 +185,7 @@ struct RawImgFrame : public RawBuffer {
         datatype = DatatypeEnum::ImgFrame;
     };
 
-    DEPTHAI_SERIALIZE(RawImgFrame, fb, category, instanceNum, sequenceNum, ts, tsDevice);
+    DEPTHAI_SERIALIZE(RawImgFrame, fb, cam, category, instanceNum, sequenceNum, ts, tsDevice);
 };
 
 }  // namespace dai
