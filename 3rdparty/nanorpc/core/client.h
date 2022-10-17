@@ -47,11 +47,17 @@ public:
     template <typename ... TArgs>
     result call(std::string name, TArgs && ... args)
     {
-        return call(hash_id(name), std::forward<TArgs>(args) ... );
+        return call(name, hash_id(name), std::forward<TArgs>(args) ... );
     }
 
     template <typename ... TArgs>
     result call(type::id id, TArgs && ... args)
+    {
+        return call("", id, std::forward<TArgs>(args) ... );
+    }
+
+    template <typename ... TArgs>
+    result call(std::string name, type::id id, TArgs && ... args)
     {
         auto data = std::make_tuple(std::forward<TArgs>(args) ... );
 
@@ -71,8 +77,8 @@ public:
             response = response.unpack(protocol);
             if (protocol != version::core::protocol::value)
             {
-                throw exception::client{"[nanorpc::core::client::call] Unsupported protocol version \"" +
-                        std::to_string(protocol) + "\"."};
+                throw exception::client{"[nanorpc::core::client::call] [" + name + "] Unsupported protocol version \"" +
+                        std::to_string(protocol) + "\". (" + name + ")"};
             }
         }
 
@@ -80,7 +86,7 @@ public:
             detail::pack::meta::type type{};
             response = response.unpack(type);
             if (type != detail::pack::meta::type::response)
-                throw exception::client{"[nanorpc::core::client::call] Bad response type."};
+                throw exception::client{"[nanorpc::core::client::call] Bad response type. (" + name + ")"};
         }
 
         {
@@ -90,7 +96,7 @@ public:
             {
                 std::string message;
                 response = response.unpack(message);
-                throw exception::logic{message};
+                throw exception::logic{message + " (" + name + ")"};
             }
         }
 
