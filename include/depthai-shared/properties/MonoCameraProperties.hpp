@@ -14,7 +14,7 @@ struct MonoCameraProperties : PropertiesSerializable<Properties, MonoCameraPrope
     /**
      * Select the camera sensor resolution: 1280×720, 1280×800, 640×400, 640×480
      */
-    enum class SensorResolution : int32_t { THE_720_P, THE_800_P, THE_400_P, THE_480_P };
+    enum class SensorResolution : int32_t { THE_720_P, THE_800_P, THE_400_P, THE_480_P, THE_1200_P };
 
     /*
      * Initial controls applied to MonoCamera node
