@@ -26,16 +26,27 @@ struct ColorCameraProperties : PropertiesSerializable<Properties, ColorCameraPro
      * Select the camera sensor resolution
      */
     enum class SensorResolution : int32_t {
+        /// 1920 × 1080
         THE_1080_P,
+        /// 3840 × 2160
         THE_4_K,
+        /// 4056 × 3040
         THE_12_MP,
+        /// 4208 × 3120
         THE_13_MP,
+        /// 1280 × 720
         THE_720_P,
+        /// 1280 × 800
         THE_800_P,
+        /// 1920 × 1200
         THE_1200_P,
+        /// 2592 × 1944
         THE_5_MP,
-        THE_12P0_MP,
+        /// 4000 × 3000
+        THE_4000X3000,
+        /// 5312 × 6000
         THE_5312X6000,
+        /// 8000 × 6000
         THE_48_MP
     };
 
