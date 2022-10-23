@@ -4,6 +4,8 @@
 #include "depthai-shared/common/CameraImageOrientation.hpp"
 #include "depthai-shared/datatype/RawCameraControl.hpp"
 #include "depthai-shared/properties/Properties.hpp"
+#include "depthai-shared/common/FrameEvent.hpp"
+#include <vector>
 
 namespace dai {
 
@@ -150,6 +152,11 @@ struct ColorCameraProperties : PropertiesSerializable<Properties, ColorCameraPro
     int numFramesPoolVideo = 4;
     int numFramesPoolPreview = 4;
     int numFramesPoolStill = 4;
+    
+    /**
+     * List of events to receive, the rest will be ignored
+     */
+    std::vector<dai::FrameEvent> filterEvents;
 };
 
 DEPTHAI_SERIALIZE_EXT(ColorCameraProperties,
