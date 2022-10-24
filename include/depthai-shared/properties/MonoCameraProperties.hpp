@@ -1,11 +1,12 @@
 #pragma once
 
+#include <vector>
+
 #include "depthai-shared/common/CameraBoardSocket.hpp"
 #include "depthai-shared/common/CameraImageOrientation.hpp"
 #include "depthai-shared/datatype/RawCameraControl.hpp"
 #include "depthai-shared/properties/Properties.hpp"
 #include "depthai-shared/common/FrameEvent.hpp"
-#include <vector>
 
 namespace dai {
 
