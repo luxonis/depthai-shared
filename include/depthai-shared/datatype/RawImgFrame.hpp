@@ -4,7 +4,7 @@
 
 #include "depthai-shared/common/Timestamp.hpp"
 #include "depthai-shared/datatype/RawBuffer.hpp"
-#include "depthai-shared/datatype/RawImgTransformation.hpp"
+#include "depthai-shared/common/RawImgTransformation.hpp"
 #include "depthai-shared/utility/Serialization.hpp"
 
 namespace dai {
