@@ -58,7 +58,7 @@ struct MonoCameraProperties : PropertiesSerializable<Properties, MonoCameraPrope
     /**
      * List of events to receive, the rest will be ignored
      */
-    std::vector<dai::FrameEvent> filterEvents;
+    std::vector<dai::FrameEvent> eventFilter;
 };
 
 DEPTHAI_SERIALIZE_EXT(MonoCameraProperties, initialControl, boardSocket, cameraName, imageOrientation, resolution, fps, numFramesPool, numFramesPoolRaw);
