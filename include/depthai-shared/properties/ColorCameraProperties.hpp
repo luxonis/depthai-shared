@@ -157,7 +157,7 @@ struct ColorCameraProperties : PropertiesSerializable<Properties, ColorCameraPro
     /**
      * List of events to receive, the rest will be ignored
      */
-    std::vector<dai::FrameEvent> eventFilter;
+    std::vector<dai::FrameEvent> eventFilter = { dai::FrameEvent::READOUT_START };
 };
 
 DEPTHAI_SERIALIZE_EXT(ColorCameraProperties,
