@@ -29,7 +29,7 @@ struct PoolProperties : PropertiesSerializable<Properties, PoolProperties> {
     /**
      * Which processor should hold the pool
      */
-    tl::optional<ProcessorType> processor = ProcessorType::LEON_MSS;
+    tl::optional<ProcessorType> processor = tl::nullopt;
 };
 
 DEPTHAI_SERIALIZE_EXT(PoolProperties, numMessages, maxMessageSize, datatype, processor);
