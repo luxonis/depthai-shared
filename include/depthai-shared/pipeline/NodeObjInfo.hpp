@@ -13,6 +13,7 @@ struct NodeObjInfo {
     int64_t parentId = -1;
 
     std::string name;
+    std::string alias;
 
     std::vector<std::uint8_t> properties;
 
@@ -24,6 +25,6 @@ struct NodeObjInfo {
     std::unordered_map<std::tuple<std::string, std::string>, NodeIoInfo, IoInfoKey> ioInfo;
 };
 
-DEPTHAI_SERIALIZE_EXT(NodeObjInfo, id, parentId, name, properties, ioInfo);
+DEPTHAI_SERIALIZE_EXT(NodeObjInfo, id, parentId, name, alias, properties, ioInfo);
 
 }  // namespace dai
