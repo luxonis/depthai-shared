@@ -1,5 +1,6 @@
 #pragma once
 
+#include "depthai-shared/common/ProcessorType.hpp"
 #include "depthai-shared/common/optional.hpp"
 #include "depthai-shared/properties/Properties.hpp"
 
@@ -18,8 +19,18 @@ struct PoolProperties : PropertiesSerializable<Properties, PoolProperties> {
      * Size of data allocated for each message
      */
     std::int64_t maxMessageSize = 0;
+
+    /**
+     * Optional datatype of messages in the pool
+     */
+    tl::optional<DatatypeEnum> datatype = tl::nullopt;
+
+    /**
+     * Which processor should hold the pool
+     */
+    ProcessorType processor = ProcessorType::LEON_MSS;
 };
 
-DEPTHAI_SERIALIZE_EXT(PoolProperties, numMessages, maxMessageSize);
+DEPTHAI_SERIALIZE_EXT(PoolProperties, numMessages, maxMessageSize, datatype, processor);
 
 }  // namespace dai
