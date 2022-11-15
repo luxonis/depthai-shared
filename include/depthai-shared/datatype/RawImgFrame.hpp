@@ -49,49 +49,49 @@ struct RawImgFrame : public RawBuffer {
     static constexpr int typeToBpp(Type type) {
         switch(type) {
             case Type::YUV422i:
-                return 1;
+                return 2;
                 break;
             case Type::YUV444p:
-                return 1;
+                return 3;
                 break;
             case Type::YUV420p:
-                return 1;
+                return 2;
                 break;
             case Type::YUV422p:
-                return 1;
+                return 2;
                 break;
             case Type::YUV400p:
-                return 1;
+                return 2;
                 break;
             case Type::RGBA8888:
-                return 1;
+                return 4;
                 break;
             case Type::RGB161616:
-                return 2;
+                return 6;
                 break;
             case Type::RGB888p:
-                return 1;
+                return 3;
                 break;
             case Type::BGR888p:
-                return 1;
+                return 3;
                 break;
             case Type::RGB888i:
-                return 1;
+                return 3;
                 break;
             case Type::BGR888i:
-                return 1;
+                return 3;
                 break;
             case Type::RGBF16F16F16p:
-                return 2;
+                return 6;
                 break;
             case Type::BGRF16F16F16p:
-                return 2;
+                return 6;
                 break;
             case Type::RGBF16F16F16i:
-                return 2;
+                return 6;
                 break;
             case Type::BGRF16F16F16i:
-                return 2;
+                return 6;
                 break;
             case Type::GRAY8:
                 return 1;
@@ -130,13 +130,13 @@ struct RawImgFrame : public RawBuffer {
                 return 2;
                 break;
             case Type::YUV444i:
-                return 1;
+                return 2;
                 break;
             case Type::NV12:
-                return 1;
+                return 2;
                 break;
             case Type::NV21:
-                return 1;
+                return 2;
                 break;
             case Type::BITSTREAM:
                 return 1;
