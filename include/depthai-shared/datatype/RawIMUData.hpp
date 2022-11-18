@@ -44,6 +44,13 @@ struct IMUReport {
     std::chrono::time_point<std::chrono::steady_clock, std::chrono::steady_clock::duration> getTimestampDevice() const {
         return tsDevice.get();
     }
+
+    /**
+     * Retrieves IMU report sequence number
+     */
+    int32_t getSequenceNum() const {
+        return sequence;
+    }
 };
 DEPTHAI_SERIALIZE_EXT(IMUReport, sequence, accuracy, timestamp, tsDevice);
 
