@@ -5,13 +5,13 @@
 #include <unordered_map>
 
 // project
+#include "depthai-shared/common/CameraBoardSocket.hpp"
+#include "depthai-shared/common/CameraSensorType.hpp"
 #include "depthai-shared/common/UsbSpeed.hpp"
 #include "depthai-shared/common/optional.hpp"
 #include "depthai-shared/log/LogLevel.hpp"
 #include "depthai-shared/utility/Serialization.hpp"
 #include "depthai-shared/xlink/XLinkConstants.hpp"
-#include "depthai-shared/common/CameraBoardSocket.hpp"
-#include "depthai-shared/common/CameraSensorType.hpp"
 
 namespace dai {
 
@@ -110,7 +110,7 @@ struct BoardConfig {
     // Socket description
     struct Socket {
         int i2cBus;
-        int mipiStart, mipiEnd; // inclusive
+        int mipiStart, mipiEnd;  // inclusive
         int gpioPwr, gpioRst;
         float voltageCore, voltageAnalog, voltageInterface;
         // TODO(themarpe) - tbd if better placed here
@@ -127,7 +127,6 @@ struct BoardConfig {
         // tl::optional<CameraBoardSocket> syncTo;
     };
     std::unordered_map<CameraBoardSocket, Camera> camera;
-
 };
 
 DEPTHAI_SERIALIZE_EXT(BoardConfig::USB, vid, pid, flashBootedVid, flashBootedPid, maxSpeed);
