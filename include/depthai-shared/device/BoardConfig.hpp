@@ -10,6 +10,8 @@
 #include "depthai-shared/log/LogLevel.hpp"
 #include "depthai-shared/utility/Serialization.hpp"
 #include "depthai-shared/xlink/XLinkConstants.hpp"
+#include "depthai-shared/common/CameraBoardSocket.hpp"
+#include "depthai-shared/common/CameraSensorType.hpp"
 
 namespace dai {
 
@@ -104,6 +106,28 @@ struct BoardConfig {
 
     // log device prints
     tl::optional<bool> logDevicePrints;
+
+    // Socket description
+    struct Socket {
+        int i2cBus;
+        int mipiStart, mipiEnd; // inclusive
+        int gpioPwr, gpioRst;
+        float voltageCore, voltageAnalog, voltageInterface;
+        // TODO(themarpe) - tbd if better placed here
+        // tl::optional<CameraBoardSocket> syncTo;
+    };
+    std::unordered_map<CameraBoardSocket, Socket> socket;
+
+    // Camera description
+    struct Camera {
+        std::string name;
+        std::vector<std::string> sensorName;
+        std::vector<CameraSensorType> sensorType;
+        // std::vector<vector> vcm;
+        // tl::optional<CameraBoardSocket> syncTo;
+    };
+    std::unordered_map<CameraBoardSocket, Camera> camera;
+
 };
 
 DEPTHAI_SERIALIZE_EXT(BoardConfig::USB, vid, pid, flashBootedVid, flashBootedPid, maxSpeed);

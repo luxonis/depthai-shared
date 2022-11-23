@@ -27,6 +27,11 @@ struct MonoCameraProperties : PropertiesSerializable<Properties, MonoCameraPrope
     CameraBoardSocket boardSocket = CameraBoardSocket::AUTO;
 
     /**
+     * Which camera name will mono camera use
+     */
+    std::string cameraName = "";
+
+    /**
      * Camera sensor image orientation / pixel readout
      */
     CameraImageOrientation imageOrientation = CameraImageOrientation::AUTO;
