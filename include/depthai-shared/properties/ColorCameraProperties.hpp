@@ -155,6 +155,7 @@ struct ColorCameraProperties : PropertiesSerializable<Properties, ColorCameraPro
 DEPTHAI_SERIALIZE_EXT(ColorCameraProperties,
                       initialControl,
                       boardSocket,
+                      cameraName,
                       imageOrientation,
                       colorOrder,
                       interleaved,
