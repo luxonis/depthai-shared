@@ -16,7 +16,7 @@ struct CameraFeatures {
     /**
      * Board socket where the camera was detected
      */
-    CameraBoardSocket socket;
+    CameraBoardSocket socket = CameraBoardSocket::AUTO;
     /**
      * Camera sensor name, e.g: "IMX378", "OV9282"
      */
@@ -24,11 +24,11 @@ struct CameraFeatures {
     /**
      * Maximum sensor resolution
      */
-    std::int32_t width, height;
+    std::int32_t width = -1, height = -1;
     /**
      * Default camera orientation, board dependent
      */
-    CameraImageOrientation orientation;
+    CameraImageOrientation orientation = CameraImageOrientation::AUTO;
     /**
      * List of supported types of processing for the given camera.
      *
@@ -39,7 +39,7 @@ struct CameraFeatures {
     /**
      *  Whether an autofocus VCM IC was detected
      */
-    bool hasAutofocus;
+    bool hasAutofocus = false;
     /**
      * Camera name or alias
      */
