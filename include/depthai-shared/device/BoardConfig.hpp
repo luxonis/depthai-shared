@@ -124,7 +124,7 @@ struct BoardConfig {
         std::string name;
         // TODO(themarpe) - add later when applicable
         // std::vector<std::string> sensorName;
-        // std::vector<CameraSensorType> sensorType;
+        tl::optional<CameraSensorType> sensorType;
         // std::vector<vector> vcm;
         // tl::optional<CameraBoardSocket> syncTo;
     };
@@ -135,6 +135,7 @@ DEPTHAI_SERIALIZE_EXT(BoardConfig::USB, vid, pid, flashBootedVid, flashBootedPid
 DEPTHAI_SERIALIZE_EXT(BoardConfig::Network, mtu, xlinkTcpNoDelay);
 DEPTHAI_SERIALIZE_EXT(BoardConfig::GPIO, mode, direction, level, pull, drive, schmitt, slewFast);
 DEPTHAI_SERIALIZE_EXT(BoardConfig::UART, tmp);
+DEPTHAI_SERIALIZE_EXT(BoardConfig::Camera, name, sensorType);
 DEPTHAI_SERIALIZE_EXT(BoardConfig,
                       usb,
                       network,
@@ -149,6 +150,7 @@ DEPTHAI_SERIALIZE_EXT(BoardConfig,
                       logPath,
                       logSizeMax,
                       logVerbosity,
-                      logDevicePrints);
+                      logDevicePrints,
+                      camera);
 
 }  // namespace dai
