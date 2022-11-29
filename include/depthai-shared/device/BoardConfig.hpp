@@ -107,22 +107,24 @@ struct BoardConfig {
     // log device prints
     tl::optional<bool> logDevicePrints;
 
-    // Socket description
-    struct Socket {
-        int i2cBus;
-        int mipiStart, mipiEnd;  // inclusive
-        int gpioPwr, gpioRst;
-        float voltageCore, voltageAnalog, voltageInterface;
-        // TODO(themarpe) - tbd if better placed here
-        // tl::optional<CameraBoardSocket> syncTo;
-    };
-    std::unordered_map<CameraBoardSocket, Socket> socket;
+    // TODO(themarpe) - add later when applicable
+    // // Socket description
+    // struct Socket {
+    //     int i2cBus;
+    //     int mipiStart, mipiEnd;  // inclusive
+    //     int gpioPwr, gpioRst;
+    //     float voltageCore, voltageAnalog, voltageInterface;
+    //     // TODO(themarpe) - tbd if better placed here
+    //     // tl::optional<CameraBoardSocket> syncTo;
+    // };
+    // std::unordered_map<CameraBoardSocket, Socket> socket;
 
     // Camera description
     struct Camera {
         std::string name;
-        std::vector<std::string> sensorName;
-        std::vector<CameraSensorType> sensorType;
+        // TODO(themarpe) - add later when applicable
+        // std::vector<std::string> sensorName;
+        // std::vector<CameraSensorType> sensorType;
         // std::vector<vector> vcm;
         // tl::optional<CameraBoardSocket> syncTo;
     };
