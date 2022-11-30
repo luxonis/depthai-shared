@@ -27,6 +27,11 @@ struct MonoCameraProperties : PropertiesSerializable<Properties, MonoCameraPrope
     CameraBoardSocket boardSocket = CameraBoardSocket::AUTO;
 
     /**
+     * Which camera name will mono camera use
+     */
+    std::string cameraName = "";
+
+    /**
      * Camera sensor image orientation / pixel readout
      */
     CameraImageOrientation imageOrientation = CameraImageOrientation::AUTO;
@@ -49,6 +54,6 @@ struct MonoCameraProperties : PropertiesSerializable<Properties, MonoCameraPrope
     int numFramesPoolRaw = 3;
 };
 
-DEPTHAI_SERIALIZE_EXT(MonoCameraProperties, initialControl, boardSocket, imageOrientation, resolution, fps, numFramesPool, numFramesPoolRaw);
+DEPTHAI_SERIALIZE_EXT(MonoCameraProperties, initialControl, boardSocket, cameraName, imageOrientation, resolution, fps, numFramesPool, numFramesPoolRaw);
 
 }  // namespace dai
