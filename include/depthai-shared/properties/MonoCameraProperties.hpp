@@ -4,9 +4,9 @@
 
 #include "depthai-shared/common/CameraBoardSocket.hpp"
 #include "depthai-shared/common/CameraImageOrientation.hpp"
+#include "depthai-shared/common/FrameEvent.hpp"
 #include "depthai-shared/datatype/RawCameraControl.hpp"
 #include "depthai-shared/properties/Properties.hpp"
-#include "depthai-shared/common/FrameEvent.hpp"
 
 namespace dai {
 
@@ -58,7 +58,7 @@ struct MonoCameraProperties : PropertiesSerializable<Properties, MonoCameraPrope
     /**
      * List of events to receive, the rest will be ignored
      */
-    std::vector<dai::FrameEvent> eventFilter = { dai::FrameEvent::READOUT_START };
+    std::vector<dai::FrameEvent> eventFilter = {dai::FrameEvent::READOUT_START};
 };
 
 DEPTHAI_SERIALIZE_EXT(MonoCameraProperties, initialControl, boardSocket, cameraName, imageOrientation, resolution, fps, numFramesPool, numFramesPoolRaw);
