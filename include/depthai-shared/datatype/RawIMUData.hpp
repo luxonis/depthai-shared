@@ -17,7 +17,7 @@ struct IMUReport {
     /**
      * The sequence number increments once for each report sent.  Gaps
      * in the sequence numbers indicate missing or dropped reports.
-     * Max value 255 after which resets to 0.
+     * Max value 2^32 after which resets to 0.
      */
     int32_t sequence = 0;
 
@@ -43,6 +43,13 @@ struct IMUReport {
      */
     std::chrono::time_point<std::chrono::steady_clock, std::chrono::steady_clock::duration> getTimestampDevice() const {
         return tsDevice.get();
+    }
+
+    /**
+     * Retrieves IMU report sequence number
+     */
+    int32_t getSequenceNum() const {
+        return sequence;
     }
 };
 DEPTHAI_SERIALIZE_EXT(IMUReport, sequence, accuracy, timestamp, tsDevice);
