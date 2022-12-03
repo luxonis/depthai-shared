@@ -51,12 +51,22 @@ struct NeuralNetworkProperties : PropertiesSerializable<Properties, NeuralNetwor
      */
     std::string backend;
     /**
-     * Specify custom settings
-    */
-    std::map<std::string, std::string> customSettings;
+     * Specify backend properties
+     */
+    std::map<std::string, std::string> backendProperties;
 };
 
-DEPTHAI_SERIALIZE_EXT(
-    NeuralNetworkProperties, modelSource, blobSize, blobUri, xmlUri, binUri, numFrames, numThreads, numNCEPerThread, numShavesPerThread, backend, customSettings);
+DEPTHAI_SERIALIZE_EXT(NeuralNetworkProperties,
+                      modelSource,
+                      blobSize,
+                      blobUri,
+                      xmlUri,
+                      binUri,
+                      numFrames,
+                      numThreads,
+                      numNCEPerThread,
+                      numShavesPerThread,
+                      backend,
+                      backendProperties);
 
 }  // namespace dai
