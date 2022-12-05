@@ -66,6 +66,11 @@ struct ColorCameraProperties : PropertiesSerializable<Properties, ColorCameraPro
     CameraBoardSocket boardSocket = CameraBoardSocket::AUTO;
 
     /**
+     * Which camera name will color camera use
+     */
+    std::string cameraName = "";
+
+    /**
      * Camera sensor image orientation / pixel readout
      */
     CameraImageOrientation imageOrientation = CameraImageOrientation::AUTO;
@@ -150,6 +155,7 @@ struct ColorCameraProperties : PropertiesSerializable<Properties, ColorCameraPro
 DEPTHAI_SERIALIZE_EXT(ColorCameraProperties,
                       initialControl,
                       boardSocket,
+                      cameraName,
                       imageOrientation,
                       colorOrder,
                       interleaved,

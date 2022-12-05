@@ -61,7 +61,7 @@ struct StereoDepthProperties : PropertiesSerializable<Properties, StereoDepthPro
     /**
      * Fill color for missing data at frame edges - grayscale 0..255, or -1 to replicate pixels
      */
-    std::int32_t rectifyEdgeFillColor = -1;
+    std::int32_t rectifyEdgeFillColor = 0;
     /**
      * Input frame width. Optional (taken from MonoCamera nodes if they exist)
      */

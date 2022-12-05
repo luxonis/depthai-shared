@@ -50,9 +50,23 @@ struct NeuralNetworkProperties : PropertiesSerializable<Properties, NeuralNetwor
      * Specify which backend is used. "" = auto
      */
     std::string backend;
+    /**
+     * Specify backend properties
+     */
+    std::map<std::string, std::string> backendProperties;
 };
 
-DEPTHAI_SERIALIZE_EXT(
-    NeuralNetworkProperties, modelSource, blobSize, blobUri, xmlUri, binUri, numFrames, numThreads, numNCEPerThread, numShavesPerThread, backend);
+DEPTHAI_SERIALIZE_EXT(NeuralNetworkProperties,
+                      modelSource,
+                      blobSize,
+                      blobUri,
+                      xmlUri,
+                      binUri,
+                      numFrames,
+                      numThreads,
+                      numNCEPerThread,
+                      numShavesPerThread,
+                      backend,
+                      backendProperties);
 
 }  // namespace dai
