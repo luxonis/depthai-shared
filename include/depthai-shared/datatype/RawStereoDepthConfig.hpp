@@ -32,7 +32,7 @@ struct RawStereoDepthConfig : public RawBuffer {
         /**
          * Set the disparity/depth alignment to the perspective of a rectified output, or center it
          */
-        DepthAlign depthAlign = DepthAlign::RECTIFIED_RIGHT;
+        DepthAlign depthAlign = DepthAlign::RECTIFIED_LEFT;
 
         /**
          * Measurement unit for depth data.
@@ -61,7 +61,7 @@ struct RawStereoDepthConfig : public RawBuffer {
         /**
          * Computes disparity with sub-pixel interpolation (5 fractional bits), suitable for long range
          */
-        bool enableSubpixel = false;
+        bool enableSubpixel = true;
 
         /**
          * Left-right check threshold for left-right, right-left disparity map combine, 0..128
@@ -79,7 +79,7 @@ struct RawStereoDepthConfig : public RawBuffer {
          *
          * Median filter postprocessing is supported only for 3 fractional bits
          */
-        std::int32_t subpixelFractionalBits = 3;
+        std::int32_t subpixelFractionalBits = 5;
 
         /**
          * Shift input frame by a number of pixels to increase minimum depth.
@@ -115,7 +115,7 @@ struct RawStereoDepthConfig : public RawBuffer {
         /**
          * Set kernel size for disparity/depth median filtering, or disable
          */
-        MedianFilter median = MedianFilter::KERNEL_5x5;
+        MedianFilter median = MedianFilter::MEDIAN_OFF;
 
         /**
          * Sigma value for bilateral filter. 0 means disabled.

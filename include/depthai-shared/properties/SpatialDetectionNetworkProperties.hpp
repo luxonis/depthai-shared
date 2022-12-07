@@ -6,10 +6,10 @@
 // libraries
 
 // project
-#include "depthai-shared/properties/Properties.hpp"
 #include "depthai-shared/common/DetectionNetworkType.hpp"
 #include "depthai-shared/common/optional.hpp"
 #include "depthai-shared/datatype/RawSpatialLocationCalculatorConfig.hpp"
+#include "depthai-shared/properties/Properties.hpp"
 
 namespace dai {
 
@@ -22,9 +22,6 @@ struct SpatialDetectionNetworkProperties : PropertiesSerializable<Properties, Sp
     SpatialLocationCalculatorAlgorithm calculationAlgorithm = SpatialLocationCalculatorAlgorithm::AVERAGE;
 };
 
-DEPTHAI_SERIALIZE_EXT(SpatialDetectionNetworkProperties,
-                      detectedBBScaleFactor,
-                      depthThresholds,
-                      calculationAlgorithm);
+DEPTHAI_SERIALIZE_EXT(SpatialDetectionNetworkProperties, detectedBBScaleFactor, depthThresholds, calculationAlgorithm);
 
 }  // namespace dai
