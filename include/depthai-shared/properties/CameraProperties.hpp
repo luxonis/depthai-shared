@@ -110,6 +110,9 @@ struct CameraProperties : PropertiesSerializable<Properties, CameraProperties> {
     //  */
     // IspScale ispScale;
 
+    /// Type of sensor, specifies what kind of postprocessing is performed
+    CameraSensorType sensorType = CameraSensorType::AUTO;
+
     /**
      * Pool sizes
      */
@@ -141,6 +144,7 @@ DEPTHAI_SERIALIZE_EXT(CameraProperties,
                       sensorCropY,
                       previewKeepAspectRatio,
                       ispScale,
+                      sensorType,
                       numFramesPoolRaw,
                       numFramesPoolIsp,
                       numFramesPoolVideo,
