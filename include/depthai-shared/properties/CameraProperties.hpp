@@ -2,6 +2,7 @@
 
 #include "depthai-shared/common/CameraBoardSocket.hpp"
 #include "depthai-shared/common/CameraImageOrientation.hpp"
+#include "depthai-shared/common/CameraSensorType.hpp"
 #include "depthai-shared/datatype/RawCameraControl.hpp"
 #include "depthai-shared/properties/Properties.hpp"
 
@@ -105,10 +106,10 @@ struct CameraProperties : PropertiesSerializable<Properties, CameraProperties> {
      */
     bool previewKeepAspectRatio = true;
 
-    // /**
-    //  * Configure scaling for `isp` output.
-    //  */
-    // IspScale ispScale;
+    /**
+     * Configure scaling for `isp` output.
+     */
+    IspScale ispScale;
 
     /// Type of sensor, specifies what kind of postprocessing is performed
     CameraSensorType sensorType = CameraSensorType::AUTO;
