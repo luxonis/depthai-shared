@@ -14,6 +14,15 @@ namespace dai {
 struct CameraProperties : PropertiesSerializable<Properties, CameraProperties> {
     static constexpr int AUTO = -1;
 
+    struct IspScale {
+        int32_t horizNumerator = 0;
+        int32_t horizDenominator = 0;
+        int32_t vertNumerator = 0;
+        int32_t vertDenominator = 0;
+
+        DEPTHAI_SERIALIZE(IspScale, horizNumerator, horizDenominator, vertNumerator, vertDenominator);
+    };
+
     /**
      * For 24 bit color these can be either RGB or BGR
      */
