@@ -8,15 +8,15 @@
 namespace dai {
 
 /**
- * Specify PoolProperties options such as pool uri, pool name, ...
+ * Specify benchmark properties (number of messages to send/receive)
  */
-struct TestInProperties : PropertiesSerializable<Properties, TestInProperties> {
+struct BenchmarkProperties : PropertiesSerializable<Properties, BenchmarkProperties> {
     /**
      * Number of messages to send
      */
-    int numMessagesToSend = 50;
+    int numMessages = 50;
 };
 
-DEPTHAI_SERIALIZE_EXT(TestInProperties, numMessagesToSend);
+DEPTHAI_SERIALIZE_EXT(BenchmarkProperties, numMessages);
 
 }  // namespace dai
