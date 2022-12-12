@@ -24,6 +24,7 @@ enum class DatatypeEnum : std::int32_t {
     StereoDepthConfig,
     FeatureTrackerConfig,
     TrackedFeatures,
+    BenchmarkReport,
 };
 bool isDatatypeSubclassOf(DatatypeEnum parent, DatatypeEnum children);
 
