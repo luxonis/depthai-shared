@@ -11,6 +11,8 @@ struct RawBenchmarkReport : public RawBuffer {
     float fps;
     float timeTotal; // seconds
     float numMessagesReceived;
+    float averageLatency;
+    std::vector<float> latencies;
 
     // TODO Add jitter, timestamps for start/end, possibly a vector of timestamps for all messages
 
@@ -19,7 +21,7 @@ struct RawBenchmarkReport : public RawBuffer {
         datatype = DatatypeEnum::BenchmarkReport;
     };
 
-    DEPTHAI_SERIALIZE(RawBenchmarkReport, fps, timeTotal, numMessagesReceived);
+    DEPTHAI_SERIALIZE(RawBenchmarkReport, fps, timeTotal, numMessagesReceived, averageLatency, latencies);
 };
 
 }  // namespace dai
