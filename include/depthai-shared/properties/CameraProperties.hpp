@@ -111,9 +111,9 @@ struct CameraProperties : PropertiesSerializable<Properties, CameraProperties> {
     float sensorCropY = AUTO;
 
     /**
-     * Whether to keep aspect ratio of input (video size) or not
+     * Whether to keep aspect ratio of input (video/preview size) or not
      */
-    bool previewKeepAspectRatio = true;
+    bool previewKeepAspectRatio = false;
 
     /**
      * Configure scaling for `isp` output.
