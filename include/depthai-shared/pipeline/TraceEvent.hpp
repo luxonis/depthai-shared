@@ -2,8 +2,7 @@
 
 #include <depthai-shared/common/Timestamp.hpp>
 
-namespace dai
-{
+namespace dai {
 
 struct TraceEvent {
     enum Event : std::uint8_t {
@@ -23,4 +22,4 @@ struct TraceEvent {
     Timestamp timestamp;
 };
 
-} // namespace dai
+}  // namespace dai
