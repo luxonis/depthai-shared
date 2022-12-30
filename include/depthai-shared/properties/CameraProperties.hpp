@@ -131,6 +131,14 @@ struct CameraProperties : PropertiesSerializable<Properties, CameraProperties> {
     int numFramesPoolVideo = 4;
     int numFramesPoolPreview = 4;
     int numFramesPoolStill = 4;
+
+    /**
+     * Warp mesh source
+     */
+    enum class WarpMeshSource { AUTO = -1, NONE, CALIBRATION, URI };
+    WarpMeshSource warpMeshSource = WarpMeshSource::AUTO;
+    std::string warpMeshUri = "";
+    int warpMeshWidth, warpMeshHeight;
 };
 
 DEPTHAI_SERIALIZE_EXT(CameraProperties,
@@ -159,6 +167,10 @@ DEPTHAI_SERIALIZE_EXT(CameraProperties,
                       numFramesPoolIsp,
                       numFramesPoolVideo,
                       numFramesPoolPreview,
-                      numFramesPoolStill);
+                      numFramesPoolStill,
+                      warpMeshSource,
+                      warpMeshUri,
+                      warpMeshWidth,
+                      warpMeshHeight);
 
 }  // namespace dai
