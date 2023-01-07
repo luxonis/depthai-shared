@@ -8,15 +8,15 @@
 namespace dai {
 
 /**
- * CameraProperties structure
+ * CameraFeatures structure
  *
  * Characterizes detected cameras on board
  */
-struct CameraProperties {
+struct CameraFeatures {
     /**
      * Board socket where the camera was detected
      */
-    CameraBoardSocket socket;
+    CameraBoardSocket socket = CameraBoardSocket::AUTO;
     /**
      * Camera sensor name, e.g: "IMX378", "OV9282"
      */
@@ -24,11 +24,11 @@ struct CameraProperties {
     /**
      * Maximum sensor resolution
      */
-    uint16_t width, height;
+    std::int32_t width = -1, height = -1;
     /**
      * Default camera orientation, board dependent
      */
-    CameraImageOrientation orientation;
+    CameraImageOrientation orientation = CameraImageOrientation::AUTO;
     /**
      * List of supported types of processing for the given camera.
      *
@@ -39,9 +39,13 @@ struct CameraProperties {
     /**
      *  Whether an autofocus VCM IC was detected
      */
-    bool hasAutofocus;
+    bool hasAutofocus = false;
+    /**
+     * Camera name or alias
+     */
+    std::string name;
 
-    DEPTHAI_SERIALIZE(CameraProperties, socket, sensorName, width, height, orientation, supportedTypes, hasAutofocus);
+    DEPTHAI_SERIALIZE(CameraFeatures, socket, sensorName, width, height, orientation, supportedTypes, hasAutofocus, name);
 };
 
 }  // namespace dai
