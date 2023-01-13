@@ -107,6 +107,8 @@ struct BoardConfig {
     // log device prints
     tl::optional<bool> logDevicePrints;
 
+    bool nonExclusiveMode = false;
+
     // TODO(themarpe) - add later when applicable
     // // Socket description
     // struct Socket {
@@ -151,6 +153,7 @@ DEPTHAI_SERIALIZE_EXT(BoardConfig,
                       logSizeMax,
                       logVerbosity,
                       logDevicePrints,
+                      nonExclusiveMode,
                       camera);
 
 }  // namespace dai
