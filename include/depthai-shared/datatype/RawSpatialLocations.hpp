@@ -28,6 +28,8 @@ struct SpatialLocations {
      *  Average of depth values inside the ROI between the specified thresholds in config
      */
     float depthAverage = 0.f;
+    float depthMode = 0.f;
+    float depthMedian = 0.f;
     /**
      *  Minimum of depth values inside the ROI between the specified thresholds in config
      */
@@ -45,7 +47,7 @@ struct SpatialLocations {
      */
     Point3f spatialCoordinates;
 };
-DEPTHAI_SERIALIZE_EXT(SpatialLocations, config, depthAverage, depthMin, depthMax, depthAveragePixelCount, spatialCoordinates);
+DEPTHAI_SERIALIZE_EXT(SpatialLocations, config, depthAverage, depthMode, depthMedian, depthMin, depthMax, depthAveragePixelCount, spatialCoordinates);
 
 /// RawSpatialLocations structure
 struct RawSpatialLocations : public RawBuffer {
