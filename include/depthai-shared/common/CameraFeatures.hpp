@@ -8,6 +8,16 @@
 namespace dai {
 
 /**
+ * Sensor config
+ */
+struct CameraSensorConfig {
+    std::int32_t width = -1, height = -1;
+    std::int32_t minFps = -1, maxFps = -1;
+    CameraSensorType type;
+};
+DEPTHAI_SERIALIZE_EXT(CameraSensorConfig, width, height, minFps, maxFps, type);
+
+/**
  * CameraFeatures structure
  *
  * Characterizes detected cameras on board
@@ -44,8 +54,12 @@ struct CameraFeatures {
      * Camera name or alias
      */
     std::string name;
+    /**
+     * Available sensor configs
+     */
+    std::vector<CameraSensorConfig> configs;
 
-    DEPTHAI_SERIALIZE(CameraFeatures, socket, sensorName, width, height, orientation, supportedTypes, hasAutofocus, name);
+    DEPTHAI_SERIALIZE(CameraFeatures, socket, sensorName, width, height, orientation, supportedTypes, hasAutofocus, name, configs);
 };
 
 }  // namespace dai
