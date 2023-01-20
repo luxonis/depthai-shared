@@ -17,11 +17,22 @@ namespace dai {
  * Values outside of threshold range will be ignored when calculating spatial coordinates from depth map.
  */
 struct SpatialLocationCalculatorConfigThresholds {
+    /**
+     * Values less or equal than this threshold are not taken into calculation.
+     */
     uint32_t lowerThreshold = 0;
+    /**
+     * Values greater or equal than this threshold are not taken into calculation.
+     */
     uint32_t upperThreshold = 65535;
 };
 DEPTHAI_SERIALIZE_EXT(SpatialLocationCalculatorConfigThresholds, lowerThreshold, upperThreshold);
 
+/**
+ * SpatialLocationCalculatorAlgorithm configuration modes
+ *
+ * Contains calculation method used to obtain spatial locations.
+ */
 enum class SpatialLocationCalculatorAlgorithm : uint32_t { AVERAGE = 0, MEAN = AVERAGE, MIN, MAX, MODE, MEDIAN };
 
 /// SpatialLocation configuration data structure
@@ -36,12 +47,14 @@ struct SpatialLocationCalculatorConfigData {
     SpatialLocationCalculatorConfigThresholds depthThresholds;
     /**
      * Calculation method used to obtain spatial locations
-     * Average - the average of ROI is used for calculation.
+     * Average/mean: the average of ROI is used for calculation.
      * Min: the minimum value inside ROI is used for calculation.
      * Max: the maximum value inside ROI is used for calculation.
-     * Default: average.
+     * Mode: the most frequent value inside ROI is used for calculation.
+     * Median: the median value inside ROI is used for calculation.
+     * Default: median.
      */
-    SpatialLocationCalculatorAlgorithm calculationAlgorithm = SpatialLocationCalculatorAlgorithm::AVERAGE;
+    SpatialLocationCalculatorAlgorithm calculationAlgorithm = SpatialLocationCalculatorAlgorithm::MEDIAN;
 };
 DEPTHAI_SERIALIZE_EXT(SpatialLocationCalculatorConfigData, roi, depthThresholds, calculationAlgorithm);
 
