@@ -35,6 +35,43 @@ struct TensorInfo {
         I8 = 4,    // Signed byte
     };
 
+    void validateStorageOrder() {
+        switch(order) {
+            case StorageOrder::NHWC:
+            case StorageOrder::NHCW:
+            case StorageOrder::NCHW:
+                if(dims.size() < 4) {
+                    throw std::runtime_error("Not enough dimensions (needs at least 4) for the storage order in TensorInfo");
+                }
+                break;
+            case StorageOrder::HWC:
+            case StorageOrder::CHW:
+            case StorageOrder::WHC:
+            case StorageOrder::HCW:
+            case StorageOrder::WCH:
+            case StorageOrder::CWH:
+                if(dims.size() < 3) {
+                    throw std::runtime_error("Not enough dimensions (needs at least 3) for the storage order in TensorInfo");
+                }
+                break;
+            case StorageOrder::NC:
+            case StorageOrder::CN:
+                if(dims.size() < 2) {
+                    throw std::runtime_error("Not enough dimensions (needs at least 2) for the storage order in TensorInfo");
+                }
+                break;
+            case StorageOrder::C:
+            case StorageOrder::H:
+            case StorageOrder::W:
+                if(dims.size() < 1) {
+                    throw std::runtime_error("Not enough dimensions (needs at least 1) for the storage order in TensorInfo");
+                }
+                break;
+            default:
+                throw std::runtime_error("Invalid storage order type in TensorInfo");
+        }
+    }
+
     int getDataTypeSize() {
         switch(dataType) {
             case DataType::U8F:
@@ -52,7 +89,7 @@ struct TensorInfo {
     }
 
     int getWidth() {
-        // TODO Don't assume that dims are big enough
+        validateStorageOrder();
         switch(order) {
             case StorageOrder::NHWC:
                 return dims[2];
@@ -84,6 +121,7 @@ struct TensorInfo {
     }
 
     int getHeight() {
+        validateStorageOrder();
         switch(order) {
             case StorageOrder::NHWC:
                 return dims[1];
@@ -115,7 +153,8 @@ struct TensorInfo {
     }
 
     int getChannels() {
-         switch(order) {
+        validateStorageOrder();
+        switch(order) {
             case StorageOrder::NHWC:
                 return dims[3];
             case StorageOrder::NHCW:
@@ -145,7 +184,7 @@ struct TensorInfo {
             default:
                 return 0;
         }
-   }
+    }
 
     StorageOrder order = StorageOrder::NCHW;
     DataType dataType = DataType::FP16;
@@ -159,7 +198,7 @@ struct TensorInfo {
     bool quantisation = false;
     float qp_scale = 1;
     float qp_zp = 0;
-};
+    };
 
 DEPTHAI_SERIALIZE_EXT(TensorInfo, order, dataType, numDimensions, dims, strides, name, offset);
 
