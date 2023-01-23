@@ -37,6 +37,8 @@ enum class SpatialLocationCalculatorAlgorithm : uint32_t { AVERAGE = 0, MEAN = A
 
 /// SpatialLocation configuration data structure
 struct SpatialLocationCalculatorConfigData {
+    static constexpr std::int32_t AUTO = -1;
+
     /**
      * Region of interest for spatial location calculation.
      */
@@ -55,8 +57,14 @@ struct SpatialLocationCalculatorConfigData {
      * Default: median.
      */
     SpatialLocationCalculatorAlgorithm calculationAlgorithm = SpatialLocationCalculatorAlgorithm::MEDIAN;
+    /**
+     * Step size for calculation.
+     * Step size 1 means that every pixel is taken into calculation, size 2 means every second etc.
+     * Default value AUTO: for AVERAGE, MIN, MAX step size is 1; for MODE/MEDIAN it's 2.
+     */
+    std::int32_t stepSize = AUTO;
 };
-DEPTHAI_SERIALIZE_EXT(SpatialLocationCalculatorConfigData, roi, depthThresholds, calculationAlgorithm);
+DEPTHAI_SERIALIZE_EXT(SpatialLocationCalculatorConfigData, roi, depthThresholds, calculationAlgorithm, stepSize);
 
 /// RawSpatialLocation configuration structure
 struct RawSpatialLocationCalculatorConfig : public RawBuffer {

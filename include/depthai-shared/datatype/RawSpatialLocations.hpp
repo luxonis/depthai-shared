@@ -25,21 +25,32 @@ struct SpatialLocations {
      */
     SpatialLocationCalculatorConfigData config;
     /**
-     *  Average of depth values inside the ROI between the specified thresholds in config
+     *  Average of depth values inside the ROI between the specified thresholds in config.
+     *  Calculated only if calculation method is set to AVERAGE or MIN oR MAX.
      */
     float depthAverage = 0.f;
+    /**
+     *  Most frequent of depth values inside the ROI between the specified thresholds in config.
+     * Calculated only if calculation method is set to MODE.
+     */
     float depthMode = 0.f;
+    /**
+     *  Median of depth values inside the ROI between the specified thresholds in config.
+     * Calculated only if calculation method is set to MEDIAN.
+     */
     float depthMedian = 0.f;
     /**
-     *  Minimum of depth values inside the ROI between the specified thresholds in config
+     *  Minimum of depth values inside the ROI between the specified thresholds in config.
+     * Calculated only if calculation method is set to AVERAGE or MIN oR MAX.
      */
     std::uint16_t depthMin = 0;
     /**
-     *  Maximum of depth values inside the ROI between the specified thresholds in config
+     *  Maximum of depth values inside the ROI between the specified thresholds in config.
+     * Calculated only if calculation method is set to AVERAGE or MIN oR MAX.
      */
     std::uint16_t depthMax = 0;
     /**
-     *  Number of depth values used to calculate depthAverage based on config
+     *  Number of depth values used in calculations.
      */
     std::uint32_t depthAveragePixelCount = 0;
     /**
