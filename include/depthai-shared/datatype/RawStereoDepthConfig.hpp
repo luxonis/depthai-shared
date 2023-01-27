@@ -250,6 +250,35 @@ struct RawStereoDepthConfig : public RawBuffer {
         ThresholdFilter thresholdFilter;
 
         /**
+         * Brightness filtering.
+         * If input frame pixel is too dark or too bright, disparity will be invalidated.
+         * The idea is that for too dark/too bright pixels we have low confidence,
+         * since that area was under/over exposed and details were lost.
+         */
+        struct BrightnessFilter {
+            /**
+             * Minimum pixel brightness.
+             * Depth values less or equal than this value are invalidated.
+             */
+            std::int32_t minBrightness = 0;
+            /**
+             * Maximum range in depth units.
+             * Depth values less or equal than this value are invalidated.
+             */
+            std::int32_t maxBrightness = 255;
+
+            DEPTHAI_SERIALIZE(BrightnessFilter, minBrightness, maxBrightness);
+        };
+
+        /**
+         * Brightness filtering.
+         * If input frame pixel is too dark or too bright, disparity will be invalidated.
+         * The idea is that for too dark/too bright pixels we have low confidence,
+         * since that area was under/over exposed and details were lost.
+         */
+        BrightnessFilter brightnessFilter;
+
+        /**
          * Speckle filtering.
          * Removes speckle noise.
          */
@@ -305,7 +334,8 @@ struct RawStereoDepthConfig : public RawBuffer {
          */
         DecimationFilter decimationFilter;
 
-        DEPTHAI_SERIALIZE(PostProcessing, median, bilateralSigmaValue, spatialFilter, temporalFilter, thresholdFilter, speckleFilter, decimationFilter);
+        DEPTHAI_SERIALIZE(
+            PostProcessing, median, bilateralSigmaValue, spatialFilter, temporalFilter, thresholdFilter, brightnessFilter, speckleFilter, decimationFilter);
     };
 
     /**
