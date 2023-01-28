@@ -5,6 +5,8 @@
 #include <unordered_map>
 
 // project
+#include "depthai-shared/common/CameraBoardSocket.hpp"
+#include "depthai-shared/common/CameraSensorType.hpp"
 #include "depthai-shared/common/UsbSpeed.hpp"
 #include "depthai-shared/common/optional.hpp"
 #include "depthai-shared/log/LogLevel.hpp"
@@ -104,12 +106,38 @@ struct BoardConfig {
 
     // log device prints
     tl::optional<bool> logDevicePrints;
+
+    bool nonExclusiveMode = false;
+
+    // TODO(themarpe) - add later when applicable
+    // // Socket description
+    // struct Socket {
+    //     int i2cBus;
+    //     int mipiStart, mipiEnd;  // inclusive
+    //     int gpioPwr, gpioRst;
+    //     float voltageCore, voltageAnalog, voltageInterface;
+    //     // TODO(themarpe) - tbd if better placed here
+    //     // tl::optional<CameraBoardSocket> syncTo;
+    // };
+    // std::unordered_map<CameraBoardSocket, Socket> socket;
+
+    // Camera description
+    struct Camera {
+        std::string name;
+        // TODO(themarpe) - add later when applicable
+        // std::vector<std::string> sensorName;
+        tl::optional<CameraSensorType> sensorType;
+        // std::vector<vector> vcm;
+        // tl::optional<CameraBoardSocket> syncTo;
+    };
+    std::unordered_map<CameraBoardSocket, Camera> camera;
 };
 
 DEPTHAI_SERIALIZE_EXT(BoardConfig::USB, vid, pid, flashBootedVid, flashBootedPid, maxSpeed);
 DEPTHAI_SERIALIZE_EXT(BoardConfig::Network, mtu, xlinkTcpNoDelay);
 DEPTHAI_SERIALIZE_EXT(BoardConfig::GPIO, mode, direction, level, pull, drive, schmitt, slewFast);
 DEPTHAI_SERIALIZE_EXT(BoardConfig::UART, tmp);
+DEPTHAI_SERIALIZE_EXT(BoardConfig::Camera, name, sensorType);
 DEPTHAI_SERIALIZE_EXT(BoardConfig,
                       usb,
                       network,
@@ -124,6 +152,8 @@ DEPTHAI_SERIALIZE_EXT(BoardConfig,
                       logPath,
                       logSizeMax,
                       logVerbosity,
-                      logDevicePrints);
+                      logDevicePrints,
+                      nonExclusiveMode,
+                      camera);
 
 }  // namespace dai
