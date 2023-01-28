@@ -7,12 +7,12 @@
 // project
 #include "depthai-shared/common/CameraBoardSocket.hpp"
 #include "depthai-shared/common/CameraSensorType.hpp"
+#include "depthai-shared/common/EepromData.hpp"
 #include "depthai-shared/common/UsbSpeed.hpp"
 #include "depthai-shared/common/optional.hpp"
 #include "depthai-shared/log/LogLevel.hpp"
 #include "depthai-shared/utility/Serialization.hpp"
 #include "depthai-shared/xlink/XLinkConstants.hpp"
-#include "depthai-shared/common/EepromData.hpp"
 
 namespace dai {
 
