@@ -12,6 +12,7 @@
 #include "depthai-shared/log/LogLevel.hpp"
 #include "depthai-shared/utility/Serialization.hpp"
 #include "depthai-shared/xlink/XLinkConstants.hpp"
+#include "depthai-shared/common/EepromData.hpp"
 
 namespace dai {
 
@@ -131,6 +132,9 @@ struct BoardConfig {
         // tl::optional<CameraBoardSocket> syncTo;
     };
     std::unordered_map<CameraBoardSocket, Camera> camera;
+
+    // EEPROM to override on boot
+    tl::optional<EepromData> eepromData;
 };
 
 DEPTHAI_SERIALIZE_EXT(BoardConfig::USB, vid, pid, flashBootedVid, flashBootedPid, maxSpeed);
@@ -154,6 +158,7 @@ DEPTHAI_SERIALIZE_EXT(BoardConfig,
                       logVerbosity,
                       logDevicePrints,
                       nonExclusiveMode,
-                      camera);
+                      camera,
+                      eepromData);
 
 }  // namespace dai
