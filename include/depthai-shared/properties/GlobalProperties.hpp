@@ -43,13 +43,6 @@ struct GlobalProperties : PropertiesSerializable<Properties, GlobalProperties> {
      * device defaults - configured per protocol, currently 64*1024 for both USB and Ethernet.
      */
     int32_t xlinkChunkSize = -1;
-
-    /**
-     * Temporary, for adjusting (+/-) the CMX buffer size allocated to ImageManip nodes.
-     * Some configurations may require a larger size allocated,
-     * but too much may cause other nodes allocations to fail.
-     */
-    int32_t imageManipAdjustCmxSize = 0;
 };
 
 DEPTHAI_SERIALIZE_EXT(GlobalProperties,
@@ -60,7 +53,6 @@ DEPTHAI_SERIALIZE_EXT(GlobalProperties,
                       cameraTuningBlobSize,
                       cameraTuningBlobUri,
                       calibData,
-                      xlinkChunkSize,
-                      imageManipAdjustCmxSize);
+                      xlinkChunkSize);
 
 }  // namespace dai
