@@ -3,6 +3,7 @@
 #include "RawImgDetections.hpp"
 #include "depthai-shared/common/Point3f.hpp"
 #include "depthai-shared/common/Timestamp.hpp"
+#include "depthai-shared/datatype/RawSpatialLocationCalculatorConfig.hpp"
 #include "depthai-shared/utility/Serialization.hpp"
 
 namespace dai {
@@ -14,9 +15,10 @@ namespace dai {
  */
 struct SpatialImgDetection : public ImgDetection {
     Point3f spatialCoordinates;
+    SpatialLocationCalculatorConfigData boundingBoxMapping;
 };
 
-DEPTHAI_SERIALIZE_EXT(SpatialImgDetection, label, confidence, xmin, ymin, xmax, ymax, spatialCoordinates);
+DEPTHAI_SERIALIZE_EXT(SpatialImgDetection, label, confidence, xmin, ymin, xmax, ymax, spatialCoordinates, boundingBoxMapping);
 
 /// RawSpatialImgDetections structure
 struct RawSpatialImgDetections : public RawBuffer {

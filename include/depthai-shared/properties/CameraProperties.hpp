@@ -2,13 +2,14 @@
 
 #include "depthai-shared/common/CameraBoardSocket.hpp"
 #include "depthai-shared/common/CameraImageOrientation.hpp"
+#include "depthai-shared/common/CameraSensorType.hpp"
 #include "depthai-shared/datatype/RawCameraControl.hpp"
 #include "depthai-shared/properties/Properties.hpp"
 
 namespace dai {
 
 /**
- *  Specify properties for Camera such as camera ID, ...
+ *  Specify properties for ColorCamera such as camera ID, ...
  */
 struct CameraProperties : PropertiesSerializable<Properties, CameraProperties> {
     static constexpr int AUTO = -1;
@@ -23,16 +24,11 @@ struct CameraProperties : PropertiesSerializable<Properties, CameraProperties> {
     };
 
     /**
-     * Select the camera sensor resolution
-     */
-    enum class SensorResolution : int32_t { THE_400_P, THE_480_P, THE_720_P, THE_800_P, THE_1080_P, THE_1200_P, THE_4_K, THE_5_MP, THE_12_MP, THE_13_MP };
-
-    /**
      * For 24 bit color these can be either RGB or BGR
      */
     enum class ColorOrder : int32_t { BGR, RGB };
 
-    /*
+    /**
      * Initial controls applied to ColorCamera node
      */
     RawCameraControl initialControl;
@@ -41,6 +37,11 @@ struct CameraProperties : PropertiesSerializable<Properties, CameraProperties> {
      * Which socket will color camera use
      */
     CameraBoardSocket boardSocket = CameraBoardSocket::AUTO;
+
+    /**
+     * Which camera name will color camera use
+     */
+    std::string cameraName = "";
 
     /**
      * Camera sensor image orientation / pixel readout
@@ -90,9 +91,14 @@ struct CameraProperties : PropertiesSerializable<Properties, CameraProperties> {
     int32_t stillHeight = AUTO;
 
     /**
-     * Select the camera sensor resolution
+     * Select the camera sensor width
      */
-    SensorResolution resolution = SensorResolution::THE_1080_P;
+    int32_t resolutionWidth = AUTO;
+    /**
+     * Select the camera sensor height
+     */
+    int32_t resolutionHeight = AUTO;
+
     /**
      * Camera sensor FPS
      */
@@ -105,19 +111,43 @@ struct CameraProperties : PropertiesSerializable<Properties, CameraProperties> {
     float sensorCropY = AUTO;
 
     /**
-     * Whether to keep aspect ratio of input (video size) or not
+     * Whether to keep aspect ratio of input (video/preview size) or not
      */
-    bool previewKeepAspectRatio = true;
+    bool previewKeepAspectRatio = false;
 
     /**
      * Configure scaling for `isp` output.
      */
     IspScale ispScale;
+
+    /// Type of sensor, specifies what kind of postprocessing is performed
+    CameraSensorType sensorType = CameraSensorType::AUTO;
+
+    /**
+     * Pool sizes
+     */
+    int numFramesPoolRaw = 3;
+    int numFramesPoolIsp = 3;
+    int numFramesPoolVideo = 4;
+    int numFramesPoolPreview = 4;
+    int numFramesPoolStill = 4;
+
+    /**
+     * Warp mesh source
+     */
+    enum class WarpMeshSource { AUTO = -1, NONE, CALIBRATION, URI };
+    WarpMeshSource warpMeshSource = WarpMeshSource::AUTO;
+    std::string warpMeshUri = "";
+    int warpMeshWidth, warpMeshHeight;
+    float calibAlpha = 1.0f;
+    int warpMeshStepWidth = 32;
+    int warpMeshStepHeight = 32;
 };
 
 DEPTHAI_SERIALIZE_EXT(CameraProperties,
                       initialControl,
                       boardSocket,
+                      cameraName,
                       imageOrientation,
                       colorOrder,
                       interleaved,
@@ -128,11 +158,25 @@ DEPTHAI_SERIALIZE_EXT(CameraProperties,
                       videoHeight,
                       stillWidth,
                       stillHeight,
-                      resolution,
+                      resolutionWidth,
+                      resolutionHeight,
                       fps,
                       sensorCropX,
                       sensorCropY,
                       previewKeepAspectRatio,
-                      ispScale);
+                      ispScale,
+                      sensorType,
+                      numFramesPoolRaw,
+                      numFramesPoolIsp,
+                      numFramesPoolVideo,
+                      numFramesPoolPreview,
+                      numFramesPoolStill,
+                      warpMeshSource,
+                      warpMeshUri,
+                      warpMeshWidth,
+                      warpMeshHeight,
+                      calibAlpha,
+                      warpMeshStepWidth,
+                      warpMeshStepHeight);
 
 }  // namespace dai

@@ -1,7 +1,10 @@
 #pragma once
 
+#include <vector>
+
 #include "depthai-shared/common/CameraBoardSocket.hpp"
 #include "depthai-shared/common/CameraImageOrientation.hpp"
+#include "depthai-shared/common/FrameEvent.hpp"
 #include "depthai-shared/datatype/RawCameraControl.hpp"
 #include "depthai-shared/properties/Properties.hpp"
 
@@ -25,7 +28,32 @@ struct ColorCameraProperties : PropertiesSerializable<Properties, ColorCameraPro
     /**
      * Select the camera sensor resolution
      */
-    enum class SensorResolution : int32_t { THE_1080_P, THE_1200_P, THE_4_K, THE_5_MP, THE_12_MP, THE_13_MP, THE_720_P, THE_800_P };
+    enum class SensorResolution : int32_t {
+        /// 1920 × 1080
+        THE_1080_P,
+        /// 3840 × 2160
+        THE_4_K,
+        /// 4056 × 3040
+        THE_12_MP,
+        /// 4208 × 3120
+        THE_13_MP,
+        /// 1280 × 720
+        THE_720_P,
+        /// 1280 × 800
+        THE_800_P,
+        /// 1920 × 1200
+        THE_1200_P,
+        /// 2592 × 1944
+        THE_5_MP,
+        /// 4000 × 3000
+        THE_4000X3000,
+        /// 5312 × 6000
+        THE_5312X6000,
+        /// 8000 × 6000
+        THE_48_MP,
+        /// 1440 × 1080
+        THE_1440X1080
+    };
 
     /**
      * For 24 bit color these can be either RGB or BGR
@@ -41,6 +69,11 @@ struct ColorCameraProperties : PropertiesSerializable<Properties, ColorCameraPro
      * Which socket will color camera use
      */
     CameraBoardSocket boardSocket = CameraBoardSocket::AUTO;
+
+    /**
+     * Which camera name will color camera use
+     */
+    std::string cameraName = "";
 
     /**
      * Camera sensor image orientation / pixel readout
@@ -129,11 +162,26 @@ struct ColorCameraProperties : PropertiesSerializable<Properties, ColorCameraPro
      * Configure scaling for `isp` output.
      */
     IspScale ispScale;
+
+    /**
+     * Pool sizes
+     */
+    int numFramesPoolRaw = 3;
+    int numFramesPoolIsp = 3;
+    int numFramesPoolVideo = 4;
+    int numFramesPoolPreview = 4;
+    int numFramesPoolStill = 4;
+
+    /**
+     * List of events to receive, the rest will be ignored
+     */
+    std::vector<dai::FrameEvent> eventFilter = {dai::FrameEvent::READOUT_START};
 };
 
 DEPTHAI_SERIALIZE_EXT(ColorCameraProperties,
                       initialControl,
                       boardSocket,
+                      cameraName,
                       imageOrientation,
                       colorOrder,
                       interleaved,
@@ -155,6 +203,11 @@ DEPTHAI_SERIALIZE_EXT(ColorCameraProperties,
                       pdOffY,
                       pdWinW,
                       pdWinH,
-                      ispScale);
+                      ispScale,
+                      numFramesPoolRaw,
+                      numFramesPoolIsp,
+                      numFramesPoolVideo,
+                      numFramesPoolPreview,
+                      numFramesPoolStill);
 
 }  // namespace dai

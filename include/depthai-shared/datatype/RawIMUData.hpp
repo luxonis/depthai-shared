@@ -17,7 +17,7 @@ struct IMUReport {
     /**
      * The sequence number increments once for each report sent.  Gaps
      * in the sequence numbers indicate missing or dropped reports.
-     * Max value 255 after which resets to 0.
+     * Max value 2^32 after which resets to 0.
      */
     int32_t sequence = 0;
 
@@ -29,6 +29,28 @@ struct IMUReport {
 
     /** Generation timestamp, direct device monotonic clock */
     Timestamp tsDevice = {};
+
+    /**
+     * Retrieves timestamp related to dai::Clock::now()
+     */
+    std::chrono::time_point<std::chrono::steady_clock, std::chrono::steady_clock::duration> getTimestamp() const {
+        return timestamp.get();
+    }
+
+    /**
+     * Retrieves timestamp directly captured from device's monotonic clock,
+     * not synchronized to host time. Used mostly for debugging
+     */
+    std::chrono::time_point<std::chrono::steady_clock, std::chrono::steady_clock::duration> getTimestampDevice() const {
+        return tsDevice.get();
+    }
+
+    /**
+     * Retrieves IMU report sequence number
+     */
+    int32_t getSequenceNum() const {
+        return sequence;
+    }
 };
 DEPTHAI_SERIALIZE_EXT(IMUReport, sequence, accuracy, timestamp, tsDevice);
 

@@ -61,7 +61,7 @@ struct StereoDepthProperties : PropertiesSerializable<Properties, StereoDepthPro
     /**
      * Fill color for missing data at frame edges - grayscale 0..255, or -1 to replicate pixels
      */
-    std::int32_t rectifyEdgeFillColor = -1;
+    std::int32_t rectifyEdgeFillColor = 0;
     /**
      * Input frame width. Optional (taken from MonoCamera nodes if they exist)
      */
@@ -108,6 +108,7 @@ struct StereoDepthProperties : PropertiesSerializable<Properties, StereoDepthPro
      * 0 means that it will reuse the shave assigned for main stereo algorithm.
      * For optimal performance it's recommended to allocate more than 0,
      * so post processing will run in parallel with main stereo algorithm.
+     * Minimum 1, maximum 10.
      */
     std::int32_t numPostProcessingShaves = AUTO;
 
@@ -117,11 +118,12 @@ struct StereoDepthProperties : PropertiesSerializable<Properties, StereoDepthPro
      * 0 means that it will reuse the memory slices assigned for main stereo algorithm.
      * For optimal performance it's recommended to allocate more than 0,
      * so post processing will run in parallel with main stereo algorithm.
+     * Minimum 1, maximum 6.
      */
     std::int32_t numPostProcessingMemorySlices = AUTO;
 
     /**
-     * Whether to use focal length from calibration intrinsics or calculate based on calibration FOV.
+     * Whether to use horizontal focal length from calibration intrinsics (fx) or calculate based on calibration FOV.
      * Default value is true.
      * If set to false it's calculated from FOV and image resolution: focalLength = calib.width / (2.f * tan(calib.fov / 2 / 180.f * pi));
      */
@@ -138,6 +140,20 @@ struct StereoDepthProperties : PropertiesSerializable<Properties, StereoDepthPro
      * used from calibration data.
      */
     tl::optional<bool> useHomographyRectification;
+
+    /**
+     * Override baseline from calibration.
+     * Used only in disparity to depth conversion.
+     * Units are centimeters.
+     */
+    tl::optional<float> baseline;
+
+    /**
+     * Override focal length from calibration.
+     * Used only in disparity to depth conversion.
+     * Units are pixels.
+     */
+    tl::optional<float> focalLength;
 };
 
 DEPTHAI_SERIALIZE_EXT(StereoDepthProperties,
@@ -156,6 +172,8 @@ DEPTHAI_SERIALIZE_EXT(StereoDepthProperties,
                       numPostProcessingShaves,
                       numPostProcessingMemorySlices,
                       focalLengthFromCalibration,
-                      useHomographyRectification);
+                      useHomographyRectification,
+                      baseline,
+                      focalLength);
 
 }  // namespace dai
