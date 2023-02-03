@@ -156,7 +156,8 @@ struct StereoDepthProperties : PropertiesSerializable<Properties, StereoDepthPro
     tl::optional<float> focalLength;
 
     /**
-     * Get baseline information for disparity to depth conversion from specs (design data) or from calibration.
+     * Use baseline information for disparity to depth conversion from specs (design data) or from calibration.
+     * Should be used only for debugging.
      * Default: true
      */
     bool disparityToDepthUseSpecTranslation = true;
@@ -169,10 +170,11 @@ struct StereoDepthProperties : PropertiesSerializable<Properties, StereoDepthPro
     bool rectificationUseSpecTranslation = false;
 
     /**
-     * Get baseline information for depth alignment from specs (design data) or from calibration.
+     * Use baseline information for depth alignment from specs (design data) or from calibration.
+     * Should be used only for debugging.
      * Default: true
      */
-    bool depthAlignmentuseSpecTranslation = true;
+    bool depthAlignmentUseSpecTranslation = true;
 };
 
 DEPTHAI_SERIALIZE_EXT(StereoDepthProperties,
@@ -196,6 +198,6 @@ DEPTHAI_SERIALIZE_EXT(StereoDepthProperties,
                       focalLength,
                       disparityToDepthUseSpecTranslation,
                       rectificationUseSpecTranslation,
-                      depthAlignmentuseSpecTranslation);
+                      depthAlignmentUseSpecTranslation);
 
 }  // namespace dai
