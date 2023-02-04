@@ -91,6 +91,8 @@ struct RawStereoDepthConfig : public RawBuffer {
          */
         std::int32_t disparityShift = 0;
 
+        tl::optional<float> centerAlignmentShiftFactor;
+
         DEPTHAI_SERIALIZE(AlgorithmControl,
                           depthAlign,
                           depthUnit,
@@ -100,7 +102,8 @@ struct RawStereoDepthConfig : public RawBuffer {
                           enableSubpixel,
                           leftRightCheckThreshold,
                           subpixelFractionalBits,
-                          disparityShift);
+                          disparityShift,
+                          centerAlignmentShiftFactor);
     };
 
     /**
