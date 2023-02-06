@@ -154,6 +154,27 @@ struct StereoDepthProperties : PropertiesSerializable<Properties, StereoDepthPro
      * Units are pixels.
      */
     tl::optional<float> focalLength;
+
+    /**
+     * Use baseline information for disparity to depth conversion from specs (design data) or from calibration.
+     * Suitable for debugging.
+     * Default: true
+     */
+    bool disparityToDepthUseSpecTranslation = true;
+
+    /**
+     * Obtain rectification matrices using spec translation (design data) or from calibration in calculations.
+     * Suitable for debugging.
+     * Default: false
+     */
+    bool rectificationUseSpecTranslation = false;
+
+    /**
+     * Use baseline information for depth alignment from specs (design data) or from calibration.
+     * Suitable for debugging.
+     * Default: true
+     */
+    bool depthAlignmentUseSpecTranslation = true;
 };
 
 DEPTHAI_SERIALIZE_EXT(StereoDepthProperties,
@@ -174,6 +195,9 @@ DEPTHAI_SERIALIZE_EXT(StereoDepthProperties,
                       focalLengthFromCalibration,
                       useHomographyRectification,
                       baseline,
-                      focalLength);
+                      focalLength,
+                      disparityToDepthUseSpecTranslation,
+                      rectificationUseSpecTranslation,
+                      depthAlignmentUseSpecTranslation);
 
 }  // namespace dai

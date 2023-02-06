@@ -19,7 +19,10 @@ constexpr static uint32_t BOARD_CONFIG_MAGIC1 = 0x78010000U;
 constexpr static uint32_t BOARD_CONFIG_MAGIC2 = 0x21ea17e6U;
 
 struct BoardConfig {
-    // USB related config
+    constexpr static uint32_t SIPP_BUFFER_DEFAULT_SIZE = 24 * 1024;
+    constexpr static uint32_t SIPP_DMA_BUFFER_DEFAULT_SIZE = 20 * 1024;
+
+    /// USB related config
     struct USB {
         uint16_t vid = 0x03e7, pid = 0xf63b;
         uint16_t flashBootedVid = 0x03e7, flashBootedPid = 0xf63d;
@@ -45,11 +48,28 @@ struct BoardConfig {
     /// For example: "net.inet.tcp.delayed_ack=0" (this one is also set by default)
     std::vector<std::string> sysctl;
 
-    // Watchdog config
+    /// Watchdog config
     tl::optional<uint32_t> watchdogTimeoutMs;
     tl::optional<uint32_t> watchdogInitialDelayMs;
 
-    // GPIO config
+    /**
+     * SIPP (Signal Image Processing Pipeline) internal memory pool.
+     * SIPP is a framework used to schedule HW filters, e.g. ISP, Warp, Median filter etc.
+     * Changing the size of this pool is meant for advanced use cases, pushing the limits of the HW.
+     * By default memory is allocated in high speed CMX memory. Setting to 0 will allocate in DDR 256 kilobytes.
+     * Units are bytes.
+     */
+    uint32_t sippBufferSize = SIPP_BUFFER_DEFAULT_SIZE;
+    /**
+     * SIPP (Signal Image Processing Pipeline) internal DMA memory pool.
+     * SIPP is a framework used to schedule HW filters, e.g. ISP, Warp, Median filter etc.
+     * Changing the size of this pool is meant for advanced use cases, pushing the limits of the HW.
+     * Memory is allocated in high speed CMX memory
+     * Units are bytes.
+     */
+    uint32_t sippDmaBufferSize = SIPP_DMA_BUFFER_DEFAULT_SIZE;
+
+    /// GPIO config
     struct GPIO {
         enum Mode : std::int8_t { ALT_MODE_0 = 0, ALT_MODE_1, ALT_MODE_2, ALT_MODE_3, ALT_MODE_4, ALT_MODE_5, ALT_MODE_6, DIRECT };
         Mode mode = Mode::DIRECT;
@@ -83,28 +103,28 @@ struct BoardConfig {
     /// UART instance map
     std::unordered_map<std::int8_t, UART> uart;
 
-    // PCIe config
+    /// PCIe config
     tl::optional<bool> pcieInternalClock;
 
-    // USB3 phy config
+    /// USB3 phy config
     tl::optional<bool> usb3PhyInternalClock;
 
-    // MIPI 4Lane RGB config
+    /// MIPI 4Lane RGB config
     tl::optional<bool> mipi4LaneRgb;
 
-    // eMMC config
+    /// eMMC config
     tl::optional<bool> emmc;
 
-    // log path
+    /// log path
     tl::optional<std::string> logPath;
 
-    // Max log size
+    /// Max log size
     tl::optional<size_t> logSizeMax;
 
-    // log verbosity
+    /// log verbosity
     tl::optional<LogLevel> logVerbosity;
 
-    // log device prints
+    /// log device prints
     tl::optional<bool> logDevicePrints;
 
     bool nonExclusiveMode = false;
@@ -121,7 +141,7 @@ struct BoardConfig {
     // };
     // std::unordered_map<CameraBoardSocket, Socket> socket;
 
-    // Camera description
+    /// Camera description
     struct Camera {
         std::string name;
         // TODO(themarpe) - add later when applicable
@@ -154,6 +174,8 @@ DEPTHAI_SERIALIZE_EXT(BoardConfig,
                       logVerbosity,
                       logDevicePrints,
                       nonExclusiveMode,
-                      camera);
+                      camera,
+                      sippBufferSize,
+                      sippDmaBufferSize);
 
 }  // namespace dai

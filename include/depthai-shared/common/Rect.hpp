@@ -97,12 +97,12 @@ struct Rect {
      * @param width Destination frame width.
      * @param height Destination frame height.
      */
-    Rect denormalize(int width, int height) {
+    Rect denormalize(int newWidth, int newHeight) {
         if(isNormalized()) {
-            float _x = std::round(this->x * width);
-            float _y = std::round(this->y * height);
-            float _width = std::round(this->width * width);
-            float _height = std::round(this->height * height);
+            float _x = std::round(this->x * newWidth);
+            float _y = std::round(this->y * newHeight);
+            float _width = std::round(this->width * newWidth);
+            float _height = std::round(this->height * newHeight);
             return Rect(_x, _y, _width, _height);
         }
         return *this;
@@ -113,14 +113,14 @@ struct Rect {
      * @param width Source frame width.
      * @param height Source frame height.
      */
-    Rect normalize(int width, int height) {
+    Rect normalize(int newWidth, int newHeight) {
         if(isNormalized()) {
             return *this;
         }
-        float _x = this->x / width;
-        float _y = this->y / height;
-        float _width = this->width / width;
-        float _height = this->height / height;
+        float _x = this->x / newWidth;
+        float _y = this->y / newHeight;
+        float _width = this->width / newWidth;
+        float _height = this->height / newHeight;
         return Rect(_x, _y, _width, _height);
     }
 
