@@ -7,6 +7,7 @@
 // project
 #include "depthai-shared/common/CameraBoardSocket.hpp"
 #include "depthai-shared/common/CameraSensorType.hpp"
+#include "depthai-shared/common/CameraImageOrientation.hpp"
 #include "depthai-shared/common/UsbSpeed.hpp"
 #include "depthai-shared/common/optional.hpp"
 #include "depthai-shared/log/LogLevel.hpp"
@@ -149,6 +150,7 @@ struct BoardConfig {
         tl::optional<CameraSensorType> sensorType;
         // std::vector<vector> vcm;
         // tl::optional<CameraBoardSocket> syncTo;
+        tl::optional<CameraImageOrientation> orientation;
     };
     std::unordered_map<CameraBoardSocket, Camera> camera;
 };
@@ -157,7 +159,7 @@ DEPTHAI_SERIALIZE_EXT(BoardConfig::USB, vid, pid, flashBootedVid, flashBootedPid
 DEPTHAI_SERIALIZE_EXT(BoardConfig::Network, mtu, xlinkTcpNoDelay);
 DEPTHAI_SERIALIZE_EXT(BoardConfig::GPIO, mode, direction, level, pull, drive, schmitt, slewFast);
 DEPTHAI_SERIALIZE_EXT(BoardConfig::UART, tmp);
-DEPTHAI_SERIALIZE_EXT(BoardConfig::Camera, name, sensorType);
+DEPTHAI_SERIALIZE_EXT(BoardConfig::Camera, name, sensorType, orientation);
 DEPTHAI_SERIALIZE_EXT(BoardConfig,
                       usb,
                       network,
