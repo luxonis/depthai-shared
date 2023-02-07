@@ -6,8 +6,8 @@
 
 // project
 #include "depthai-shared/common/CameraBoardSocket.hpp"
-#include "depthai-shared/common/CameraSensorType.hpp"
 #include "depthai-shared/common/CameraImageOrientation.hpp"
+#include "depthai-shared/common/CameraSensorType.hpp"
 #include "depthai-shared/common/UsbSpeed.hpp"
 #include "depthai-shared/common/optional.hpp"
 #include "depthai-shared/log/LogLevel.hpp"
