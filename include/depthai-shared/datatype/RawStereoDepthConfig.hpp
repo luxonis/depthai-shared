@@ -173,7 +173,7 @@ struct RawStereoDepthConfig : public RawBuffer {
             std::int32_t delta = 0;
 
             /**
-             * Nubmer of iterations over the image in both horizontal and vertical direction.
+             * Number of iterations over the image in both horizontal and vertical direction.
              */
             std::int32_t numIterations = 1;
 
