@@ -276,7 +276,7 @@ struct RawStereoDepthConfig : public RawBuffer {
              * Minimum pixel brightness.
              * If input pixel is less or equal than this value the depth value is invalidated.
              */
-            std::int32_t minBrightness = -1;
+            std::int32_t minBrightness = 0;
             /**
              * Maximum range in depth units.
              * If input pixel is less or equal than this value the depth value is invalidated.

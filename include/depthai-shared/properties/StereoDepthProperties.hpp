@@ -181,7 +181,6 @@ struct StereoDepthProperties : PropertiesSerializable<Properties, StereoDepthPro
      * and 1 (when all the source image pixels are retained in the undistorted image).
      * See getOptimalNewCameraMatrix from opencv for more details.
      */
-
     tl::optional<float> alphaScaling;
 };
 
