@@ -9,11 +9,11 @@ namespace dai {
 
 /// StereoRectification structure
 struct StereoRectification {
-    std::vector<std::vector<float>> rectifiedRotationLeft, rectifiedRotationRight, rectifiedRotationVertical;
-    CameraBoardSocket leftCameraSocket = CameraBoardSocket::AUTO, rightCameraSocket = CameraBoardSocket::AUTO, verticalCameraSocket = CameraBoardSocket::AUTO;
+    std::vector<std::vector<float>> rectifiedRotationLeft, rectifiedRotationRight;
+    CameraBoardSocket leftCameraSocket = CameraBoardSocket::AUTO, rightCameraSocket = CameraBoardSocket::AUTO;
 };
 
 DEPTHAI_SERIALIZE_EXT(
-    StereoRectification, rectifiedRotationLeft, rectifiedRotationRight, rectifiedRotationVertical, leftCameraSocket, rightCameraSocket, verticalCameraSocket);
+    StereoRectification, rectifiedRotationLeft, rectifiedRotationRight, leftCameraSocket, rightCameraSocket);
 
 }  // namespace dai
