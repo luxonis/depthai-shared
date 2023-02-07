@@ -175,6 +175,14 @@ struct StereoDepthProperties : PropertiesSerializable<Properties, StereoDepthPro
      * Default: true
      */
     bool depthAlignmentUseSpecTranslation = true;
+
+    /**
+     * Free scaling parameter between 0 (when all the pixels in the undistorted image are valid)
+     * and 1 (when all the source image pixels are retained in the undistorted image).
+     * See getOptimalNewCameraMatrix from opencv for more details.
+     */
+
+    tl::optional<float> alphaScaling;
 };
 
 DEPTHAI_SERIALIZE_EXT(StereoDepthProperties,
@@ -198,6 +206,7 @@ DEPTHAI_SERIALIZE_EXT(StereoDepthProperties,
                       focalLength,
                       disparityToDepthUseSpecTranslation,
                       rectificationUseSpecTranslation,
-                      depthAlignmentUseSpecTranslation);
+                      depthAlignmentUseSpecTranslation,
+                      alphaScaling);
 
 }  // namespace dai
