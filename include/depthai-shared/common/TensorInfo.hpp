@@ -194,10 +194,10 @@ struct TensorInfo {
     std::string name;
     unsigned int offset = 0;
 
-    // Quantisation params (deqValue = (val - qp_zp) * scale )
-    bool quantisation = false;
-    float qp_scale = 1;
-    float qp_zp = 0;
+    // quantization params (deqValue = (val - qpZp) * scale )
+    bool quantization = false;
+    float qpScale = 1;
+    float qpZp = 0;
     };
 
 DEPTHAI_SERIALIZE_EXT(TensorInfo, order, dataType, numDimensions, dims, strides, name, offset);
