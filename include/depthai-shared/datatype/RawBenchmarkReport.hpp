@@ -9,7 +9,7 @@ namespace dai {
 /// RawAprilTags structure
 struct RawBenchmarkReport : public RawBuffer {
     float fps;
-    float timeTotal; // seconds
+    float timeTotal;  // seconds
     float numMessagesReceived;
     float averageLatency;
     std::vector<float> latencies;
