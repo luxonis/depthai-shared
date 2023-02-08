@@ -18,7 +18,7 @@ struct BenchmarkPropertiesOut : PropertiesSerializable<Properties, BenchmarkProp
 
     /**
      * FPS for sending, 0 means as fast as possible
-    */
+     */
     float fps = 0;
 };
 
