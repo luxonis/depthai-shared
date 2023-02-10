@@ -70,6 +70,12 @@ struct CrashDump {
 
     std::vector<CrashReport> crashReports;
     std::string depthaiCommitHash;
+
+    nlohmann::json serializeToJson() {
+        std::vector<std::uint8_t> data;
+        utility::serialize<SerializationType::JSON>(*this, data);
+        return nlohmann::json::parse(data);
+    }
 };
 
 DEPTHAI_SERIALIZE_EXT(CrashDump, crashReports, depthaiCommitHash);
