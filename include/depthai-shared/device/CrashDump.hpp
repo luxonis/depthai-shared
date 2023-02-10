@@ -70,9 +70,8 @@ struct CrashDump {
 
     std::vector<CrashReport> crashReports;
     std::string depthaiCommitHash;
-    std::string depthaiVersion;
 };
 
-DEPTHAI_SERIALIZE_EXT(CrashDump, crashReports, depthaiCommitHash, depthaiVersion);
+DEPTHAI_SERIALIZE_EXT(CrashDump, crashReports, depthaiCommitHash);
 
 }  // namespace dai
