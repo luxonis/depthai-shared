@@ -15,6 +15,7 @@ struct CrashDump {
     struct CrashReport {
         ProcessorType processor;
         std::string errorSource;
+        uint32_t crashedThreadId;
 
         struct ErrorSourceInfo {
             struct AssertContext {
@@ -65,7 +66,7 @@ struct CrashDump {
         };
 
         std::vector<ThreadCallstack> threadCallstack;
-        DEPTHAI_SERIALIZE(CrashReport, processor, errorSource, errorSourceInfo, threadCallstack);
+        DEPTHAI_SERIALIZE(CrashReport, processor, errorSource, crashedThreadId, errorSourceInfo, threadCallstack);
     };
 
     std::vector<CrashReport> crashReports;
