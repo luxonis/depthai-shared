@@ -65,7 +65,7 @@ struct CrashDump {
         };
 
         std::vector<ThreadCallstack> threadCallstack;
-        DEPTHAI_SERIALIZE(CrashReport, processor, errorSource, threadCallstack);
+        DEPTHAI_SERIALIZE(CrashReport, processor, errorSource, errorSourceInfo, threadCallstack);
     };
 
     std::vector<CrashReport> crashReports;
