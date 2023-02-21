@@ -20,8 +20,8 @@ constexpr static uint32_t BOARD_CONFIG_MAGIC1 = 0x78010000U;
 constexpr static uint32_t BOARD_CONFIG_MAGIC2 = 0x21ea17e6U;
 
 struct BoardConfig {
-    constexpr static uint32_t SIPP_BUFFER_DEFAULT_SIZE = 24 * 1024;
-    constexpr static uint32_t SIPP_DMA_BUFFER_DEFAULT_SIZE = 20 * 1024;
+    constexpr static uint32_t SIPP_BUFFER_DEFAULT_SIZE = 18 * 1024;
+    constexpr static uint32_t SIPP_DMA_BUFFER_DEFAULT_SIZE = 16 * 1024;
 
     /// USB related config
     struct USB {
