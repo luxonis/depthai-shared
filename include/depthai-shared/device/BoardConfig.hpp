@@ -153,6 +153,11 @@ struct BoardConfig {
         tl::optional<CameraImageOrientation> orientation;
     };
     std::unordered_map<CameraBoardSocket, Camera> camera;
+
+    struct IMU {
+        int8_t bus, interrupt, wake, csGpio;
+    };
+    tl::optional<IMU> imu;
 };
 
 DEPTHAI_SERIALIZE_EXT(BoardConfig::USB, vid, pid, flashBootedVid, flashBootedPid, maxSpeed);
@@ -160,6 +165,7 @@ DEPTHAI_SERIALIZE_EXT(BoardConfig::Network, mtu, xlinkTcpNoDelay);
 DEPTHAI_SERIALIZE_EXT(BoardConfig::GPIO, mode, direction, level, pull, drive, schmitt, slewFast);
 DEPTHAI_SERIALIZE_EXT(BoardConfig::UART, tmp);
 DEPTHAI_SERIALIZE_EXT(BoardConfig::Camera, name, sensorType, orientation);
+DEPTHAI_SERIALIZE_EXT(BoardConfig::IMU, bus, interrupt, wake, csGpio);
 DEPTHAI_SERIALIZE_EXT(BoardConfig,
                       usb,
                       network,
@@ -178,6 +184,7 @@ DEPTHAI_SERIALIZE_EXT(BoardConfig,
                       nonExclusiveMode,
                       camera,
                       sippBufferSize,
-                      sippDmaBufferSize);
+                      sippDmaBufferSize,
+                      imu);
 
 }  // namespace dai
