@@ -106,12 +106,12 @@ struct CameraProperties : PropertiesSerializable<Properties, CameraProperties> {
 
     /**
      * Isp 3A rate (auto focus, auto exposure, auto white balance).
-     * Default (-1) is auto-mode. For USB devices will set 3A fps to maximum 30 fps, for POE devices to maximum 20 fps.
+     * Value (-1) is auto-mode. For USB devices will set 3A fps to maximum 30 fps, for POE devices to maximum 20 fps.
      * Can be overriden by setting explicitly.
-     * Value (0) matches the camera FPS, meaning that 3A is running on each frame.
+     * Default (0) matches the camera FPS, meaning that 3A is running on each frame.
      * Reducing the rate of 3A reduces the CPU usage on CSS, but also increases the convergence rate of 3A.
      */
-    int isp3aFps = -1;
+    int isp3aFps = 0;
 
     /**
      * Initial sensor crop, -1 signifies center crop

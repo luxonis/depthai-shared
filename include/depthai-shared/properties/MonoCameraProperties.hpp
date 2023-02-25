@@ -14,6 +14,8 @@ namespace dai {
  * Specify properties for MonoCamera such as camera ID, ...
  */
 struct MonoCameraProperties : PropertiesSerializable<Properties, MonoCameraProperties> {
+    static constexpr int AUTO = -1;
+
     /**
      * Select the camera sensor resolution: 1280×720, 1280×800, 640×400, 640×480, 1920×1200
      */
@@ -49,12 +51,12 @@ struct MonoCameraProperties : PropertiesSerializable<Properties, MonoCameraPrope
     float fps = 30.0;
     /**
      * Isp 3A rate (auto focus, auto exposure, auto white balance).
-     * Default (-1) is auto-mode. For USB devices will set 3A fps to maximum 30 fps, for POE devices to maximum 20 fps.
+     * Value (-1) is auto-mode. For USB devices will set 3A fps to maximum 30 fps, for POE devices to maximum 20 fps.
      * Can be overriden by setting explicitly.
-     * Value (0) matches the camera FPS, meaning that 3A is running on each frame.
+     * Default (0) matches the camera FPS, meaning that 3A is running on each frame.
      * Reducing the rate of 3A reduces the CPU usage on CSS, but also increases the convergence rate of 3A.
      */
-    int isp3aFps = -1;
+    int isp3aFps = 0;
     /**
      * Frame pool size for the main output, ISP processed
      */
