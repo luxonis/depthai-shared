@@ -48,11 +48,13 @@ struct MonoCameraProperties : PropertiesSerializable<Properties, MonoCameraPrope
      */
     float fps = 30.0;
     /**
-     * Image tuning, 3A rate.
-     * Default (0) matches the camera FPS, meaning that statistics for auto exposure are collected on each frame.
-     * Reducing the rate of 3A reduces the CPU usage on MSS, but also reduces the convergence rate of 3A.
+     * Isp 3A rate (auto focus, auto exposure, auto white balance).
+     * Default (-1) is auto-mode. For USB devices will set 3A fps to maximum 30 fps, for POE devices to maximum 20 fps.
+     * Can be overriden by setting explicitly.
+     * Value (0) matches the camera FPS, meaning that 3A is running on each frame.
+     * Reducing the rate of 3A reduces the CPU usage on CSS, but also increases the convergence rate of 3A.
      */
-    int imageTuningFpsDenominator = 0;
+    int isp3aFps = -1;
     /**
      * Frame pool size for the main output, ISP processed
      */
@@ -67,15 +69,7 @@ struct MonoCameraProperties : PropertiesSerializable<Properties, MonoCameraPrope
     std::vector<dai::FrameEvent> eventFilter = {dai::FrameEvent::READOUT_START};
 };
 
-DEPTHAI_SERIALIZE_EXT(MonoCameraProperties,
-                      initialControl,
-                      boardSocket,
-                      cameraName,
-                      imageOrientation,
-                      resolution,
-                      fps,
-                      imageTuningFpsDenominator,
-                      numFramesPool,
-                      numFramesPoolRaw);
+DEPTHAI_SERIALIZE_EXT(
+    MonoCameraProperties, initialControl, boardSocket, cameraName, imageOrientation, resolution, fps, isp3aFps, numFramesPool, numFramesPoolRaw);
 
 }  // namespace dai

@@ -132,11 +132,13 @@ struct ColorCameraProperties : PropertiesSerializable<Properties, ColorCameraPro
     float fps = 30.0;
 
     /**
-     * Image tuning, 3A rate.
-     * Default (0) matches the camera FPS, meaning that statistics for auto exposure are collected on each frame.
-     * Reducing the rate of 3A reduces the CPU usage on MSS, but also reduces the convergence rate of 3A.
+     * Isp 3A rate (auto focus, auto exposure, auto white balance).
+     * Default (-1) is auto-mode. For USB devices will set 3A fps to maximum 30 fps, for POE devices to maximum 20 fps.
+     * Can be overriden by setting explicitly.
+     * Value (0) matches the camera FPS, meaning that 3A is running on each frame.
+     * Reducing the rate of 3A reduces the CPU usage on CSS, but also increases the convergence rate of 3A.
      */
-    int imageTuningFpsDenominator = 0;
+    int isp3aFps = -1;
 
     /**
      * Initial sensor crop, -1 signifies center crop
@@ -185,7 +187,7 @@ DEPTHAI_SERIALIZE_EXT(ColorCameraProperties,
                       stillHeight,
                       resolution,
                       fps,
-                      imageTuningFpsDenominator,
+                      isp3aFps,
                       sensorCropX,
                       sensorCropY,
                       previewKeepAspectRatio,
