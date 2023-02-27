@@ -22,6 +22,8 @@ constexpr static uint32_t BOARD_CONFIG_MAGIC2 = 0x21ea17e6U;
 struct BoardConfig {
     constexpr static uint32_t SIPP_BUFFER_DEFAULT_SIZE = 18 * 1024;
     constexpr static uint32_t SIPP_DMA_BUFFER_DEFAULT_SIZE = 16 * 1024;
+    constexpr static uint32_t ISP_3A_DEFAULT_MAX_FPS_USB = 30;
+    constexpr static uint32_t ISP_3A_DEFAULT_MAX_FPS_ETHERNET = 20;
 
     /// USB related config
     struct USB {
@@ -69,6 +71,15 @@ struct BoardConfig {
      * Units are bytes.
      */
     uint32_t sippDmaBufferSize = SIPP_DMA_BUFFER_DEFAULT_SIZE;
+
+    /**
+     * Isp 3A max rate (auto focus, auto exposure, auto white balance) for USB.
+     */
+    uint32_t isp3aMaxFpsUsb = ISP_3A_DEFAULT_MAX_FPS_USB;
+    /**
+     * Isp 3A max rate (auto focus, auto exposure, auto white balance) for Ethernet.
+     */
+    uint32_t isp3aMaxFpsEthernet = ISP_3A_DEFAULT_MAX_FPS_ETHERNET;
 
     /// GPIO config
     struct GPIO {
@@ -178,6 +189,8 @@ DEPTHAI_SERIALIZE_EXT(BoardConfig,
                       nonExclusiveMode,
                       camera,
                       sippBufferSize,
-                      sippDmaBufferSize);
+                      sippDmaBufferSize,
+                      isp3aMaxFpsUsb,
+                      isp3aMaxFpsEthernet);
 
 }  // namespace dai
