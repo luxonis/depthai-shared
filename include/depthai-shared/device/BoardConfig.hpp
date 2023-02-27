@@ -30,6 +30,10 @@ struct BoardConfig {
         uint16_t vid = 0x03e7, pid = 0xf63b;
         uint16_t flashBootedVid = 0x03e7, flashBootedPid = 0xf63d;
         UsbSpeed maxSpeed = UsbSpeed::SUPER;
+        /**
+         * Isp 3A max rate (auto focus, auto exposure, auto white balance) for USB.
+         */
+        uint32_t isp3aMaxFps = ISP_3A_DEFAULT_MAX_FPS_USB;
     };
 
     USB usb;
@@ -43,6 +47,10 @@ struct BoardConfig {
         /// Sets the `TCP_NODELAY` option for XLink TCP sockets (disable Nagle's algorithm),
         /// reducing latency at the expense of a small hit for max throughput. Default is `true`
         bool xlinkTcpNoDelay = true;
+        /**
+         * Isp 3A max rate (auto focus, auto exposure, auto white balance) for Ethernet.
+         */
+        uint32_t isp3aMaxFps = ISP_3A_DEFAULT_MAX_FPS_ETHERNET;
     };
 
     Network network;
@@ -71,15 +79,6 @@ struct BoardConfig {
      * Units are bytes.
      */
     uint32_t sippDmaBufferSize = SIPP_DMA_BUFFER_DEFAULT_SIZE;
-
-    /**
-     * Isp 3A max rate (auto focus, auto exposure, auto white balance) for USB.
-     */
-    uint32_t isp3aMaxFpsUsb = ISP_3A_DEFAULT_MAX_FPS_USB;
-    /**
-     * Isp 3A max rate (auto focus, auto exposure, auto white balance) for Ethernet.
-     */
-    uint32_t isp3aMaxFpsEthernet = ISP_3A_DEFAULT_MAX_FPS_ETHERNET;
 
     /// GPIO config
     struct GPIO {
@@ -166,8 +165,8 @@ struct BoardConfig {
     std::unordered_map<CameraBoardSocket, Camera> camera;
 };
 
-DEPTHAI_SERIALIZE_EXT(BoardConfig::USB, vid, pid, flashBootedVid, flashBootedPid, maxSpeed);
-DEPTHAI_SERIALIZE_EXT(BoardConfig::Network, mtu, xlinkTcpNoDelay);
+DEPTHAI_SERIALIZE_EXT(BoardConfig::USB, vid, pid, flashBootedVid, flashBootedPid, maxSpeed, isp3aMaxFps);
+DEPTHAI_SERIALIZE_EXT(BoardConfig::Network, mtu, xlinkTcpNoDelay, isp3aMaxFps);
 DEPTHAI_SERIALIZE_EXT(BoardConfig::GPIO, mode, direction, level, pull, drive, schmitt, slewFast);
 DEPTHAI_SERIALIZE_EXT(BoardConfig::UART, tmp);
 DEPTHAI_SERIALIZE_EXT(BoardConfig::Camera, name, sensorType, orientation);
@@ -189,8 +188,6 @@ DEPTHAI_SERIALIZE_EXT(BoardConfig,
                       nonExclusiveMode,
                       camera,
                       sippBufferSize,
-                      sippDmaBufferSize,
-                      isp3aMaxFpsUsb,
-                      isp3aMaxFpsEthernet);
+                      sippDmaBufferSize);
 
 }  // namespace dai
