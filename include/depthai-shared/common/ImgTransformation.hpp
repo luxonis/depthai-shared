@@ -3,9 +3,21 @@
 #include "depthai-shared/common/Rect.hpp"
 #include "depthai-shared/utility/Serialization.hpp"
 
+// All widths, heights, xs, ys are relative - from 0 -> 1
 namespace dai {
 struct RawImgTransformation {
-    float rotationAngle = 0;  // degrees
+    float rotationAngle = 0;                      // degrees
+    dai::Point2f rotationTurnPoint = {0.5, 0.5};  // TODO naming
+
+    enum class Transformation : uint8_t {
+        Crop,
+        Rotation,
+        Pad,
+        Flip,
+        Scale,
+    };
+
+    Transformation transformationType;
     dai::Rect crop = {0, 0, 0, 0};
     int topPadding = 0, bottomPadding = 0, leftPadding = 0, rightPadding = 0;
     float scaleFactorX = 1, scaleFactorY = 1;
@@ -13,15 +25,12 @@ struct RawImgTransformation {
     bool verticalFlip = false;
 
     bool warpEnabled = false;
-    RawImgTransformation(int width, int height) {
-        this->crop.width = width;
-        this->crop.height = height;
-    }
-    RawImgTransformation() {}
 };
 
 DEPTHAI_SERIALIZE_EXT(RawImgTransformation,
                       rotationAngle,
+                      rotationTurnPoint,
+                      transformationType,
                       crop,
                       topPadding,
                       bottomPadding,
