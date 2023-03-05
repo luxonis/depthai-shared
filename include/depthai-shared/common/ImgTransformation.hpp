@@ -18,9 +18,17 @@ struct RawImgTransformation {
     };
 
     Transformation transformationType;
+
+    // Crop relative to the uncropped image
     dai::Rect crop = {0, 0, 0, 0};
-    int topPadding = 0, bottomPadding = 0, leftPadding = 0, rightPadding = 0;
+
+    // Paddings are relative (0.0 - 1.0) to the padded image.
+    float topPadding = 0, bottomPadding = 0, leftPadding = 0, rightPadding = 0;
+
+    // Relative to the unscaled image
     float scaleFactorX = 1, scaleFactorY = 1;
+
+
     bool horizontalFlip = false;
     bool verticalFlip = false;
 
