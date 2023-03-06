@@ -20,14 +20,20 @@ constexpr static uint32_t BOARD_CONFIG_MAGIC1 = 0x78010000U;
 constexpr static uint32_t BOARD_CONFIG_MAGIC2 = 0x21ea17e6U;
 
 struct BoardConfig {
-    constexpr static uint32_t SIPP_BUFFER_DEFAULT_SIZE = 24 * 1024;
-    constexpr static uint32_t SIPP_DMA_BUFFER_DEFAULT_SIZE = 20 * 1024;
+    constexpr static uint32_t SIPP_BUFFER_DEFAULT_SIZE = 18 * 1024;
+    constexpr static uint32_t SIPP_DMA_BUFFER_DEFAULT_SIZE = 16 * 1024;
+    constexpr static uint32_t ISP_3A_DEFAULT_MAX_FPS_USB = 30;
+    constexpr static uint32_t ISP_3A_DEFAULT_MAX_FPS_ETHERNET = 20;
 
     /// USB related config
     struct USB {
         uint16_t vid = 0x03e7, pid = 0xf63b;
         uint16_t flashBootedVid = 0x03e7, flashBootedPid = 0xf63d;
         UsbSpeed maxSpeed = UsbSpeed::SUPER;
+        /**
+         * Isp 3A max rate (auto focus, auto exposure, auto white balance) for USB.
+         */
+        uint32_t isp3aMaxFps = ISP_3A_DEFAULT_MAX_FPS_USB;
     };
 
     USB usb;
@@ -41,6 +47,10 @@ struct BoardConfig {
         /// Sets the `TCP_NODELAY` option for XLink TCP sockets (disable Nagle's algorithm),
         /// reducing latency at the expense of a small hit for max throughput. Default is `true`
         bool xlinkTcpNoDelay = true;
+        /**
+         * Isp 3A max rate (auto focus, auto exposure, auto white balance) for Ethernet.
+         */
+        uint32_t isp3aMaxFps = ISP_3A_DEFAULT_MAX_FPS_ETHERNET;
     };
 
     Network network;
@@ -160,8 +170,8 @@ struct BoardConfig {
     tl::optional<IMU> imu;
 };
 
-DEPTHAI_SERIALIZE_EXT(BoardConfig::USB, vid, pid, flashBootedVid, flashBootedPid, maxSpeed);
-DEPTHAI_SERIALIZE_EXT(BoardConfig::Network, mtu, xlinkTcpNoDelay);
+DEPTHAI_SERIALIZE_EXT(BoardConfig::USB, vid, pid, flashBootedVid, flashBootedPid, maxSpeed, isp3aMaxFps);
+DEPTHAI_SERIALIZE_EXT(BoardConfig::Network, mtu, xlinkTcpNoDelay, isp3aMaxFps);
 DEPTHAI_SERIALIZE_EXT(BoardConfig::GPIO, mode, direction, level, pull, drive, schmitt, slewFast);
 DEPTHAI_SERIALIZE_EXT(BoardConfig::UART, tmp);
 DEPTHAI_SERIALIZE_EXT(BoardConfig::Camera, name, sensorType, orientation);
