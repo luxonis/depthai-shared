@@ -7,6 +7,12 @@
 
 namespace dai {
 
+enum class IMUVersion : std::int32_t {
+    NONE = 0,
+    BNO086 = 1,
+    BMI270 = 2,
+};
+
 struct IMUReport {
     enum class Accuracy : std::uint8_t {
         UNRELIABLE = 0,
