@@ -165,7 +165,13 @@ struct BoardConfig {
     std::unordered_map<CameraBoardSocket, Camera> camera;
 
     struct IMU {
-        int8_t bus = 0, interrupt = 53, wake = 34, csGpio = 8;
+        IMU() {
+            bus = 0;
+            interrupt = 53;
+            wake = 34;
+            csGpio = 8;
+        }
+        int8_t bus, interrupt, wake, csGpio;
     };
     tl::optional<IMU> imu;
 };
