@@ -15,10 +15,7 @@ namespace dai {
  */
 struct Point2f {
     Point2f() = default;
-    Point2f(float x, float y) {
-        this->x = x;
-        this->y = y;
-    }
+    Point2f(float x, float y) : x(x), y(y) {}
     float x = 0, y = 0;
 };
 
