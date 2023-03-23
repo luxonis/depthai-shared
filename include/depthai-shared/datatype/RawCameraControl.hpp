@@ -359,8 +359,10 @@ struct RawCameraControl : public RawBuffer {
         uint32_t exposureTimeUs;
         uint32_t sensitivityIso;
         uint32_t frameDurationUs;
+        /// Bypasses 3A, to get the parameters applied faster. Experimental
+        bool setDirect;
 
-        DEPTHAI_SERIALIZE(ManualExposureParams, exposureTimeUs, sensitivityIso, frameDurationUs);
+        DEPTHAI_SERIALIZE(ManualExposureParams, exposureTimeUs, sensitivityIso, frameDurationUs, setDirect);
     };
 
     // AE_REGION / AF_REGION
