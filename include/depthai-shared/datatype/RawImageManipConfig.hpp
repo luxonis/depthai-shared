@@ -110,13 +110,24 @@ struct RawImageManipConfig : public RawBuffer {
     bool reusePreviousImage = false;
     bool skipCurrentImage = false;
 
+    enum class Interpolation { BILINEAR = 0, BICUBIC = 1, BYPASS = 2 };
+    Interpolation interpolation;
+
     void serialize(std::vector<std::uint8_t>& metadata, DatatypeEnum& datatype) const override {
         metadata = utility::serialize(*this);
         datatype = DatatypeEnum::ImageManipConfig;
     };
 
-    DEPTHAI_SERIALIZE(
-        RawImageManipConfig, cropConfig, resizeConfig, formatConfig, enableCrop, enableResize, enableFormat, reusePreviousImage, skipCurrentImage);
+    DEPTHAI_SERIALIZE(RawImageManipConfig,
+                      cropConfig,
+                      resizeConfig,
+                      formatConfig,
+                      enableCrop,
+                      enableResize,
+                      enableFormat,
+                      reusePreviousImage,
+                      skipCurrentImage,
+                      interpolation);
 };
 
 }  // namespace dai
