@@ -8,6 +8,7 @@
 
 // shared
 #include "depthai-shared/common/Colormap.hpp"
+#include "depthai-shared/common/Interpolation.hpp"
 #include "depthai-shared/common/Point2f.hpp"
 #include "depthai-shared/common/RotatedRect.hpp"
 #include "depthai-shared/common/Size2f.hpp"
@@ -110,8 +111,8 @@ struct RawImageManipConfig : public RawBuffer {
     bool reusePreviousImage = false;
     bool skipCurrentImage = false;
 
-    enum class Interpolation { BILINEAR = 0, BICUBIC = 1, BYPASS = 2 };
-    Interpolation interpolation;
+    /// Interpolation type to use
+    Interpolation interpolation = Interpolation::AUTO;
 
     void serialize(std::vector<std::uint8_t>& metadata, DatatypeEnum& datatype) const override {
         metadata = utility::serialize(*this);
