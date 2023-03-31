@@ -34,7 +34,7 @@ struct WarpProperties : PropertiesSerializable<Properties, WarpProperties> {
 
     /// Warp HW IDs to use, if empty, use auto/default
     std::vector<int> warpHwIds;
-
+    using Interpolation = dai::Interpolation;
     /// Interpolation type to use
     Interpolation interpolation = Interpolation::AUTO;
 };
