@@ -106,6 +106,13 @@ struct RawStereoDepthConfig : public RawBuffer {
          */
         tl::optional<float> centerAlignmentShiftFactor;
 
+        /**
+         * Invalidate X amount of pixels at the edge of disparity frame.
+         * For right and center alignment X pixels will be invalidated from the right edge,
+         * for left alignment from the left edge.
+         */
+        std::int32_t numInvalidateEdgePixels = 0;
+
         DEPTHAI_SERIALIZE(AlgorithmControl,
                           depthAlign,
                           depthUnit,
@@ -116,7 +123,8 @@ struct RawStereoDepthConfig : public RawBuffer {
                           leftRightCheckThreshold,
                           subpixelFractionalBits,
                           disparityShift,
-                          centerAlignmentShiftFactor);
+                          centerAlignmentShiftFactor,
+                          numInvalidateEdgePixels);
     };
 
     /**
