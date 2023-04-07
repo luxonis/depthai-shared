@@ -8,17 +8,17 @@
 
 namespace dai {
 
-/// RawTofCameraConfig configuration structure
-struct RawTofCameraConfig : public RawBuffer {
+/// RawToFConfig configuration structure
+struct RawToFConfig : public RawBuffer {
     
     int dummy;
 
     void serialize(std::vector<std::uint8_t>& metadata, DatatypeEnum& datatype) const override {
         metadata = utility::serialize(*this);
-        datatype = DatatypeEnum::TofCameraConfig;
+        datatype = DatatypeEnum::ToFConfig;
     };
 
-    DEPTHAI_SERIALIZE(RawTofCameraConfig, dummy);
+    DEPTHAI_SERIALIZE(RawToFConfig, dummy);
 };
 
 }  // namespace dai
