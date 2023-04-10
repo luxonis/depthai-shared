@@ -10,7 +10,6 @@ namespace dai {
 
 /// RawToFConfig configuration structure
 struct RawToFConfig : public RawBuffer {
-    
     int dummy;
 
     void serialize(std::vector<std::uint8_t>& metadata, DatatypeEnum& datatype) const override {

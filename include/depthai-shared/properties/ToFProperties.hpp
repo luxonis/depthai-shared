@@ -16,7 +16,6 @@ struct ToFProperties : PropertiesSerializable<Properties, ToFProperties> {
      * Initial feature tracker config
      */
     RawToFConfig initialConfig;
-
 };
 
 DEPTHAI_SERIALIZE_EXT(ToFProperties, initialConfig);
