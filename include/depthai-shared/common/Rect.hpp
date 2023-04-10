@@ -18,29 +18,13 @@ namespace dai {
 struct Rect {
     // default constructor
     Rect() = default;
-    Rect(float x, float y, float width, float height) {
-        this->x = x;
-        this->y = y;
-        this->width = width;
-        this->height = height;
-    }
-
+    Rect(float x, float y, float width, float height) : x(x), y(y), width(width), height(height) {}
     Rect(const Rect& r) : x(r.x), y(r.y), width(r.width), height(r.height) {}
     Rect(const Point2f& org, const Size2f& sz) : x(org.x), y(org.y), width(sz.width), height(sz.height) {}
-    Rect(const Point2f& pt1, const Point2f& pt2) {
-        x = std::min(pt1.x, pt2.x);
-        y = std::min(pt1.y, pt2.y);
-        width = std::max(pt1.x, pt2.x) - x;
-        height = std::max(pt1.y, pt2.y) - y;
-    }
-
-    Rect& operator=(const Rect& r) {
-        x = r.x;
-        y = r.y;
-        width = r.width;
-        height = r.height;
-        return *this;
-    }
+    Rect(const Point2f& pt1, const Point2f& pt2)
+        : x(std::min(pt1.x, pt2.x)), y(std::min(pt1.y, pt2.y)), width(std::max(pt1.x, pt2.x) - x), height(std::max(pt1.y, pt2.y) - y) {}
+    Rect& operator=(const Rect& r) = default;
+    Rect& operator=(Rect&& r) = default;
 
     /**
      * The top-left corner.
@@ -94,36 +78,29 @@ struct Rect {
 
     /**
      * Denormalize rectangle.
-     * @param width Destination frame width.
-     * @param height Destination frame height.
+     * @param destWidth Destination frame width.
+     * @param destHeight Destination frame height.
      */
-    Rect denormalize(int newWidth, int newHeight) {
+    Rect denormalize(int destWidth, int destHeight) const {
         if(isNormalized()) {
-            float _x = std::round(this->x * newWidth);
-            float _y = std::round(this->y * newHeight);
-            float _width = std::round(this->width * newWidth);
-            float _height = std::round(this->height * newHeight);
-            return Rect(_x, _y, _width, _height);
+            return Rect(std::round(x * destWidth), std::round(y * destHeight), std::round(width * destWidth), std::round(height * destHeight));
         }
         return *this;
     }
 
     /**
      * Normalize rectangle.
-     * @param width Source frame width.
-     * @param height Source frame height.
+     * @param srcWidth Source frame width.
+     * @param srcHeight Source frame height.
      */
-    Rect normalize(int newWidth, int newHeight) {
+    Rect normalize(int srcWidth, int srcHeight) const {
         if(isNormalized()) {
             return *this;
         }
-        float _x = this->x / newWidth;
-        float _y = this->y / newHeight;
-        float _width = this->width / newWidth;
-        float _height = this->height / newHeight;
-        return Rect(_x, _y, _width, _height);
+        return Rect(x / srcWidth, y / srcHeight, width / srcWidth, height / srcHeight);
     }
 
+    // order of declaration must be x, y, width, height for constructor initializer lists
     float x = 0.0f;       // x coordinate of the top-left corner
     float y = 0.0f;       // y coordinate of the top-left corner
     float width = 0.0f;   // width of the rectangle
