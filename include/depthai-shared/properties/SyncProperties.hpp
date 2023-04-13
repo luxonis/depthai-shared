@@ -12,11 +12,17 @@ namespace dai {
  */
 struct SyncProperties : PropertiesSerializable<Properties, SyncProperties> {
     /**
-     * Stub
+     * Optional manual sync threshold.
+     * If not specified default threshold is obtained as:
+     * thresholdMS = 1000.f / (minimum FPS of input frames) / 2
+     * Frame timestamp difference below this threshold are considered synced.
+     * 0 is not recommended in real time system, as frame interrupts are received
+     * at slightly different time, even with perfect hardware sync.
+     * 0 can be used when replaying frames.
      */
-    bool syncPolicy = false;
+    tl::optional<float> syncThresholdMs;
 };
 
-DEPTHAI_SERIALIZE_EXT(SyncProperties, syncPolicy);
+DEPTHAI_SERIALIZE_EXT(SyncProperties, syncThresholdMs);
 
 }  // namespace dai

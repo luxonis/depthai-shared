@@ -91,6 +91,24 @@ struct RawStereoDepthConfig : public RawBuffer {
          */
         std::int32_t disparityShift = 0;
 
+        /**
+         * Replace of invalid disparity with computed spatial kernel average.
+         */
+        bool replaceInvalidDisparity = false;
+
+        /**
+         * Outliers Remove Threshold
+         */
+        uint8_t outlierRemoveThreshold = 15;
+        /**
+         * Census Threshold
+         */
+        uint8_t outlierCensusThreshold = 32;
+        /**
+         * Kernel radius difference threshold
+         */
+        uint8_t outlierDiffThreshold = 4;
+
         DEPTHAI_SERIALIZE(AlgorithmControl,
                           depthAlign,
                           depthUnit,
@@ -100,7 +118,11 @@ struct RawStereoDepthConfig : public RawBuffer {
                           enableSubpixel,
                           leftRightCheckThreshold,
                           subpixelFractionalBits,
-                          disparityShift);
+                          disparityShift,
+                          replaceInvalidDisparity,
+                          outlierRemoveThreshold,
+                          outlierCensusThreshold,
+                          outlierDiffThreshold);
     };
 
     /**
@@ -472,7 +494,17 @@ struct RawStereoDepthConfig : public RawBuffer {
          */
         uint16_t verticalPenaltyCostP2 = defaultPenaltyP2;
 
-        DEPTHAI_SERIALIZE(CostAggregation, divisionFactor, horizontalPenaltyCostP1, horizontalPenaltyCostP2, verticalPenaltyCostP1, verticalPenaltyCostP2);
+        enum class LocalAggregationMode : std::uint32_t { AVG3x3, CLAMP3x3, PASS3x3 };
+
+        LocalAggregationMode localAggregationMode = LocalAggregationMode::AVG3x3;
+
+        DEPTHAI_SERIALIZE(CostAggregation,
+                          divisionFactor,
+                          horizontalPenaltyCostP1,
+                          horizontalPenaltyCostP2,
+                          verticalPenaltyCostP1,
+                          verticalPenaltyCostP2,
+                          localAggregationMode);
     };
 
     /**
