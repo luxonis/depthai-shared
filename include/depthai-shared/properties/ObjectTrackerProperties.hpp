@@ -56,8 +56,13 @@ struct ObjectTrackerProperties : PropertiesSerializable<Properties, ObjectTracke
      * New ID assignment policy.
      */
     TrackerIdAssignmentPolicy trackerIdAssignmentPolicy = TrackerIdAssignmentPolicy::UNIQUE_ID;
+    /**
+     * Whether tracker should take into consideration class label for tracking.
+     */
+    bool trackingPerClass = true;
 };
 
-DEPTHAI_SERIALIZE_EXT(ObjectTrackerProperties, trackerThreshold, maxObjectsToTrack, detectionLabelsToTrack, trackerType, trackerIdAssignmentPolicy);
+DEPTHAI_SERIALIZE_EXT(
+    ObjectTrackerProperties, trackerThreshold, maxObjectsToTrack, detectionLabelsToTrack, trackerType, trackerIdAssignmentPolicy, trackingPerClass);
 
 }  // namespace dai

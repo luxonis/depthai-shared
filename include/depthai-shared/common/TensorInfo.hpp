@@ -198,7 +198,7 @@ struct TensorInfo {
     bool quantization = false;
     float qpScale = 1;
     float qpZp = 0;
-    };
+};
 
 DEPTHAI_SERIALIZE_EXT(TensorInfo, order, dataType, numDimensions, dims, strides, name, offset);
 
