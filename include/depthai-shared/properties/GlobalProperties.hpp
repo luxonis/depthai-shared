@@ -10,6 +10,9 @@ namespace dai {
  * Specify properties which apply for whole pipeline
  */
 struct GlobalProperties : PropertiesSerializable<Properties, GlobalProperties> {
+    constexpr static uint32_t SIPP_BUFFER_DEFAULT_SIZE = 18 * 1024;
+    constexpr static uint32_t SIPP_DMA_BUFFER_DEFAULT_SIZE = 16 * 1024;
+
     /**
      * Set frequency of Leon OS - Increasing can improve performance, at the cost of higher power
      * draw
@@ -43,6 +46,23 @@ struct GlobalProperties : PropertiesSerializable<Properties, GlobalProperties> {
      * device defaults - configured per protocol, currently 64*1024 for both USB and Ethernet.
      */
     int32_t xlinkChunkSize = -1;
+
+    /**
+     * SIPP (Signal Image Processing Pipeline) internal memory pool.
+     * SIPP is a framework used to schedule HW filters, e.g. ISP, Warp, Median filter etc.
+     * Changing the size of this pool is meant for advanced use cases, pushing the limits of the HW.
+     * By default memory is allocated in high speed CMX memory. Setting to 0 will allocate in DDR 256 kilobytes.
+     * Units are bytes.
+     */
+    uint32_t sippBufferSize = SIPP_BUFFER_DEFAULT_SIZE;
+    /**
+     * SIPP (Signal Image Processing Pipeline) internal DMA memory pool.
+     * SIPP is a framework used to schedule HW filters, e.g. ISP, Warp, Median filter etc.
+     * Changing the size of this pool is meant for advanced use cases, pushing the limits of the HW.
+     * Memory is allocated in high speed CMX memory
+     * Units are bytes.
+     */
+    uint32_t sippDmaBufferSize = SIPP_DMA_BUFFER_DEFAULT_SIZE;
 };
 
 DEPTHAI_SERIALIZE_EXT(GlobalProperties,
@@ -53,6 +73,8 @@ DEPTHAI_SERIALIZE_EXT(GlobalProperties,
                       cameraTuningBlobSize,
                       cameraTuningBlobUri,
                       calibData,
-                      xlinkChunkSize);
+                      xlinkChunkSize,
+                      sippBufferSize,
+                      sippDmaBufferSize);
 
 }  // namespace dai
