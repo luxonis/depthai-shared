@@ -16,6 +16,8 @@ enum class CameraBoardSocket : int32_t {
     CAM_F,
     CAM_G,
     CAM_H,
+    CAM_I,
+    CAM_J,
     // Deprecated naming
     RGB [[deprecated]] = CAM_A,
     CENTER [[deprecated]] = CAM_A,
