@@ -145,6 +145,12 @@ struct StereoDepthProperties : PropertiesSerializable<Properties, StereoDepthPro
      * If set to true rectification process includes 90 degree clock wise rotation to perform vertical matching.
      */
     bool verticalStereo = false;
+
+    /**
+     * Whether to use custom pixel descriptors sent from host to device for debugging purposes.
+     * Default value is false.
+     */
+    bool customPixelDescriptors = false;
 };
 
 DEPTHAI_SERIALIZE_EXT(StereoDepthProperties,
@@ -164,6 +170,7 @@ DEPTHAI_SERIALIZE_EXT(StereoDepthProperties,
                       numPostProcessingMemorySlices,
                       focalLengthFromCalibration,
                       useHomographyRectification,
-                      verticalStereo);
+                      verticalStereo,
+                      customPixelDescriptors);
 
 }  // namespace dai
