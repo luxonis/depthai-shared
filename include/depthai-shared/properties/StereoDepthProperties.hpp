@@ -154,6 +154,36 @@ struct StereoDepthProperties : PropertiesSerializable<Properties, StereoDepthPro
      * Units are pixels.
      */
     tl::optional<float> focalLength;
+
+    /**
+     * Use baseline information for disparity to depth conversion from specs (design data) or from calibration.
+     * Suitable for debugging.
+     * Default: true
+     */
+    bool disparityToDepthUseSpecTranslation = true;
+
+    /**
+     * Obtain rectification matrices using spec translation (design data) or from calibration in calculations.
+     * Suitable for debugging.
+     * Default: false
+     */
+    bool rectificationUseSpecTranslation = false;
+
+    /**
+     * Use baseline information for depth alignment from specs (design data) or from calibration.
+     * Suitable for debugging.
+     * Default: true
+     */
+    bool depthAlignmentUseSpecTranslation = true;
+
+    /**
+     * Free scaling parameter between 0 (when all the pixels in the undistorted image are valid)
+     * and 1 (when all the source image pixels are retained in the undistorted image).
+     * On some high distortion lenses, and/or due to rectification (image rotated) invalid areas may appear even with alpha=0,
+     * in these cases alpha < 0.0 helps removing invalid areas.
+     * See getOptimalNewCameraMatrix from opencv for more details.
+     */
+    tl::optional<float> alphaScaling;
 };
 
 DEPTHAI_SERIALIZE_EXT(StereoDepthProperties,
@@ -174,6 +204,10 @@ DEPTHAI_SERIALIZE_EXT(StereoDepthProperties,
                       focalLengthFromCalibration,
                       useHomographyRectification,
                       baseline,
-                      focalLength);
+                      focalLength,
+                      disparityToDepthUseSpecTranslation,
+                      rectificationUseSpecTranslation,
+                      depthAlignmentUseSpecTranslation,
+                      alphaScaling);
 
 }  // namespace dai

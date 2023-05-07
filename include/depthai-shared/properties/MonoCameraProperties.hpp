@@ -14,6 +14,8 @@ namespace dai {
  * Specify properties for MonoCamera such as camera ID, ...
  */
 struct MonoCameraProperties : PropertiesSerializable<Properties, MonoCameraProperties> {
+    static constexpr int AUTO = -1;
+
     /**
      * Select the camera sensor resolution: 1280×720, 1280×800, 640×400, 640×480, 1920×1200
      */
@@ -48,6 +50,15 @@ struct MonoCameraProperties : PropertiesSerializable<Properties, MonoCameraPrope
      */
     float fps = 30.0;
     /**
+     * Isp 3A rate (auto focus, auto exposure, auto white balance, camera controls etc.).
+     * Default (0) matches the camera FPS, meaning that 3A is running on each frame.
+     * Reducing the rate of 3A reduces the CPU usage on CSS, but also increases the convergence rate of 3A.
+     * Note that camera controls will be processed at this rate. E.g. if camera is running at 30 fps, and camera control is sent at every frame,
+     * but 3A fps is set to 15, the camera control messages will be processed at 15 fps rate, which will lead to queueing.
+
+     */
+    int isp3aFps = 0;
+    /**
      * Frame pool size for the main output, ISP processed
      */
     int numFramesPool = 3;
@@ -61,6 +72,7 @@ struct MonoCameraProperties : PropertiesSerializable<Properties, MonoCameraPrope
     std::vector<dai::FrameEvent> eventFilter = {dai::FrameEvent::READOUT_START};
 };
 
-DEPTHAI_SERIALIZE_EXT(MonoCameraProperties, initialControl, boardSocket, cameraName, imageOrientation, resolution, fps, numFramesPool, numFramesPoolRaw);
+DEPTHAI_SERIALIZE_EXT(
+    MonoCameraProperties, initialControl, boardSocket, cameraName, imageOrientation, resolution, fps, isp3aFps, numFramesPool, numFramesPoolRaw);
 
 }  // namespace dai

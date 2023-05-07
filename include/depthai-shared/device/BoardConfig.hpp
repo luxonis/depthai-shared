@@ -6,6 +6,7 @@
 
 // project
 #include "depthai-shared/common/CameraBoardSocket.hpp"
+#include "depthai-shared/common/CameraImageOrientation.hpp"
 #include "depthai-shared/common/CameraSensorType.hpp"
 #include "depthai-shared/common/UsbSpeed.hpp"
 #include "depthai-shared/common/optional.hpp"
@@ -19,7 +20,7 @@ constexpr static uint32_t BOARD_CONFIG_MAGIC1 = 0x78010000U;
 constexpr static uint32_t BOARD_CONFIG_MAGIC2 = 0x21ea17e6U;
 
 struct BoardConfig {
-    // USB related config
+    /// USB related config
     struct USB {
         uint16_t vid = 0x03e7, pid = 0xf63b;
         uint16_t flashBootedVid = 0x03e7, flashBootedPid = 0xf63d;
@@ -45,11 +46,11 @@ struct BoardConfig {
     /// For example: "net.inet.tcp.delayed_ack=0" (this one is also set by default)
     std::vector<std::string> sysctl;
 
-    // Watchdog config
+    /// Watchdog config
     tl::optional<uint32_t> watchdogTimeoutMs;
     tl::optional<uint32_t> watchdogInitialDelayMs;
 
-    // GPIO config
+    /// GPIO config
     struct GPIO {
         enum Mode : std::int8_t { ALT_MODE_0 = 0, ALT_MODE_1, ALT_MODE_2, ALT_MODE_3, ALT_MODE_4, ALT_MODE_5, ALT_MODE_6, DIRECT };
         Mode mode = Mode::DIRECT;
@@ -83,29 +84,31 @@ struct BoardConfig {
     /// UART instance map
     std::unordered_map<std::int8_t, UART> uart;
 
-    // PCIe config
+    /// PCIe config
     tl::optional<bool> pcieInternalClock;
 
-    // USB3 phy config
+    /// USB3 phy config
     tl::optional<bool> usb3PhyInternalClock;
 
-    // MIPI 4Lane RGB config
+    /// MIPI 4Lane RGB config
     tl::optional<bool> mipi4LaneRgb;
 
-    // eMMC config
+    /// eMMC config
     tl::optional<bool> emmc;
 
-    // log path
+    /// log path
     tl::optional<std::string> logPath;
 
-    // Max log size
+    /// Max log size
     tl::optional<size_t> logSizeMax;
 
-    // log verbosity
+    /// log verbosity
     tl::optional<LogLevel> logVerbosity;
 
-    // log device prints
+    /// log device prints
     tl::optional<bool> logDevicePrints;
+
+    bool nonExclusiveMode = false;
 
     // TODO(themarpe) - add later when applicable
     // // Socket description
@@ -119,7 +122,7 @@ struct BoardConfig {
     // };
     // std::unordered_map<CameraBoardSocket, Socket> socket;
 
-    // Camera description
+    /// Camera description
     struct Camera {
         std::string name;
         // TODO(themarpe) - add later when applicable
@@ -127,15 +130,23 @@ struct BoardConfig {
         tl::optional<CameraSensorType> sensorType;
         // std::vector<vector> vcm;
         // tl::optional<CameraBoardSocket> syncTo;
+        tl::optional<CameraImageOrientation> orientation;
     };
     std::unordered_map<CameraBoardSocket, Camera> camera;
+
+    struct IMU {
+        IMU() : bus(0), interrupt(53), wake(34), csGpio(8), boot(46), reset(45) {}
+        int8_t bus, interrupt, wake, csGpio, boot, reset;
+    };
+    tl::optional<IMU> imu;
 };
 
 DEPTHAI_SERIALIZE_EXT(BoardConfig::USB, vid, pid, flashBootedVid, flashBootedPid, maxSpeed);
 DEPTHAI_SERIALIZE_EXT(BoardConfig::Network, mtu, xlinkTcpNoDelay);
 DEPTHAI_SERIALIZE_EXT(BoardConfig::GPIO, mode, direction, level, pull, drive, schmitt, slewFast);
 DEPTHAI_SERIALIZE_EXT(BoardConfig::UART, tmp);
-DEPTHAI_SERIALIZE_EXT(BoardConfig::Camera, name, sensorType);
+DEPTHAI_SERIALIZE_EXT(BoardConfig::Camera, name, sensorType, orientation);
+DEPTHAI_SERIALIZE_EXT(BoardConfig::IMU, bus, interrupt, wake, csGpio, boot, reset);
 DEPTHAI_SERIALIZE_EXT(BoardConfig,
                       usb,
                       network,
@@ -151,6 +162,8 @@ DEPTHAI_SERIALIZE_EXT(BoardConfig,
                       logSizeMax,
                       logVerbosity,
                       logDevicePrints,
-                      camera);
+                      nonExclusiveMode,
+                      camera,
+                      imu);
 
 }  // namespace dai
