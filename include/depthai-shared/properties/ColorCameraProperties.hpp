@@ -52,6 +52,12 @@ struct ColorCameraProperties : PropertiesSerializable<Properties, ColorCameraPro
         THE_240X180,
         /// 1280 x 962
         THE_1280X962,
+        /// 2000 × 1500
+        THE_2000X1500,
+        /// 2028 × 1520
+        THE_2028X1520,
+        /// 2104 × 1560
+        THE_2104X1560,
     };
 
     /**
