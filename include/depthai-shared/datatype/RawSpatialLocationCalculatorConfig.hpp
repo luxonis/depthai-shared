@@ -22,7 +22,7 @@ struct SpatialLocationCalculatorConfigThresholds {
 };
 DEPTHAI_SERIALIZE_EXT(SpatialLocationCalculatorConfigThresholds, lowerThreshold, upperThreshold);
 
-enum class SpatialLocationCalculatorAlgorithm : uint32_t { AVERAGE = 0, MIN, MAX };
+enum class SpatialLocationCalculatorAlgorithm : uint32_t { AVERAGE = 0, MEAN = AVERAGE, MIN, MAX, MODE, MEDIAN };
 
 /// SpatialLocation configuration data structure
 struct SpatialLocationCalculatorConfigData {
@@ -41,7 +41,7 @@ struct SpatialLocationCalculatorConfigData {
      * Max: the maximum value inside ROI is used for calculation.
      * Default: average.
      */
-    SpatialLocationCalculatorAlgorithm calculationAlgorithm = SpatialLocationCalculatorAlgorithm::AVERAGE;
+    SpatialLocationCalculatorAlgorithm calculationAlgorithm = SpatialLocationCalculatorAlgorithm::MEDIAN;
 };
 DEPTHAI_SERIALIZE_EXT(SpatialLocationCalculatorConfigData, roi, depthThresholds, calculationAlgorithm);
 
