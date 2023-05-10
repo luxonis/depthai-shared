@@ -28,7 +28,6 @@ struct RawImgTransformation {
     // Relative to the unscaled image
     float scaleFactorX = 1, scaleFactorY = 1;
 
-
     bool horizontalFlip = false;
     bool verticalFlip = false;
 

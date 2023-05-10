@@ -151,6 +151,11 @@ struct StereoDepthProperties : PropertiesSerializable<Properties, StereoDepthPro
      * Default value is false.
      */
     bool customPixelDescriptors = false;
+
+    /**
+     * Whether to enable frame syncing inside stereo node or not. Suitable if inputs are known to be synced.
+     */
+    bool enableFrameSync = true;
 };
 
 DEPTHAI_SERIALIZE_EXT(StereoDepthProperties,
@@ -171,6 +176,7 @@ DEPTHAI_SERIALIZE_EXT(StereoDepthProperties,
                       focalLengthFromCalibration,
                       useHomographyRectification,
                       verticalStereo,
-                      customPixelDescriptors);
+                      customPixelDescriptors,
+                      enableFrameSync);
 
 }  // namespace dai

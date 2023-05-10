@@ -171,7 +171,6 @@ struct ColorCameraProperties : PropertiesSerializable<Properties, ColorCameraPro
     float calibAlpha = 1.0f;
     int warpMeshStepWidth = 32;
     int warpMeshStepHeight = 32;
-
 };
 
 DEPTHAI_SERIALIZE_EXT(ColorCameraProperties,
