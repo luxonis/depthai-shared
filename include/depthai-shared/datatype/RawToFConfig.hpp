@@ -10,7 +10,6 @@ namespace dai {
 
 /// RawToFConfig configuration structure
 struct RawToFConfig : public RawBuffer {
-
     /**
      * DepthParams configuration structure.
      */
@@ -25,7 +24,7 @@ struct RawToFConfig : public RawBuffer {
          * The depth frame rate will be half if this is enabled
          */
         bool avgPhaseShuffle = false;
-    
+
         /**
          * Perform depth calculation only for pixels with amplitude greater than provided value
          */
@@ -35,11 +34,7 @@ struct RawToFConfig : public RawBuffer {
          * Frequency modulation frames used for depth calculation. If the ToF sensor supports multiple modulation frequencies,
          * all will be used for depth calculation.
          */
-        enum class TypeFMod : std::int32_t {
-            F_MOD_ALL,
-            F_MOD_MIN,
-            F_MOD_MAX
-        };
+        enum class TypeFMod : std::int32_t { F_MOD_ALL, F_MOD_MIN, F_MOD_MAX };
 
         TypeFMod freqModUsed = TypeFMod::F_MOD_MIN;
 
