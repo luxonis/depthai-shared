@@ -11,6 +11,7 @@
 #include "depthai-shared/common/EepromData.hpp"
 #include "depthai-shared/common/UsbSpeed.hpp"
 #include "depthai-shared/common/optional.hpp"
+#include "depthai-shared/datatype/RawImgFrame.hpp"
 #include "depthai-shared/log/LogLevel.hpp"
 #include "depthai-shared/utility/Serialization.hpp"
 #include "depthai-shared/xlink/XLinkConstants.hpp"
@@ -26,6 +27,7 @@ struct BoardConfig {
         uint16_t vid = 0x03e7, pid = 0xf63b;
         uint16_t flashBootedVid = 0x03e7, flashBootedPid = 0xf63d;
         UsbSpeed maxSpeed = UsbSpeed::SUPER;
+        std::string productName, manufacturer;
     };
 
     USB usb;
@@ -141,16 +143,28 @@ struct BoardConfig {
     };
     tl::optional<IMU> imu;
 
+    /// UVC configuration for USB descriptor
+    struct UVC {
+        std::string cameraName;
+        uint16_t width, height;
+        RawImgFrame::Type frameType;
+        bool enable;
+        UVC(uint16_t width, uint16_t height) : width(width), height(height), frameType(RawImgFrame::Type::NV12), enable(true) {}
+        UVC() : UVC(1920, 1080) {}
+    };
+    tl::optional<UVC> uvc;
+
     // EEPROM to override on boot
     tl::optional<EepromData> eepromData;
 };
 
-DEPTHAI_SERIALIZE_EXT(BoardConfig::USB, vid, pid, flashBootedVid, flashBootedPid, maxSpeed);
+DEPTHAI_SERIALIZE_EXT(BoardConfig::USB, vid, pid, flashBootedVid, flashBootedPid, maxSpeed, productName, manufacturer);
 DEPTHAI_SERIALIZE_EXT(BoardConfig::Network, mtu, xlinkTcpNoDelay);
 DEPTHAI_SERIALIZE_EXT(BoardConfig::GPIO, mode, direction, level, pull, drive, schmitt, slewFast);
 DEPTHAI_SERIALIZE_EXT(BoardConfig::UART, tmp);
 DEPTHAI_SERIALIZE_EXT(BoardConfig::Camera, name, sensorType, orientation);
 DEPTHAI_SERIALIZE_EXT(BoardConfig::IMU, bus, interrupt, wake, csGpio, boot, reset);
+DEPTHAI_SERIALIZE_EXT(BoardConfig::UVC, cameraName, width, height, frameType, enable);
 DEPTHAI_SERIALIZE_EXT(BoardConfig,
                       usb,
                       network,
@@ -169,6 +183,7 @@ DEPTHAI_SERIALIZE_EXT(BoardConfig,
                       nonExclusiveMode,
                       camera,
                       imu,
+                      uvc,
                       eepromData);
 
 }  // namespace dai
