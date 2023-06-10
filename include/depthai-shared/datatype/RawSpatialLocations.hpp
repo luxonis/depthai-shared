@@ -29,6 +29,16 @@ struct SpatialLocations {
      */
     float depthAverage = 0.f;
     /**
+     *  Most frequent of depth values inside the ROI between the specified thresholds in config.
+     * Calculated only if calculation method is set to MODE.
+     */
+    float depthMode = 0.f;
+    /**
+     *  Median of depth values inside the ROI between the specified thresholds in config.
+     * Calculated only if calculation method is set to MEDIAN.
+     */
+    float depthMedian = 0.f;
+    /**
      *  Minimum of depth values inside the ROI between the specified thresholds in config
      */
     std::uint16_t depthMin = 0;
@@ -45,7 +55,7 @@ struct SpatialLocations {
      */
     Point3f spatialCoordinates;
 };
-DEPTHAI_SERIALIZE_EXT(SpatialLocations, config, depthAverage, depthMin, depthMax, depthAveragePixelCount, spatialCoordinates);
+DEPTHAI_SERIALIZE_EXT(SpatialLocations, config, depthAverage, depthMode, depthMedian, depthMin, depthMax, depthAveragePixelCount, spatialCoordinates);
 
 /// RawSpatialLocations structure
 struct RawSpatialLocations : public RawBuffer {

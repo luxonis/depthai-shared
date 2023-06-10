@@ -200,6 +200,6 @@ struct TensorInfo {
     float qpZp = 0;
 };
 
-DEPTHAI_SERIALIZE_EXT(TensorInfo, order, dataType, numDimensions, dims, strides, name, offset);
+DEPTHAI_SERIALIZE_EXT(TensorInfo, order, dataType, numDimensions, dims, strides, name, offset, quantization, qpScale, qpZp);
 
 }  // namespace dai

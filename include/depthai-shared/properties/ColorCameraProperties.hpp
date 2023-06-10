@@ -4,6 +4,7 @@
 #include "depthai-shared/common/CameraImageOrientation.hpp"
 #include "depthai-shared/datatype/RawCameraControl.hpp"
 #include "depthai-shared/properties/Properties.hpp"
+#include "depthai-shared/datatype/RawImgFrame.hpp"
 
 namespace dai {
 
@@ -94,6 +95,10 @@ struct ColorCameraProperties : PropertiesSerializable<Properties, ColorCameraPro
      */
     bool interleaved = true;
     /**
+     * Frame type
+    */
+    RawImgFrame::Type previewType = RawImgFrame::Type::BGR888p;
+    /**
      * Are values FP16 type (0.0 - 255.0)
      */
     bool fp16 = false;
@@ -171,7 +176,6 @@ struct ColorCameraProperties : PropertiesSerializable<Properties, ColorCameraPro
     float calibAlpha = 1.0f;
     int warpMeshStepWidth = 32;
     int warpMeshStepHeight = 32;
-
 };
 
 DEPTHAI_SERIALIZE_EXT(ColorCameraProperties,
@@ -181,6 +185,7 @@ DEPTHAI_SERIALIZE_EXT(ColorCameraProperties,
                       imageOrientation,
                       colorOrder,
                       interleaved,
+                      previewType,
                       fp16,
                       previewHeight,
                       previewWidth,
