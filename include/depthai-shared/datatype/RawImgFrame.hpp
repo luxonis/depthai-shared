@@ -180,19 +180,20 @@ struct RawImgFrame : public RawBuffer {
     Specs fb = {};
     Specs sourceFb = {};
     CameraSettings cam;
+    float HFovDegrees;         // Horizontal field of view in degrees
     uint32_t category = 0;     //
     uint32_t instanceNum = 0;  // Which source created this frame (color, mono, ...)
     int64_t sequenceNum = 0;   // increments for each frame
     Timestamp ts = {};         // generation timestamp, synced to host time
     Timestamp tsDevice = {};   // generation timestamp, direct device monotonic clock
-    ImgTransformation transformation;
+    ImgTransformations transformations;
 
     void serialize(std::vector<std::uint8_t>& metadata, DatatypeEnum& datatype) const override {
         metadata = utility::serialize(*this);
         datatype = DatatypeEnum::ImgFrame;
     };
 
-    DEPTHAI_SERIALIZE(RawImgFrame, fb, sourceFb, cam, category, instanceNum, sequenceNum, ts, tsDevice, transformation);
+    DEPTHAI_SERIALIZE(RawImgFrame, fb, sourceFb, cam, HFovDegrees, category, instanceNum, sequenceNum, ts, tsDevice, transformations);
 };
 
 }  // namespace dai
