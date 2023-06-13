@@ -157,5 +157,14 @@ std::vector<std::vector<float>> createTranslationMatrix(float dx, float dy) {
     return translationMatrix;
 }
 
+void printMatrix(std::vector<std::vector<float>>& matrix) {
+    for(size_t i = 0; i < matrix.size(); ++i) {
+        for(size_t j = 0; j < matrix[0].size(); ++j) {
+            std::cout << matrix[i][j] << " ";
+        }
+        std::cout << std::endl;
+    }
+}
+
 }  // namespace matrix
 }  // namespace dai

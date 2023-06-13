@@ -13,6 +13,8 @@ bool matInv(std::vector<std::vector<float>>& A, std::vector<std::vector<float>>&
 std::vector<std::vector<float>> createRotationMatrix(float theta);
 std::vector<std::vector<float>> createScalingMatrix(float scaleX, float scaleY);
 std::vector<std::vector<float>> createTranslationMatrix(float dx, float dy);
+void printMatrix(std::vector<std::vector<float>>& matrix);
+
 
 }  // namespace matrix
 }  // namespace dai

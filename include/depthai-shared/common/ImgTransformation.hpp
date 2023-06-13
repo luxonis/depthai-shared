@@ -1,8 +1,8 @@
 #pragma once
 
-#include "depthai-shared/utility/matrixOps.hpp"
 #include "depthai-shared/common/Point2f.hpp"
 #include "depthai-shared/utility/Serialization.hpp"
+#include "depthai-shared/utility/matrixOps.hpp"
 
 namespace dai {
 struct RawImgTransformation {
@@ -25,8 +25,14 @@ struct RawImgTransformation {
     // Used for flipping scale and rotation
     std::vector<std::vector<float>> transformationMatrix = {{1, 0, 0}, {0, 1, 0}, {0, 0, 1}};
 
+    // Precomput the inverse matrix for performance reasons
+    std::vector<std::vector<float>> invTransformationMatrix = {{1, 0, 0}, {0, 1, 0}, {0, 0, 1}};
+
     // Image size after transformation
     int afterTransformWidth = 0, afterTransformHeight = 0;
+
+    // Image size before the transformation
+    int beforeTransformWidth = 0, beforeTransformHeight = 0;
 };
 
 DEPTHAI_SERIALIZE_EXT(RawImgTransformation,
@@ -41,13 +47,19 @@ DEPTHAI_SERIALIZE_EXT(RawImgTransformation,
                       rightPadding,
                       transformationMatrix,
                       afterTransformWidth,
-                      afterTransformHeight);
-
+                      afterTransformHeight,
+                      beforeTransformWidth,
+                      beforeTransformHeight);
 
 class ImgTransformations {
    public:
     std::vector<RawImgTransformation> transformations = {};
+
     bool warpEnabled = false;
+
+    int getLastWidth();
+
+    int getLastHeight();
 
     std::vector<std::vector<float>> getFlipHorizontalMatrix(int width);
 
@@ -57,7 +69,7 @@ class ImgTransformations {
 
     std::vector<std::vector<float>> getScaleMatrix(float scaleX, float scaleY);
 
-    void setPadding(float topPadding, float bottomPadding, float leftPadding, float rightPadding);
+    void setPadding(int topPadding, int bottomPadding, int leftPadding, int rightPadding);
 
     void setCrop(int topLeftCropX = 0, int topLeftCropY = 0, int bottomRightCropX = 0, int bottomRightCropY = 0);
 
@@ -72,17 +84,21 @@ class ImgTransformations {
     void setScale(float scaleX, float scaleY);
 
     // API that is meant for performance reasons - so matrices can be precomputed.
-    void setTransformation(std::vector<std::vector<float>> matrix, std::vector<std::vector<float>> invMatrix, RawImgTransformation::Transformation transformationm, int newWidth, int newHeight);
+    void setTransformation(std::vector<std::vector<float>> matrix,
+                           std::vector<std::vector<float>> invMatrix,
+                           RawImgTransformation::Transformation transformationm,
+                           int newWidth,
+                           int newHeight);
 
-    dai::Point2f clipPoint(dai::Point2f point, int imageWidth, int imageHeight, bool &isClipped);
+    dai::Point2f applyMatrixTransformation(dai::Point2f point, std::vector<std::vector<float>>& matrix);
 
-    dai::Point2f transformPoint(RawImgTransformation transformation, dai::Point2f point);
+    dai::Point2f clipPoint(dai::Point2f point, int imageWidth, int imageHeight, bool& isClipped);
 
-    dai::Point2f invTransformPoint(RawImgTransformation transformation, dai::Point2f point);
+    dai::Point2f transformPoint(RawImgTransformation transformation, dai::Point2f point, bool& isClipped);
+
+    dai::Point2f invTransformPoint(RawImgTransformation transformation, dai::Point2f point, bool& isClipped);
 };
 
-DEPTHAI_SERIALIZE_EXT(ImgTransformations,
-                      transformations,
-                      warpEnabled);
+DEPTHAI_SERIALIZE_EXT(ImgTransformations, transformations, warpEnabled);
 
 }  // namespace dai
