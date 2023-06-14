@@ -55,19 +55,15 @@ class ImgTransformations {
    public:
     std::vector<RawImgTransformation> transformations = {};
 
-    bool warpEnabled = false;
+    bool invalidFlag = false;
 
-    int getLastWidth();
+    void invalidateTransformations();
 
-    int getLastHeight();
+    bool isInvalid() const;
 
-    std::vector<std::vector<float>> getFlipHorizontalMatrix(int width);
+    int getLastWidth() const;
 
-    std::vector<std::vector<float>> getFlipVerticalMatrix(int height);
-
-    std::vector<std::vector<float>> getRotationMatrix(int px, int py, float theta);
-
-    std::vector<std::vector<float>> getScaleMatrix(float scaleX, float scaleY);
+    int getLastHeight() const;
 
     void setPadding(int topPadding, int bottomPadding, int leftPadding, int rightPadding);
 
@@ -83,22 +79,35 @@ class ImgTransformations {
 
     void setScale(float scaleX, float scaleY);
 
+    bool validateTransformationSizes() const;
+
     // API that is meant for performance reasons - so matrices can be precomputed.
     void setTransformation(std::vector<std::vector<float>> matrix,
                            std::vector<std::vector<float>> invMatrix,
-                           RawImgTransformation::Transformation transformationm,
+                           RawImgTransformation::Transformation transformation,
                            int newWidth,
                            int newHeight);
 
-    dai::Point2f applyMatrixTransformation(dai::Point2f point, std::vector<std::vector<float>>& matrix);
+    static dai::Point2f transformPoint(RawImgTransformation transformation, dai::Point2f point, bool& isClipped);
 
-    dai::Point2f clipPoint(dai::Point2f point, int imageWidth, int imageHeight, bool& isClipped);
+    static dai::Point2f invTransformPoint(RawImgTransformation transformation, dai::Point2f point, bool& isClipped);
 
-    dai::Point2f transformPoint(RawImgTransformation transformation, dai::Point2f point, bool& isClipped);
+   private:
+    RawImgTransformation getNewTransformation() const;
 
-    dai::Point2f invTransformPoint(RawImgTransformation transformation, dai::Point2f point, bool& isClipped);
+    static dai::Point2f clipPoint(dai::Point2f point, int imageWidth, int imageHeight, bool& isClipped);
+
+    static dai::Point2f applyMatrixTransformation(dai::Point2f point, std::vector<std::vector<float>>& matrix);
+
+    static std::vector<std::vector<float>> getFlipHorizontalMatrix(int width);
+
+    static std::vector<std::vector<float>> getFlipVerticalMatrix(int height);
+
+    static std::vector<std::vector<float>> getRotationMatrix(int px, int py, float theta);
+
+    static std::vector<std::vector<float>> getScaleMatrix(float scaleX, float scaleY);
 };
 
-DEPTHAI_SERIALIZE_EXT(ImgTransformations, transformations, warpEnabled);
+DEPTHAI_SERIALIZE_EXT(ImgTransformations, transformations, invalidFlag);
 
 }  // namespace dai

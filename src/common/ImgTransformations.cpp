@@ -1,6 +1,6 @@
-#include <assert.h>
-
 #include "depthai-shared/common/ImgTransformations.hpp"
+
+#include <assert.h>
 namespace dai {
 
 std::vector<std::vector<float>> ImgTransformations::getFlipHorizontalMatrix(int width) {
@@ -28,14 +28,14 @@ std::vector<std::vector<float>> ImgTransformations::getScaleMatrix(float scaleX,
     return matrix::createScalingMatrix(scaleX, scaleY);
 }
 
-int ImgTransformations::getLastHeight() {
+int ImgTransformations::getLastHeight() const {
     if(transformations.size() < 1) {
         return 0;
     }
     return transformations.back().afterTransformHeight;
 }
 
-int ImgTransformations::getLastWidth() {
+int ImgTransformations::getLastWidth() const {
     if(transformations.size() < 1) {
         return 0;
     }
@@ -43,12 +43,10 @@ int ImgTransformations::getLastWidth() {
 }
 
 void ImgTransformations::setPadding(int topPadding, int bottomPadding, int leftPadding, int rightPadding) {
-    RawImgTransformation paddingTransformation;
+    auto paddingTransformation = getNewTransformation();
     paddingTransformation.transformationType = RawImgTransformation::Transformation::Pad;
     paddingTransformation.afterTransformWidth = getLastWidth() + leftPadding + rightPadding;
     paddingTransformation.afterTransformHeight = getLastHeight() + topPadding + bottomPadding;
-    paddingTransformation.beforeTransformWidth = getLastWidth();
-    paddingTransformation.beforeTransformHeight = getLastHeight();
     paddingTransformation.topPadding = topPadding;
     paddingTransformation.bottomPadding = bottomPadding;
     paddingTransformation.leftPadding = leftPadding;
@@ -61,12 +59,10 @@ void ImgTransformations::setCrop(int topLeftCropX, int topLeftCropY, int bottomR
     if(transformations.size() < 1) {
         throw std::runtime_error("Cannot rotate image without first setting an initial transformation");
     }
-    RawImgTransformation croppingTransformation;
+    auto croppingTransformation = getNewTransformation();
     croppingTransformation.transformationType = RawImgTransformation::Transformation::Crop;
     croppingTransformation.afterTransformWidth = getLastWidth() - topLeftCropX - bottomRightCropX;
     croppingTransformation.afterTransformHeight = getLastHeight() - topLeftCropX - bottomRightCropY;
-    croppingTransformation.beforeTransformWidth = getLastWidth();
-    croppingTransformation.beforeTransformHeight = getLastHeight();
     croppingTransformation.topLeftCropX = topLeftCropX;
     croppingTransformation.topLeftCropY = topLeftCropY;
     croppingTransformation.bottomRightCropX = bottomRightCropX;
@@ -79,12 +75,10 @@ void ImgTransformations::setScale(float scaleX, float scaleY) {
     if(transformations.size() < 1) {
         throw std::runtime_error("Cannot rotate image without first setting an initial transformation");
     }
-    RawImgTransformation scaleTransformation;
+    auto scaleTransformation = getNewTransformation();
     scaleTransformation.transformationType = RawImgTransformation::Transformation::Scale;
     scaleTransformation.afterTransformWidth = static_cast<int>(getLastWidth() * scaleX);
     scaleTransformation.afterTransformHeight = static_cast<int>(getLastHeight() * scaleY);
-    scaleTransformation.beforeTransformWidth = getLastWidth();
-    scaleTransformation.beforeTransformHeight = getLastHeight();
     scaleTransformation.transformationMatrix = getScaleMatrix(scaleX, scaleY);
     scaleTransformation.invTransformationMatrix = std::vector<std::vector<float>>();
     bool success = matrix::matInv(scaleTransformation.transformationMatrix, scaleTransformation.invTransformationMatrix);
@@ -99,10 +93,8 @@ void ImgTransformations::setFlipVertical() {
     if(transformations.size() < 1) {
         throw std::runtime_error("Cannot rotate image without first setting an initial transformation");
     }
-    RawImgTransformation flipTransformation;
+    auto flipTransformation = getNewTransformation();
     flipTransformation.transformationType = RawImgTransformation::Transformation::Flip;
-    flipTransformation.beforeTransformWidth = getLastWidth();
-    flipTransformation.beforeTransformHeight = getLastHeight();
     flipTransformation.afterTransformWidth = getLastWidth();
     flipTransformation.afterTransformHeight = getLastHeight();
     flipTransformation.transformationMatrix = getFlipVerticalMatrix(getLastHeight());
@@ -119,10 +111,8 @@ void ImgTransformations::setFlipHorizontal() {
     if(transformations.size() < 1) {
         throw std::runtime_error("Cannot rotate image without first setting an initial transformation");
     }
-    RawImgTransformation flipTransformation;
+    auto flipTransformation = getNewTransformation();
     flipTransformation.transformationType = RawImgTransformation::Transformation::Flip;
-    flipTransformation.beforeTransformHeight = getLastHeight();
-    flipTransformation.beforeTransformWidth = getLastWidth();
     flipTransformation.afterTransformWidth = getLastWidth();
     flipTransformation.afterTransformHeight = getLastHeight();
     flipTransformation.transformationMatrix = getFlipHorizontalMatrix(getLastWidth());
@@ -153,10 +143,8 @@ void ImgTransformations::setRotation(float angle, dai::Point2f rotationPoint, in
     if(transformations.size() < 1) {
         throw std::runtime_error("Cannot rotate image without first setting an initial transformation");
     }
-    RawImgTransformation rotationTransformation;
+    auto rotationTransformation = getNewTransformation();
     rotationTransformation.transformationType = RawImgTransformation::Transformation::Rotation;
-    rotationTransformation.beforeTransformHeight = getLastHeight();
-    rotationTransformation.beforeTransformWidth = getLastWidth();
     rotationTransformation.afterTransformWidth = newWidth;
     rotationTransformation.afterTransformHeight = newHeight;
     rotationTransformation.transformationMatrix = getRotationMatrix(rotationPoint.x, rotationPoint.y, angle);
@@ -167,9 +155,15 @@ void ImgTransformations::setRotation(float angle, dai::Point2f rotationPoint, in
 // API that is meant for performance reasons - so matrices can be precomputed.
 void ImgTransformations::setTransformation(std::vector<std::vector<float>> matrix,
                                            std::vector<std::vector<float>> invMatrix,
-                                           RawImgTransformation::Transformation transformationm,
+                                           RawImgTransformation::Transformation transformation,
                                            int newWidth,
                                            int newHeight) {
+    auto rawImgTransformation = getNewTransformation();
+    rawImgTransformation.transformationType = transformation;
+    rawImgTransformation.afterTransformWidth = newWidth;
+    rawImgTransformation.afterTransformHeight = newHeight;
+    rawImgTransformation.transformationMatrix = matrix;
+    rawImgTransformation.invTransformationMatrix = invMatrix;
     return;
 }
 
@@ -262,6 +256,38 @@ dai::Point2f ImgTransformations::invTransformPoint(RawImgTransformation transfor
     }
     point = clipPoint(point, transformation.beforeTransformWidth, transformation.beforeTransformHeight, isClipped);
     return point;
+}
+
+bool ImgTransformations::validateTransformationSizes() const {
+    if(transformations.size() < 1) {
+        return true;
+    }
+
+    int lastWidth = transformations[0].beforeTransformWidth;
+    int lastHeight = transformations[0].beforeTransformHeight;
+    for(auto& transformation : transformations) {
+        if(transformation.beforeTransformWidth != lastWidth || transformation.beforeTransformHeight != lastHeight) {
+            return false;
+        }
+        lastWidth = transformation.afterTransformWidth;
+        lastHeight = transformation.afterTransformHeight;
+    }
+    return true;
+}
+
+RawImgTransformation ImgTransformations::getNewTransformation() const {
+    RawImgTransformation transformation;
+    transformation.beforeTransformWidth = getLastWidth();
+    transformation.beforeTransformHeight = getLastHeight();
+    return transformation;
+}
+
+void ImgTransformations::invalidateTransformations() {
+    invalidFlag = true;
+}
+
+bool ImgTransformations::isInvalid() const {
+    return invalidFlag || !validateTransformationSizes();
 }
 
 };  // namespace dai
