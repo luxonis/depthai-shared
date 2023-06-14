@@ -1,6 +1,6 @@
 #include <assert.h>
 
-#include "depthai-shared/common/ImgTransformation.hpp"
+#include "depthai-shared/common/ImgTransformations.hpp"
 namespace dai {
 
 std::vector<std::vector<float>> ImgTransformations::getFlipHorizontalMatrix(int width) {
