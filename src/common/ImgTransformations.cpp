@@ -61,8 +61,8 @@ void ImgTransformations::setCrop(int topLeftCropX, int topLeftCropY, int bottomR
     }
     auto croppingTransformation = getNewTransformation();
     croppingTransformation.transformationType = RawImgTransformation::Transformation::Crop;
-    croppingTransformation.afterTransformWidth = getLastWidth() - topLeftCropX - bottomRightCropX;
-    croppingTransformation.afterTransformHeight = getLastHeight() - topLeftCropX - bottomRightCropY;
+    croppingTransformation.afterTransformWidth = bottomRightCropX - topLeftCropX;
+    croppingTransformation.afterTransformHeight = bottomRightCropY - topLeftCropY;
     croppingTransformation.topLeftCropX = topLeftCropX;
     croppingTransformation.topLeftCropY = topLeftCropY;
     croppingTransformation.bottomRightCropX = bottomRightCropX;
@@ -77,8 +77,8 @@ void ImgTransformations::setScale(float scaleX, float scaleY) {
     }
     auto scaleTransformation = getNewTransformation();
     scaleTransformation.transformationType = RawImgTransformation::Transformation::Scale;
-    scaleTransformation.afterTransformWidth = static_cast<int>(getLastWidth() * scaleX);
-    scaleTransformation.afterTransformHeight = static_cast<int>(getLastHeight() * scaleY);
+    scaleTransformation.afterTransformWidth = std::round(getLastWidth() * scaleX);
+    scaleTransformation.afterTransformHeight = std::round(getLastHeight() * scaleY);
     scaleTransformation.transformationMatrix = getScaleMatrix(scaleX, scaleY);
     scaleTransformation.invTransformationMatrix = std::vector<std::vector<float>>();
     bool success = matrix::matInv(scaleTransformation.transformationMatrix, scaleTransformation.invTransformationMatrix);
