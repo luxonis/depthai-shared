@@ -28,14 +28,14 @@ std::vector<std::vector<float>> ImgTransformations::getScaleMatrix(float scaleX,
     return matrix::createScalingMatrix(scaleX, scaleY);
 }
 
-int ImgTransformations::getLastHeight() const {
+unsigned int ImgTransformations::getLastHeight() const {
     if(transformations.size() < 1) {
         return 0;
     }
     return transformations.back().afterTransformHeight;
 }
 
-int ImgTransformations::getLastWidth() const {
+unsigned int ImgTransformations::getLastWidth() const {
     if(transformations.size() < 1) {
         return 0;
     }
@@ -263,8 +263,8 @@ bool ImgTransformations::validateTransformationSizes() const {
         return true;
     }
 
-    int lastWidth = transformations[0].beforeTransformWidth;
-    int lastHeight = transformations[0].beforeTransformHeight;
+    auto lastWidth = transformations[0].beforeTransformWidth;
+    auto lastHeight = transformations[0].beforeTransformHeight;
     for(auto& transformation : transformations) {
         if(transformation.beforeTransformWidth != lastWidth || transformation.beforeTransformHeight != lastHeight) {
             return false;

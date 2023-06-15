@@ -29,10 +29,10 @@ struct RawImgTransformation {
     std::vector<std::vector<float>> invTransformationMatrix = {{1, 0, 0}, {0, 1, 0}, {0, 0, 1}};
 
     // Image size after transformation
-    int afterTransformWidth = 0, afterTransformHeight = 0;
+    unsigned int afterTransformWidth = 0, afterTransformHeight = 0;
 
     // Image size before the transformation
-    int beforeTransformWidth = 0, beforeTransformHeight = 0;
+    unsigned int beforeTransformWidth = 0, beforeTransformHeight = 0;
 };
 
 DEPTHAI_SERIALIZE_EXT(RawImgTransformation,
@@ -61,9 +61,9 @@ class ImgTransformations {
 
     bool isInvalid() const;
 
-    int getLastWidth() const;
+    unsigned int getLastWidth() const;
 
-    int getLastHeight() const;
+    unsigned int getLastHeight() const;
 
     void setPadding(int topPadding, int bottomPadding, int leftPadding, int rightPadding);
 
@@ -92,10 +92,10 @@ class ImgTransformations {
 
     static dai::Point2f invTransformPoint(RawImgTransformation transformation, dai::Point2f point, bool& isClipped);
 
+    static dai::Point2f clipPoint(dai::Point2f point, int imageWidth, int imageHeight, bool& isClipped);
+
    private:
     RawImgTransformation getNewTransformation() const;
-
-    static dai::Point2f clipPoint(dai::Point2f point, int imageWidth, int imageHeight, bool& isClipped);
 
     static dai::Point2f applyMatrixTransformation(dai::Point2f point, std::vector<std::vector<float>>& matrix);
 
