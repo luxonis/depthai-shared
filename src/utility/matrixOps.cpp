@@ -130,30 +130,18 @@ bool matInv(std::vector<std::vector<float>>& A, std::vector<std::vector<float>>&
 }
 
 std::vector<std::vector<float>> createRotationMatrix(float theta) {
-    float radian = theta * M_PI / 180; // convert degree to radian
-    std::vector<std::vector<float>> rotationMatrix = {
-        {std::cos(radian), -std::sin(radian), 0},
-        {std::sin(radian), std::cos(radian), 0},
-        {0, 0, 1}
-    };
+    float radian = theta * M_PI / 180;  // convert degree to radian
+    std::vector<std::vector<float>> rotationMatrix = {{std::cos(radian), -std::sin(radian), 0}, {std::sin(radian), std::cos(radian), 0}, {0, 0, 1}};
     return rotationMatrix;
 }
 
 std::vector<std::vector<float>> createScalingMatrix(float scaleX, float scaleY) {
-    std::vector<std::vector<float>> scalingMatrix = {
-        {scaleX, 0, 0},
-        {0, scaleY, 0},
-        {0, 0, 1}
-    };
+    std::vector<std::vector<float>> scalingMatrix = {{scaleX, 0, 0}, {0, scaleY, 0}, {0, 0, 1}};
     return scalingMatrix;
 }
 
 std::vector<std::vector<float>> createTranslationMatrix(float dx, float dy) {
-    std::vector<std::vector<float>> translationMatrix = {
-        {1, 0, dx},
-        {0, 1, dy},
-        {0, 0, 1}
-    };
+    std::vector<std::vector<float>> translationMatrix = {{1, 0, dx}, {0, 1, dy}, {0, 0, 1}};
     return translationMatrix;
 }
 

@@ -23,8 +23,7 @@ struct Point2f {
 
     bool isNormalized() const {
         // When ambiguous, default to denormalized - this is to avoid breaking existing code TODO(refactor)
-        if(x == 0 && y == 0) return false;
-        if(x == 1 && y == 1) return false;
+        if((x == 0 || x == 1) && (y == 0 || y == 1)) return false;
         return x >= 0 && x <= 1 && y >= 0 && y <= 1;
     }
 };

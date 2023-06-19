@@ -1,9 +1,9 @@
 #pragma once
 #define _USE_MATH_DEFINES
 
+#include <cmath>
 #include <iostream>
 #include <vector>
-#include <cmath>
 
 namespace dai {
 namespace matrix {
@@ -14,7 +14,6 @@ std::vector<std::vector<float>> createRotationMatrix(float theta);
 std::vector<std::vector<float>> createScalingMatrix(float scaleX, float scaleY);
 std::vector<std::vector<float>> createTranslationMatrix(float dx, float dy);
 void printMatrix(std::vector<std::vector<float>>& matrix);
-
 
 }  // namespace matrix
 }  // namespace dai

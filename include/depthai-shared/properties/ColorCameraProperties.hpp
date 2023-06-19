@@ -3,8 +3,8 @@
 #include "depthai-shared/common/CameraBoardSocket.hpp"
 #include "depthai-shared/common/CameraImageOrientation.hpp"
 #include "depthai-shared/datatype/RawCameraControl.hpp"
-#include "depthai-shared/properties/Properties.hpp"
 #include "depthai-shared/datatype/RawImgFrame.hpp"
+#include "depthai-shared/properties/Properties.hpp"
 
 namespace dai {
 
@@ -96,7 +96,7 @@ struct ColorCameraProperties : PropertiesSerializable<Properties, ColorCameraPro
     bool interleaved = true;
     /**
      * Frame type
-    */
+     */
     RawImgFrame::Type previewType = RawImgFrame::Type::BGR888p;
     /**
      * Are values FP16 type (0.0 - 255.0)

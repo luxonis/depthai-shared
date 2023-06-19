@@ -57,7 +57,7 @@ void ImgTransformations::setPadding(int topPadding, int bottomPadding, int leftP
 
 void ImgTransformations::setCrop(int topLeftCropX, int topLeftCropY, int bottomRightCropX, int bottomRightCropY) {
     if(transformations.size() < 1) {
-        throw std::runtime_error("Cannot rotate image without first setting an initial transformation");
+        throw std::runtime_error("Cannot set crop rotation without first setting an initial transformation");
     }
     auto croppingTransformation = getNewTransformation();
     croppingTransformation.transformationType = RawImgTransformation::Transformation::Crop;
@@ -73,7 +73,7 @@ void ImgTransformations::setCrop(int topLeftCropX, int topLeftCropY, int bottomR
 
 void ImgTransformations::setScale(float scaleX, float scaleY) {
     if(transformations.size() < 1) {
-        throw std::runtime_error("Cannot rotate image without first setting an initial transformation");
+        throw std::runtime_error("Cannot set scale rotation without first setting an initial transformation");
     }
     auto scaleTransformation = getNewTransformation();
     scaleTransformation.transformationType = RawImgTransformation::Transformation::Scale;
@@ -91,7 +91,7 @@ void ImgTransformations::setScale(float scaleX, float scaleY) {
 
 void ImgTransformations::setFlipVertical() {
     if(transformations.size() < 1) {
-        throw std::runtime_error("Cannot rotate image without first setting an initial transformation");
+        throw std::runtime_error("Cannot set flip transformation image without first setting an initial transformation");
     }
     auto flipTransformation = getNewTransformation();
     flipTransformation.transformationType = RawImgTransformation::Transformation::Flip;
@@ -109,7 +109,7 @@ void ImgTransformations::setFlipVertical() {
 
 void ImgTransformations::setFlipHorizontal() {
     if(transformations.size() < 1) {
-        throw std::runtime_error("Cannot rotate image without first setting an initial transformation");
+        throw std::runtime_error("Cannot set flip transformation without first setting an initial transformation");
     }
     auto flipTransformation = getNewTransformation();
     flipTransformation.transformationType = RawImgTransformation::Transformation::Flip;
@@ -141,7 +141,7 @@ void ImgTransformations::setInitTransformation(int width, int height) {
 
 void ImgTransformations::setRotation(float angle, dai::Point2f rotationPoint, int newWidth, int newHeight) {
     if(transformations.size() < 1) {
-        throw std::runtime_error("Cannot rotate image without first setting an initial transformation");
+        throw std::runtime_error("Cannot set rotation transformation without first setting an initial transformation");
     }
     auto rotationTransformation = getNewTransformation();
     rotationTransformation.transformationType = RawImgTransformation::Transformation::Rotation;
