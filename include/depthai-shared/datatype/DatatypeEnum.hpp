@@ -22,6 +22,7 @@ enum class DatatypeEnum : std::int32_t {
     IMUData,
     StereoDepthConfig,
     FeatureTrackerConfig,
+    DepthAlignConfig,
     ToFConfig,
     TrackedFeatures,
 };
