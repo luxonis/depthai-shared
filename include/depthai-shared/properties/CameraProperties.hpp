@@ -3,6 +3,7 @@
 #include "depthai-shared/common/CameraBoardSocket.hpp"
 #include "depthai-shared/common/CameraImageOrientation.hpp"
 #include "depthai-shared/common/CameraSensorType.hpp"
+#include "depthai-shared/common/optional.hpp"
 #include "depthai-shared/datatype/RawCameraControl.hpp"
 #include "depthai-shared/properties/Properties.hpp"
 
@@ -149,9 +150,27 @@ struct CameraProperties : PropertiesSerializable<Properties, CameraProperties> {
     WarpMeshSource warpMeshSource = WarpMeshSource::AUTO;
     std::string warpMeshUri = "";
     int warpMeshWidth, warpMeshHeight;
-    float calibAlpha = 1.0f;
+    /**
+     * Free scaling parameter between 0 (when all the pixels in the undistorted image are valid)
+     * and 1 (when all the source image pixels are retained in the undistorted image).
+     * On some high distortion lenses, and/or due to rectification (image rotated) invalid areas may appear even with alpha=0,
+     * in these cases alpha < 0.0 helps removing invalid areas.
+     * See getOptimalNewCameraMatrix from opencv for more details.
+     */
+    tl::optional<float> calibAlpha;
     int warpMeshStepWidth = 32;
     int warpMeshStepHeight = 32;
+
+    /**
+     * Configures whether the camera `raw` frames are saved as MIPI-packed to memory.
+     * The packed format is more efficient, consuming less memory on device, and less data
+     * to send to host: RAW10: 4 pixels saved on 5 bytes, RAW12: 2 pixels saved on 3 bytes.
+     * When packing is disabled (`false`), data is saved lsb-aligned, e.g. a RAW10 pixel
+     * will be stored as uint16, on bits 9..0: 0b0000'00pp'pppp'pppp.
+     * Default is auto: enabled for standard color/monochrome cameras where ISP can work
+     * with both packed/unpacked, but disabled for other cameras like ToF.
+     */
+    tl::optional<bool> rawPacked;
 };
 
 DEPTHAI_SERIALIZE_EXT(CameraProperties,
@@ -188,6 +207,7 @@ DEPTHAI_SERIALIZE_EXT(CameraProperties,
                       warpMeshHeight,
                       calibAlpha,
                       warpMeshStepWidth,
-                      warpMeshStepHeight);
+                      warpMeshStepHeight,
+                      rawPacked);
 
 }  // namespace dai
