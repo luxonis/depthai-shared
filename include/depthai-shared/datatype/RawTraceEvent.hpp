@@ -7,7 +7,7 @@
 namespace dai
 {
 
-struct RawTraceEvent :public RawBuffer {
+struct RawTraceEvent : public RawBuffer {
     enum Event : std::uint8_t {
         SEND,
         RECEIVE,
@@ -23,6 +23,7 @@ struct RawTraceEvent :public RawBuffer {
     Status status;
     uint32_t srcId;
     uint32_t dstId;
+    uint32_t queueSize;
     Timestamp timestamp;
 
     void serialize(std::vector<std::uint8_t>& metadata, DatatypeEnum& datatype) const override {
@@ -30,10 +31,21 @@ struct RawTraceEvent :public RawBuffer {
         datatype = DatatypeEnum::TraceEvent;
     };
 
-    DEPTHAI_SERIALIZE(RawTraceEvent, event, status, srcId, dstId, timestamp);
+    DEPTHAI_SERIALIZE(RawTraceEvent, event, status, srcId, dstId, queueSize, timestamp);
 };
 
+struct RawNodeTraceEvent : public RawBuffer {
+    uint32_t nodeId;
+    Duration timeToGetMessages;
+    Duration timeToProcess;
+    Duration timeToSendMessages;
 
+    void serialize(std::vector<std::uint8_t>& metadata, DatatypeEnum& datatype) const override {
+        metadata = utility::serialize(*this);
+        datatype = DatatypeEnum::NodeTraceEvent;
+    };
 
+    DEPTHAI_SERIALIZE(RawNodeTraceEvent, nodeId, timeToGetMessages, timeToProcess, timeToSendMessages);
+};
 
 } // namespace dai
