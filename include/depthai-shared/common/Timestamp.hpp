@@ -15,6 +15,11 @@ struct Timestamp {
         using namespace std::chrono;
         return time_point<steady_clock, steady_clock::duration>{seconds(sec) + nanoseconds(nsec)};
     }
+    void set(std::chrono::time_point<std::chrono::steady_clock, std::chrono::steady_clock::duration> tp) {
+        using namespace std::chrono;
+        sec = duration_cast<seconds>(tp.time_since_epoch()).count();
+        nsec = duration_cast<nanoseconds>(tp.time_since_epoch()).count() % 1000000000;
+    }
 };
 
 DEPTHAI_SERIALIZE_EXT(Timestamp, sec, nsec);

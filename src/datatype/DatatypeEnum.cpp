@@ -29,7 +29,7 @@ const std::unordered_map<DatatypeEnum, std::vector<DatatypeEnum>> hierarchy = {
          DatatypeEnum::AprilTagConfig,
          DatatypeEnum::AprilTags,
          DatatypeEnum::BenchmarkReport,
-         DatatypeEnum::TraceEvent,
+         DatatypeEnum::QueueTraceEvent,
          DatatypeEnum::NodeTraceEvent,
          DatatypeEnum::CrashReport,
      }},
@@ -53,7 +53,7 @@ const std::unordered_map<DatatypeEnum, std::vector<DatatypeEnum>> hierarchy = {
     {DatatypeEnum::AprilTags, {}},
     {DatatypeEnum::BenchmarkReport, {}},
     {DatatypeEnum::CrashReport, {}},
-    {DatatypeEnum::TraceEvent, {}},
+    {DatatypeEnum::QueueTraceEvent, {}},
     {DatatypeEnum::NodeTraceEvent, {}},
 };
 

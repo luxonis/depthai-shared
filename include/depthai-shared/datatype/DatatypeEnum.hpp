@@ -26,7 +26,7 @@ enum class DatatypeEnum : std::int32_t {
     ToFConfig,
     TrackedFeatures,
     BenchmarkReport,
-    TraceEvent,
+    QueueTraceEvent,
     NodeTraceEvent,
     CrashReport,
 };

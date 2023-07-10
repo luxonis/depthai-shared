@@ -4,10 +4,9 @@
 #include "depthai-shared/datatype/RawBuffer.hpp"
 #include "depthai-shared/utility/Serialization.hpp"
 
-namespace dai
-{
+namespace dai {
 
-struct RawTraceEvent : public RawBuffer {
+struct RawQueueTraceEvent : public RawBuffer {
     enum Event : std::uint8_t {
         SEND,
         RECEIVE,
@@ -28,24 +27,25 @@ struct RawTraceEvent : public RawBuffer {
 
     void serialize(std::vector<std::uint8_t>& metadata, DatatypeEnum& datatype) const override {
         metadata = utility::serialize(*this);
-        datatype = DatatypeEnum::TraceEvent;
+        datatype = DatatypeEnum::QueueTraceEvent;
     };
 
-    DEPTHAI_SERIALIZE(RawTraceEvent, event, status, srcId, dstId, queueSize, timestamp);
+    DEPTHAI_SERIALIZE(RawQueueTraceEvent, event, status, srcId, dstId, queueSize, timestamp);
 };
 
 struct RawNodeTraceEvent : public RawBuffer {
     uint32_t nodeId;
-    Duration timeToGetMessages;
-    Duration timeToProcess;
-    Duration timeToSendMessages;
+    Timestamp timeLoopStart;
+    Timestamp timeProcStart;  // Time after the node got all the messages needed to process
+    Timestamp timeProcEnd;
+    Timestamp timeLoopEnd;
 
     void serialize(std::vector<std::uint8_t>& metadata, DatatypeEnum& datatype) const override {
         metadata = utility::serialize(*this);
         datatype = DatatypeEnum::NodeTraceEvent;
     };
 
-    DEPTHAI_SERIALIZE(RawNodeTraceEvent, nodeId, timeToGetMessages, timeToProcess, timeToSendMessages);
+    DEPTHAI_SERIALIZE(RawNodeTraceEvent, nodeId, timeLoopStart, timeProcStart, timeProcEnd, timeLoopEnd);
 };
 
-} // namespace dai
+}  // namespace dai
