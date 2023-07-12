@@ -46,14 +46,14 @@ struct Rect {
      * The top-left corner.
      */
     Point2f topLeft() const {
-        return Point2f(x, y);
+        return Point2f(x, y, isNormalized());
     }
 
     /**
      * The bottom-right corner
      */
     Point2f bottomRight() const {
-        return Point2f(x + width, y + height);
+        return Point2f(x + width, y + height, isNormalized());
     }
 
     /**
