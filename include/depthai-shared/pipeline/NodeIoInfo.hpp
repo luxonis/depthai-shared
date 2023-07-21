@@ -14,8 +14,9 @@ struct NodeIoInfo {
     bool blocking = true;
     int queueSize = 8;
     bool waitForMessage = false;
+    uint32_t id;
 };
 
-DEPTHAI_SERIALIZE_EXT(NodeIoInfo, group, name, type, blocking, queueSize, waitForMessage);
+DEPTHAI_SERIALIZE_EXT(NodeIoInfo, group, name, type, blocking, queueSize, waitForMessage, id);
 
 }  // namespace dai

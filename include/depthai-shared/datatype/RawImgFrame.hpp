@@ -3,6 +3,7 @@
 #include <unordered_map>
 
 #include "depthai-shared/common/ImgTransformation.hpp"
+#include "depthai-shared/common/FrameEvent.hpp"
 #include "depthai-shared/common/Timestamp.hpp"
 #include "depthai-shared/datatype/RawBuffer.hpp"
 #include "depthai-shared/utility/Serialization.hpp"
@@ -186,6 +187,7 @@ struct RawImgFrame : public RawBuffer {
     Timestamp ts = {};         // generation timestamp, synced to host time
     Timestamp tsDevice = {};   // generation timestamp, direct device monotonic clock
     ImgTransformation transformation;
+    dai::FrameEvent event = dai::FrameEvent::NONE;
 
     void serialize(std::vector<std::uint8_t>& metadata, DatatypeEnum& datatype) const override {
         metadata = utility::serialize(*this);
