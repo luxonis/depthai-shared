@@ -10,7 +10,6 @@ namespace dai {
 
 /// RawToFConfig configuration structure
 struct RawToFConfig : public RawBuffer {
-    int dummy = 1;
     /**
      * DepthParams configuration structure.
      */
