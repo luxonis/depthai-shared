@@ -15,8 +15,10 @@ struct PointCloudProperties : PropertiesSerializable<Properties, PointCloudPrope
     RawPointCloudConfig initialConfig;
 
     int numFramesPool = 4;
+
+    int numShaves = 1;
 };
 
-DEPTHAI_SERIALIZE_EXT(PointCloudProperties, initialConfig, numFramesPool);
+DEPTHAI_SERIALIZE_EXT(PointCloudProperties, initialConfig, numFramesPool, numShaves);
 
 }  // namespace dai
