@@ -41,6 +41,8 @@ struct BoardConfig {
         /// Sets the `TCP_NODELAY` option for XLink TCP sockets (disable Nagle's algorithm),
         /// reducing latency at the expense of a small hit for max throughput. Default is `true`
         bool xlinkTcpNoDelay = true;
+        /// Force enable networking
+        bool forceEnable = false;
     };
 
     Network network;
@@ -159,7 +161,7 @@ struct BoardConfig {
 };
 
 DEPTHAI_SERIALIZE_EXT(BoardConfig::USB, vid, pid, flashBootedVid, flashBootedPid, maxSpeed, productName, manufacturer);
-DEPTHAI_SERIALIZE_EXT(BoardConfig::Network, mtu, xlinkTcpNoDelay);
+DEPTHAI_SERIALIZE_EXT(BoardConfig::Network, mtu, xlinkTcpNoDelay, forceEnable);
 DEPTHAI_SERIALIZE_EXT(BoardConfig::GPIO, mode, direction, level, pull, drive, schmitt, slewFast);
 DEPTHAI_SERIALIZE_EXT(BoardConfig::UART, tmp);
 DEPTHAI_SERIALIZE_EXT(BoardConfig::Camera, name, sensorType, orientation);
