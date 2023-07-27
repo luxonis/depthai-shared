@@ -18,12 +18,13 @@ namespace dai {
  */
 struct EepromData {
     uint32_t version = 7;
-    std::string productName, boardCustom, boardName, boardRev, boardConf, hardwareConf, batchName;
+    std::string productName, boardCustom, boardName, boardRev, boardConf, hardwareConf, deviceName;
     uint64_t batchTime{0};
     uint32_t boardOptions{0};
     std::unordered_map<CameraBoardSocket, CameraInfo> cameraData;
     StereoRectification stereoRectificationData;
     Extrinsics imuExtrinsics;
+    Extrinsics housingExtrinsics;
     std::vector<uint8_t> miscellaneousData;
 };
 
@@ -35,12 +36,13 @@ DEPTHAI_SERIALIZE_OPTIONAL_EXT(EepromData,
                                boardConf,
                                hardwareConf,
                                productName,
-                               batchName,
+                               deviceName,
                                batchTime,
                                boardOptions,
                                cameraData,
                                stereoRectificationData,
                                imuExtrinsics,
+                               housingExtrinsics,
                                miscellaneousData);
 
 }  // namespace dai
