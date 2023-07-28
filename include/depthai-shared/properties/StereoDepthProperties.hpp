@@ -153,7 +153,7 @@ struct StereoDepthProperties : PropertiesSerializable<Properties, StereoDepthPro
      * Default value is false.
      */
     bool customPixelDescriptors = false;
-    
+
     /*
      * Override baseline from calibration.
      * Used only in disparity to depth conversion.
