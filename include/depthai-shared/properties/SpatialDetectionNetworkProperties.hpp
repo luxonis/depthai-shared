@@ -19,7 +19,8 @@ namespace dai {
 struct SpatialDetectionNetworkProperties : PropertiesSerializable<Properties, SpatialDetectionNetworkProperties> {
     float detectedBBScaleFactor = 1.0;
     SpatialLocationCalculatorConfigThresholds depthThresholds;
-    SpatialLocationCalculatorAlgorithm calculationAlgorithm = SpatialLocationCalculatorAlgorithm::AVERAGE;
+    SpatialLocationCalculatorAlgorithm calculationAlgorithm = SpatialLocationCalculatorAlgorithm::MEDIAN;
+    std::int32_t stepSize = SpatialLocationCalculatorConfigData::AUTO;
 };
 
 DEPTHAI_SERIALIZE_EXT(SpatialDetectionNetworkProperties, detectedBBScaleFactor, depthThresholds, calculationAlgorithm);

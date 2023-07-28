@@ -21,6 +21,7 @@ struct Point2f {
         this->y = y;
         this->normalized = normalized;
     }
+
     float x = 0, y = 0;
     tl::optional<bool> normalized = tl::nullopt;
 
