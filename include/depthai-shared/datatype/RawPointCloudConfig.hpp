@@ -25,7 +25,7 @@ struct RawPointCloudConfig : public RawBuffer {
 
     float scale = 1.f;
 
-    bool useFastMath = true;
+    bool useFastMath = false;
 
     void serialize(std::vector<std::uint8_t>& metadata, DatatypeEnum& datatype) const override {
         metadata = utility::serialize(*this);
