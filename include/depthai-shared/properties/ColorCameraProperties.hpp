@@ -5,7 +5,6 @@
 #include "depthai-shared/datatype/RawCameraControl.hpp"
 #include "depthai-shared/datatype/RawImgFrame.hpp"
 #include "depthai-shared/properties/Properties.hpp"
-#include "depthai-shared/datatype/RawImgFrame.hpp"
 
 namespace dai {
 

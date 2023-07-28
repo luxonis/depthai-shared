@@ -29,7 +29,7 @@ const std::unordered_map<DatatypeEnum, std::vector<DatatypeEnum>> hierarchy = {
          DatatypeEnum::AprilTagConfig,
          DatatypeEnum::AprilTags,
          DatatypeEnum::OccupancyPool,
-         DatatypeEnum::PointCloudConfig,	
+         DatatypeEnum::PointCloudConfig,
          DatatypeEnum::BenchmarkReport,
          DatatypeEnum::QueueTraceEvent,
          DatatypeEnum::NodeTraceEvent,
