@@ -4,7 +4,6 @@
 #include <cstdint>
 
 // project
-#include "depthai-shared/common/optional.hpp"
 #include "depthai-shared/utility/Serialization.hpp"
 
 namespace dai {
@@ -16,18 +15,25 @@ namespace dai {
  */
 struct Point2f {
     Point2f() = default;
-    Point2f(float x, float y, tl::optional<bool> normalized = tl::nullopt) {
+    Point2f(float x, float y) {
         this->x = x;
         this->y = y;
+        this->hasNormalized = false;
+    }
+    Point2f(float x, float y, bool normalized) {
+        this->x = x;
+        this->y = y;
+        this->hasNormalized = true;
         this->normalized = normalized;
     }
 
     float x = 0, y = 0;
-    tl::optional<bool> normalized = tl::nullopt;
+    bool normalized = false;
+    bool hasNormalized = false;
 
     bool isNormalized() const {
-        if(normalized) {
-            return *normalized;
+        if(hasNormalized) {
+            return normalized;
         }
         // When ambiguous, default to denormalized
         if((x == 0 || x == 1) && (y == 0 || y == 1)) return false;
@@ -35,6 +41,6 @@ struct Point2f {
     }
 };
 
-DEPTHAI_SERIALIZE_EXT(Point2f, x, y);
+DEPTHAI_SERIALIZE_EXT(Point2f, x, y, normalized, hasNormalized);
 
 }  // namespace dai
