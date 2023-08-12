@@ -2,6 +2,7 @@
 #include <cstdint>
 #include <vector>
 
+#include "depthai-shared/common/MedianFilter.hpp"
 #include "depthai-shared/datatype/DatatypeEnum.hpp"
 #include "depthai-shared/datatype/RawBuffer.hpp"
 #include "depthai-shared/utility/Serialization.hpp"
@@ -14,11 +15,6 @@ struct RawToFConfig : public RawBuffer {
      * DepthParams configuration structure.
      */
     struct DepthParams {
-        /**
-         * Enable feature maintaining or not.
-         */
-        bool enable = true;
-
         /**
          * Enable averaging between phases with same modulation frequency(e.g. for ToF cameras with phase shuffle).
          * The depth frame rate will be half if this is enabled
@@ -38,7 +34,12 @@ struct RawToFConfig : public RawBuffer {
 
         TypeFMod freqModUsed = TypeFMod::F_MOD_MIN;
 
-        DEPTHAI_SERIALIZE(DepthParams, enable, avgPhaseShuffle, minimumAmplitude, freqModUsed);
+        /**
+         * Set kernel size for depth median filtering, or disable
+         */
+        MedianFilter median = MedianFilter::KERNEL_5x5;
+
+        DEPTHAI_SERIALIZE(DepthParams, avgPhaseShuffle, minimumAmplitude, freqModUsed, median);
     };
 
     /**
