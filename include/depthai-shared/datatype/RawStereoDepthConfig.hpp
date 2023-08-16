@@ -108,6 +108,27 @@ struct RawStereoDepthConfig : public RawBuffer {
          * Kernel radius difference threshold
          */
         uint8_t outlierDiffThreshold = 4;
+        /*
+         * Used only for debug purposes. centerAlignmentShiftFactor is set automatically in firmware,
+         * from camera extrinsics when depth alignment to camera is enabled.
+         * Center alignment is achieved by shifting the obtained disparity map by a scale factor.
+         * It's used to align to a different camera that is on the same horizontal baseline as the two stereo cameras.
+         * E.g. if we have a device with 10 cm stereo baseline, and we have another camera inbetween,
+         * 9cm from the LEFT camera and 1 cm from the RIGHT camera we can align the obtained disparity map using a scale factor of 0.9.
+         * Note that aligning disparity map to a different camera involves 2 steps:
+         * 1. Shifting obtained disparity map.
+         * 2. Warping the image to counter rotate and scaling to match the FOV.
+         * Center alignment factor 1 is equivalent to RECTIFIED_RIGHT
+         * Center alignment factor 0 is equivalent to RECTIFIED_LEFT
+         */
+        tl::optional<float> centerAlignmentShiftFactor;
+
+        /**
+         * Invalidate X amount of pixels at the edge of disparity frame.
+         * For right and center alignment X pixels will be invalidated from the right edge,
+         * for left alignment from the left edge.
+         */
+        std::int32_t numInvalidateEdgePixels = 0;
 
         DEPTHAI_SERIALIZE(AlgorithmControl,
                           depthAlign,
@@ -122,7 +143,9 @@ struct RawStereoDepthConfig : public RawBuffer {
                           replaceInvalidDisparity,
                           outlierRemoveThreshold,
                           outlierCensusThreshold,
-                          outlierDiffThreshold);
+                          outlierDiffThreshold,
+                          centerAlignmentShiftFactor,
+                          numInvalidateEdgePixels);
     };
 
     /**
@@ -179,7 +202,7 @@ struct RawStereoDepthConfig : public RawBuffer {
             std::int32_t delta = 0;
 
             /**
-             * Nubmer of iterations over the image in both horizontal and vertical direction.
+             * Number of iterations over the image in both horizontal and vertical direction.
              */
             std::int32_t numIterations = 1;
 
@@ -272,6 +295,35 @@ struct RawStereoDepthConfig : public RawBuffer {
         ThresholdFilter thresholdFilter;
 
         /**
+         * Brightness filtering.
+         * If input frame pixel is too dark or too bright, disparity will be invalidated.
+         * The idea is that for too dark/too bright pixels we have low confidence,
+         * since that area was under/over exposed and details were lost.
+         */
+        struct BrightnessFilter {
+            /**
+             * Minimum pixel brightness.
+             * If input pixel is less or equal than this value the depth value is invalidated.
+             */
+            std::int32_t minBrightness = 0;
+            /**
+             * Maximum range in depth units.
+             * If input pixel is less or equal than this value the depth value is invalidated.
+             */
+            std::int32_t maxBrightness = 256;
+
+            DEPTHAI_SERIALIZE(BrightnessFilter, minBrightness, maxBrightness);
+        };
+
+        /**
+         * Brightness filtering.
+         * If input frame pixel is too dark or too bright, disparity will be invalidated.
+         * The idea is that for too dark/too bright pixels we have low confidence,
+         * since that area was under/over exposed and details were lost.
+         */
+        BrightnessFilter brightnessFilter;
+
+        /**
          * Speckle filtering.
          * Removes speckle noise.
          */
@@ -327,7 +379,8 @@ struct RawStereoDepthConfig : public RawBuffer {
          */
         DecimationFilter decimationFilter;
 
-        DEPTHAI_SERIALIZE(PostProcessing, median, bilateralSigmaValue, spatialFilter, temporalFilter, thresholdFilter, speckleFilter, decimationFilter);
+        DEPTHAI_SERIALIZE(
+            PostProcessing, median, bilateralSigmaValue, spatialFilter, temporalFilter, thresholdFilter, brightnessFilter, speckleFilter, decimationFilter);
     };
 
     /**

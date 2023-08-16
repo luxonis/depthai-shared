@@ -15,11 +15,7 @@ namespace dai {
  */
 struct Point3f {
     Point3f() = default;
-    Point3f(float x, float y, float z) {
-        this->x = x;
-        this->y = y;
-        this->z = z;
-    }
+    Point3f(float x, float y, float z) : x(x), y(y), z(z) {}
     float x = 0, y = 0, z = 0;
 };
 
