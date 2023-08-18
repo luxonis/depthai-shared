@@ -2,8 +2,8 @@
 #include <cstdint>
 #include <vector>
 
-#include "depthai-shared/datatype/DatatypeEnum.hpp"
 #include "depthai-shared/common/Timestamp.hpp"
+#include "depthai-shared/datatype/DatatypeEnum.hpp"
 #include "depthai-shared/utility/Serialization.hpp"
 
 namespace dai {
