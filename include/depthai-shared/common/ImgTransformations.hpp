@@ -42,7 +42,6 @@ struct ImgTransformation {
 
    private:
     static dai::Point2f applyMatrixTransformation(dai::Point2f point, std::vector<std::vector<float>>& matrix);
-
 };
 
 DEPTHAI_SERIALIZE_EXT(ImgTransformation,
