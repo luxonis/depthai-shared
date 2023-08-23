@@ -6,8 +6,8 @@
 
 // project
 #include "depthai-shared/common/ProcessorType.hpp"
-#include "depthai-shared/datatype/RawBuffer.hpp"
 #include "depthai-shared/common/optional.hpp"
+#include "depthai-shared/datatype/RawBuffer.hpp"
 #include "depthai-shared/utility/Serialization.hpp"
 
 namespace dai {
@@ -87,6 +87,5 @@ struct RawCrashDump : public RawBuffer {
 
     DEPTHAI_SERIALIZE_EXT(CrashDump, crashReports, depthaiCommitHash, deviceId);
 };
-
 
 }  // namespace dai
