@@ -51,7 +51,7 @@ struct CameraFeatures {
      */
     bool hasAutofocusIC = false;
     /**
-     *  Autofocus based on lensposition/boardconfig
+     *  Whether camera has auto focus capabilities, or is a fixed focus lens
      */
     bool hasAutofocus = false;
     /**
