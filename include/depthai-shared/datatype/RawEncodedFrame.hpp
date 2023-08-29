@@ -15,7 +15,8 @@ struct RawEncodedFrame : public RawBuffer {
     enum class FrameType : std::uint8_t {
         I,
         P,
-        B
+        B,
+        Unknown
     };
 
     unsigned int height;
