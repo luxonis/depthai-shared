@@ -158,7 +158,7 @@ struct RawImgFrame : public RawBuffer {
     }
 
     static constexpr bool isInterleaved(Type type) {
-        switch (type) {
+        switch(type) {
             case Type::YUV422i:
             case Type::RGB888i:
             case Type::BGR888i:
@@ -200,7 +200,7 @@ struct RawImgFrame : public RawBuffer {
     }
 
     static constexpr Type toPlanar(Type type) {
-        switch (type) {
+        switch(type) {
             case Type::YUV422i:
                 return Type::YUV422p;
             case Type::RGB888i:
@@ -242,13 +242,12 @@ struct RawImgFrame : public RawBuffer {
             case Type::RAW32:
             case Type::NONE:
                 return type;
-
         }
         return type;
     }
 
     static constexpr Type toInterleaved(Type type) {
-        switch (type) {
+        switch(type) {
             case Type::YUV422p:
                 return Type::YUV422i;
             case Type::RGB888p:
@@ -288,7 +287,7 @@ struct RawImgFrame : public RawBuffer {
             case Type::BITSTREAM:
             case Type::HDR:
             case Type::RAW32:
-            case Type::NONE:    
+            case Type::NONE:
                 return type;
         }
         return type;
