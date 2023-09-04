@@ -93,21 +93,9 @@ struct ColorCameraProperties : PropertiesSerializable<Properties, ColorCameraPro
     CameraImageOrientation imageOrientation = CameraImageOrientation::AUTO;
 
     /**
-     * For 24 bit color these can be either RGB or BGR
-     */
-    ColorOrder colorOrder = ColorOrder::BGR;
-    /**
-     * Are colors interleaved (R1G1B1, R2G2B2, ...) or planar (R1R2..., G1G2..., B1B2)
-     */
-    bool interleaved = true;
-    /**
      * Frame type
      */
     RawImgFrame::Type previewType = RawImgFrame::Type::BGR888p;
-    /**
-     * Are values FP16 type (0.0 - 255.0)
-     */
-    bool fp16 = false;
 
     /**
      * Preview frame output height
@@ -215,10 +203,7 @@ DEPTHAI_SERIALIZE_EXT(ColorCameraProperties,
                       boardSocket,
                       cameraName,
                       imageOrientation,
-                      colorOrder,
-                      interleaved,
                       previewType,
-                      fp16,
                       previewHeight,
                       previewWidth,
                       videoWidth,

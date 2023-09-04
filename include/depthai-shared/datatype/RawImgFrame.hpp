@@ -157,6 +157,142 @@ struct RawImgFrame : public RawBuffer {
         return 0;
     }
 
+    static constexpr bool isInterleaved(Type type) {
+        switch(type) {
+            case Type::YUV422i:
+            case Type::RGB888i:
+            case Type::BGR888i:
+            case Type::RGBF16F16F16i:
+            case Type::BGRF16F16F16i:
+            case Type::YUV444i:
+                return true;
+            case Type::YUV400p:
+            case Type::YUV422p:
+            case Type::RGB888p:
+            case Type::BGR888p:
+            case Type::RGBF16F16F16p:
+            case Type::BGRF16F16F16p:
+            case Type::YUV444p:
+            case Type::YUV420p:
+            case Type::RGBA8888:
+            case Type::RGB161616:
+            case Type::GRAY8:
+            case Type::GRAYF16:
+            case Type::LUT2:
+            case Type::LUT4:
+            case Type::LUT16:
+            case Type::RAW16:
+            case Type::RAW14:
+            case Type::RAW12:
+            case Type::RAW10:
+            case Type::RAW8:
+            case Type::PACK10:
+            case Type::PACK12:
+            case Type::NV12:
+            case Type::NV21:
+            case Type::BITSTREAM:
+            case Type::HDR:
+            case Type::RAW32:
+            case Type::NONE:
+                return false;
+        }
+        return false;
+    }
+
+    static constexpr Type toPlanar(Type type) {
+        switch(type) {
+            case Type::YUV422i:
+                return Type::YUV422p;
+            case Type::RGB888i:
+                return Type::RGB888p;
+            case Type::BGR888i:
+                return Type::BGR888p;
+            case Type::RGBF16F16F16i:
+                return Type::RGBF16F16F16p;
+            case Type::BGRF16F16F16i:
+                return Type::BGRF16F16F16p;
+            case Type::YUV444i:
+                return Type::YUV444p;
+            case Type::YUV400p:
+            case Type::YUV422p:
+            case Type::RGB888p:
+            case Type::BGR888p:
+            case Type::RGBF16F16F16p:
+            case Type::BGRF16F16F16p:
+            case Type::YUV444p:
+            case Type::YUV420p:
+            case Type::RGBA8888:
+            case Type::RGB161616:
+            case Type::GRAY8:
+            case Type::GRAYF16:
+            case Type::LUT2:
+            case Type::LUT4:
+            case Type::LUT16:
+            case Type::RAW16:
+            case Type::RAW14:
+            case Type::RAW12:
+            case Type::RAW10:
+            case Type::RAW8:
+            case Type::PACK10:
+            case Type::PACK12:
+            case Type::NV12:
+            case Type::NV21:
+            case Type::BITSTREAM:
+            case Type::HDR:
+            case Type::RAW32:
+            case Type::NONE:
+                return type;
+        }
+        return type;
+    }
+
+    static constexpr Type toInterleaved(Type type) {
+        switch(type) {
+            case Type::YUV422p:
+                return Type::YUV422i;
+            case Type::RGB888p:
+                return Type::RGB888i;
+            case Type::BGR888p:
+                return Type::BGR888i;
+            case Type::RGBF16F16F16p:
+                return Type::RGBF16F16F16i;
+            case Type::BGRF16F16F16p:
+                return Type::BGRF16F16F16i;
+            case Type::YUV444p:
+                return Type::YUV444i;
+            case Type::YUV400p:
+            case Type::YUV420p:
+            case Type::YUV422i:
+            case Type::RGB888i:
+            case Type::BGR888i:
+            case Type::RGBF16F16F16i:
+            case Type::BGRF16F16F16i:
+            case Type::YUV444i:
+            case Type::RGBA8888:
+            case Type::RGB161616:
+            case Type::GRAY8:
+            case Type::GRAYF16:
+            case Type::LUT2:
+            case Type::LUT4:
+            case Type::LUT16:
+            case Type::RAW16:
+            case Type::RAW14:
+            case Type::RAW12:
+            case Type::RAW10:
+            case Type::RAW8:
+            case Type::PACK10:
+            case Type::PACK12:
+            case Type::NV12:
+            case Type::NV21:
+            case Type::BITSTREAM:
+            case Type::HDR:
+            case Type::RAW32:
+            case Type::NONE:
+                return type;
+        }
+        return type;
+    }
+
     struct Specs {
         Type type = Type::NONE;
         unsigned int width;     // width in pixels

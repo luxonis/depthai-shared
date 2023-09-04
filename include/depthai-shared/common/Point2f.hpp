@@ -26,7 +26,6 @@ struct Point2f {
         this->hasNormalized = true;
         this->normalized = normalized;
     }
-
     float x = 0, y = 0;
     bool normalized = false;
     bool hasNormalized = false;

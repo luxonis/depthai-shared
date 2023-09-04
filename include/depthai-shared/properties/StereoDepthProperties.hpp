@@ -229,5 +229,4 @@ DEPTHAI_SERIALIZE_EXT(StereoDepthProperties,
                       rectificationUseSpecTranslation,
                       depthAlignmentUseSpecTranslation,
                       alphaScaling);
-
 }  // namespace dai
