@@ -27,16 +27,12 @@ struct RawEncodedFrame : public RawBuffer {
     bool lossless; // jpeg
     FrameType type; // h264
 
-    int64_t sequenceNum = 0;  // increments for each frame
-    Timestamp ts = {};        // generation timestamp, synced to host time
-    Timestamp tsDevice = {};  // generation timestamp, direct device monotonic clock
-
     void serialize(std::vector<std::uint8_t>& metadata, DatatypeEnum& datatype) const override {
         metadata = utility::serialize(*this);
         datatype = DatatypeEnum::EncodedFrame;
     };
 
-    DEPTHAI_SERIALIZE(RawEncodedFrame, sequenceNum, ts, tsDevice);
+    DEPTHAI_SERIALIZE(RawEncodedFrame, height, width, quality, profile, lossless, type, RawBuffer::sequenceNum, RawBuffer::ts, RawBuffer::tsDevice);
 };
 
 }
