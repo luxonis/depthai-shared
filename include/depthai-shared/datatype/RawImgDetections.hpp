@@ -27,7 +27,7 @@ struct RawImgDetections : public RawBuffer {
         datatype = DatatypeEnum::ImgDetections;
     };
 
-    DEPTHAI_SERIALIZE(RawImgDetections, detections, sequenceNum, ts, tsDevice);
+    DEPTHAI_SERIALIZE(RawImgDetections, detections, RawBuffer::sequenceNum, RawBuffer::ts, RawBuffer::tsDevice);
 };
 
 }  // namespace dai

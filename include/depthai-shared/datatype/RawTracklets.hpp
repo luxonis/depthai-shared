@@ -64,7 +64,7 @@ struct RawTracklets : public RawBuffer {
         datatype = DatatypeEnum::Tracklets;
     };
 
-    DEPTHAI_SERIALIZE(RawTracklets, tracklets, sequenceNum, ts, tsDevice);
+    DEPTHAI_SERIALIZE(RawTracklets, tracklets, RawBuffer::sequenceNum, RawBuffer::ts, RawBuffer::tsDevice);
 };
 
 }  // namespace dai

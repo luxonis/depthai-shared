@@ -68,7 +68,7 @@ struct RawSpatialLocations : public RawBuffer {
         datatype = DatatypeEnum::SpatialLocationCalculatorData;
     };
 
-    DEPTHAI_SERIALIZE(RawSpatialLocations, spatialLocations, sequenceNum, ts, tsDevice);
+    DEPTHAI_SERIALIZE(RawSpatialLocations, spatialLocations, RawBuffer::sequenceNum, RawBuffer::ts, RawBuffer::tsDevice);
 };
 
 }  // namespace dai

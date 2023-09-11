@@ -17,7 +17,7 @@ struct RawNNData : public RawBuffer {
         datatype = DatatypeEnum::NNData;
     };
 
-    DEPTHAI_SERIALIZE(RawNNData, tensors, batchSize, sequenceNum, ts, tsDevice);
+    DEPTHAI_SERIALIZE(RawNNData, tensors, batchSize, RawBuffer::sequenceNum, RawBuffer::ts, RawBuffer::tsDevice);
 };
 
 }  // namespace dai

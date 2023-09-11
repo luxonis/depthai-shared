@@ -51,7 +51,7 @@ struct RawTrackedFeatures : public RawBuffer {
         datatype = DatatypeEnum::TrackedFeatures;
     };
 
-    DEPTHAI_SERIALIZE(RawTrackedFeatures, trackedFeatures, sequenceNum, ts, tsDevice);
+    DEPTHAI_SERIALIZE(RawTrackedFeatures, trackedFeatures, RawBuffer::sequenceNum, RawBuffer::ts, RawBuffer::tsDevice);
 };
 
 }  // namespace dai
