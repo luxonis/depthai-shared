@@ -26,6 +26,8 @@ struct EepromData {
     Extrinsics imuExtrinsics;
     Extrinsics housingExtrinsics;
     std::vector<uint8_t> miscellaneousData;
+    bool stereoUseSpecTranslation{true};
+    bool stereoEnableDistortionCorrection{false};
 };
 
 DEPTHAI_SERIALIZE_OPTIONAL_EXT(EepromData,
@@ -43,6 +45,8 @@ DEPTHAI_SERIALIZE_OPTIONAL_EXT(EepromData,
                                stereoRectificationData,
                                imuExtrinsics,
                                housingExtrinsics,
-                               miscellaneousData);
+                               miscellaneousData,
+                               stereoUseSpecTranslation,
+                               stereoEnableDistortionCorrection);
 
 }  // namespace dai
