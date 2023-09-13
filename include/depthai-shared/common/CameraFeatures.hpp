@@ -67,7 +67,8 @@ struct CameraFeatures {
      */
     std::vector<CameraSensorConfig> configs;
 
-    DEPTHAI_SERIALIZE(CameraFeatures, socket, sensorName, width, height, orientation, supportedTypes, hasAutofocusIC, hasAutofocus, name, additionalNames, configs);
+    DEPTHAI_SERIALIZE(
+        CameraFeatures, socket, sensorName, width, height, orientation, supportedTypes, hasAutofocusIC, hasAutofocus, name, additionalNames, configs);
 };
 
 }  // namespace dai
