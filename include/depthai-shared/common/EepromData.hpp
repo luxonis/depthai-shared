@@ -26,6 +26,8 @@ struct EepromData {
     Extrinsics imuExtrinsics;
     Extrinsics housingExtrinsics;
     std::vector<uint8_t> miscellaneousData;
+    uint8_t reservedBitfield{0};
+    CameraBoardSocket verticalCameraSocket;
     bool stereoUseSpecTranslation{true};
     bool stereoEnableDistortionCorrection{false};
 };
@@ -46,6 +48,8 @@ DEPTHAI_SERIALIZE_OPTIONAL_EXT(EepromData,
                                imuExtrinsics,
                                housingExtrinsics,
                                miscellaneousData,
+                               reservedBitfield,
+                               verticalCameraSocket,
                                stereoUseSpecTranslation,
                                stereoEnableDistortionCorrection);
 
