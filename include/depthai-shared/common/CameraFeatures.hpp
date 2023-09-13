@@ -49,6 +49,10 @@ struct CameraFeatures {
     /**
      *  Whether an autofocus VCM IC was detected
      */
+    bool hasAutofocusIC = false;
+    /**
+     *  Whether camera has auto focus capabilities, or is a fixed focus lens
+     */
     bool hasAutofocus = false;
     /**
      * Camera name or alias
@@ -63,7 +67,7 @@ struct CameraFeatures {
      */
     std::vector<CameraSensorConfig> configs;
 
-    DEPTHAI_SERIALIZE(CameraFeatures, socket, sensorName, width, height, orientation, supportedTypes, hasAutofocus, name, additionalNames, configs);
+    DEPTHAI_SERIALIZE(CameraFeatures, socket, sensorName, width, height, orientation, supportedTypes, hasAutofocusIC, hasAutofocus, name, additionalNames, configs);
 };
 
 }  // namespace dai
