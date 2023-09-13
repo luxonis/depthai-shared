@@ -19,20 +19,21 @@ struct RawEncodedFrame : public RawBuffer {
         Unknown
     };
 
-    unsigned int height;
-    unsigned int width;
     unsigned int quality;
     Profile profile;
 
     bool lossless; // jpeg
     FrameType type; // h264
 
+    unsigned int frameOffset = 0;
+    unsigned int frameSize = 0;
+
     void serialize(std::vector<std::uint8_t>& metadata, DatatypeEnum& datatype) const override {
         metadata = utility::serialize(*this);
         datatype = DatatypeEnum::EncodedFrame;
     };
 
-    DEPTHAI_SERIALIZE(RawEncodedFrame, height, width, quality, profile, lossless, type, RawBuffer::sequenceNum, RawBuffer::ts, RawBuffer::tsDevice);
+    DEPTHAI_SERIALIZE(RawEncodedFrame, quality, profile, lossless, type, frameOffset, frameSize, RawBuffer::sequenceNum, RawBuffer::ts, RawBuffer::tsDevice);
 };
 
 }
