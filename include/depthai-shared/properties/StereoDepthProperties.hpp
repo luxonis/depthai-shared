@@ -160,7 +160,7 @@ struct StereoDepthProperties : PropertiesSerializable<Properties, StereoDepthPro
      * Suitable for debugging.
      * Default: true
      */
-    bool disparityToDepthUseSpecTranslation = true;
+    tl::optional<bool> disparityToDepthUseSpecTranslation = true;
 
     /**
      * Obtain rectification matrices using spec translation (design data) or from calibration in calculations.
