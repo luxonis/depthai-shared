@@ -19,15 +19,15 @@ struct RawEncodedFrame : public RawBuffer {
         Unknown
     };
 
-    unsigned int quality;
-    unsigned int bitrate;
+    std::uint32_t quality;
+    std::uint32_t bitrate;
     Profile profile;
 
     bool lossless; // jpeg
     FrameType type; // h264
 
-    unsigned int frameOffset = 0;
-    unsigned int frameSize = 0;
+    std::uint32_t frameOffset = 0;
+    std::uint32_t frameSize = 0;
 
     void serialize(std::vector<std::uint8_t>& metadata, DatatypeEnum& datatype) const override {
         metadata = utility::serialize(*this);
