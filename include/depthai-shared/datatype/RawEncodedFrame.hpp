@@ -34,7 +34,7 @@ struct RawEncodedFrame : public RawBuffer {
         datatype = DatatypeEnum::EncodedFrame;
     };
 
-    DEPTHAI_SERIALIZE(RawEncodedFrame, quality, profile, lossless, type, frameOffset, frameSize, RawBuffer::sequenceNum, RawBuffer::ts, RawBuffer::tsDevice);
+    DEPTHAI_SERIALIZE(RawEncodedFrame, quality, bitrate, profile, lossless, type, frameOffset, frameSize, RawBuffer::sequenceNum, RawBuffer::ts, RawBuffer::tsDevice);
 };
 
 }
