@@ -20,6 +20,7 @@ struct RawEncodedFrame : public RawBuffer {
     };
 
     unsigned int quality;
+    unsigned int bitrate;
     Profile profile;
 
     bool lossless; // jpeg
