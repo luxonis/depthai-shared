@@ -28,6 +28,7 @@ const std::unordered_map<DatatypeEnum, std::vector<DatatypeEnum>> hierarchy = {
          DatatypeEnum::TrackedFeatures,
          DatatypeEnum::AprilTagConfig,
          DatatypeEnum::AprilTags,
+         DatatypeEnum::MessageGroup,
      }},
     {DatatypeEnum::ImgFrame, {}},
     {DatatypeEnum::NNData, {}},
@@ -47,6 +48,7 @@ const std::unordered_map<DatatypeEnum, std::vector<DatatypeEnum>> hierarchy = {
     {DatatypeEnum::TrackedFeatures, {}},
     {DatatypeEnum::AprilTagConfig, {}},
     {DatatypeEnum::AprilTags, {}},
+    {DatatypeEnum::MessageGroup, {}},
 };
 
 bool isDatatypeSubclassOf(DatatypeEnum parent, DatatypeEnum children) {
