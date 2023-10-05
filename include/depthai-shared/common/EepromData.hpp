@@ -29,6 +29,7 @@ struct EepromData {
     std::vector<uint8_t> miscellaneousData;
     bool stereoUseSpecTranslation{true};
     bool stereoEnableDistortionCorrection{false};
+    CameraBoardSocket verticalCameraSocket = dai::CameraBoardSocket::AUTO;
 };
 
 DEPTHAI_SERIALIZE_OPTIONAL_EXT(EepromData,
@@ -49,6 +50,7 @@ DEPTHAI_SERIALIZE_OPTIONAL_EXT(EepromData,
                                housingExtrinsics,
                                miscellaneousData,
                                stereoUseSpecTranslation,
-                               stereoEnableDistortionCorrection);
+                               stereoEnableDistortionCorrection,
+                               verticalCameraSocket);
 
 }  // namespace dai
