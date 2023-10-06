@@ -14,9 +14,13 @@ struct ImgDetection {
     float ymin = 0.f;
     float xmax = 0.f;
     float ymax = 0.f;
+    int xIndex = 0;
+    int yIndex = 0;
+    int headIndex = 0;
+    int anchorIndex = 0;
 };
 
-DEPTHAI_SERIALIZE_EXT(ImgDetection, label, confidence, xmin, ymin, xmax, ymax);
+DEPTHAI_SERIALIZE_EXT(ImgDetection, label, confidence, xmin, ymin, xmax, ymax, xIndex, yIndex, headIndex, anchorIndex);
 
 /// RawImgDetections structure
 struct RawImgDetections : public RawBuffer {

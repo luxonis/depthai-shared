@@ -17,7 +17,8 @@ struct SpatialImgDetection : public ImgDetection {
     SpatialLocationCalculatorConfigData boundingBoxMapping;
 };
 
-DEPTHAI_SERIALIZE_EXT(SpatialImgDetection, label, confidence, xmin, ymin, xmax, ymax, spatialCoordinates, boundingBoxMapping);
+DEPTHAI_SERIALIZE_EXT(
+    SpatialImgDetection, label, confidence, xmin, ymin, xmax, ymax, xIndex, yIndex, headIndex, anchorIndex, spatialCoordinates, boundingBoxMapping);
 
 /// RawSpatialImgDetections structure
 struct RawSpatialImgDetections : public RawBuffer {
