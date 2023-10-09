@@ -202,4 +202,5 @@ nop::Status<std::shared_ptr<RawBuffer>> deserializeNopToRaw(DatatypeEnum type, R
     }
     return {};
 }
+
 }  // namespace dai
