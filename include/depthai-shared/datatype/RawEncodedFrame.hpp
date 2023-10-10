@@ -10,6 +10,18 @@ struct RawEncodedFrame : public RawBuffer {
     enum class Profile : std::uint8_t { JPEG, AVC, HEVC };
     enum class FrameType : std::uint8_t { I, P, B, Unknown };
 
+    struct CameraSettings {
+        int32_t exposureTimeUs;
+        int32_t sensitivityIso;
+        int32_t lensPosition;
+        int32_t wbColorTemp;
+
+        DEPTHAI_SERIALIZE(CameraSettings, exposureTimeUs, sensitivityIso, lensPosition, wbColorTemp);
+    };
+
+    CameraSettings cam;
+    uint32_t instanceNum = 0;  // Which source created this frame (color, mono, ...)
+
     std::uint32_t quality;
     std::uint32_t bitrate;
     Profile profile;
