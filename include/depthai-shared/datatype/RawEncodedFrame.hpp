@@ -7,38 +7,42 @@
 namespace dai {
 
 struct RawEncodedFrame : public RawBuffer {
-    enum class Profile : std::uint8_t { JPEG, AVC, HEVC };
-    enum class FrameType : std::uint8_t { I, P, B, Unknown };
+  enum class Profile : std::uint8_t { JPEG, AVC, HEVC };
+  enum class FrameType : std::uint8_t { I, P, B, Unknown };
 
-    struct CameraSettings {
-        int32_t exposureTimeUs;
-        int32_t sensitivityIso;
-        int32_t lensPosition;
-        int32_t wbColorTemp;
+  struct CameraSettings {
+    int32_t exposureTimeUs;
+    int32_t sensitivityIso;
+    int32_t lensPosition;
+    int32_t wbColorTemp;
 
-        DEPTHAI_SERIALIZE(CameraSettings, exposureTimeUs, sensitivityIso, lensPosition, wbColorTemp);
-    };
+    DEPTHAI_SERIALIZE_EXT(CameraSettings, exposureTimeUs, sensitivityIso,
+                          lensPosition, wbColorTemp);
+  };
 
-    CameraSettings cam;
-    uint32_t instanceNum = 0;  // Which source created this frame (color, mono, ...)
+  CameraSettings cam;
+  uint32_t instanceNum =
+      0; // Which source created this frame (color, mono, ...)
 
-    std::uint32_t quality;
-    std::uint32_t bitrate;
-    Profile profile;
+  uint32_t quality;
+  uint32_t bitrate;
+  Profile profile;
 
-    bool lossless;   // jpeg
-    FrameType type;  // h264
+  bool lossless;  // jpeg
+  FrameType type; // h264
 
-    std::uint32_t frameOffset = 0;
-    std::uint32_t frameSize = 0;
+  uint32_t frameOffset = 0;
+  uint32_t frameSize = 0;
 
-    void serialize(std::vector<std::uint8_t>& metadata, DatatypeEnum& datatype) const override {
-        metadata = utility::serialize(*this);
-        datatype = DatatypeEnum::EncodedFrame;
-    };
+  void serialize(std::vector<std::uint8_t> &metadata,
+                 DatatypeEnum &datatype) const override {
+    metadata = utility::serialize(*this);
+    datatype = DatatypeEnum::EncodedFrame;
+  };
 
-    DEPTHAI_SERIALIZE(
-        RawEncodedFrame, quality, bitrate, profile, lossless, type, frameOffset, frameSize, RawBuffer::sequenceNum, RawBuffer::ts, RawBuffer::tsDevice);
+  DEPTHAI_SERIALIZE(RawEncodedFrame, cam, instanceNum, quality, bitrate,
+                    profile, lossless, type, frameOffset, frameSize,
+                    RawBuffer::sequenceNum, RawBuffer::ts, RawBuffer::tsDevice);
 };
 
-}  // namespace dai
+} // namespace dai
