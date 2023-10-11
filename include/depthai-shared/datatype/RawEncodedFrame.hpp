@@ -16,7 +16,7 @@ struct RawEncodedFrame : public RawBuffer {
         int32_t lensPosition;
         int32_t wbColorTemp;
 
-        DEPTHAI_SERIALIZE_EXT(CameraSettings, exposureTimeUs, sensitivityIso, lensPosition, wbColorTemp);
+        DEPTHAI_SERIALIZE(CameraSettings, exposureTimeUs, sensitivityIso, lensPosition, wbColorTemp);
     };
 
     CameraSettings cam;
