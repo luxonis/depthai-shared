@@ -2,6 +2,10 @@
 pipeline_builder/generated_backup
 
 # git
-*.orig
 .vscode
 .vscode/*
+*.orig
+*_REMOTE_*
+*_LOCAL_*
+*_BACKUP_*
+*_BASE_*

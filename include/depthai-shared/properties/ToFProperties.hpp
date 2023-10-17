@@ -1,8 +1,5 @@
 #pragma once
 
-#include <vector>
-
-#include "depthai-shared/common/optional.hpp"
 #include "depthai-shared/datatype/RawToFConfig.hpp"
 #include "depthai-shared/properties/Properties.hpp"
 
@@ -13,7 +10,7 @@ namespace dai {
  */
 struct ToFProperties : PropertiesSerializable<Properties, ToFProperties> {
     /**
-     * Initial feature tracker config
+     * Initial ToF config
      */
     RawToFConfig initialConfig;
 };

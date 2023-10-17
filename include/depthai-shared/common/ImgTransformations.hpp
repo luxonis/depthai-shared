@@ -5,16 +5,16 @@
 #include "depthai-shared/utility/matrixOps.hpp"
 
 namespace dai {
-struct RawImgTransformation {
+struct ImgTransformation {
     enum class Transformation : uint8_t {
-        Init,
-        Crop,
-        Rotation,
-        Pad,
-        Flip,
-        Scale,
+        INIT,
+        CROP,
+        ROTATION,
+        PAD,
+        FLIP,
+        SCALE,
     };
-    Transformation transformationType = Transformation::Init;
+    Transformation transformationType = Transformation::INIT;
 
     // Crop parameters in absolute pixel values for the original image
     int topLeftCropX = 0, topLeftCropY = 0, bottomRightCropX = 0, bottomRightCropY = 0;
@@ -33,9 +33,18 @@ struct RawImgTransformation {
 
     // Image size before the transformation
     unsigned int beforeTransformWidth = 0, beforeTransformHeight = 0;
+
+    static dai::Point2f transformPoint(ImgTransformation transformation, dai::Point2f point, bool& isClipped);
+
+    static dai::Point2f invTransformPoint(ImgTransformation transformation, dai::Point2f point, bool& isClipped);
+
+    static dai::Point2f clipPoint(dai::Point2f point, int imageWidth, int imageHeight, bool& isClipped);
+
+   private:
+    static dai::Point2f applyMatrixTransformation(dai::Point2f point, std::vector<std::vector<float>>& matrix);
 };
 
-DEPTHAI_SERIALIZE_EXT(RawImgTransformation,
+DEPTHAI_SERIALIZE_EXT(ImgTransformation,
                       transformationType,
                       topLeftCropX,
                       topLeftCropY,
@@ -53,7 +62,7 @@ DEPTHAI_SERIALIZE_EXT(RawImgTransformation,
 
 class ImgTransformations {
    public:
-    std::vector<RawImgTransformation> transformations = {};
+    std::vector<ImgTransformation> transformations = {};
 
     bool invalidFlag = false;
 
@@ -65,39 +74,31 @@ class ImgTransformations {
 
     unsigned int getLastHeight() const;
 
-    void setPadding(int topPadding, int bottomPadding, int leftPadding, int rightPadding);
+    void addPadding(int topPadding, int bottomPadding, int leftPadding, int rightPadding);
 
-    void setCrop(int topLeftCropX = 0, int topLeftCropY = 0, int bottomRightCropX = 0, int bottomRightCropY = 0);
+    void addCrop(int topLeftCropX = 0, int topLeftCropY = 0, int bottomRightCropX = 0, int bottomRightCropY = 0);
 
-    void setFlipVertical();
+    void addFlipVertical();
 
-    void setFlipHorizontal();
+    void addFlipHorizontal();
 
-    void setInitTransformation(int width, int height);
+    void addInitTransformation(int width, int height);
 
-    void setRotation(float angle, dai::Point2f rotationPoint, int newWidth = 0, int newHeight = 0);
+    void addRotation(float angle, dai::Point2f rotationPoint, int newWidth = 0, int newHeight = 0);
 
-    void setScale(float scaleX, float scaleY);
+    void addScale(float scaleX, float scaleY);
 
     bool validateTransformationSizes() const;
 
     // API that is meant for performance reasons - so matrices can be precomputed.
-    void setTransformation(std::vector<std::vector<float>> matrix,
+    void addTransformation(std::vector<std::vector<float>> matrix,
                            std::vector<std::vector<float>> invMatrix,
-                           RawImgTransformation::Transformation transformation,
+                           ImgTransformation::Transformation transformation,
                            int newWidth,
                            int newHeight);
 
-    static dai::Point2f transformPoint(RawImgTransformation transformation, dai::Point2f point, bool& isClipped);
-
-    static dai::Point2f invTransformPoint(RawImgTransformation transformation, dai::Point2f point, bool& isClipped);
-
-    static dai::Point2f clipPoint(dai::Point2f point, int imageWidth, int imageHeight, bool& isClipped);
-
    private:
-    RawImgTransformation getNewTransformation() const;
-
-    static dai::Point2f applyMatrixTransformation(dai::Point2f point, std::vector<std::vector<float>>& matrix);
+    ImgTransformation getNewTransformation() const;
 
     static std::vector<std::vector<float>> getFlipHorizontalMatrix(int width);
 

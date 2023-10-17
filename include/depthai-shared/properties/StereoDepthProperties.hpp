@@ -108,6 +108,7 @@ struct StereoDepthProperties : PropertiesSerializable<Properties, StereoDepthPro
      * 0 means that it will reuse the shave assigned for main stereo algorithm.
      * For optimal performance it's recommended to allocate more than 0,
      * so post processing will run in parallel with main stereo algorithm.
+     * Minimum 1, maximum 10.
      */
     std::int32_t numPostProcessingShaves = AUTO;
 
@@ -117,11 +118,12 @@ struct StereoDepthProperties : PropertiesSerializable<Properties, StereoDepthPro
      * 0 means that it will reuse the memory slices assigned for main stereo algorithm.
      * For optimal performance it's recommended to allocate more than 0,
      * so post processing will run in parallel with main stereo algorithm.
+     * Minimum 1, maximum 6.
      */
     std::int32_t numPostProcessingMemorySlices = AUTO;
 
     /**
-     * Whether to use focal length from calibration intrinsics or calculate based on calibration FOV.
+     * Whether to use horizontal focal length from calibration intrinsics (fx) or calculate based on calibration FOV.
      * Default value is true.
      * If set to false it's calculated from FOV and image resolution: focalLength = calib.width / (2.f * tan(calib.fov / 2 / 180.f * pi));
      */
@@ -156,6 +158,49 @@ struct StereoDepthProperties : PropertiesSerializable<Properties, StereoDepthPro
      * Whether to enable frame syncing inside stereo node or not. Suitable if inputs are known to be synced.
      */
     bool enableFrameSync = true;
+    /*
+     * Override baseline from calibration.
+     * Used only in disparity to depth conversion.
+     * Units are centimeters.
+     */
+    tl::optional<float> baseline;
+
+    /**
+     * Override focal length from calibration.
+     * Used only in disparity to depth conversion.
+     * Units are pixels.
+     */
+    tl::optional<float> focalLength;
+
+    /**
+     * Use baseline information for disparity to depth conversion from specs (design data) or from calibration.
+     * Suitable for debugging.
+     * Default: true
+     */
+    bool disparityToDepthUseSpecTranslation = true;
+
+    /**
+     * Obtain rectification matrices using spec translation (design data) or from calibration in calculations.
+     * Suitable for debugging.
+     * Default: false
+     */
+    bool rectificationUseSpecTranslation = false;
+
+    /**
+     * Use baseline information for depth alignment from specs (design data) or from calibration.
+     * Suitable for debugging.
+     * Default: true
+     */
+    bool depthAlignmentUseSpecTranslation = true;
+
+    /**
+     * Free scaling parameter between 0 (when all the pixels in the undistorted image are valid)
+     * and 1 (when all the source image pixels are retained in the undistorted image).
+     * On some high distortion lenses, and/or due to rectification (image rotated) invalid areas may appear even with alpha=0,
+     * in these cases alpha < 0.0 helps removing invalid areas.
+     * See getOptimalNewCameraMatrix from opencv for more details.
+     */
+    tl::optional<float> alphaScaling;
 };
 
 DEPTHAI_SERIALIZE_EXT(StereoDepthProperties,
@@ -177,6 +222,11 @@ DEPTHAI_SERIALIZE_EXT(StereoDepthProperties,
                       useHomographyRectification,
                       verticalStereo,
                       customPixelDescriptors,
-                      enableFrameSync);
-
+                      enableFrameSync,
+                      baseline,
+                      focalLength,
+                      disparityToDepthUseSpecTranslation,
+                      rectificationUseSpecTranslation,
+                      depthAlignmentUseSpecTranslation,
+                      alphaScaling);
 }  // namespace dai
