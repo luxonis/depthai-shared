@@ -12,6 +12,7 @@ namespace dai {
 /// RawOccupancyPool structure
 struct RawOccupancyPool : public RawBuffer {
     std::vector<std::vector<int>> occupancyPool;
+    std::vector<std::vector<std::vector<int>>> occupancyPool3d;
 
     // Related to input ImgFrame
     int64_t sequenceNum = 0;  // increments for each frame
@@ -23,7 +24,7 @@ struct RawOccupancyPool : public RawBuffer {
         datatype = DatatypeEnum::OccupancyPool;
     };
 
-    DEPTHAI_SERIALIZE(RawOccupancyPool, occupancyPool, sequenceNum, ts, tsDevice);
+    DEPTHAI_SERIALIZE(RawOccupancyPool, occupancyPool, occupancyPool3d, sequenceNum, ts, tsDevice);
 };
 
 }  // namespace dai

@@ -19,6 +19,7 @@ struct RawPointCloudConfig : public RawBuffer {
     float maxHeight = 500;
     uint32_t numRings = 8;
     uint32_t numSectors = 6;
+    uint32_t numVoxels = 16;
     uint32_t occupancyThreshold = 8000;
 
     std::array<std::array<float, 3>, 3> transformationMatrix = {{{1, 0, 0}, {0, 1, 0}, {0, 0, 1}}};
@@ -26,6 +27,8 @@ struct RawPointCloudConfig : public RawBuffer {
     float scale = 1.f;
 
     bool useFastMath = false;
+
+    bool occupancy3d = false;
 
     void serialize(std::vector<std::uint8_t>& metadata, DatatypeEnum& datatype) const override {
         metadata = utility::serialize(*this);
@@ -41,10 +44,12 @@ struct RawPointCloudConfig : public RawBuffer {
                       maxHeight,
                       numRings,
                       numSectors,
+                      numVoxels,
                       occupancyThreshold,
                       transformationMatrix,
                       scale,
-                      useFastMath);
+                      useFastMath,
+                      occupancy3d);
 };
 
 }  // namespace dai
