@@ -19,6 +19,6 @@ struct SyncProperties : PropertiesSerializable<Properties, SyncProperties> {
     uint32_t syncAttempts = 50;
 };
 
-DEPTHAI_SERIALIZE_EXT(SyncProperties, syncIntervalMs);
+DEPTHAI_SERIALIZE_EXT(SyncProperties, syncIntervalMs, syncAttempts);
 
 }  // namespace dai
