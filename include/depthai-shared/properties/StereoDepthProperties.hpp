@@ -2,6 +2,7 @@
 
 #include "depthai-shared/common/CameraBoardSocket.hpp"
 #include "depthai-shared/common/EepromData.hpp"
+#include "depthai-shared/common/Interpolation.hpp"
 #include "depthai-shared/common/optional.hpp"
 #include "depthai-shared/datatype/RawStereoDepthConfig.hpp"
 #include "depthai-shared/properties/Properties.hpp"
@@ -182,6 +183,18 @@ struct StereoDepthProperties : PropertiesSerializable<Properties, StereoDepthPro
      * See getOptimalNewCameraMatrix from opencv for more details.
      */
     tl::optional<float> alphaScaling;
+
+    /**
+     * Whether to use vertical stereo mode or not.
+     * Default value: auto, extrinsic calibration data will determine whether it's vertical or horizontal stereo.
+     */
+    tl::optional<bool> verticalStereo;
+
+    /**
+     * Interpolation type used for stereo rectification.
+     * Default value: DEFAULT_STEREO_RECTIFICATION.
+     */
+    Interpolation interpolation = Interpolation::DEFAULT_STEREO_RECTIFICATION;
 };
 
 DEPTHAI_SERIALIZE_EXT(StereoDepthProperties,
@@ -206,6 +219,8 @@ DEPTHAI_SERIALIZE_EXT(StereoDepthProperties,
                       disparityToDepthUseSpecTranslation,
                       rectificationUseSpecTranslation,
                       depthAlignmentUseSpecTranslation,
-                      alphaScaling);
+                      alphaScaling,
+                      verticalStereo,
+                      interpolation);
 
 }  // namespace dai
