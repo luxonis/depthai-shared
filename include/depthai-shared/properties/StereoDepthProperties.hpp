@@ -194,7 +194,7 @@ struct StereoDepthProperties : PropertiesSerializable<Properties, StereoDepthPro
      * Interpolation type used for stereo rectification.
      * Default value: DEFAULT_STEREO_RECTIFICATION.
      */
-    Interpolation interpolation = Interpolation::DEFAULT_STEREO_RECTIFICATION;
+    Interpolation rectificationInterpolation = Interpolation::DEFAULT_STEREO_RECTIFICATION;
 };
 
 DEPTHAI_SERIALIZE_EXT(StereoDepthProperties,
@@ -221,6 +221,6 @@ DEPTHAI_SERIALIZE_EXT(StereoDepthProperties,
                       depthAlignmentUseSpecTranslation,
                       alphaScaling,
                       verticalStereo,
-                      interpolation);
+                      rectificationInterpolation);
 
 }  // namespace dai
