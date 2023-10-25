@@ -11,8 +11,7 @@ namespace dai {
 struct RawGroupMessage {
     dai::DatatypeEnum datatype;
     std::shared_ptr<RawBuffer> buffer;
-    uint64_t offset = 0;
-    uint64_t size = 0;
+    uint32_t index = 0;
 };
 
 }  // namespace dai
@@ -25,17 +24,15 @@ template <>
 struct adl_serializer<dai::RawGroupMessage> {
     static void to_json(json& j, const dai::RawGroupMessage& msg) {  // NOLINT this is a specialization, naming conventions don't apply
         j["datatype"] = msg.datatype;
-        j["offset"] = msg.offset;
-        j["size"] = msg.size;
-        j["buffer"] = dai::serializeRawToJson(msg.buffer, msg.datatype);
+        j["index"] = msg.index;
+        // j["buffer"] = dai::serializeRawToJson(msg.buffer, msg.datatype);
     }
 
     static void from_json(const json& j, dai::RawGroupMessage& msg) {  // NOLINT this is a specialization, naming conventions don't apply
         auto datatype = j["datatype"].get<dai::DatatypeEnum>();
-        auto offset = j["offset"].get<uint64_t>();
-        auto size = j["size"].get<uint64_t>();
-        auto buffer = dai::deserializeJsonToRaw(j["buffer"], datatype);
-        msg = {datatype, buffer, offset, size};
+        auto index = j["index"].get<uint32_t>();
+        // auto buffer = dai::deserializeJsonToRaw(j["buffer"], datatype);
+        msg = {datatype, {}, index};
     }
 };
 
@@ -44,7 +41,7 @@ struct adl_serializer<dai::RawGroupMessage> {
 // tl::optional serialization for libnop
 namespace nop {
 
-static const SizeType numMembers = 4;
+static const SizeType numMembers = 2;
 
 template <>
 struct Encoding<dai::RawGroupMessage> : EncodingIO<dai::RawGroupMessage> {
@@ -55,7 +52,7 @@ struct Encoding<dai::RawGroupMessage> : EncodingIO<dai::RawGroupMessage> {
     }
     static std::size_t Size(const Type& value) {
         return BaseEncodingSize(EncodingByte::Structure) + Encoding<std::uint64_t>::Size(numMembers) + Encoding<dai::DatatypeEnum>::Size(value.datatype)
-               + Encoding<uint64_t>::Size(value.offset) + Encoding<uint64_t>::Size(value.size) + dai::getNopSize(value.buffer, value.datatype);
+               + Encoding<uint32_t>::Size(value.index) /*  + dai::getNopSize(value.buffer, value.datatype) */;
     }
 
     static constexpr bool Match(EncodingByte prefix) {
@@ -68,12 +65,10 @@ struct Encoding<dai::RawGroupMessage> : EncodingIO<dai::RawGroupMessage> {
         if(!status1) return status1.error();
         auto status2 = Encoding<dai::DatatypeEnum>::Write(value.datatype, writer);
         if(!status2) return status2.error();
-        auto status3 = Encoding<uint64_t>::Write(value.offset, writer);
+        auto status3 = Encoding<uint32_t>::Write(value.index, writer);
         if(!status3) return status3.error();
-        auto status4 = Encoding<uint64_t>::Write(value.size, writer);
-        if(!status4) return status4.error();
-        auto status5 = dai::serializeRawToNop(value.datatype, value.buffer, writer);
-        if(!status5) return status5.error();
+        // auto status5 = dai::serializeRawToNop(value.datatype, value.buffer, writer);
+        // if(!status5) return status5.error();
         return {};
     }
 
@@ -86,18 +81,15 @@ struct Encoding<dai::RawGroupMessage> : EncodingIO<dai::RawGroupMessage> {
         dai::DatatypeEnum type;
         auto status2 = Encoding<dai::DatatypeEnum>::Read(&type, reader);
         if(!status2) return status2.error();
-        uint64_t offset;
-        auto status3 = Encoding<uint64_t>::Read(&offset, reader);
+        uint32_t index;
+        auto status3 = Encoding<uint32_t>::Read(&index, reader);
         if(!status3) return status3.error();
-        uint64_t size;
-        auto status4 = Encoding<uint64_t>::Read(&size, reader);
-        if(!status4) return status4.error();
-        auto status5 = dai::deserializeNopToRaw(type, reader);
-        if(!status5) return status5.error();
+        // auto status5 = dai::deserializeNopToRaw(type, reader);
+        // if(!status5) return status5.error();
         value->datatype = type;
-        value->offset = offset;
-        value->size = size;
-        value->buffer = status5.get();
+        value->index = index;
+        value->buffer = {};
+        // value->buffer = status5.get();
         return {};
     }
 };
@@ -116,12 +108,10 @@ struct RawMessageGroup : public RawBuffer {
         datatype = DatatypeEnum::MessageGroup;
     };
 
-    void updateOffsets() {
-        uint64_t offset = 0;
+    void updateMeta() {
+        uint32_t index = 0;
         for(auto& entry : group) {
-            entry.second.offset = offset;
-            entry.second.size = entry.second.buffer->data.size();
-            offset += entry.second.size;
+            entry.second.index = index++;
         }
     }
 
