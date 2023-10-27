@@ -29,7 +29,7 @@ struct RawMessageGroup : public RawBuffer {
         datatype = DatatypeEnum::MessageGroup;
     };
 
-    void prepareMetadata() {
+    void prepareMetadata() override {
         uint32_t index = 0;
         for(auto& entry : group) {
             entry.second.index = index++;
