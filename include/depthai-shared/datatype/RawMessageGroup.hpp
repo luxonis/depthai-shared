@@ -8,11 +8,10 @@
 namespace dai {
 
 struct RawGroupMessage {
-    dai::DatatypeEnum datatype;
     std::shared_ptr<RawBuffer> buffer;
     uint32_t index = 0;
 
-    DEPTHAI_SERIALIZE(RawGroupMessage, datatype, index);
+    DEPTHAI_SERIALIZE(RawGroupMessage, index);
 };
 
 }  // namespace dai
