@@ -251,6 +251,10 @@ struct RawFeatureTrackerConfig : public RawBuffer {
         datatype = DatatypeEnum::FeatureTrackerConfig;
     };
 
+    DatatypeEnum getType() const override {
+        return DatatypeEnum::FeatureTrackerConfig;
+    }
+
     DEPTHAI_SERIALIZE(RawFeatureTrackerConfig, cornerDetector, motionEstimator, featureMaintainer);
 };
 

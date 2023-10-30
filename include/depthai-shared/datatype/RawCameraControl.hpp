@@ -455,6 +455,10 @@ struct RawCameraControl : public RawBuffer {
         datatype = DatatypeEnum::CameraControl;
     };
 
+    DatatypeEnum getType() const override {
+        return DatatypeEnum::CameraControl;
+    }
+
     DEPTHAI_SERIALIZE(RawCameraControl,
                       cmdMask,
                       autoFocusMode,
