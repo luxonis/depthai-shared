@@ -28,6 +28,10 @@ struct RawMessageGroup : public RawBuffer {
         datatype = DatatypeEnum::MessageGroup;
     };
 
+    DatatypeEnum getType() const override {
+        return DatatypeEnum::MessageGroup;
+    }
+
     void prepareMetadata() override {
         uint32_t index = 0;
         for(auto& entry : group) {

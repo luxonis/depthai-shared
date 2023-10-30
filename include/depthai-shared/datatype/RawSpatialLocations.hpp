@@ -68,6 +68,10 @@ struct RawSpatialLocations : public RawBuffer {
         datatype = DatatypeEnum::SpatialLocationCalculatorData;
     };
 
+    DatatypeEnum getType() const override {
+        return DatatypeEnum::SpatialLocationCalculatorData;
+    }
+
     DEPTHAI_SERIALIZE(RawSpatialLocations, spatialLocations, RawBuffer::sequenceNum, RawBuffer::ts, RawBuffer::tsDevice);
 };
 

@@ -115,6 +115,10 @@ struct RawAprilTagConfig : public RawBuffer {
         datatype = DatatypeEnum::AprilTagConfig;
     };
 
+    DatatypeEnum getType() const override {
+        return DatatypeEnum::AprilTagConfig;
+    }
+
     DEPTHAI_SERIALIZE(RawAprilTagConfig, family, quadDecimate, quadSigma, refineEdges, decodeSharpening, maxHammingDistance, quadThresholds);
 };
 
