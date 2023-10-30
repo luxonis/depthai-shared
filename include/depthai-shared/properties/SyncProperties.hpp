@@ -17,8 +17,14 @@ struct SyncProperties : PropertiesSerializable<Properties, SyncProperties> {
      * The number of syncing attempts before fail (num of replaced messages).
      */
     uint32_t syncAttempts = 50;
+
+    /**
+     * Frame pool size for the output
+     */
+    int numFramesPool = 3;
+
 };
 
-DEPTHAI_SERIALIZE_EXT(SyncProperties, syncIntervalMs, syncAttempts);
+DEPTHAI_SERIALIZE_EXT(SyncProperties, syncIntervalMs, syncAttempts, numFramesPool);
 
 }  // namespace dai
