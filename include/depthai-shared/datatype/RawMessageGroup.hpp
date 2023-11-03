@@ -32,13 +32,6 @@ struct RawMessageGroup : public RawBuffer {
         return DatatypeEnum::MessageGroup;
     }
 
-    void prepareMetadata() override {
-        uint32_t index = 0;
-        for(auto& entry : group) {
-            entry.second.index = index++;
-        }
-    }
-
     DEPTHAI_SERIALIZE(RawMessageGroup, group, success, RawBuffer::ts, RawBuffer::tsDevice);
 };
 
