@@ -8,9 +8,9 @@ namespace dai {
  * TODO
  */
 struct MessageDemuxProperties : PropertiesSerializable<Properties, MessageDemuxProperties> {
-    int dummy = 0;
+    bool demuxOnlyOnSuccessful = false;
 };
 
-DEPTHAI_SERIALIZE_EXT(MessageDemuxProperties, dummy);
+DEPTHAI_SERIALIZE_EXT(MessageDemuxProperties, demuxOnlyOnSuccessful);
 
 }  // namespace dai
