@@ -20,7 +20,6 @@ namespace dai {
 
 struct RawMessageGroup : public RawBuffer {
     std::unordered_map<std::string, RawGroupMessage> group;
-    bool success = false;
 
    public:
     void serialize(std::vector<std::uint8_t>& metadata, DatatypeEnum& datatype) const override {
@@ -32,7 +31,7 @@ struct RawMessageGroup : public RawBuffer {
         return DatatypeEnum::MessageGroup;
     }
 
-    DEPTHAI_SERIALIZE(RawMessageGroup, group, success, RawBuffer::ts, RawBuffer::tsDevice);
+    DEPTHAI_SERIALIZE(RawMessageGroup, group, RawBuffer::ts, RawBuffer::tsDevice, RawBuffer::sequenceNum);
 };
 
 }  // namespace dai
