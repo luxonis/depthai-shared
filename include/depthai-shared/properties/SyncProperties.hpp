@@ -16,7 +16,7 @@ struct SyncProperties : PropertiesSerializable<Properties, SyncProperties> {
     /**
      * The number of syncing attempts before fail (num of replaced messages).
      */
-    uint32_t syncAttempts = -1;
+    int32_t syncAttempts = -1;
 
     /**
      * Frame pool size for the output
