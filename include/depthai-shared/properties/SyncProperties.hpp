@@ -21,7 +21,7 @@ struct SyncProperties : PropertiesSerializable<Properties, SyncProperties> {
     /**
      * Frame pool size for the output
      */
-    int numFramesPool = 8;
+    int numFramesPool = 0;
 };
 
 DEPTHAI_SERIALIZE_EXT(SyncProperties, syncIntervalMs, syncAttempts, numFramesPool);
