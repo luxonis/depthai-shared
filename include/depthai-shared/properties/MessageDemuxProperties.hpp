@@ -5,9 +5,10 @@
 namespace dai {
 
 /**
- * TODO
+ * MessageDemux does not have any properties to set
  */
 struct MessageDemuxProperties : PropertiesSerializable<Properties, MessageDemuxProperties> {
+    // Needed for serialization
     char dummy = 0;
 };
 
