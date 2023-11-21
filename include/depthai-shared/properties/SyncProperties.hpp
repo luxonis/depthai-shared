@@ -5,11 +5,11 @@
 namespace dai {
 
 /**
- * TODO
+ * Specify properties for Sync.
  */
 struct SyncProperties : PropertiesSerializable<Properties, SyncProperties> {
     /**
-     * The maximal interval the messages can be apart in milliseconds.
+     * The maximal interval the messages can be apart in nanoseconds.
      */
     uint64_t syncThresholdNs = 10e6;
 
