@@ -25,6 +25,8 @@ struct RawPointCloudConfig : public RawBuffer {
     std::array<std::array<float, 3>, 3> transformationMatrix = {{{1, 0, 0}, {0, 1, 0}, {0, 0, 1}}};
 
     float scale = 1.f;
+    float width = 5000;
+    float height = 5000;
 
     bool useFastMath = false;
 
@@ -48,6 +50,8 @@ struct RawPointCloudConfig : public RawBuffer {
                       occupancyThreshold,
                       transformationMatrix,
                       scale,
+                      width,
+                      height,
                       useFastMath,
                       occupancy3d);
 };
