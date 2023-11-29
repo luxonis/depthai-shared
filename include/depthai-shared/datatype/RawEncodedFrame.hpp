@@ -37,6 +37,10 @@ struct RawEncodedFrame : public RawBuffer {
         datatype = DatatypeEnum::EncodedFrame;
     };
 
+    DatatypeEnum getType() const override {
+        return DatatypeEnum::EncodedFrame;
+    }
+
     DEPTHAI_SERIALIZE(RawEncodedFrame,
                       cam,
                       instanceNum,
