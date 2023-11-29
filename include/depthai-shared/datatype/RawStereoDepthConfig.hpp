@@ -535,6 +535,10 @@ struct RawStereoDepthConfig : public RawBuffer {
         datatype = DatatypeEnum::StereoDepthConfig;
     };
 
+    DatatypeEnum getType() const override {
+        return DatatypeEnum::StereoDepthConfig;
+    }
+
     DEPTHAI_SERIALIZE(RawStereoDepthConfig, algorithmControl, postProcessing, censusTransform, costMatching, costAggregation);
 };
 

@@ -7,7 +7,7 @@
     #if((NLOHMANN_JSON_VERSION_MAJOR < 3) || ((NLOHMANN_JSON_VERSION_MAJOR == 3) && (NLOHMANN_JSON_VERSION_MINOR < 6)))
 static_assert(0, "DepthAI requires nlohmann library version 3.6.0 or higher");
     #else
-        // Set up compat macros for nlohmann json (independent of version)
+    // Set up compat macros for nlohmann json (independent of version)
         #define DEPTHAI_NLOHMANN_JSON_EXPAND(x) x
         #define DEPTHAI_NLOHMANN_JSON_GET_MACRO(_1,   \
                                                 _2,   \
@@ -3394,7 +3394,7 @@ static_assert(0, "DepthAI requires nlohmann library version 3.6.0 or higher");
         #define DEPTHAI_NLOHMANN_JSON_TO(v1) nlohmann_json_j[#v1] = nlohmann_json_t.v1;
         #define DEPTHAI_NLOHMANN_JSON_FROM(v1) nlohmann_json_j.at(#v1).get_to(nlohmann_json_t.v1);
 
-        /// Backward ported from nlohmann 3.9.0
+    /// Backward ported from nlohmann 3.9.0
         #define DEPTHAI_NLOHMANN_DEFINE_TYPE_INTRUSIVE(Type, ...)                                                  \
             friend void to_json(nlohmann::json& nlohmann_json_j, const Type& nlohmann_json_t) {                    \
                 DEPTHAI_NLOHMANN_JSON_EXPAND(DEPTHAI_NLOHMANN_JSON_PASTE(DEPTHAI_NLOHMANN_JSON_TO, __VA_ARGS__))   \
@@ -3403,7 +3403,7 @@ static_assert(0, "DepthAI requires nlohmann library version 3.6.0 or higher");
                 DEPTHAI_NLOHMANN_JSON_EXPAND(DEPTHAI_NLOHMANN_JSON_PASTE(DEPTHAI_NLOHMANN_JSON_FROM, __VA_ARGS__)) \
             }
 
-        /// Backward ported from nlohmann 3.9.0
+    /// Backward ported from nlohmann 3.9.0
         #define DEPTHAI_NLOHMANN_DEFINE_TYPE_NON_INTRUSIVE(Type, ...)                                              \
             inline void to_json(nlohmann::json& nlohmann_json_j, const Type& nlohmann_json_t) {                    \
                 DEPTHAI_NLOHMANN_JSON_EXPAND(DEPTHAI_NLOHMANN_JSON_PASTE(DEPTHAI_NLOHMANN_JSON_TO, __VA_ARGS__))   \
