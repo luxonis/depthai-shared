@@ -32,6 +32,8 @@ struct RawPointCloudConfig : public RawBuffer {
 
     bool occupancy3d = false;
 
+    float occupancy3dScale = 1.f;
+
     void serialize(std::vector<std::uint8_t>& metadata, DatatypeEnum& datatype) const override {
         metadata = utility::serialize(*this);
         datatype = DatatypeEnum::PointCloudConfig;
@@ -53,7 +55,8 @@ struct RawPointCloudConfig : public RawBuffer {
                       width,
                       height,
                       useFastMath,
-                      occupancy3d);
+                      occupancy3d,
+                      occupancy3dScale);
 };
 
 }  // namespace dai
