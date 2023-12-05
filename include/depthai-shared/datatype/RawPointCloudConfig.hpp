@@ -18,6 +18,10 @@ struct RawPointCloudConfig : public RawBuffer {
         datatype = DatatypeEnum::PointCloudConfig;
     };
 
+    DatatypeEnum getType() const override {
+        return DatatypeEnum::PointCloudConfig;
+    }
+
     DEPTHAI_SERIALIZE(RawPointCloudConfig, config);
 };
 

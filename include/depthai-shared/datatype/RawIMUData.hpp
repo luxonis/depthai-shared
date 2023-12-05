@@ -216,6 +216,10 @@ struct RawIMUData : public RawBuffer {
         datatype = DatatypeEnum::IMUData;
     };
 
+    DatatypeEnum getType() const override {
+        return DatatypeEnum::IMUData;
+    }
+
     DEPTHAI_SERIALIZE(RawIMUData, packets);
 };
 
