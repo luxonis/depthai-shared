@@ -28,6 +28,10 @@ struct RawSpatialImgDetections : public RawBuffer {
         datatype = DatatypeEnum::SpatialImgDetections;
     };
 
+    DatatypeEnum getType() const override {
+        return DatatypeEnum::SpatialImgDetections;
+    }
+
     DEPTHAI_SERIALIZE(RawSpatialImgDetections, detections, RawBuffer::sequenceNum, RawBuffer::ts, RawBuffer::tsDevice);
 };
 

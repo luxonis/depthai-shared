@@ -7,6 +7,7 @@ namespace dai {
 enum class DatatypeEnum : std::int32_t {
     Buffer,
     ImgFrame,
+    EncodedFrame,
     NNData,
     ImageManipConfig,
     CameraControl,
@@ -24,6 +25,7 @@ enum class DatatypeEnum : std::int32_t {
     FeatureTrackerConfig,
     ToFConfig,
     TrackedFeatures,
+    MessageGroup,
 };
 bool isDatatypeSubclassOf(DatatypeEnum parent, DatatypeEnum children);
 

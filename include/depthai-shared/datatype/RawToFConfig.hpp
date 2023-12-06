@@ -53,6 +53,10 @@ struct RawToFConfig : public RawBuffer {
         datatype = DatatypeEnum::ToFConfig;
     };
 
+    DatatypeEnum getType() const override {
+        return DatatypeEnum::ToFConfig;
+    }
+
     DEPTHAI_SERIALIZE(RawToFConfig, depthParams);
 };
 

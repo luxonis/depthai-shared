@@ -36,6 +36,10 @@ struct RawEdgeDetectorConfig : public RawBuffer {
         datatype = DatatypeEnum::EdgeDetectorConfig;
     };
 
+    DatatypeEnum getType() const override {
+        return DatatypeEnum::EdgeDetectorConfig;
+    }
+
     DEPTHAI_SERIALIZE(RawEdgeDetectorConfig, config);
 };
 
