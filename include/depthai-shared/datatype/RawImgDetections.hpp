@@ -18,9 +18,10 @@ struct ImgDetection {
     int yIndex = 0;
     int headIndex = 0;
     int anchorIndex = 0;
+    std::vector<float> extraParams;
 };
 
-DEPTHAI_SERIALIZE_EXT(ImgDetection, label, confidence, xmin, ymin, xmax, ymax, xIndex, yIndex, headIndex, anchorIndex);
+DEPTHAI_SERIALIZE_EXT(ImgDetection, label, confidence, xmin, ymin, xmax, ymax, xIndex, yIndex, headIndex, anchorIndex, extraParams);
 
 /// RawImgDetections structure
 struct RawImgDetections : public RawBuffer {

@@ -18,7 +18,7 @@ struct SpatialImgDetection : public ImgDetection {
 };
 
 DEPTHAI_SERIALIZE_EXT(
-    SpatialImgDetection, label, confidence, xmin, ymin, xmax, ymax, xIndex, yIndex, headIndex, anchorIndex, spatialCoordinates, boundingBoxMapping);
+    SpatialImgDetection, label, confidence, xmin, ymin, xmax, ymax, xIndex, yIndex, headIndex, anchorIndex, extraParams, spatialCoordinates, boundingBoxMapping);
 
 /// RawSpatialImgDetections structure
 struct RawSpatialImgDetections : public RawBuffer {
