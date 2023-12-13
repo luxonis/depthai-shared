@@ -15,6 +15,7 @@ struct StereoPair {
      * Baseline in centimeters.
      */
     float baseline = -1;
+    bool isVertical = false;
     DEPTHAI_SERIALIZE(StereoPair, left, right, baseline);
 };
 }  // namespace dai
