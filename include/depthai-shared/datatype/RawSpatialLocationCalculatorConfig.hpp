@@ -55,6 +55,7 @@ struct SpatialLocationCalculatorConfigData {
      * Mode: the most frequent value inside ROI is used for calculation.
      * Median: the median value inside ROI is used for calculation.
      * Default: median.
+
      */
     SpatialLocationCalculatorAlgorithm calculationAlgorithm = SpatialLocationCalculatorAlgorithm::MEDIAN;
     /**
