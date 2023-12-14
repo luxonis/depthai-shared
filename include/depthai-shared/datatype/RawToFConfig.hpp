@@ -2,6 +2,7 @@
 #include <cstdint>
 #include <vector>
 
+#include "depthai-shared/common/MedianFilter.hpp"
 #include "depthai-shared/datatype/DatatypeEnum.hpp"
 #include "depthai-shared/datatype/RawBuffer.hpp"
 #include "depthai-shared/utility/Serialization.hpp"
@@ -38,7 +39,12 @@ struct RawToFConfig : public RawBuffer {
 
         TypeFMod freqModUsed = TypeFMod::F_MOD_MIN;
 
-        DEPTHAI_SERIALIZE(DepthParams, enable, avgPhaseShuffle, minimumAmplitude, freqModUsed);
+        /**
+         * Set kernel size for depth median filtering, or disable
+         */
+        MedianFilter median = MedianFilter::KERNEL_5x5;
+
+        DEPTHAI_SERIALIZE(DepthParams, enable, avgPhaseShuffle, minimumAmplitude, freqModUsed, median);
     };
 
     /**
