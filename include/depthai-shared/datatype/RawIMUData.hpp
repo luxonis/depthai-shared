@@ -220,7 +220,7 @@ struct RawIMUData : public RawBuffer {
         return DatatypeEnum::IMUData;
     }
 
-    DEPTHAI_SERIALIZE(RawIMUData, packets);
+    DEPTHAI_SERIALIZE(RawIMUData, packets, RawBuffer::sequenceNum, RawBuffer::ts, RawBuffer::tsDevice);
 };
 
 }  // namespace dai
