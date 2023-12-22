@@ -25,6 +25,7 @@ enum class DatatypeEnum : std::int32_t {
     FeatureTrackerConfig,
     ToFConfig,
     PointCloudConfig,
+    PointCloudData,
     TrackedFeatures,
     MessageGroup,
 };
