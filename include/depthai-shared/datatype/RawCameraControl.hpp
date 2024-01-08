@@ -422,6 +422,7 @@ struct RawCameraControl : public RawBuffer {
     FrameSyncMode frameSyncMode;
     StrobeConfig strobeConfig;
     StrobeTimings strobeTimings;
+    uint32_t aeMaxExposureTimeUs;
     bool aeLockMode;
     bool awbLockMode;
     int8_t expCompensation;  //  -9 ..  9
@@ -455,6 +456,10 @@ struct RawCameraControl : public RawBuffer {
         datatype = DatatypeEnum::CameraControl;
     };
 
+    DatatypeEnum getType() const override {
+        return DatatypeEnum::CameraControl;
+    }
+
     DEPTHAI_SERIALIZE(RawCameraControl,
                       cmdMask,
                       autoFocusMode,
@@ -475,6 +480,7 @@ struct RawCameraControl : public RawBuffer {
                       frameSyncMode,
                       strobeConfig,
                       strobeTimings,
+                      aeMaxExposureTimeUs,
                       expCompensation,
                       brightness,
                       contrast,

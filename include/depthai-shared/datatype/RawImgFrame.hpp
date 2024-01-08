@@ -183,6 +183,10 @@ struct RawImgFrame : public RawBuffer {
         datatype = DatatypeEnum::ImgFrame;
     };
 
+    DatatypeEnum getType() const override {
+        return DatatypeEnum::ImgFrame;
+    }
+
     DEPTHAI_SERIALIZE(RawImgFrame, fb, cam, category, instanceNum, RawBuffer::sequenceNum, RawBuffer::ts, RawBuffer::tsDevice);
 };
 

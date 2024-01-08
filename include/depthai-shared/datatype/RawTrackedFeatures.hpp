@@ -51,6 +51,10 @@ struct RawTrackedFeatures : public RawBuffer {
         datatype = DatatypeEnum::TrackedFeatures;
     };
 
+    DatatypeEnum getType() const override {
+        return DatatypeEnum::TrackedFeatures;
+    }
+
     DEPTHAI_SERIALIZE(RawTrackedFeatures, trackedFeatures, RawBuffer::sequenceNum, RawBuffer::ts, RawBuffer::tsDevice);
 };
 
