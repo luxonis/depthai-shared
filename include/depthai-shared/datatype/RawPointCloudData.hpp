@@ -30,7 +30,8 @@ struct RawPointCloudData : public RawBuffer {
         return DatatypeEnum::PointCloudData;
     }
 
-    DEPTHAI_SERIALIZE(RawPointCloudData, format, width, height, minx, miny, minz, maxx, maxy, maxz, instanceNum, RawBuffer::ts, RawBuffer::tsDevice, RawBuffer::sequenceNum);
+    DEPTHAI_SERIALIZE(
+        RawPointCloudData, format, width, height, minx, miny, minz, maxx, maxy, maxz, instanceNum, RawBuffer::ts, RawBuffer::tsDevice, RawBuffer::sequenceNum);
 };
 
 }  // namespace dai
