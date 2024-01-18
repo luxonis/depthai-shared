@@ -8,12 +8,6 @@
 namespace dai {
 
 struct RawPointCloudData : public RawBuffer {
-    enum class PointCloudFormat : uint8_t {
-        XYZ,
-        XYZRGB,
-    };
-
-    PointCloudFormat format = PointCloudFormat::XYZ;
     unsigned int width;     // width in pixels
     unsigned int height;    // height in pixels
     uint32_t instanceNum = 0;  // Which source created this frame (color, mono, ...)
@@ -30,8 +24,7 @@ struct RawPointCloudData : public RawBuffer {
         return DatatypeEnum::PointCloudData;
     }
 
-    DEPTHAI_SERIALIZE(
-        RawPointCloudData, format, width, height, minx, miny, minz, maxx, maxy, maxz, instanceNum, RawBuffer::ts, RawBuffer::tsDevice, RawBuffer::sequenceNum);
+    DEPTHAI_SERIALIZE(RawPointCloudData, width, height, minx, miny, minz, maxx, maxy, maxz, instanceNum, RawBuffer::ts, RawBuffer::tsDevice, RawBuffer::sequenceNum);
 };
 
 }  // namespace dai
