@@ -11,7 +11,7 @@ namespace dai {
 
 /// RawPointCloudConfig configuration structure
 struct RawPointCloudConfig : public RawBuffer {
-    int config = 0;
+    bool sparse = false;
 
     void serialize(std::vector<std::uint8_t>& metadata, DatatypeEnum& datatype) const override {
         metadata = utility::serialize(*this);
@@ -22,7 +22,7 @@ struct RawPointCloudConfig : public RawBuffer {
         return DatatypeEnum::PointCloudConfig;
     }
 
-    DEPTHAI_SERIALIZE(RawPointCloudConfig, config);
+    DEPTHAI_SERIALIZE(RawPointCloudConfig, sparse);
 };
 
 }  // namespace dai
