@@ -13,6 +13,7 @@ struct RawPointCloudData : public RawBuffer {
     uint32_t instanceNum = 0;  // Which source created this frame (color, mono, ...)
     float minx, miny, minz;
     float maxx, maxy, maxz;
+    bool sparse = false;
 
    public:
     void serialize(std::vector<std::uint8_t>& metadata, DatatypeEnum& datatype) const override {
@@ -24,7 +25,7 @@ struct RawPointCloudData : public RawBuffer {
         return DatatypeEnum::PointCloudData;
     }
 
-    DEPTHAI_SERIALIZE(RawPointCloudData, width, height, minx, miny, minz, maxx, maxy, maxz, instanceNum, RawBuffer::ts, RawBuffer::tsDevice, RawBuffer::sequenceNum);
+    DEPTHAI_SERIALIZE(RawPointCloudData, width, height, minx, miny, minz, maxx, maxy, maxz, sparse, instanceNum, RawBuffer::ts, RawBuffer::tsDevice, RawBuffer::sequenceNum);
 };
 
 }  // namespace dai
