@@ -8,8 +8,8 @@
 namespace dai {
 
 struct RawPointCloudData : public RawBuffer {
-    unsigned int width;     // width in pixels
-    unsigned int height;    // height in pixels
+    unsigned int width;        // width in pixels
+    unsigned int height;       // height in pixels
     uint32_t instanceNum = 0;  // Which source created this frame (color, mono, ...)
     float minx, miny, minz;
     float maxx, maxy, maxz;
@@ -25,7 +25,8 @@ struct RawPointCloudData : public RawBuffer {
         return DatatypeEnum::PointCloudData;
     }
 
-    DEPTHAI_SERIALIZE(RawPointCloudData, width, height, minx, miny, minz, maxx, maxy, maxz, sparse, instanceNum, RawBuffer::ts, RawBuffer::tsDevice, RawBuffer::sequenceNum);
+    DEPTHAI_SERIALIZE(
+        RawPointCloudData, width, height, minx, miny, minz, maxx, maxy, maxz, sparse, instanceNum, RawBuffer::ts, RawBuffer::tsDevice, RawBuffer::sequenceNum);
 };
 
 }  // namespace dai
