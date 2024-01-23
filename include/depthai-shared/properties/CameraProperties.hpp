@@ -71,6 +71,12 @@ struct CameraProperties : PropertiesSerializable<Properties, CameraProperties> {
      */
     uint32_t previewWidth = 300;
 
+    static constexpr RawImgFrame::Type DEFAULT_PREVIEW_TYPE = RawImgFrame::Type::BGR888p;
+    /**
+     * Preview type
+    */
+    RawImgFrame::Type previewType = DEFAULT_PREVIEW_TYPE;
+
     /**
      * Preview frame output width
      */
@@ -80,6 +86,13 @@ struct CameraProperties : PropertiesSerializable<Properties, CameraProperties> {
      * Preview frame output height
      */
     int32_t videoHeight = AUTO;
+
+
+    static constexpr RawImgFrame::Type DEFAULT_VIDEO_TYPE = RawImgFrame::Type::NV12;
+    /**
+     * Video type 
+    */
+    RawImgFrame::Type videoType = DEFAULT_VIDEO_TYPE;
 
     /**
      * Preview frame output width
@@ -183,8 +196,10 @@ DEPTHAI_SERIALIZE_EXT(CameraProperties,
                       fp16,
                       previewHeight,
                       previewWidth,
+                      previewType,
                       videoWidth,
                       videoHeight,
+                      videoType,
                       stillWidth,
                       stillHeight,
                       resolutionWidth,
