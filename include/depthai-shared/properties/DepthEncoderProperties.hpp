@@ -15,8 +15,9 @@ struct DepthEncoderProperties : PropertiesSerializable<Properties, DepthEncoderP
     RawImgFrame::Type outputType = RawImgFrame::Type::NV12;
     std::vector<uint8_t> lutR, lutG, lutB;
     int numFramesPool = 8;
+    int numShaves = 1;
 };
 
-DEPTHAI_SERIALIZE_EXT(DepthEncoderProperties, outputType, lutR, lutG, lutB, numFramesPool);
+DEPTHAI_SERIALIZE_EXT(DepthEncoderProperties, outputType, lutR, lutG, lutB, numFramesPool, numShaves);
 
 }  // namespace dai
