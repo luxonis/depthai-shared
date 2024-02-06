@@ -3,16 +3,12 @@
 #include <depthai-shared/common/optional.hpp>
 #include <vector>
 
+#include "depthai-shared/common/MedianFilter.hpp"
 #include "depthai-shared/datatype/DatatypeEnum.hpp"
 #include "depthai-shared/datatype/RawBuffer.hpp"
 #include "depthai-shared/utility/Serialization.hpp"
 
 namespace dai {
-
-/**
- * Median filter config for disparity post-processing
- */
-enum class MedianFilter : int32_t { MEDIAN_OFF = 0, KERNEL_3x3 = 3, KERNEL_5x5 = 5, KERNEL_7x7 = 7 };
 
 /// RawStereoDepthConfig configuration structure
 struct RawStereoDepthConfig : public RawBuffer {
@@ -538,6 +534,10 @@ struct RawStereoDepthConfig : public RawBuffer {
         metadata = utility::serialize(*this);
         datatype = DatatypeEnum::StereoDepthConfig;
     };
+
+    DatatypeEnum getType() const override {
+        return DatatypeEnum::StereoDepthConfig;
+    }
 
     DEPTHAI_SERIALIZE(RawStereoDepthConfig, algorithmControl, postProcessing, censusTransform, costMatching, costAggregation);
 };

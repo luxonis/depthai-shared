@@ -3,7 +3,6 @@
 #include <vector>
 
 #include "depthai-shared/common/Point2f.hpp"
-#include "depthai-shared/common/Timestamp.hpp"
 #include "depthai-shared/datatype/DatatypeEnum.hpp"
 #include "depthai-shared/datatype/RawAprilTagConfig.hpp"
 #include "depthai-shared/datatype/RawBuffer.hpp"
@@ -65,17 +64,16 @@ DEPTHAI_SERIALIZE_EXT(AprilTag, id, hamming, decisionMargin, topLeft, topRight, 
 struct RawAprilTags : public RawBuffer {
     std::vector<AprilTag> aprilTags;
 
-    // Related to input ImgFrame
-    int64_t sequenceNum = 0;  // increments for each frame
-    Timestamp ts = {};        // generation timestamp, synced to host time
-    Timestamp tsDevice = {};  // generation timestamp, direct device monotonic clock
-
     void serialize(std::vector<std::uint8_t>& metadata, DatatypeEnum& datatype) const override {
         metadata = utility::serialize(*this);
         datatype = DatatypeEnum::AprilTags;
     };
 
-    DEPTHAI_SERIALIZE(RawAprilTags, aprilTags, sequenceNum, ts, tsDevice);
+    DatatypeEnum getType() const override {
+        return DatatypeEnum::AprilTags;
+    }
+
+    DEPTHAI_SERIALIZE(RawAprilTags, aprilTags, RawBuffer::sequenceNum, RawBuffer::ts, RawBuffer::tsDevice);
 };
 
 }  // namespace dai
