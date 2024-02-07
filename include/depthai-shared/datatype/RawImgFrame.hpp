@@ -327,9 +327,7 @@ struct RawImgFrame : public RawBuffer {
     float HFovDegrees = 0.0;   // Horizontal field of view in degrees
     uint32_t category = 0;     //
     uint32_t instanceNum = 0;  // Which source created this frame (color, mono, ...)
-    int64_t sequenceNum = 0;   // increments for each frame
-    Timestamp ts = {};         // generation timestamp, synced to host time
-    Timestamp tsDevice = {};   // generation timestamp, direct device monotonic clock
+
     ImgTransformations transformations;
     dai::FrameEvent event = dai::FrameEvent::NONE;
 
@@ -340,7 +338,7 @@ struct RawImgFrame : public RawBuffer {
         datatype = DatatypeEnum::ImgFrame;
     };
 
-    DEPTHAI_SERIALIZE(RawImgFrame, fb, sourceFb, cam, HFovDegrees, category, instanceNum, sequenceNum, ts, tsDevice, transformations, disp2DepthMultiplier);
+    DEPTHAI_SERIALIZE(RawImgFrame, fb, sourceFb, cam, HFovDegrees, category, transformations, disp2DepthMultiplier, RawBuffer::sequenceNum, RawBuffer::ts, RawBuffer::tsDevice);
 };
 
 }  // namespace dai
