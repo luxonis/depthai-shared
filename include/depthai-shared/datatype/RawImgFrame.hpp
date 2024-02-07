@@ -310,8 +310,9 @@ struct RawImgFrame : public RawBuffer {
         int32_t sensitivityIso;
         int32_t lensPosition;
         int32_t wbColorTemp;
+        float lensPositionRaw;
 
-        DEPTHAI_SERIALIZE(CameraSettings, exposureTimeUs, sensitivityIso, lensPosition, wbColorTemp);
+        DEPTHAI_SERIALIZE(CameraSettings, exposureTimeUs, sensitivityIso, lensPosition, wbColorTemp, lensPositionRaw);
     };
 
     Specs fb = {};
