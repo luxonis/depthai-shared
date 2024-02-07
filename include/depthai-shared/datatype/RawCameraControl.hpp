@@ -97,6 +97,7 @@ struct RawCameraControl : public RawBuffer {
         FRAME_SYNC = 52,
         STROBE_CONFIG = 53,
         STROBE_TIMINGS = 54,
+        MOVE_LENS_RAW = 55,
     };
 
     enum class AutoFocusMode : uint8_t {
@@ -409,6 +410,7 @@ struct RawCameraControl : public RawBuffer {
      * - lower values lead to out-of-focus (lens too close to the sensor array)
      */
     uint8_t lensPosition = 0;
+    float lensPositionRaw = 0;
     uint8_t lensPosAutoInfinity, lensPosAutoMacro;
 
     ManualExposureParams expManual;
@@ -458,6 +460,7 @@ struct RawCameraControl : public RawBuffer {
                       cmdMask,
                       autoFocusMode,
                       lensPosition,
+                      lensPositionRaw,
                       lensPosAutoInfinity,
                       lensPosAutoMacro,
                       expManual,
