@@ -3,7 +3,10 @@
 #include "depthai-shared/common/CameraBoardSocket.hpp"
 #include "depthai-shared/common/CameraImageOrientation.hpp"
 #include "depthai-shared/common/CameraSensorType.hpp"
+#include "depthai-shared/common/Rect.hpp"
+#include "depthai-shared/common/optional.hpp"
 #include "depthai-shared/utility/Serialization.hpp"
+
 
 namespace dai {
 
