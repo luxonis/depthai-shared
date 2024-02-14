@@ -338,7 +338,18 @@ struct RawImgFrame : public RawBuffer {
         datatype = DatatypeEnum::ImgFrame;
     };
 
-    DEPTHAI_SERIALIZE(RawImgFrame, fb, sourceFb, cam, HFovDegrees, category, transformations, disp2DepthMultiplier, instanceNum, RawBuffer::sequenceNum, RawBuffer::ts, RawBuffer::tsDevice);
+    DEPTHAI_SERIALIZE(RawImgFrame,
+                      fb,
+                      sourceFb,
+                      cam,
+                      HFovDegrees,
+                      category,
+                      transformations,
+                      disp2DepthMultiplier,
+                      instanceNum,
+                      RawBuffer::sequenceNum,
+                      RawBuffer::ts,
+                      RawBuffer::tsDevice);
 };
 
 }  // namespace dai
