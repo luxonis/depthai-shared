@@ -13,6 +13,8 @@ namespace dai {
 struct RawPointCloudConfig : public RawBuffer {
     bool sparse = false;
 
+    std::array<std::array<float, 4>, 4> transformationMatrix = {{{1, 0, 0, 0}, {0, 1, 0, 0}, {0, 0, 1, 0}, {0, 0, 0, 1}}};
+
     void serialize(std::vector<std::uint8_t>& metadata, DatatypeEnum& datatype) const override {
         metadata = utility::serialize(*this);
         datatype = DatatypeEnum::PointCloudConfig;
@@ -22,7 +24,7 @@ struct RawPointCloudConfig : public RawBuffer {
         return DatatypeEnum::PointCloudConfig;
     }
 
-    DEPTHAI_SERIALIZE(RawPointCloudConfig, sparse);
+    DEPTHAI_SERIALIZE(RawPointCloudConfig, sparse, transformationMatrix);
 };
 
 }  // namespace dai
