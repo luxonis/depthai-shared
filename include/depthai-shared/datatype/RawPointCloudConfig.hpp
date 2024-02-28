@@ -1,7 +1,7 @@
 #pragma once
+#include <array>
 #include <cstdint>
 #include <vector>
-#include <array>
 
 #include "RawImgFrame.hpp"
 #include "depthai-shared/datatype/DatatypeEnum.hpp"
