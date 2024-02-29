@@ -21,7 +21,7 @@ struct DepthEncoderProperties : PropertiesSerializable<Properties, DepthEncoderP
     int minDepth = 1000;   // In the stereo depth unit
     int maxDepth = 10000;  // In the stereo depth unit
     int numFramesPool = 8;
-    int numShaves = 1;
+    int numShaves = 2;
 };
 
 DEPTHAI_SERIALIZE_EXT(DepthEncoderProperties, outputType, lutR, lutG, lutB, useHueEncoding, minDepth, maxDepth, hueEncodingType, numShaves);
