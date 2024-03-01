@@ -29,6 +29,8 @@ const std::unordered_map<DatatypeEnum, std::vector<DatatypeEnum>> hierarchy = {
          DatatypeEnum::TrackedFeatures,
          DatatypeEnum::AprilTagConfig,
          DatatypeEnum::AprilTags,
+         DatatypeEnum::PointCloudConfig,
+         DatatypeEnum::PointCloudData,
          DatatypeEnum::MessageGroup,
      }},
     {DatatypeEnum::ImgFrame, {}},
@@ -50,6 +52,8 @@ const std::unordered_map<DatatypeEnum, std::vector<DatatypeEnum>> hierarchy = {
     {DatatypeEnum::TrackedFeatures, {}},
     {DatatypeEnum::AprilTagConfig, {}},
     {DatatypeEnum::AprilTags, {}},
+    {DatatypeEnum::PointCloudConfig, {}},
+    {DatatypeEnum::PointCloudData, {}},
     {DatatypeEnum::MessageGroup, {}},
 };
 
