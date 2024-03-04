@@ -22,6 +22,6 @@ struct DepthAlignProperties: PropertiesSerializable<Properties, DepthAlignProper
     bool downscaleSource = true;
 };
 
-DEPTHAI_SERIALIZE_EXT(DepthAlignProperties, initialConfig, alignFrom, alignTo);
+DEPTHAI_SERIALIZE_EXT(DepthAlignProperties, initialConfig, alignFrom, alignTo, alignWidth, alignHeight, downscaleSource);
 
 }  // namespace dai
