@@ -7,7 +7,6 @@
 #include "depthai-shared/common/optional.hpp"
 #include "depthai-shared/utility/Serialization.hpp"
 
-
 namespace dai {
 
 /**
@@ -78,8 +77,19 @@ struct CameraFeatures {
      */
     tl::optional<CameraSensorConfig> calibrationResolution = tl::nullopt;
 
-    DEPTHAI_SERIALIZE(
-        CameraFeatures, socket, sensorName, width, height, orientation, supportedTypes, hasAutofocusIC, hasAutofocus, name, additionalNames, configs, calibrationResolution);
+    DEPTHAI_SERIALIZE(CameraFeatures,
+                      socket,
+                      sensorName,
+                      width,
+                      height,
+                      orientation,
+                      supportedTypes,
+                      hasAutofocusIC,
+                      hasAutofocus,
+                      name,
+                      additionalNames,
+                      configs,
+                      calibrationResolution);
 };
 
 }  // namespace dai
