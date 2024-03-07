@@ -63,11 +63,11 @@ struct StereoDepthProperties : PropertiesSerializable<Properties, StereoDepthPro
      */
     std::int32_t rectifyEdgeFillColor = 0;
     /**
-     * Input frame width. Optional (taken from MonoCamera nodes if they exist)
+     * Input frame width. Optional use to resize the output, otherwise the resolution is lazy-loaded by the first frame.
      */
     tl::optional<std::int32_t> width;
     /**
-     * Input frame height. Optional (taken from MonoCamera nodes if they exist)
+     * Input frame height. Optional use to resize the output, otherwise the resolution is lazy-loaded by the first frame.
      */
     tl::optional<std::int32_t> height;
     /**
