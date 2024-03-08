@@ -39,7 +39,17 @@ struct RawToFConfig : public RawBuffer {
          */
         MedianFilter median = MedianFilter::KERNEL_5x5;
 
-        DEPTHAI_SERIALIZE(DepthParams, avgPhaseShuffle, minimumAmplitude, freqModUsed, median);
+        /**
+         * Temperature coefficient A
+         */
+        float temperatureCoefficientA = 0.0f;
+
+        /**
+         * Temperature coefficient B
+         */
+        float temperatureCoefficientB = 0.0f;
+
+        DEPTHAI_SERIALIZE(DepthParams, avgPhaseShuffle, minimumAmplitude, freqModUsed, median, temperatureCoefficientA, temperatureCoefficientB);
     };
 
     /**
