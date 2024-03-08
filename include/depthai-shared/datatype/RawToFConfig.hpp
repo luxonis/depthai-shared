@@ -58,6 +58,10 @@ struct RawToFConfig : public RawBuffer {
      */
     DepthParams depthParams;
 
+    bool enableFPPN = true;
+    bool enableDistanceToDepth = true;
+    bool enableTemperatureCorrection = true;
+
     void serialize(std::vector<std::uint8_t>& metadata, DatatypeEnum& datatype) const override {
         metadata = utility::serialize(*this);
         datatype = DatatypeEnum::ToFConfig;
@@ -67,7 +71,7 @@ struct RawToFConfig : public RawBuffer {
         return DatatypeEnum::ToFConfig;
     }
 
-    DEPTHAI_SERIALIZE(RawToFConfig, depthParams);
+    DEPTHAI_SERIALIZE(RawToFConfig, depthParams, enableFPPN, enableDistanceToDepth, enableTemperatureCorrection);
 };
 
 }  // namespace dai
