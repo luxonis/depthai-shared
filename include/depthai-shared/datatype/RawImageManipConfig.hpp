@@ -119,6 +119,10 @@ struct RawImageManipConfig : public RawBuffer {
         datatype = DatatypeEnum::ImageManipConfig;
     };
 
+    DatatypeEnum getType() const override {
+        return DatatypeEnum::ImageManipConfig;
+    }
+
     DEPTHAI_SERIALIZE(RawImageManipConfig,
                       cropConfig,
                       resizeConfig,

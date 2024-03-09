@@ -69,6 +69,10 @@ struct RawAprilTags : public RawBuffer {
         datatype = DatatypeEnum::AprilTags;
     };
 
+    DatatypeEnum getType() const override {
+        return DatatypeEnum::AprilTags;
+    }
+
     DEPTHAI_SERIALIZE(RawAprilTags, aprilTags, RawBuffer::sequenceNum, RawBuffer::ts, RawBuffer::tsDevice);
 };
 

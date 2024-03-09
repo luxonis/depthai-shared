@@ -216,7 +216,11 @@ struct RawIMUData : public RawBuffer {
         datatype = DatatypeEnum::IMUData;
     };
 
-    DEPTHAI_SERIALIZE(RawIMUData, packets);
+    DatatypeEnum getType() const override {
+        return DatatypeEnum::IMUData;
+    }
+
+    DEPTHAI_SERIALIZE(RawIMUData, packets, RawBuffer::sequenceNum, RawBuffer::ts, RawBuffer::tsDevice);
 };
 
 }  // namespace dai

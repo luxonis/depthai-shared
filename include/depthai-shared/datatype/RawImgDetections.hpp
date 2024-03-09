@@ -27,6 +27,10 @@ struct RawImgDetections : public RawBuffer {
         datatype = DatatypeEnum::ImgDetections;
     };
 
+    DatatypeEnum getType() const override {
+        return DatatypeEnum::ImgDetections;
+    }
+
     DEPTHAI_SERIALIZE(RawImgDetections, detections, RawBuffer::sequenceNum, RawBuffer::ts, RawBuffer::tsDevice);
 };
 

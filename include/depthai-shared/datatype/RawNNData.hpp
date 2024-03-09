@@ -17,6 +17,10 @@ struct RawNNData : public RawBuffer {
         datatype = DatatypeEnum::NNData;
     };
 
+    DatatypeEnum getType() const override {
+        return DatatypeEnum::NNData;
+    }
+
     DEPTHAI_SERIALIZE(RawNNData, tensors, batchSize, RawBuffer::sequenceNum, RawBuffer::ts, RawBuffer::tsDevice);
 };
 
