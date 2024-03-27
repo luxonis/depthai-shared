@@ -1,5 +1,6 @@
 #pragma once
 
+#include <depthai-shared/common/optional.hpp>
 #include <unordered_map>
 
 #include "depthai-shared/common/FrameEvent.hpp"
@@ -331,7 +332,9 @@ struct RawImgFrame : public RawBuffer {
     ImgTransformations transformations;
     dai::FrameEvent event = dai::FrameEvent::NONE;
 
+    // TODO(Morato) - make a DepthMessage message for this instead of directly extending ImgFrame
     float disp2DepthMultiplier = 0;
+    tl::optional<std::vector<std::vector<float>>> intrinsicMatrix;
 
     void serialize(std::vector<std::uint8_t>& metadata, DatatypeEnum& datatype) const override {
         metadata = utility::serialize(*this);
@@ -347,6 +350,7 @@ struct RawImgFrame : public RawBuffer {
                       transformations,
                       disp2DepthMultiplier,
                       instanceNum,
+                      intrinsicMatrix,
                       RawBuffer::sequenceNum,
                       RawBuffer::ts,
                       RawBuffer::tsDevice);

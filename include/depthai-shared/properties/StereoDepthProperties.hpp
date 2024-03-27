@@ -199,6 +199,12 @@ struct StereoDepthProperties : PropertiesSerializable<Properties, StereoDepthPro
      * See getOptimalNewCameraMatrix from opencv for more details.
      */
     tl::optional<float> alphaScaling;
+
+    /**
+    * Scale factor for the intrisic matrix.
+    * Not compatible with alphaScaling.
+    */
+    tl::optional<float> intrinsicScaleFactor;
 };
 
 DEPTHAI_SERIALIZE_EXT(StereoDepthProperties,
@@ -226,5 +232,6 @@ DEPTHAI_SERIALIZE_EXT(StereoDepthProperties,
                       disparityToDepthUseSpecTranslation,
                       rectificationUseSpecTranslation,
                       depthAlignmentUseSpecTranslation,
-                      alphaScaling);
+                      alphaScaling,
+                      intrinsicScaleFactor);
 }  // namespace dai
