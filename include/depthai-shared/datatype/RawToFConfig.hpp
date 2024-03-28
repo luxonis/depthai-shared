@@ -1,5 +1,6 @@
 #pragma once
 #include <cstdint>
+#include <depthai-shared/common/optional.hpp>
 #include <vector>
 
 #include "depthai-shared/common/MedianFilter.hpp"
@@ -39,17 +40,7 @@ struct RawToFConfig : public RawBuffer {
          */
         MedianFilter median = MedianFilter::KERNEL_5x5;
 
-        /**
-         * Temperature coefficient A
-         */
-        float temperatureCoefficientA = 0.0f;
-
-        /**
-         * Temperature coefficient B
-         */
-        float temperatureCoefficientB = 0.0f;
-
-        DEPTHAI_SERIALIZE(DepthParams, avgPhaseShuffle, minimumAmplitude, freqModUsed, median, temperatureCoefficientA, temperatureCoefficientB);
+        DEPTHAI_SERIALIZE(DepthParams, avgPhaseShuffle, minimumAmplitude, freqModUsed, median);
     };
 
     /**
@@ -58,9 +49,10 @@ struct RawToFConfig : public RawBuffer {
      */
     DepthParams depthParams;
 
-    bool enableFPPN = true;
-    bool enableDistanceToDepth = true;
-    bool enableTemperatureCorrection = true;
+    tl::optional<bool> enableFPPNCorrection;
+    tl::optional<bool> enableOpticalCorrection;
+    tl::optional<bool> enableTemperatureCorrection;
+    tl::optional<bool> enableWiggleCorrection;
 
     void serialize(std::vector<std::uint8_t>& metadata, DatatypeEnum& datatype) const override {
         metadata = utility::serialize(*this);
@@ -71,7 +63,7 @@ struct RawToFConfig : public RawBuffer {
         return DatatypeEnum::ToFConfig;
     }
 
-    DEPTHAI_SERIALIZE(RawToFConfig, depthParams, enableFPPN, enableDistanceToDepth, enableTemperatureCorrection);
+    DEPTHAI_SERIALIZE(RawToFConfig, depthParams, enableFPPNCorrection, enableOpticalCorrection, enableTemperatureCorrection, enableWiggleCorrection);
 };
 
 }  // namespace dai
