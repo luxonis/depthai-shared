@@ -72,6 +72,10 @@ struct VideoEncoderProperties : PropertiesSerializable<Properties, VideoEncoderP
      * Frame rate
      */
     float frameRate = 30.0f;
+    /**
+     * Miscellaneous properties
+     */
+    std::vector<std::pair<std::string, std::string>> miscProps;
 };
 
 DEPTHAI_SERIALIZE_EXT(VideoEncoderProperties,
@@ -85,6 +89,7 @@ DEPTHAI_SERIALIZE_EXT(VideoEncoderProperties,
                       quality,
                       lossless,
                       rateCtrlMode,
-                      frameRate);
+                      frameRate,
+                      miscProps);
 
 }  // namespace dai
