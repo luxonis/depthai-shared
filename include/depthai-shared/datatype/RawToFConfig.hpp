@@ -17,6 +17,11 @@ struct RawToFConfig : public RawBuffer {
      */
     MedianFilter median = MedianFilter::MEDIAN_OFF;
 
+    /*
+     * Maximum phase unwrapping level.
+     */
+    int maxPhaseUnwrappingLevel = 4;
+
     tl::optional<bool> enableFPPNCorrection;
     tl::optional<bool> enableOpticalCorrection;
     tl::optional<bool> enableTemperatureCorrection;
@@ -32,8 +37,14 @@ struct RawToFConfig : public RawBuffer {
         return DatatypeEnum::ToFConfig;
     }
 
-    DEPTHAI_SERIALIZE(
-        RawToFConfig, median, enableFPPNCorrection, enableOpticalCorrection, enableTemperatureCorrection, enableWiggleCorrection, enablePhaseUnwrapping);
+    DEPTHAI_SERIALIZE(RawToFConfig,
+                      median,
+                      enableFPPNCorrection,
+                      enableOpticalCorrection,
+                      enableTemperatureCorrection,
+                      enableWiggleCorrection,
+                      enablePhaseUnwrapping,
+                      maxPhaseUnwrappingLevel);
 };
 
 }  // namespace dai
