@@ -18,9 +18,9 @@ struct RawToFConfig : public RawBuffer {
     MedianFilter median = MedianFilter::MEDIAN_OFF;
 
     /*
-     * Maximum phase unwrapping level.
+     * Phase unwrapping level.
      */
-    int maxPhaseUnwrappingLevel = 4;
+    int phaseUnwrappingLevel = 4;
 
     tl::optional<bool> enableFPPNCorrection;
     tl::optional<bool> enableOpticalCorrection;
@@ -44,7 +44,7 @@ struct RawToFConfig : public RawBuffer {
                       enableTemperatureCorrection,
                       enableWiggleCorrection,
                       enablePhaseUnwrapping,
-                      maxPhaseUnwrappingLevel);
+                      phaseUnwrappingLevel);
 };
 
 }  // namespace dai
