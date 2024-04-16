@@ -21,6 +21,11 @@ struct RawBuffer {
         metadata = utility::serialize(*this);
         datatype = DatatypeEnum::Buffer;
     };
+
+    virtual DatatypeEnum getType() const {
+        return DatatypeEnum::Buffer;
+    }
+
     DEPTHAI_SERIALIZE(RawBuffer, sequenceNum, ts, tsDevice);
 };
 

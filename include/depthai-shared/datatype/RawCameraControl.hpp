@@ -97,6 +97,7 @@ struct RawCameraControl : public RawBuffer {
         FRAME_SYNC = 52,
         STROBE_CONFIG = 53,
         STROBE_TIMINGS = 54,
+        MOVE_LENS_RAW = 55, /* lens position: 0.0 - 1.0 */
     };
 
     enum class AutoFocusMode : uint8_t {
@@ -409,6 +410,7 @@ struct RawCameraControl : public RawBuffer {
      * - lower values lead to out-of-focus (lens too close to the sensor array)
      */
     uint8_t lensPosition = 0;
+    float lensPositionRaw = 0;
     uint8_t lensPosAutoInfinity, lensPosAutoMacro;
 
     ManualExposureParams expManual;
@@ -416,10 +418,13 @@ struct RawCameraControl : public RawBuffer {
     AutoWhiteBalanceMode awbMode;
     SceneMode sceneMode;
     AntiBandingMode antiBandingMode;
+    CaptureIntent captureIntent;
+    ControlMode controlMode;
     EffectMode effectMode;
     FrameSyncMode frameSyncMode;
     StrobeConfig strobeConfig;
     StrobeTimings strobeTimings;
+    uint32_t aeMaxExposureTimeUs;
     bool aeLockMode;
     bool awbLockMode;
     int8_t expCompensation;  //  -9 ..  9
@@ -453,10 +458,15 @@ struct RawCameraControl : public RawBuffer {
         datatype = DatatypeEnum::CameraControl;
     };
 
+    DatatypeEnum getType() const override {
+        return DatatypeEnum::CameraControl;
+    }
+
     DEPTHAI_SERIALIZE(RawCameraControl,
                       cmdMask,
                       autoFocusMode,
                       lensPosition,
+                      lensPositionRaw,
                       lensPosAutoInfinity,
                       lensPosAutoMacro,
                       expManual,
@@ -467,10 +477,13 @@ struct RawCameraControl : public RawBuffer {
                       antiBandingMode,
                       aeLockMode,
                       awbLockMode,
+                      captureIntent,
+                      controlMode,
                       effectMode,
                       frameSyncMode,
                       strobeConfig,
                       strobeTimings,
+                      aeMaxExposureTimeUs,
                       expCompensation,
                       brightness,
                       contrast,

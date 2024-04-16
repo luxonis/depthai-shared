@@ -3,6 +3,8 @@
 #include "depthai-shared/common/CameraBoardSocket.hpp"
 #include "depthai-shared/common/CameraImageOrientation.hpp"
 #include "depthai-shared/common/CameraSensorType.hpp"
+#include "depthai-shared/common/Rect.hpp"
+#include "depthai-shared/common/optional.hpp"
 #include "depthai-shared/utility/Serialization.hpp"
 
 namespace dai {
@@ -11,11 +13,14 @@ namespace dai {
  * Sensor config
  */
 struct CameraSensorConfig {
+    /// Width and height in number of output pixels.
     std::int32_t width = -1, height = -1;
-    std::int32_t minFps = -1, maxFps = -1;
+    float minFps = -1, maxFps = -1;
+    /// Sensor active view area in physical area [pixels]
+    Rect fov;
     CameraSensorType type;
 };
-DEPTHAI_SERIALIZE_EXT(CameraSensorConfig, width, height, minFps, maxFps, type);
+DEPTHAI_SERIALIZE_EXT(CameraSensorConfig, width, height, minFps, maxFps, fov, type);
 
 /**
  * CameraFeatures structure
@@ -67,8 +72,24 @@ struct CameraFeatures {
      */
     std::vector<CameraSensorConfig> configs;
 
-    DEPTHAI_SERIALIZE(
-        CameraFeatures, socket, sensorName, width, height, orientation, supportedTypes, hasAutofocusIC, hasAutofocus, name, additionalNames, configs);
+    /**
+     * The resolution which should be used for calibration.
+     */
+    tl::optional<CameraSensorConfig> calibrationResolution = tl::nullopt;
+
+    DEPTHAI_SERIALIZE(CameraFeatures,
+                      socket,
+                      sensorName,
+                      width,
+                      height,
+                      orientation,
+                      supportedTypes,
+                      hasAutofocusIC,
+                      hasAutofocus,
+                      name,
+                      additionalNames,
+                      configs,
+                      calibrationResolution);
 };
 
 }  // namespace dai

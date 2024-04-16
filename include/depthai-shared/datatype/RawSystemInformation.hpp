@@ -36,6 +36,10 @@ struct RawSystemInformation : public RawBuffer {
         datatype = DatatypeEnum::SystemInformation;
     };
 
+    DatatypeEnum getType() const override {
+        return DatatypeEnum::SystemInformation;
+    }
+
     DEPTHAI_SERIALIZE(
         RawSystemInformation, ddrMemoryUsage, cmxMemoryUsage, leonCssMemoryUsage, leonMssMemoryUsage, leonCssCpuUsage, leonMssCpuUsage, chipTemperature);
 };

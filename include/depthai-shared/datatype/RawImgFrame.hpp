@@ -168,8 +168,9 @@ struct RawImgFrame : public RawBuffer {
         int32_t sensitivityIso;
         int32_t lensPosition;
         int32_t wbColorTemp;
+        float lensPositionRaw;
 
-        DEPTHAI_SERIALIZE(CameraSettings, exposureTimeUs, sensitivityIso, lensPosition, wbColorTemp);
+        DEPTHAI_SERIALIZE(CameraSettings, exposureTimeUs, sensitivityIso, lensPosition, wbColorTemp, lensPositionRaw);
     };
 
     Specs fb = {};
@@ -182,6 +183,10 @@ struct RawImgFrame : public RawBuffer {
         metadata = utility::serialize(*this);
         datatype = DatatypeEnum::ImgFrame;
     };
+
+    DatatypeEnum getType() const override {
+        return DatatypeEnum::ImgFrame;
+    }
 
     DEPTHAI_SERIALIZE(RawImgFrame, fb, cam, category, instanceNum, RawBuffer::sequenceNum, RawBuffer::ts, RawBuffer::tsDevice);
 };
