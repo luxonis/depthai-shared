@@ -22,6 +22,11 @@ struct RawToFConfig : public RawBuffer {
      */
     int phaseUnwrappingLevel = 4;
 
+    /*
+     * Phase unwrapping error threshold.
+     */
+    uint16_t phaseUnwrapErrorThreshold = 100;
+
     tl::optional<bool> enableFPPNCorrection;
     tl::optional<bool> enableOpticalCorrection;
     tl::optional<bool> enableTemperatureCorrection;
@@ -44,7 +49,8 @@ struct RawToFConfig : public RawBuffer {
                       enableTemperatureCorrection,
                       enableWiggleCorrection,
                       enablePhaseUnwrapping,
-                      phaseUnwrappingLevel);
+                      phaseUnwrappingLevel,
+                      phaseUnwrapErrorThreshold);
 };
 
 }  // namespace dai
