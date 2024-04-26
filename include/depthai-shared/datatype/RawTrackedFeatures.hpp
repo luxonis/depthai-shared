@@ -1,6 +1,7 @@
 #pragma once
 #include <cstdint>
 #include <vector>
+#include <array>
 
 #include "RawFeatureTrackerConfig.hpp"
 #include "depthai-shared/common/Point2f.hpp"
@@ -39,8 +40,13 @@ struct TrackedFeature {
      *  Feature tracking error
      */
     float trackingError = 0.f;
+
+    /**
+     *  Feature descriptor
+     */
+    std::array<uint8_t, 32> descriptor = {0};
 };
-DEPTHAI_SERIALIZE_EXT(TrackedFeature, position, id, age, harrisScore, trackingError);
+DEPTHAI_SERIALIZE_EXT(TrackedFeature, position, id, age, harrisScore, trackingError, descriptor);
 
 /// RawTrackedFeatures structure
 struct RawTrackedFeatures : public RawBuffer {
