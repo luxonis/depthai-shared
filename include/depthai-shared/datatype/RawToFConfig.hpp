@@ -28,10 +28,10 @@ struct RawToFConfig : public RawBuffer {
     uint16_t phaseUnwrapErrorThreshold = 100;
 
     /*
-     * Enable phase shuffle average.
+     * Enable phase shuffle temporal filter.
      * Temporal filter that averages the shuffle and non-shuffle frequencies.
      */
-    bool enablePhaseShuffleAverage = true;
+    bool enablePhaseShuffleTemporalFilter = true;
 
     /*
      * Enable burst mode.
@@ -72,7 +72,7 @@ struct RawToFConfig : public RawBuffer {
 
     DEPTHAI_SERIALIZE(RawToFConfig,
                       median,
-                      enablePhaseShuffleAverage,
+                      enablePhaseShuffleTemporalFilter,
                       enableBurstMode,
                       enableFPPNCorrection,
                       enableOpticalCorrection,
