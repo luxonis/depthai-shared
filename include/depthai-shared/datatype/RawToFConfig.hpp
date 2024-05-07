@@ -27,10 +27,38 @@ struct RawToFConfig : public RawBuffer {
      */
     uint16_t phaseUnwrapErrorThreshold = 100;
 
+    /*
+     * Enable phase shuffle average.
+     * Temporal filter that averages the shuffle and non-shuffle frequencies.
+     */
+    bool enablePhaseShuffleAverage = true;
+
+    /*
+     * Enable burst mode.
+     * Decoding is performed on a series of 4 frames.
+     * Outputf fps will be 4 times lower, but reduces motion blur artifacts.
+     */
+    bool enableBurstMode = false;
+
+    /*
+     * Enable FPN correction. Used for debugging.
+     */
     tl::optional<bool> enableFPPNCorrection;
+    /*
+     * Enable optical correction. Used for debugging.
+     */
     tl::optional<bool> enableOpticalCorrection;
+    /*
+     * Enable temperature correction. Used for debugging.
+     */
     tl::optional<bool> enableTemperatureCorrection;
+    /*
+     * Enable wiggle correction. Used for debugging.
+     */
     tl::optional<bool> enableWiggleCorrection;
+    /*
+     * Enable phase unwrapping. Used for debugging.
+     */
     tl::optional<bool> enablePhaseUnwrapping;
 
     void serialize(std::vector<std::uint8_t>& metadata, DatatypeEnum& datatype) const override {
@@ -44,6 +72,8 @@ struct RawToFConfig : public RawBuffer {
 
     DEPTHAI_SERIALIZE(RawToFConfig,
                       median,
+                      enablePhaseShuffleAverage,
+                      enableBurstMode,
                       enableFPPNCorrection,
                       enableOpticalCorrection,
                       enableTemperatureCorrection,
