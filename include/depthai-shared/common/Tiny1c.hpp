@@ -3,7 +3,7 @@
 #include "depthai-shared/utility/Serialization.hpp"
 
 namespace dai {
-enum Tiny1cPropAutoShutterParams {
+enum Tiny1cPropAutoShutterParam {
     /// Auto shutter update switch. 0:OFF, 1:ON
     SHUTTER_PROP_SWITCH = 0,
 
