@@ -36,7 +36,7 @@ struct RawToFConfig : public RawBuffer {
     /*
      * Enable burst mode.
      * Decoding is performed on a series of 4 frames.
-     * Outputf fps will be 4 times lower, but reduces motion blur artifacts.
+     * Output fps will be 4 times lower, but reduces motion blur artifacts.
      */
     bool enableBurstMode = false;
 
