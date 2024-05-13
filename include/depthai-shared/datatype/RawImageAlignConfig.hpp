@@ -9,16 +9,19 @@
 
 namespace dai {
 
-/// RawPointCloudConfig configuration structure
+/// RawImageAlignConfig configuration structure
 struct RawImageAlignConfig : public RawBuffer {
-    int config = 0;
+    /**
+     * Optional static depth plane to align to, in depth units, by default millimeters
+     */
+    uint16_t staticDepthPlane = 0;
 
     void serialize(std::vector<std::uint8_t>& metadata, DatatypeEnum& datatype) const override {
         metadata = utility::serialize(*this);
         datatype = DatatypeEnum::ImageAlignConfig;
     };
 
-    DEPTHAI_SERIALIZE(RawImageAlignConfig, config);
+    DEPTHAI_SERIALIZE(RawImageAlignConfig, staticDepthPlane);
 };
 
 }  // namespace dai
