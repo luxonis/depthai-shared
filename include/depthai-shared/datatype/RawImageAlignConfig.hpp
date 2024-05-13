@@ -10,15 +10,15 @@
 namespace dai {
 
 /// RawPointCloudConfig configuration structure
-struct RawDepthAlignConfig : public RawBuffer {
+struct RawImageAlignConfig : public RawBuffer {
     int config = 0;
 
     void serialize(std::vector<std::uint8_t>& metadata, DatatypeEnum& datatype) const override {
         metadata = utility::serialize(*this);
-        datatype = DatatypeEnum::DepthAlignConfig;
+        datatype = DatatypeEnum::ImageAlignConfig;
     };
 
-    DEPTHAI_SERIALIZE(RawDepthAlignConfig, config);
+    DEPTHAI_SERIALIZE(RawImageAlignConfig, config);
 };
 
 }  // namespace dai
