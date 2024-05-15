@@ -1,5 +1,6 @@
 #pragma once
 #include <cstdint>
+#include <depthai-shared/common/optional.hpp>
 #include <vector>
 
 #include "depthai-shared/common/MedianFilter.hpp"
@@ -12,41 +13,53 @@ namespace dai {
 /// RawToFConfig configuration structure
 struct RawToFConfig : public RawBuffer {
     /**
-     * DepthParams configuration structure.
+     * Set kernel size for depth median filtering, or disable
      */
-    struct DepthParams {
-        /**
-         * Enable averaging between phases with same modulation frequency(e.g. for ToF cameras with phase shuffle).
-         * The depth frame rate will be half if this is enabled
-         */
-        bool avgPhaseShuffle = false;
+    MedianFilter median = MedianFilter::MEDIAN_OFF;
 
-        /**
-         * Perform depth calculation only for pixels with amplitude greater than provided value
-         */
-        float minimumAmplitude = 5.0;
-
-        /**
-         * Frequency modulation frames used for depth calculation. If the ToF sensor supports multiple modulation frequencies,
-         * all will be used for depth calculation.
-         */
-        enum class TypeFMod : std::int32_t { F_MOD_ALL, F_MOD_MIN, F_MOD_MAX };
-
-        TypeFMod freqModUsed = TypeFMod::F_MOD_MIN;
-
-        /**
-         * Set kernel size for depth median filtering, or disable
-         */
-        MedianFilter median = MedianFilter::KERNEL_5x5;
-
-        DEPTHAI_SERIALIZE(DepthParams, avgPhaseShuffle, minimumAmplitude, freqModUsed, median);
-    };
-
-    /**
-     * DepthParams configuration.
-     * Used for configuring the ToF.
+    /*
+     * Phase unwrapping level.
      */
-    DepthParams depthParams;
+    int phaseUnwrappingLevel = 4;
+
+    /*
+     * Phase unwrapping error threshold.
+     */
+    uint16_t phaseUnwrapErrorThreshold = 100;
+
+    /*
+     * Enable phase shuffle temporal filter.
+     * Temporal filter that averages the shuffle and non-shuffle frequencies.
+     */
+    bool enablePhaseShuffleTemporalFilter = true;
+
+    /*
+     * Enable burst mode.
+     * Decoding is performed on a series of 4 frames.
+     * Output fps will be 4 times lower, but reduces motion blur artifacts.
+     */
+    bool enableBurstMode = false;
+
+    /*
+     * Enable FPN correction. Used for debugging.
+     */
+    tl::optional<bool> enableFPPNCorrection;
+    /*
+     * Enable optical correction. Used for debugging.
+     */
+    tl::optional<bool> enableOpticalCorrection;
+    /*
+     * Enable temperature correction. Used for debugging.
+     */
+    tl::optional<bool> enableTemperatureCorrection;
+    /*
+     * Enable wiggle correction. Used for debugging.
+     */
+    tl::optional<bool> enableWiggleCorrection;
+    /*
+     * Enable phase unwrapping. Used for debugging.
+     */
+    tl::optional<bool> enablePhaseUnwrapping;
 
     void serialize(std::vector<std::uint8_t>& metadata, DatatypeEnum& datatype) const override {
         metadata = utility::serialize(*this);
@@ -57,7 +70,17 @@ struct RawToFConfig : public RawBuffer {
         return DatatypeEnum::ToFConfig;
     }
 
-    DEPTHAI_SERIALIZE(RawToFConfig, depthParams);
+    DEPTHAI_SERIALIZE(RawToFConfig,
+                      median,
+                      enablePhaseShuffleTemporalFilter,
+                      enableBurstMode,
+                      enableFPPNCorrection,
+                      enableOpticalCorrection,
+                      enableTemperatureCorrection,
+                      enableWiggleCorrection,
+                      enablePhaseUnwrapping,
+                      phaseUnwrappingLevel,
+                      phaseUnwrapErrorThreshold);
 };
 
 }  // namespace dai
