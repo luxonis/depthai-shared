@@ -32,8 +32,12 @@ struct ImageAlignProperties : PropertiesSerializable<Properties, ImageAlignPrope
     using Interpolation = dai::Interpolation;
     /// Interpolation type to use
     Interpolation interpolation = Interpolation::AUTO;
+    /**
+     * Whether to keep aspect ratio of the input or not
+     */
+    bool outKeepAspectRatio = true;
 };
 
-DEPTHAI_SERIALIZE_EXT(ImageAlignProperties, initialConfig, numFramesPool, alignWidth, alignHeight, warpHwIds, interpolation);
+DEPTHAI_SERIALIZE_EXT(ImageAlignProperties, initialConfig, numFramesPool, alignWidth, alignHeight, warpHwIds, interpolation, outKeepAspectRatio);
 
 }  // namespace dai
