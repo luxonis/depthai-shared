@@ -311,8 +311,10 @@ struct RawImgFrame : public RawBuffer {
         int32_t lensPosition;
         int32_t wbColorTemp;
         float lensPositionRaw;
+        float sensorTemperature;
+        float auxTemperature;
 
-        DEPTHAI_SERIALIZE(CameraSettings, exposureTimeUs, sensitivityIso, lensPosition, wbColorTemp, lensPositionRaw);
+        DEPTHAI_SERIALIZE(CameraSettings, exposureTimeUs, sensitivityIso, lensPosition, wbColorTemp, lensPositionRaw, sensorTemperature, auxTemperature);
     };
 
     enum class Category : uint32_t {
