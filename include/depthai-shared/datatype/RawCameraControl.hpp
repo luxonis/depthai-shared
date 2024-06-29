@@ -425,6 +425,7 @@ struct RawCameraControl : public RawBuffer {
     StrobeConfig strobeConfig;
     StrobeTimings strobeTimings;
     uint32_t aeMaxExposureTimeUs;
+    uint32_t frameDurationUs;
     bool aeLockMode;
     bool awbLockMode;
     int8_t expCompensation;  //  -9 ..  9
@@ -484,6 +485,7 @@ struct RawCameraControl : public RawBuffer {
                       strobeConfig,
                       strobeTimings,
                       aeMaxExposureTimeUs,
+                      frameDurationUs,
                       expCompensation,
                       brightness,
                       contrast,
