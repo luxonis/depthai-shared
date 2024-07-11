@@ -41,6 +41,11 @@ struct RawToFConfig : public RawBuffer {
     bool enableBurstMode = false;
 
     /*
+     * Enable distortion correction for intensity, amplitude and depth output, if calibration is present.
+     */
+    bool enableDistortionCorrection = true;
+
+    /*
      * Enable FPN correction. Used for debugging.
      */
     tl::optional<bool> enableFPPNCorrection;
@@ -74,6 +79,7 @@ struct RawToFConfig : public RawBuffer {
                       median,
                       enablePhaseShuffleTemporalFilter,
                       enableBurstMode,
+                      enableDistortionCorrection,
                       enableFPPNCorrection,
                       enableOpticalCorrection,
                       enableTemperatureCorrection,

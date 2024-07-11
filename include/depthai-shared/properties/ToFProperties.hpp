@@ -23,8 +23,11 @@ struct ToFProperties : PropertiesSerializable<Properties, ToFProperties> {
      * Number of shaves reserved for ToF decoding.
      */
     std::int32_t numShaves = 1;
+
+    /// Warp HW IDs to use for undistortion, if empty, use auto/default
+    std::vector<int> warpHwIds;
 };
 
-DEPTHAI_SERIALIZE_EXT(ToFProperties, initialConfig, numFramesPool, numShaves);
+DEPTHAI_SERIALIZE_EXT(ToFProperties, initialConfig, numFramesPool, numShaves, warpHwIds);
 
 }  // namespace dai
