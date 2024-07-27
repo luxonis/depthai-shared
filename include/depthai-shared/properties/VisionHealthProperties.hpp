@@ -13,11 +13,10 @@ namespace dai {
  */
 struct VisionHealthProperties : PropertiesSerializable<Properties, VisionHealthProperties> {
     RawVisionHealthConfig initialConfig;
-    int memory = 20;
     int bootThreshold = 10;
     int checkThreshold = 50;
 };
 
-DEPTHAI_SERIALIZE_EXT(VisionHealthProperties, initialConfig, memory, bootThreshold, checkThreshold);
+DEPTHAI_SERIALIZE_EXT(VisionHealthProperties, initialConfig, bootThreshold, checkThreshold);
 
 }  // namespace dai

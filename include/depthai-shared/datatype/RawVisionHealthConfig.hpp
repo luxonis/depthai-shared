@@ -36,11 +36,15 @@ DEPTHAI_SERIALIZE_EXT(RelativeVisionHealthConfig, threshold, oper, sigmas);
 
 /// RawVisionHealthConfig structure
 struct RawVisionHealthConfig : public RawBuffer {
-    int relativeChangeFrameDistance = 5;
-    int relativeWindowSize = 30;
+    int depthVarianceRelativeWindowSize = 30;
+    int edgeHoleRateRelativeWindowSize = 30;
     float depthHoleRateThreshold = 10.0;
     float edgeStrengthThreshold = 300.0;
     float edgeHoleRateThreshold = 10.0;
+    int edgeHoleRateKernelSize = 5;
+
+    // Constant padding value if image is not perfectly divisible by the block size.
+    float depthtHoleRateCval = 400;
 
     std::unordered_map<VisionHealthMetricTypes, AbsoluteVisionHealthConfig> absoluteVisionHealthConfigs;
     std::unordered_map<VisionHealthMetricTypes, RelativeVisionHealthConfig> relativeVisionHealthConfigs;
@@ -53,11 +57,13 @@ struct RawVisionHealthConfig : public RawBuffer {
     DEPTHAI_SERIALIZE(RawVisionHealthConfig,
                       absoluteVisionHealthConfigs,
                       relativeVisionHealthConfigs,
-                      relativeChangeFrameDistance,
-                      relativeWindowSize,
+                      depthVarianceRelativeWindowSize,
                       depthHoleRateThreshold,
                       edgeStrengthThreshold,
                       edgeHoleRateThreshold,
+                      edgeHoleRateRelativeWindowSize,
+                      edgeHoleRateKernelSize,
+                      depthtHoleRateCval,
                       RawBuffer::sequenceNum,
                       RawBuffer::ts,
                       RawBuffer::tsDevice);

@@ -8,16 +8,14 @@ namespace dai {
  * Get USB Speed
  */
 
-enum class VisionHealthMetricTypes : uint32_t { DepthVariance, FillRate, PSNR, EdgeHoleRate, Laplacian };
+enum class VisionHealthMetricTypes : uint32_t { DepthVariance, FillRate, EdgeHoleRate, Laplacian };
 
-inline std::string toString(const VisionHealthMetricTypes &m) {
+inline std::string toString(const VisionHealthMetricTypes& m) {
     switch(m) {
         case VisionHealthMetricTypes::DepthVariance:
             return "DepthVariance";
         case VisionHealthMetricTypes::FillRate:
             return "FillRate";
-        case VisionHealthMetricTypes::PSNR:
-            return "PSNR";
         case VisionHealthMetricTypes::EdgeHoleRate:
             return "EdgeHoleRate";
         case VisionHealthMetricTypes::Laplacian:
@@ -27,7 +25,7 @@ inline std::string toString(const VisionHealthMetricTypes &m) {
     }
 }
 
-inline std::ostream &operator<<(std::ostream &os, const VisionHealthMetricTypes &m) {
+inline std::ostream& operator<<(std::ostream& os, const VisionHealthMetricTypes& m) {
     os << dai::toString(m);
     return os;
 }
