@@ -31,6 +31,8 @@ enum class DatatypeEnum : std::int32_t {
     QueueTraceEvent,
     NodeTraceEvent,
     CrashReport,
+    VisionHealthMetrics,
+    VisionHealthConfig,
 };
 bool isDatatypeSubclassOf(DatatypeEnum parent, DatatypeEnum children);
 

@@ -1,7 +1,7 @@
 #pragma once
+#include <array>
 #include <cstdint>
 #include <vector>
-#include <array>
 
 #include "RawFeatureTrackerConfig.hpp"
 #include "depthai-shared/common/Point2f.hpp"
