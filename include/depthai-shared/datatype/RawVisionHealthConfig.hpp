@@ -13,27 +13,6 @@
 
 namespace dai {
 
-/**
- * AbsoluteVisionHealthConfig structure
- *
- */
-struct AbsoluteVisionHealthConfig {
-    float threshold;
-    std::string oper;
-};
-DEPTHAI_SERIALIZE_EXT(AbsoluteVisionHealthConfig, threshold, oper);
-
-/**
- * RelativeVisionHealthConfig structure
- *
- */
-struct RelativeVisionHealthConfig {
-    tl::optional<float> threshold;
-    std::string oper;
-    float sigmas;
-};
-DEPTHAI_SERIALIZE_EXT(RelativeVisionHealthConfig, threshold, oper, sigmas);
-
 /// RawVisionHealthConfig structure
 struct RawVisionHealthConfig : public RawBuffer {
     int depthVarianceRelativeWindowSize = 30;
@@ -46,8 +25,7 @@ struct RawVisionHealthConfig : public RawBuffer {
     // Constant padding value if image is not perfectly divisible by the block size.
     float depthtHoleRateCval = 400;
 
-    std::unordered_map<VisionHealthMetricTypes, AbsoluteVisionHealthConfig> absoluteVisionHealthConfigs;
-    std::unordered_map<VisionHealthMetricTypes, RelativeVisionHealthConfig> relativeVisionHealthConfigs;
+    std::vector<dai::VisionHealthMetricTypes> visionHealthConfigs;
 
     void serialize(std::vector<std::uint8_t>& metadata, DatatypeEnum& datatype) const override {
         metadata = utility::serialize(*this);
@@ -55,8 +33,7 @@ struct RawVisionHealthConfig : public RawBuffer {
     };
 
     DEPTHAI_SERIALIZE(RawVisionHealthConfig,
-                      absoluteVisionHealthConfigs,
-                      relativeVisionHealthConfigs,
+                      visionHealthConfigs,
                       depthVarianceRelativeWindowSize,
                       depthHoleRateThreshold,
                       edgeStrengthThreshold,

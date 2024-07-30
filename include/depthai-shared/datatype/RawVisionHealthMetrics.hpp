@@ -11,37 +11,24 @@
 namespace dai {
 
 /**
- * AbsoluteVisionHealthMetric structure
+ * VisionHealthMetric structure
  *
  */
-struct AbsoluteVisionHealthMetric {
+struct VisionHealthMetric {
     float value;
 };
-DEPTHAI_SERIALIZE_EXT(AbsoluteVisionHealthMetric, value);
-
-/**
- * RelativeVisionHealthMetric structure
- *
- */
-struct RelativeVisionHealthMetric {
-    float value;
-    float mean;
-    float variance;
-};
-DEPTHAI_SERIALIZE_EXT(RelativeVisionHealthMetric, value, mean, variance);
+DEPTHAI_SERIALIZE_EXT(VisionHealthMetric, value);
 
 /// RawVisionHealthMetrics structure
 struct RawVisionHealthMetrics : public RawBuffer {
-    std::unordered_map<VisionHealthMetricTypes, AbsoluteVisionHealthMetric> absoluteVisionHealthMetrics;
-    std::unordered_map<VisionHealthMetricTypes, RelativeVisionHealthMetric> relativeVisionHealthMetrics;
+    std::unordered_map<VisionHealthMetricTypes, VisionHealthMetric> visionHealthMetrics;
 
     void serialize(std::vector<std::uint8_t>& metadata, DatatypeEnum& datatype) const override {
         metadata = utility::serialize(*this);
         datatype = DatatypeEnum::VisionHealthMetrics;
     };
 
-    DEPTHAI_SERIALIZE(
-        RawVisionHealthMetrics, absoluteVisionHealthMetrics, relativeVisionHealthMetrics, RawBuffer::sequenceNum, RawBuffer::ts, RawBuffer::tsDevice);
+    DEPTHAI_SERIALIZE(RawVisionHealthMetrics, visionHealthMetrics, RawBuffer::sequenceNum, RawBuffer::ts, RawBuffer::tsDevice);
 };
 
 }  // namespace dai
