@@ -36,8 +36,17 @@ struct RawSystemInformation : public RawBuffer {
         datatype = DatatypeEnum::SystemInformation;
     };
 
-    DEPTHAI_SERIALIZE(
-        RawSystemInformation, ddrMemoryUsage, cmxMemoryUsage, leonCssMemoryUsage, leonMssMemoryUsage, leonCssCpuUsage, leonMssCpuUsage, chipTemperature);
+    DEPTHAI_SERIALIZE(RawSystemInformation,
+                      ddrMemoryUsage,
+                      cmxMemoryUsage,
+                      leonCssMemoryUsage,
+                      leonMssMemoryUsage,
+                      leonCssCpuUsage,
+                      leonMssCpuUsage,
+                      chipTemperature,
+                      RawBuffer::sequenceNum,
+                      RawBuffer::ts,
+                      RawBuffer::tsDevice);
 };
 
 }  // namespace dai
