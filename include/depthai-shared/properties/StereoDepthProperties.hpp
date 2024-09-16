@@ -158,7 +158,6 @@ struct StereoDepthProperties : PropertiesSerializable<Properties, StereoDepthPro
      * Whether to enable frame syncing inside stereo node or not. Suitable if inputs are known to be synced.
      */
     bool enableFrameSync = true;
-
     /*
      * Override baseline from calibration.
      * Used only in disparity to depth conversion.

@@ -311,8 +311,16 @@ struct RawImgFrame : public RawBuffer {
         int32_t lensPosition;
         int32_t wbColorTemp;
         float lensPositionRaw;
+        float sensorTemperature;
+        float auxTemperature;
 
-        DEPTHAI_SERIALIZE(CameraSettings, exposureTimeUs, sensitivityIso, lensPosition, wbColorTemp, lensPositionRaw);
+        DEPTHAI_SERIALIZE(CameraSettings, exposureTimeUs, sensitivityIso, lensPosition, wbColorTemp, lensPositionRaw, sensorTemperature, auxTemperature);
+    };
+
+    enum class Category : uint32_t {
+        DEFAULT = 0,
+        DISPARITY = 1,
+        DEPTH = 2,
     };
 
     Specs fb = {};
@@ -325,12 +333,26 @@ struct RawImgFrame : public RawBuffer {
     ImgTransformations transformations;
     dai::FrameEvent event = dai::FrameEvent::NONE;
 
+    float disp2DepthMultiplier = 0;
+
     void serialize(std::vector<std::uint8_t>& metadata, DatatypeEnum& datatype) const override {
         metadata = utility::serialize(*this);
         datatype = DatatypeEnum::ImgFrame;
     };
 
-    DEPTHAI_SERIALIZE(RawImgFrame, fb, sourceFb, cam, HFovDegrees, category, instanceNum, transformations, event, RawBuffer::sequenceNum, RawBuffer::ts, RawBuffer::tsDevice);
+    DEPTHAI_SERIALIZE(RawImgFrame,
+                      fb,
+                      sourceFb,
+                      cam,
+                      HFovDegrees,
+                      category,
+                      transformations,
+                      disp2DepthMultiplier,
+                      instanceNum,
+                      event,
+                      RawBuffer::sequenceNum,
+                      RawBuffer::ts,
+                      RawBuffer::tsDevice);
 };
 
 }  // namespace dai

@@ -58,7 +58,6 @@ struct SpatialLocationCalculatorConfigData {
 
      */
     SpatialLocationCalculatorAlgorithm calculationAlgorithm = SpatialLocationCalculatorAlgorithm::MEDIAN;
-
     /**
      * Step size for calculation.
      * Step size 1 means that every pixel is taken into calculation, size 2 means every second etc.

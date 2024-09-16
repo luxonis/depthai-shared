@@ -30,7 +30,8 @@ struct RawSystemInformationS3 : public RawBuffer {
         datatype = DatatypeEnum::SystemInformationS3;
     };
 
-    DEPTHAI_SERIALIZE(RawSystemInformationS3, ddrMemoryUsage, cpuAvgUsage, cpuUsages, chipTemperature);
+    DEPTHAI_SERIALIZE(
+        RawSystemInformationS3, ddrMemoryUsage, cpuAvgUsage, cpuUsages, chipTemperature, RawBuffer::sequenceNum, RawBuffer::ts, RawBuffer::tsDevice);
 };
 
 }  // namespace dai
