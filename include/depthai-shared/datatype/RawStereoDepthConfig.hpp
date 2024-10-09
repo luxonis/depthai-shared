@@ -137,7 +137,7 @@ struct RawStereoDepthConfig : public RawBuffer {
         /**
          * Order of filters to be applied if filtering is enabled.
          */
-        std::array<Filter, 5> filteringOrder = {Filter::DECIMATION, Filter::SPECKLE, Filter::SPATIAL, Filter::TEMPORAL};
+        std::array<Filter, 4> filteringOrder = {Filter::DECIMATION, Filter::SPECKLE, Filter::SPATIAL, Filter::TEMPORAL};
 
         /**
          * Set kernel size for disparity/depth median filtering, or disable
