@@ -97,6 +97,7 @@ struct RawCameraControl : public RawBuffer {
         FRAME_SYNC = 52,
         STROBE_CONFIG = 53,
         STROBE_TIMINGS = 54,
+        MOVE_LENS_RAW = 55, /* lens position: 0.0 - 1.0 */
     };
 
     enum class AutoFocusMode : uint8_t {
@@ -409,6 +410,7 @@ struct RawCameraControl : public RawBuffer {
      * - lower values lead to out-of-focus (lens too close to the sensor array)
      */
     uint8_t lensPosition = 0;
+    float lensPositionRaw = 0;
     uint8_t lensPosAutoInfinity, lensPosAutoMacro;
 
     ManualExposureParams expManual;
@@ -435,6 +437,7 @@ struct RawCameraControl : public RawBuffer {
     uint16_t wbColorTemp;    // 1000 .. 12000
     uint8_t lowPowerNumFramesBurst;
     uint8_t lowPowerNumFramesDiscard;
+    std::vector<std::pair<std::string, std::string>> miscControls;
 
     void setCommand(Command cmd, bool value = true) {
         uint64_t mask = 1ull << (uint8_t)cmd;
@@ -464,6 +467,7 @@ struct RawCameraControl : public RawBuffer {
                       cmdMask,
                       autoFocusMode,
                       lensPosition,
+                      lensPositionRaw,
                       lensPosAutoInfinity,
                       lensPosAutoMacro,
                       expManual,
@@ -490,7 +494,8 @@ struct RawCameraControl : public RawBuffer {
                       chromaDenoise,
                       wbColorTemp,
                       lowPowerNumFramesBurst,
-                      lowPowerNumFramesDiscard);
+                      lowPowerNumFramesDiscard,
+                      miscControls);
 };
 
 }  // namespace dai
