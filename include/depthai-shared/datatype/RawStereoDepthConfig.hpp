@@ -1,7 +1,7 @@
 #pragma once
+#include <array>
 #include <cstdint>
 #include <depthai-shared/common/optional.hpp>
-#include <vector>
 
 #include "depthai-shared/common/MedianFilter.hpp"
 #include "depthai-shared/datatype/DatatypeEnum.hpp"
@@ -132,6 +132,13 @@ struct RawStereoDepthConfig : public RawBuffer {
      * Post-processing filters, all the filters are applied in disparity domain.
      */
     struct PostProcessing {
+        enum class Filter : int32_t { DECIMATION = 0, SPECKLE = 1, SPATIAL = 2, TEMPORAL = 3, FILTER_COUNT = 4 };
+
+        /**
+         * Order of filters to be applied if filtering is enabled.
+         */
+        std::array<Filter, 4> filteringOrder = {Filter::DECIMATION, Filter::SPECKLE, Filter::SPATIAL, Filter::TEMPORAL};
+
         /**
          * Set kernel size for disparity/depth median filtering, or disable
          */
@@ -312,7 +319,13 @@ struct RawStereoDepthConfig : public RawBuffer {
              */
             std::uint32_t speckleRange = 50;
 
-            DEPTHAI_SERIALIZE(SpeckleFilter, enable, speckleRange);
+            /**
+             * Maximum difference between neighbor disparity pixels to put them into the same blob.
+             * Units in disparity integer levels.
+             */
+            std::uint32_t differenceThreshold = 2;
+
+            DEPTHAI_SERIALIZE(SpeckleFilter, enable, speckleRange, differenceThreshold);
         };
 
         /**
@@ -354,8 +367,16 @@ struct RawStereoDepthConfig : public RawBuffer {
          */
         DecimationFilter decimationFilter;
 
-        DEPTHAI_SERIALIZE(
-            PostProcessing, median, bilateralSigmaValue, spatialFilter, temporalFilter, thresholdFilter, brightnessFilter, speckleFilter, decimationFilter);
+        DEPTHAI_SERIALIZE(PostProcessing,
+                          filteringOrder,
+                          median,
+                          bilateralSigmaValue,
+                          spatialFilter,
+                          temporalFilter,
+                          thresholdFilter,
+                          brightnessFilter,
+                          speckleFilter,
+                          decimationFilter);
     };
 
     /**
