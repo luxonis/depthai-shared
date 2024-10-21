@@ -132,7 +132,7 @@ struct RawStereoDepthConfig : public RawBuffer {
      * Post-processing filters, all the filters are applied in disparity domain.
      */
     struct PostProcessing {
-        enum class Filter : int32_t { DECIMATION = 0, SPECKLE = 1, MEDIAN = 2, SPATIAL = 3, TEMPORAL = 4, FILTER_COUNT = 5 };
+        enum class Filter : int32_t { NONE = 0, DECIMATION, SPECKLE, MEDIAN, SPATIAL, TEMPORAL, FILTER_COUNT = TEMPORAL };
 
         /**
          * Order of filters to be applied if filtering is enabled.
