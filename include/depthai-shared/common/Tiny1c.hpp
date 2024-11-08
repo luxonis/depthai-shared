@@ -55,4 +55,20 @@ enum Tiny1cPropAutoShutterParam {
     /// unit:1s, range:0-655
     SHUTTER_CHANGE_GAIN_2ND_DELAY = 12
 };
+
+enum Tiny1cPropDefaultCfg {
+    /// all config
+    DEF_CFG_ALL = 0,
+    /// tecless k config
+    DEF_CFG_TECLESS_K = 1,
+    /// tpd config
+    DEF_CFG_TPD = 2,
+    /// prop page config
+    DEF_CFG_PROP_PAGE = 3,
+    /// user config
+    DEF_CFG_USER_CFG = 4,
+    /// dead pixel config
+    DEF_CFG_DEAD_PIXEL = 5,
+};
+
 }
