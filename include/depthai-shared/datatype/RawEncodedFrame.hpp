@@ -23,6 +23,9 @@ struct RawEncodedFrame : public RawBuffer {
     CameraSettings cam;
     uint32_t instanceNum = 0;  // Which source created this frame (color, mono, ...)
 
+    unsigned int width;   // width in pixels
+    unsigned int height;  // height in pixels
+
     uint32_t quality;
     uint32_t bitrate;
     Profile profile;
