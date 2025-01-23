@@ -8,6 +8,7 @@
 #include "depthai-shared/common/CameraBoardSocket.hpp"
 #include "depthai-shared/common/CameraImageOrientation.hpp"
 #include "depthai-shared/common/CameraSensorType.hpp"
+#include "depthai-shared/common/Extrinsics.hpp"
 #include "depthai-shared/common/UsbSpeed.hpp"
 #include "depthai-shared/common/optional.hpp"
 #include "depthai-shared/datatype/RawImgFrame.hpp"
@@ -152,6 +153,7 @@ struct BoardConfig {
         UVC() : UVC(1920, 1080) {}
     };
     tl::optional<UVC> uvc;
+    std::unordered_map<std::string, Extrinsics> defaultImuExtr;
 };
 
 DEPTHAI_SERIALIZE_EXT(BoardConfig::USB, vid, pid, flashBootedVid, flashBootedPid, maxSpeed, productName, manufacturer);
@@ -179,6 +181,7 @@ DEPTHAI_SERIALIZE_EXT(BoardConfig,
                       nonExclusiveMode,
                       camera,
                       imu,
-                      uvc);
+                      uvc,
+                      defaultImuExtr);
 
 }  // namespace dai
