@@ -60,9 +60,20 @@ struct ObjectTrackerProperties : PropertiesSerializable<Properties, ObjectTracke
      * Whether tracker should take into consideration class label for tracking.
      */
     bool trackingPerClass = true;
+
+    /**
+     */
+    float occlusionRatioThreshold = 0.4f;
+    /**
+     */
+    uint32_t trackletMaxLifespan = 120;
+    /**
+     */
+    uint32_t trackletBirthThreshold = 3;
+
 };
 
 DEPTHAI_SERIALIZE_EXT(
-    ObjectTrackerProperties, trackerThreshold, maxObjectsToTrack, detectionLabelsToTrack, trackerType, trackerIdAssignmentPolicy, trackingPerClass);
+    ObjectTrackerProperties, trackerThreshold, maxObjectsToTrack, detectionLabelsToTrack, trackerType, trackerIdAssignmentPolicy, trackingPerClass, occlusionRatioThreshold, trackletMaxLifespan, trackletBirthThreshold);
 
 }  // namespace dai
