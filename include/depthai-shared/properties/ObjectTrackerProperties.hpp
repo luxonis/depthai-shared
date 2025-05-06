@@ -62,12 +62,15 @@ struct ObjectTrackerProperties : PropertiesSerializable<Properties, ObjectTracke
     bool trackingPerClass = true;
 
     /**
+     * Occlusion ratio threshold. Used to filter out overlapping tracklets.
      */
     float occlusionRatioThreshold = 0.4f;
     /**
+     * Tracklet lifespan. Number of frames after which a LOST tracklet is removed.
      */
     uint32_t trackletMaxLifespan = 120;
     /**
+     * Tracklet birth threshold. Minimum consecutive tracked frames required to consider a tracklet as a new instance.
      */
     uint32_t trackletBirthThreshold = 3;
 };
