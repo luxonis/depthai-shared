@@ -10,7 +10,6 @@ namespace dai {
 
 /// RawObjectTrackerConfig configuration structure
 struct RawObjectTrackerConfig : public RawBuffer {
-
     std::vector<int32_t> trackletIdsToRemove;
 
     void serialize(std::vector<std::uint8_t>& metadata, DatatypeEnum& datatype) const override {

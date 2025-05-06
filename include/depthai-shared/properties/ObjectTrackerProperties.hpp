@@ -70,10 +70,17 @@ struct ObjectTrackerProperties : PropertiesSerializable<Properties, ObjectTracke
     /**
      */
     uint32_t trackletBirthThreshold = 3;
-
 };
 
-DEPTHAI_SERIALIZE_EXT(
-    ObjectTrackerProperties, trackerThreshold, maxObjectsToTrack, detectionLabelsToTrack, trackerType, trackerIdAssignmentPolicy, trackingPerClass, occlusionRatioThreshold, trackletMaxLifespan, trackletBirthThreshold);
+DEPTHAI_SERIALIZE_EXT(ObjectTrackerProperties,
+                      trackerThreshold,
+                      maxObjectsToTrack,
+                      detectionLabelsToTrack,
+                      trackerType,
+                      trackerIdAssignmentPolicy,
+                      trackingPerClass,
+                      occlusionRatioThreshold,
+                      trackletMaxLifespan,
+                      trackletBirthThreshold);
 
 }  // namespace dai

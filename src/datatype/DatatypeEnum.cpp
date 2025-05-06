@@ -33,6 +33,7 @@ const std::unordered_map<DatatypeEnum, std::vector<DatatypeEnum>> hierarchy = {
          DatatypeEnum::PointCloudData,
          DatatypeEnum::MessageGroup,
          DatatypeEnum::ImageAlignConfig,
+         DatatypeEnum::ObjectTrackerConfig,
      }},
     {DatatypeEnum::ImgFrame, {}},
     {DatatypeEnum::EncodedFrame, {}},
@@ -57,6 +58,7 @@ const std::unordered_map<DatatypeEnum, std::vector<DatatypeEnum>> hierarchy = {
     {DatatypeEnum::PointCloudData, {}},
     {DatatypeEnum::MessageGroup, {}},
     {DatatypeEnum::ImageAlignConfig, {}},
+    {DatatypeEnum::ObjectTrackerConfig, {}},
 };
 
 bool isDatatypeSubclassOf(DatatypeEnum parent, DatatypeEnum children) {
