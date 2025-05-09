@@ -66,7 +66,7 @@ struct ObjectTrackerProperties : PropertiesSerializable<Properties, ObjectTracke
      */
     float occlusionRatioThreshold = 0.4f;
     /**
-     * Tracklet lifespan. Number of frames after which a LOST tracklet is removed.
+     * Tracklet lifespan in number of frames. Number of frames after which a LOST tracklet is removed.
      */
     uint32_t trackletMaxLifespan = 120;
     /**
