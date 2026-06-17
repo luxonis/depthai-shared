@@ -1,5 +1,6 @@
 #pragma once
 
+#include "depthai-shared/common/ProcessorType.hpp"
 #include "depthai-shared/properties/Properties.hpp"
 
 namespace dai {
@@ -17,8 +18,13 @@ struct SyncProperties : PropertiesSerializable<Properties, SyncProperties> {
      * The number of syncing attempts before fail (num of replaced messages).
      */
     int32_t syncAttempts = -1;
+
+    /**
+     * Which processor should execute the node.
+     */
+    ProcessorType processor = ProcessorType::LEON_CSS;
 };
 
-DEPTHAI_SERIALIZE_EXT(SyncProperties, syncThresholdNs, syncAttempts);
+DEPTHAI_SERIALIZE_EXT(SyncProperties, syncThresholdNs, syncAttempts, processor);
 
 }  // namespace dai
